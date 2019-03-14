@@ -1,0 +1,28 @@
+<div class="container">
+    <mat-card id='master-card'>
+        <mat-card-title>
+            Liste Job Request
+        </mat-card-title>
+        <mat-card-content>
+            <ejs-grid
+                [dataSource]='interventions'
+                [allowPaging]='true'
+                [allowSorting]='true'
+                [allowFiltering]='true'
+                [allowGrouping]='true'
+                [filterSettings]='filterSettings'
+                [editSettings]='editSettings'
+                [toolbar]='toolbar'>
+                <e-columns>
+                    <e-column field='id' headerText='id' [validationRules]='orderIDRules'textAlign='Right' width='120'></e-column>
+                    <e-column field='day' headerText='day' width='100'></e-column>
+                    <e-column field='locality' textAlign='locality' format='c2' width='120'></e-column>
+                    <e-column field='priority' textAlign='priority' format='c2' width='120'></e-column>
+                    <e-column field='description' textAlign='description' format='c2' width='120'></e-column>
+                    <e-column field='departement' textAlign='departement' format='c2' width='120'></e-column>
+                    <e-column field='status' headerText='Statut' width='140'></e-column>
+                </e-columns >
+            </ejs-grid>
+        </mat-card-content>
+    </mat-card>
+</div>

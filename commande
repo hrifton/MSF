@@ -1,0 +1,18 @@
+start Compodoc:
+compodoc -s
+
+start service mongo:
+sudo service mongod start
+
+initiation projet:
+npm init -y
+
+install express+body-parser+cors+mongoose
+npm install --save express body-parser cors mongoose
+
+install nodemon
+npm install nodemon --save-dev
+
+MockUp Balsamiq
+Name: Flash 
+Serial: eNrzzU/OLi0odswsqnHLSSzOqDGoca7JKCkpsNLXLy8v1ytJTczVLUotKNFLzs8FAJHYETc=

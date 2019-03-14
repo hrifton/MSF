@@ -1,0 +1,37 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="!(isHandset$ | async)">
+    <mat-toolbar><img id="logo" src="../../assets/img/logo.png" alt="LogoMSF" srcset=""></mat-toolbar>
+
+
+    <button mat-button [matMenuTriggerFor]="Intervention">Intervention</button>
+    <button mat-button [matMenuTriggerFor]="Setting">Setting</button>
+    <mat-menu #Intervention="matMenu">
+      <a mat-button href="listInter">Liste Intervention</a>
+      <a mat-button href="formInter">Formulaire Intervention</a>
+
+    </mat-menu>
+
+    <mat-menu #Setting="matMenu">
+      <a mat-button href="setDep">Departement</a>
+      <a mat-button href="formInter">Formulaire Intervention</a>
+
+    </mat-menu>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>MSF</span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+  </mat-sidenav-content>
+</mat-sidenav-container>
