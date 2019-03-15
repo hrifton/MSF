@@ -10,7 +10,23 @@ import { DepartementService } from '../departement.service';
 export class SettingDepartementComponent implements OnInit {
 
   angForm: FormGroup;
-  breakpoint: number;
+  breakpoint: number;/*
+public  departement : string;
+public  locality : string;
+public  priority : string;
+public  date : string;
+public  description : string;
+*/
+
+
+
+
+
+
+
+
+
+
 
   constructor(private fb: FormBuilder, private ds: DepartementService) {
     this.createForm();

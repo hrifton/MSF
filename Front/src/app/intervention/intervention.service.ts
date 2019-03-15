@@ -14,7 +14,8 @@ export class InterventionService {
             priority: priority,
             day: day,
             description: description,
-            status: 'en_cours'
+            status: 'en_cours',
+            type:'JobRequest'
         };
         console.log(`${this.uri}/add`, obj);
 

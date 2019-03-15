@@ -8,7 +8,8 @@ let Intervention = new Schema(
 		priority: { type: String },
 		day: { type: String },
 		description: { type: String },
-		status: { type: String }
+		status: { type: String },
+		type: { type: String }
 	},
 	{
 		collection: 'intervention'
