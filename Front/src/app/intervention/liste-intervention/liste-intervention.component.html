@@ -13,7 +13,8 @@
                 [filterSettings]='filterSettings'
                 [pageSettings]='pageSettings'
                 [editSettings]='editSettings'
-
+                (actionComplete)="actionComplete($event)"
+                (actionBegin)="actionBegin($event)"
                 [toolbar]='toolbar'>
 
                 <e-columns>
@@ -24,7 +25,8 @@
                     <e-column field='description' textAlign='description' format='c2' width='120'></e-column>
                     <e-column field='departement' textAlign='departement' format='c2' width='120' editType='dropdownedit'  [validationRules]='priorityrules'></e-column>
                     <e-column field='status' headerText='Statut' width='140' editType='dropdownedit'  [validationRules]='priorityrules'></e-column>
-                </e-columns >
+
+                  </e-columns >
             </ejs-grid>
 
         </mat-card-content>

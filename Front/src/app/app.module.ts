@@ -16,6 +16,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TreeGridModule } from '@syncfusion/ej2-angular-treegrid';
 import { GridModule,EditService,ToolbarService,PageService, SortService, FilterService, GroupService } from '@syncfusion/ej2-angular-grids';
 import { DatePickerAllModule } from '@syncfusion/ej2-angular-calendars';
+import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
+import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
+import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
 //Providers
 import { InterventionService } from './intervention/intervention.service';
 
@@ -39,6 +42,9 @@ import { SettingDepartementComponent } from './setting/departement/setting-depar
 
   ],
   imports: [
+    ButtonModule,
+    NumericTextBoxAllModule,
+    DropDownListAllModule,
     DatePickerAllModule,
     TreeGridModule,
     BrowserModule,

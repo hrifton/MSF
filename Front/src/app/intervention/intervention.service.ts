@@ -5,7 +5,9 @@ import {HttpClient} from '@angular/common/http';
 export class InterventionService {
     uri = 'http://localhost:4000/intervention';
 
-    constructor(private http : HttpClient) {}
+    constructor(private http : HttpClient) {
+
+    }
 
     addIntervention(departement, locality, priority, day, description) {
         const obj = {
@@ -24,6 +26,23 @@ export class InterventionService {
 
     getInterventions(){
       return this.http.get(`${this.uri}`);
+    }
+
+    updateIntervention(departement, locality, priority, day, description,status,type,id) {
+console.log(departement);
+      const obj = {
+        departement: departement,
+        locality: locality,
+        priority: priority,
+        day: day,
+        description: description,
+        status: status,
+        type: type
+    };
+      this
+        .http
+        .post(`${this.uri}/update/${id}`, obj)
+        .subscribe(res => console.log('Done'));
     }
 
 }

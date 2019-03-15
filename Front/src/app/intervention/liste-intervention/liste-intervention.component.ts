@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import Intervention from '../Intervention';
 import {InterventionService} from '../intervention.service';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { EditService, ToolbarService, PageService } from '@syncfusion/ej2-angular-grids';
+import { EditService, ToolbarService, PageService,SaveEventArgs } from '@syncfusion/ej2-angular-grids';
 import { DataManager, ODataV4Adaptor,Query } from '@syncfusion/ej2-data';
 
 
@@ -27,38 +27,45 @@ export class ListeInterventionComponent implements OnInit {
     public editparams: Object;
     public query: Query;
     public priorityrules: Object;
+    public dropData: string[];
 
 
-    angForm: FormGroup;
+    constructor(private is: InterventionService) {
+    }
+   actionComplete(args) {
+      if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
+          let dialog = args.dialog;
+          // change the header of the dialog
+          dialog.header = args.requestType === 'beginEdit' ? 'Record of ' + args.rowData['_id'] : 'New Customer';
+      }
+    }
+    actionBegin(args: SaveEventArgs): void {
+     if (args.requestType === 'beginEdit' || args.requestType === 'add') {
+          alert(args.requestType)
+      }
+      if (args.requestType === 'save') {
+        console.log(args.data)
+      this.is.updateIntervention(
+          args.data['departement'],
+          args.data['locality'],
+          args.data['priority'],
+          args.data['day'],
+          args.data['description'],
+          args.data['status'],
+          args.data['type'],
+          args.data['_id']);
 
-    createForm() {
-        this.angForm = this
-            .fb
-            .group({
-                departement: [
-                    '', Validators.required
-                ],
-                locality: [
-                    '', Validators.required
-                ],
-                priority: [
-                    '', Validators.required
-                ],
-                date: [
-                    '', Validators.required
-                ],
-                description: ['', Validators.required]
-            });
+      }
     }
 
-    constructor(private is : InterventionService, private fb : FormBuilder) {
-      this.editSettings = {    }
-    }
+
+
 
     ngOnInit() {
         this.filterSettings = {
             type: 'Menu'
         };
+
         /*   this
             .is
             .getInterventions()
@@ -77,9 +84,8 @@ export class ListeInterventionComponent implements OnInit {
             this.freightrules = { required: true };
             this.editparams = { params: { popupHeight: '100px' }};
             this.pageSettings = { pageCount: 5};
-            this.query = new Query().addParams('ej2grid', 'true');
-            console.log(this.query);
-
-
+            this.dropData = ['Order Placed', 'Processing', 'Delivered'];
     }
+
+
 }
