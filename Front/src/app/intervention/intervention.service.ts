@@ -28,21 +28,23 @@ export class InterventionService {
       return this.http.get(`${this.uri}`);
     }
 
-    updateIntervention(departement, locality, priority, day, description,status,type,id) {
-console.log(departement);
-      const obj = {
-        departement: departement,
-        locality: locality,
-        priority: priority,
-        day: day,
-        description: description,
-        status: status,
-        type: type
-    };
-      this
-        .http
-        .post(`${this.uri}/update/${id}`, obj)
-        .subscribe(res => console.log('Done'));
-    }
+   updateIntervention(departement, locality, priority, day, description, status, type, id){
+
+    const obj = {
+		departement,
+		locality,
+		priority,
+		day,
+		description,
+		status,
+    type,
+    id
+      };
+
+    this
+      .http
+      .put(`${this.uri}/update/${id}`, obj)
+      .subscribe(res => console.log('Done'));
+  };
 
 }

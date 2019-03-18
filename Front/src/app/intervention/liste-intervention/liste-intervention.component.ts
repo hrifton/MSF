@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import Intervention from '../Intervention';
 import {InterventionService} from '../intervention.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { EditService, ToolbarService, PageService,SaveEventArgs } from '@syncfusion/ej2-angular-grids';
 import { DataManager, ODataV4Adaptor,Query } from '@syncfusion/ej2-data';
@@ -30,7 +31,7 @@ export class ListeInterventionComponent implements OnInit {
     public dropData: string[];
 
 
-    constructor(private is: InterventionService) {
+    constructor(private is: InterventionService,private route: ActivatedRoute,private router: Router,) {
     }
    actionComplete(args) {
       if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
@@ -43,23 +44,18 @@ export class ListeInterventionComponent implements OnInit {
      if (args.requestType === 'beginEdit' || args.requestType === 'add') {
           alert(args.requestType)
       }
-      if (args.requestType === 'save') {
-        console.log(args.data)
-      this.is.updateIntervention(
-          args.data['departement'],
-          args.data['locality'],
-          args.data['priority'],
-          args.data['day'],
-          args.data['description'],
-          args.data['status'],
-          args.data['type'],
-          args.data['_id']);
+     if (args.requestType === 'save') {
 
+      this.updateIntervention( args.data['departement'],
+      args.data['locality'],
+      args.data['priority'],
+      args.data['day'],
+      args.data['description'],
+      args.data['status'],
+      args.data['type'],
+      args.data['_id']);
       }
     }
-
-
-
 
     ngOnInit() {
         this.filterSettings = {
@@ -72,20 +68,26 @@ export class ListeInterventionComponent implements OnInit {
             .subscribe((data : Intervention[]) => {
                 this.interventions = data;
             });*/
-            this.data = new DataManager({
+        this.data = new DataManager({
               url: 'http://localhost:4000/intervention',
               adaptor: new ODataV4Adaptor,
               offline: true
           });
-            this.editSettings = { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Dialog' };
-            this.toolbar = ['Edit', 'Delete'];
-            this.orderidrules = { required: true, number: true };
-            this.customeridrules = { required: true };
-            this.freightrules = { required: true };
-            this.editparams = { params: { popupHeight: '100px' }};
-            this.pageSettings = { pageCount: 5};
-            this.dropData = ['Order Placed', 'Processing', 'Delivered'];
+        this.editSettings = { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Dialog' };
+        this.toolbar = ['Edit', 'Delete'];
+        this.orderidrules = { required: true, number: true };
+        this.customeridrules = { required: true };
+        this.freightrules = { required: true };
+        this.editparams = { params: { popupHeight: '100px' }};
+        this.pageSettings = { pageCount: 5};
+        this.dropData = ['Order Placed', 'Processing', 'Delivered'];
     }
+    updateIntervention(departement, locality, priority, day, description,status,type,id) {
 
+      this.route.params.subscribe(params => {
+        this.is.updateIntervention(departement, locality, priority, day, description,status,type,id);
 
+   });
+
+}
 }

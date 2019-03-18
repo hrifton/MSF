@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DepartementService } from '../departement.service';
+import { Query, DataManager, ODataV4Adaptor } from '@syncfusion/ej2-data'
 
 @Component({
   selector: 'app-setting-departement',
@@ -10,13 +11,9 @@ import { DepartementService } from '../departement.service';
 export class SettingDepartementComponent implements OnInit {
 
   angForm: FormGroup;
-  breakpoint: number;/*
+  breakpoint: number;
 public  departement : string;
-public  locality : string;
-public  priority : string;
-public  date : string;
-public  description : string;
-*/
+
 
 
 
@@ -51,8 +48,9 @@ public  description : string;
   }
 
 
-  addDepartement(departement){
-    this.ds.addDeparement(departement);
+  addNewDepartement(departement){
+    alert(departement)
+    //this.ds.addDeparement(departement);
   }
 
 }

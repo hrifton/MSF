@@ -28,20 +28,27 @@ interventionRoutes.route('/').get(function(req, res) {
 	});
 });
 
-interventionRoutes.route('/update/:id').post(function(req, res) {
-	intervention.findById(req.params.id, function(err, next, intervention) {
-		if (!intervention) return next(new Error('Could not load Document'));
-		else {
-			intervention.departement = req.body.departement;
-			intervention.locality = req.body.locality;
-			intervention.priority = req.body.priority;
-			intervention.day = req.body.day;
-			intervention.description = req.body.description;
-			intervention.status = req.body.status;
-			intervention.type = req.body.type;
-
-			intervention
-				.save()
+interventionRoutes.route('/update/:id').put(function(req, res) {
+	console.log('********REQ************');
+	console.log(req.body.id);
+	Intervention.findByIdAndUpdate(req.body.id, req.body, { new: true }, (err, intervention) => {
+		// Handle any possible database errors
+		if (err) return res.status(500).send(err);
+		return res.send(intervention);
+	});
+	/*
+	Intervention.findById(req.body.id, function(err, next, intervention) {
+		result = res.send(next.body);
+		if (!result) {
+			console.log('intervention is false');
+			return next(new Error('Could not load Document'));
+		} else {
+			intervention = req.body;
+			console.log('**************************');
+			console.log(intervention);
+			console.log('++++++++++++++++++++++++++++++');
+			console.log(result);
+			intervention.save()
 				.then((intervention) => {
 					res.json('Update complete');
 				})
@@ -50,6 +57,7 @@ interventionRoutes.route('/update/:id').post(function(req, res) {
 				});
 		}
 	});
+*/
 });
 
 module.exports = interventionRoutes;

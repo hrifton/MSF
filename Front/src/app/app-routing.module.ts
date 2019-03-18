@@ -5,6 +5,7 @@ import { ListeInterventionComponent } from './intervention/liste-intervention/li
 import { SettingDepartementComponent } from './setting/departement/setting-departement/setting-departement.component';
 
 const routes: Routes = [
+  {path:'',redirectTo: 'formInter',pathMatch:'full'},
   { path: 'formInter', component: FormulaireInterventionComponent },
   { path: 'listInter', component: ListeInterventionComponent },
   { path: 'setDep', component: SettingDepartementComponent },
