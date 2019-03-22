@@ -48,9 +48,12 @@ public  departement : string;
   }
 
 
-  addNewDepartement(departement){
-    alert(departement)
-    //this.ds.addDeparement(departement);
+  addNewDepartement(departement) {
+
+    if ( this.ds.getDepartement(departement) == null) {
+      this.ds.addDeparement(departement);
+    }
+
   }
 
 }

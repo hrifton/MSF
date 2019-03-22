@@ -30,7 +30,9 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FormulaireInterventionComponent } from './intervention/formulaire-intervention/formulaire-intervention.component';
 import {MatTableModule} from '@angular/material/table';
 import { ListeInterventionComponent } from './intervention/liste-intervention/liste-intervention.component';
+import { DepartementComponent } from './setting/departement/departement.component';
 import { SettingDepartementComponent } from './setting/departement/setting-departement/setting-departement.component';
+import { ListeDepartementComponent } from './setting/departement/liste-departement/liste-departement.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { SettingDepartementComponent } from './setting/departement/setting-depar
     NavBarComponent,
     FormulaireInterventionComponent,
     ListeInterventionComponent,
+    DepartementComponent,
     SettingDepartementComponent,
+    ListeDepartementComponent,
 
   ],
   imports: [

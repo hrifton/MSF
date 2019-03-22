@@ -1,6 +1,10 @@
+import { DepartementComponent } from './../../setting/departement/departement.component';
+import { DepartementService } from './../../setting/departement/departement.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { InterventionService } from '../intervention.service'
+import { InterventionService } from '../intervention.service';
+import Departement from '../../setting/departement/Departement';
+
 @Component({
   selector: 'app-formulaire-intervention',
   templateUrl: './formulaire-intervention.component.html',
@@ -9,11 +13,12 @@ import { InterventionService } from '../intervention.service'
 export class FormulaireInterventionComponent implements OnInit {
 
   today = new Date();
+  departements: Departement[];
 
   angForm: FormGroup;
   breakpoint: number;
 
-  constructor(private fb: FormBuilder, private is: InterventionService) {
+  constructor(private fb: FormBuilder, private is: InterventionService, private ds: DepartementService) {
     this.createForm();
 
   }
@@ -32,6 +37,10 @@ export class FormulaireInterventionComponent implements OnInit {
 
   ngOnInit() {
     this.breakpoint = (window.innerWidth <= 1000) ? 1 : 4;
+    this.ds.getDepartements().subscribe((data: Departement[]) => {
+      this.departements = data;
+      console.log(this.departements);
+    });
   }
 
   onResize(event) {
@@ -40,7 +49,6 @@ export class FormulaireInterventionComponent implements OnInit {
 
   addIntervention(departement, locality, priority, day, description){
     this.is.addIntervention(departement, locality, priority, day, description);
-
-
   }
+
 }

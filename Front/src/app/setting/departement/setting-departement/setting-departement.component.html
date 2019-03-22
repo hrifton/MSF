@@ -1,45 +1,28 @@
-<div class="container">
-    <form [formGroup]="angForm" novalidate="novalidate">
-        <mat-card class="shipping-card">
-            <mat-card-header>
-                <mat-card-title>Setting Departement</mat-card-title>
-            </mat-card-header>
-<mat-card-content>
-  <mat-grid-list [cols]="breakpoint" rowHeight="2:1.5" (window:resize)="onResize($event)">
-  <mat-card class="shipping-card col-5">
-      <mat-card-title-group>
-          <mat-card-title>Nouveau Departement</mat-card-title>
-          <mat-card-subtitle>formulaire</mat-card-subtitle>
-      </mat-card-title-group>
-      <mat-card-content>
 
-        <form [formGroup]="angForm" novalidate="novalidate">
+<div class="e-card col-3">
+  <div class="e-card-header-title">
+    Nouveau departement
+  </div>
+  <div class="e-card-content">
+    <form [formGroup]="angForm" novalidate="novalidate">
             <div class="row">
-              <div class="col-3">
-                <mat-form-field class="example-full-width" appearance="outline">
+              <div class=col-10>
+                <mat-form-field class="full-width">
                   <mat-label>Departement :</mat-label>
                   <input matInput="matInput" placeholder="departement" formControlName="departement" #departement></mat-form-field>
               </div>
             </div>
-          </form>
-      </mat-card-content>
-      <mat-card-actions align="start">
-        <button
-        (click)="addNewDepartement()"
 
+        <button
+        (click)="addNewDepartement(departement.value)"
         mat-raised-button="mat-raised-button-left"
             color="primary"
             >Save</button>
-
-      </mat-card-actions>
-      <mat-card-footer>
-          Footer
-      </mat-card-footer>
-  </mat-card>
-  </mat-grid-list>
-  </mat-card-content>
-        </mat-card>
-
-    </form>
+          </form>
+  </div>
 
 </div>
+
+
+
+

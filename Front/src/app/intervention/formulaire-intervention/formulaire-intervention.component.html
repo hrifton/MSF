@@ -5,16 +5,16 @@
             <mat-card-title>Job Request</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <mat-grid-list [cols]="breakpoint" rowHeight="2:1.5" (window:resize)="onResize($event)">
+            <mat-grid-list [cols]="breakpoint" rowHeight="4:1.5" (window:resize)="onResize($event)">
                 <mat-grid-tile>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Departement</mat-label>
-                        <mat-select placeholder="Departement" disableRipple="disableRipple" formControlName="departement" #departement>
-                            <mat-option value="1">Option 1</mat-option>
-                            <mat-option value="2">Option 2</mat-option>
-                            <mat-option value="3">Option 3</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                  <mat-form-field class="full-width">
+                    <mat-label>Département</mat-label>
+                    <mat-select placeholder="departement" disableRipple="disableRipple" formControlName="departement" #departement>
+                      <mat-option *ngFor="let dep of departements" [value]="dep.departement">
+                        {{dep.departement}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </mat-grid-tile>
 
                 <mat-grid-tile>

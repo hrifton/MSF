@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import Intervention from '../Intervention';
 import {InterventionService} from '../intervention.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+
 import { EditService, ToolbarService, PageService,SaveEventArgs } from '@syncfusion/ej2-angular-grids';
 import { DataManager, ODataV4Adaptor,Query } from '@syncfusion/ej2-data';
 
@@ -16,7 +16,7 @@ import { DataManager, ODataV4Adaptor,Query } from '@syncfusion/ej2-data';
 )
 export class ListeInterventionComponent implements OnInit {
 
-   // public interventions: Intervention[];
+   public interventions: Intervention[];
     public data: DataManager;
     public filterSettings: Object;
     public editSettings: Object;
@@ -31,7 +31,7 @@ export class ListeInterventionComponent implements OnInit {
     public dropData: string[];
 
 
-    constructor(private is: InterventionService,private route: ActivatedRoute,private router: Router,) {
+    constructor(private is: InterventionService,private route: ActivatedRoute,private router: Router) {
     }
    actionComplete(args) {
       if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
@@ -62,17 +62,12 @@ export class ListeInterventionComponent implements OnInit {
             type: 'Menu'
         };
 
-        /*   this
+        this
             .is
             .getInterventions()
             .subscribe((data : Intervention[]) => {
                 this.interventions = data;
-            });*/
-        this.data = new DataManager({
-              url: 'http://localhost:4000/intervention',
-              adaptor: new ODataV4Adaptor,
-              offline: true
-          });
+            });
         this.editSettings = { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Dialog' };
         this.toolbar = ['Edit', 'Delete'];
         this.orderidrules = { required: true, number: true };
