@@ -39,7 +39,6 @@ export class FormulaireInterventionComponent implements OnInit {
     this.breakpoint = (window.innerWidth <= 1000) ? 1 : 4;
     this.ds.getDepartements().subscribe((data: Departement[]) => {
       this.departements = data;
-      console.log(this.departements);
     });
   }
 

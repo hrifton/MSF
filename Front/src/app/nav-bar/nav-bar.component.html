@@ -9,14 +9,15 @@
     <button mat-button [matMenuTriggerFor]="Intervention">Intervention</button>
     <button mat-button [matMenuTriggerFor]="Setting">Setting</button>
     <mat-menu #Intervention="matMenu">
-      <a mat-button  routerLink='/listInter'>Liste Intervention</a>
+      <a mat-button  routerLink='listInter'>Liste Intervention</a>
       <a mat-button routerLink="formInter">Formulaire Intervention</a>
 
     </mat-menu>
 
     <mat-menu #Setting="matMenu">
-      <a mat-button routerLink="setDep">Departement</a>
-      <a mat-button routerLink="formInter">Formulaire Intervention</a>
+      <a mat-button routerLink="setDep">Setting Departement</a>
+      <a mat-button routerLink="setTec">Setting Technicien</a><br>
+      <a mat-button routerLink="setMet">Setting Métier</a>
 
     </mat-menu>
   </mat-sidenav>

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
+
 let Departement = new Schema(
 	{
 		departement: { type: String }
@@ -8,6 +10,7 @@ let Departement = new Schema(
 	{
 		collection: 'departement'
 	}
+
 );
 
 module.exports = mongoose.model('Departement', Departement);

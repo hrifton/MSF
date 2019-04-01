@@ -18,7 +18,7 @@ departementRoutes.route('/').get(function(req, res) {
 //returne un departementDefini
 departementRoutes.route('/edit/:departement').get(function(req, res) {
 	Departement.findOne({ departement: req.params.departement }, function(err, departement) {
-		res.json(departement);
+		return err;
 	});
 });
 
@@ -29,7 +29,7 @@ departementRoutes.route('/add').post(function(req, res) {
 	departement
 		.save()
 		.then((departement) => {
-			res.status(200).json({ departement: 'add new departement ok' });
+			res.status(200).json({ departement });
 		})
 		.catch((err) => {
 			res.status(400).send('il y a une erreur de DB');

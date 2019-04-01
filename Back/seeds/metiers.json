@@ -1,0 +1,41 @@
+[
+    { "metier": "Building/structure",
+        "descriptif":"All the structural elements: walls, floors, ceilings, doors, windows…"
+    },
+    { "metier": "Indoor fitting/ equipment",
+        "descriptif":"All the furniture inside the hospital as well as laundry machines or other appliances."
+    },
+    { "metier": "Electricity",
+        "descriptif":"Energy sources, the energy distribution, the backup means (UPS, inverters…) and the lighting equipment, Solar Panels, Solar Fridge Sources"
+    },
+    { "metier": "Ventilation/ AC/ heating (HVAC)",
+        "descriptif":"Ventilation, heating and air conditioning systems, such as fans, extractors, air conditioners and all heating elements."
+    },
+    { "metier": "Plumber/ Watsan",
+        "descriptif":"Plumber and watsan jobs"
+    },
+    { "metier": "Biomed",
+        "descriptif":"Biomedical equipment"
+    },
+    { "metier": "Outdoor fitting/Exteriors",
+        "descriptif":"Gardening work, road or access works…"
+    },
+    { "metier": "Mechanic",
+        "descriptif":"Mostly concern cars or specific generator issues."
+    },
+    { "metier": "ICT/Telecom",
+        "descriptif":"All telecommunication equipments and ICT equipment, such as laptops, printers, internal communication systems…"
+    },
+    { "metier": "Cold Chain",
+        "descriptif":"Refrigerators, freezer, cold room, Solar Fridge "
+    },
+    { "metier": "Fire  and security systems",
+        "descriptif":"Fire alarm and detection and fire fighting systems, "
+    },
+    { "metier": "Other",
+        "descriptif":""
+    }
+    
+]
+
+

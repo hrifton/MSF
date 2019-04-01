@@ -272,10 +272,19 @@ export class NavBarComponent {
     &lt;mat-toolbar&gt;&lt;img id&#x3D;&quot;logo&quot; src&#x3D;&quot;../../assets/img/logo.png&quot; alt&#x3D;&quot;LogoMSF&quot; srcset&#x3D;&quot;&quot;&gt;&lt;/mat-toolbar&gt;
 
 
-    &lt;button mat-button [matMenuTriggerFor]&#x3D;&quot;menu&quot;&gt;Intervention&lt;/button&gt;
-    &lt;mat-menu #menu&#x3D;&quot;matMenu&quot;&gt;
-      &lt;a mat-button href&#x3D;&quot;formInter&quot;&gt;Formulaire Intervention&lt;/a&gt;
-      &lt;button mat-menu-item&gt;Item 2&lt;/button&gt;
+    &lt;button mat-button [matMenuTriggerFor]&#x3D;&quot;Intervention&quot;&gt;Intervention&lt;/button&gt;
+    &lt;button mat-button [matMenuTriggerFor]&#x3D;&quot;Setting&quot;&gt;Setting&lt;/button&gt;
+    &lt;mat-menu #Intervention&#x3D;&quot;matMenu&quot;&gt;
+      &lt;a mat-button  routerLink&#x3D;&#x27;listInter&#x27;&gt;Liste Intervention&lt;/a&gt;
+      &lt;a mat-button routerLink&#x3D;&quot;formInter&quot;&gt;Formulaire Intervention&lt;/a&gt;
+
+    &lt;/mat-menu&gt;
+
+    &lt;mat-menu #Setting&#x3D;&quot;matMenu&quot;&gt;
+      &lt;a mat-button routerLink&#x3D;&quot;setDep&quot;&gt;Setting Departement&lt;/a&gt;
+      &lt;a mat-button routerLink&#x3D;&quot;setTec&quot;&gt;Setting Technicien&lt;/a&gt;&lt;br&gt;
+      &lt;a mat-button routerLink&#x3D;&quot;setMet&quot;&gt;Setting Métier&lt;/a&gt;
+
     &lt;/mat-menu&gt;
   &lt;/mat-sidenav&gt;
   &lt;mat-sidenav-content&gt;
@@ -321,6 +330,16 @@ export class NavBarComponent {
   padding-left: 15px;
   width: 100px;
 }
+.mat-button{
+
+  left: 20px;
+
+}
+.mat-menu-panel{
+
+  width: 200px;
+
+}
 </code></pre>
     </div>
 
@@ -349,8 +368,8 @@ export class NavBarComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><mat-sidenav-container class="sidenav-container">  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"      [attr.role]="(isHandset$ | async) ? \'dialog\' : \'navigation\'"      [mode]="(isHandset$ | async) ? \'over\' : \'side\'"      [opened]="!(isHandset$ | async)">    <mat-toolbar><img id="logo" src="../../assets/img/logo.png" alt="LogoMSF" srcset=""></mat-toolbar>    <button mat-button [matMenuTriggerFor]="menu">Intervention</button>    <mat-menu #menu="matMenu">      <a mat-button href="formInter">Formulaire Intervention</a>      <button mat-menu-item>Item 2</button>    </mat-menu>  </mat-sidenav>  <mat-sidenav-content>    <mat-toolbar color="primary">      <button        type="button"        aria-label="Toggle sidenav"        mat-icon-button        (click)="drawer.toggle()"        >        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>      </button>      <span>MSF</span>    </mat-toolbar>    <!-- Add Content Here -->  </mat-sidenav-content></mat-sidenav-container></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'}];
+        var COMPONENT_TEMPLATE = '<div><mat-sidenav-container class="sidenav-container">  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"      [attr.role]="(isHandset$ | async) ? \'dialog\' : \'navigation\'"      [mode]="(isHandset$ | async) ? \'over\' : \'side\'"      [opened]="!(isHandset$ | async)">    <mat-toolbar><img id="logo" src="../../assets/img/logo.png" alt="LogoMSF" srcset=""></mat-toolbar>    <button mat-button [matMenuTriggerFor]="Intervention">Intervention</button>    <button mat-button [matMenuTriggerFor]="Setting">Setting</button>    <mat-menu #Intervention="matMenu">      <a mat-button  routerLink=\'listInter\'>Liste Intervention</a>      <a mat-button routerLink="formInter">Formulaire Intervention</a>    </mat-menu>    <mat-menu #Setting="matMenu">      <a mat-button routerLink="setDep">Setting Departement</a>      <a mat-button routerLink="setTec">Setting Technicien</a><br>      <a mat-button routerLink="setMet">Setting Métier</a>    </mat-menu>  </mat-sidenav>  <mat-sidenav-content>    <mat-toolbar color="primary">      <button        type="button"        aria-label="Toggle sidenav"        mat-icon-button        (click)="drawer.toggle()"        >        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>      </button>      <span>MSF</span>    </mat-toolbar>    <!-- Add Content Here -->  </mat-sidenav-content></mat-sidenav-container></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListeInterventionComponent', 'selector': 'app-liste-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'NavBarComponent'};
 </script>

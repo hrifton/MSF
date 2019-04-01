@@ -55,33 +55,141 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/AppModule.html" data-type="entity-link">AppModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-AppModule-0b6412fb6b76172ee24d5b0a95888f07"' : 'data-target="#xs-components-links-module-AppModule-0b6412fb6b76172ee24d5b0a95888f07"' }>
+                                            'data-target="#components-links-module-AppModule-3acad96bff505617d2ba8f20f2a539da"' : 'data-target="#xs-components-links-module-AppModule-3acad96bff505617d2ba8f20f2a539da"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AppModule-0b6412fb6b76172ee24d5b0a95888f07"' :
-                                            'id="xs-components-links-module-AppModule-0b6412fb6b76172ee24d5b0a95888f07"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AppModule-3acad96bff505617d2ba8f20f2a539da"' :
+                                            'id="xs-components-links-module-AppModule-3acad96bff505617d2ba8f20f2a539da"' }>
                                             <li class="link">
                                                 <a href="components/AppComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AppComponent</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="components/CorpsDeMetierComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">CorpsDeMetierComponent</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="components/DepartementComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">DepartementComponent</a>
                                             </li>
                                             <li class="link">
                                                 <a href="components/FormulaireInterventionComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormulaireInterventionComponent</a>
                                             </li>
                                             <li class="link">
+                                                <a href="components/ListeCorpMetierComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ListeCorpMetierComponent</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="components/ListeDepartementComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ListeDepartementComponent</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="components/ListeInterventionComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ListeInterventionComponent</a>
+                                            </li>
+                                            <li class="link">
                                                 <a href="components/NavBarComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">NavBarComponent</a>
                                             </li>
+                                            <li class="link">
+                                                <a href="components/SettingDepartementComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">SettingDepartementComponent</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="components/SettingMetierComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">SettingMetierComponent</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="components/SettingTechnicienComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">SettingTechnicienComponent</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="components/TechnicienComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">TechnicienComponent</a>
+                                            </li>
                                         </ul>
                                     </li>
+                                <li class="chapter inner">
+                                    <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                        'data-target="#injectables-links-module-AppModule-3acad96bff505617d2ba8f20f2a539da"' : 'data-target="#xs-injectables-links-module-AppModule-3acad96bff505617d2ba8f20f2a539da"' }>
+                                        <span class="icon ion-md-arrow-round-down"></span>
+                                        <span>Injectables</span>
+                                        <span class="icon ion-ios-arrow-down"></span>
+                                    </div>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-AppModule-3acad96bff505617d2ba8f20f2a539da"' :
+                                        'id="xs-injectables-links-module-AppModule-3acad96bff505617d2ba8f20f2a539da"' }>
+                                        <li class="link">
+                                            <a href="injectables/InterventionService.html"
+                                                data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>InterventionService</a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </li>
                             <li class="link">
                                 <a href="modules/AppRoutingModule.html" data-type="entity-link">AppRoutingModule</a>
                             </li>
                 </ul>
                 </li>
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#classes-links"' :
+                            'data-target="#xs-classes-links"' }>
+                            <span class="icon ion-ios-paper"></span>
+                            <span>Classes</span>
+                            <span class="icon ion-ios-arrow-down"></span>
+                        </div>
+                        <ul class="links collapse" ${ isNormalMode ? 'id="classes-links"' : 'id="xs-classes-links"' }>
+                            <li class="link">
+                                <a href="classes/AppPage.html" data-type="entity-link">AppPage</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/Departement.html" data-type="entity-link">Departement</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/Intervention.html" data-type="entity-link">Intervention</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/Metier.html" data-type="entity-link">Metier</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/Technicien.html" data-type="entity-link">Technicien</a>
+                            </li>
+                        </ul>
+                    </li>
+                        <li class="chapter">
+                            <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#injectables-links"' :
+                                'data-target="#xs-injectables-links"' }>
+                                <span class="icon ion-md-arrow-round-down"></span>
+                                <span>Injectables</span>
+                                <span class="icon ion-ios-arrow-down"></span>
+                            </div>
+                            <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
+                                <li class="link">
+                                    <a href="injectables/DepartementService.html" data-type="entity-link">DepartementService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/MetierService.html" data-type="entity-link">MetierService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/TechnicienService.html" data-type="entity-link">TechnicienService</a>
+                                </li>
+                            </ul>
+                        </li>
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#interfaces-links"' :
+                            'data-target="#xs-interfaces-links"' }>
+                            <span class="icon ion-md-information-circle-outline"></span>
+                            <span>Interfaces</span>
+                            <span class="icon ion-ios-arrow-down"></span>
+                        </div>
+                        <ul class="links collapse" ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
+                            <li class="link">
+                                <a href="interfaces/IOrderModel.html" data-type="entity-link">IOrderModel</a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="chapter">
                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#miscellaneous-links"'
                             : 'data-target="#xs-miscellaneous-links"' }>

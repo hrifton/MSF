@@ -9,7 +9,8 @@ let Intervention = new Schema(
 		day: { type: String },
 		description: { type: String },
 		status: { type: String },
-		type: { type: String }
+		type: { type: String },
+		tech: { type: String }
 	},
 	{
 		collection: 'intervention'

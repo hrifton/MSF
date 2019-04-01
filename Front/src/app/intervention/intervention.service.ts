@@ -29,7 +29,7 @@ export class InterventionService {
     }
 
    updateIntervention(departement, locality, priority, day, description, status, type, id){
-
+    const techn ='Rudy';
     const obj = {
 		departement,
 		locality,
@@ -38,7 +38,8 @@ export class InterventionService {
 		description,
 		status,
     type,
-    id
+    id,
+    tech:techn,
       };
 
     this

@@ -18,10 +18,12 @@ import { GridModule,EditService,ToolbarService,PageService, SortService, FilterS
 import { DatePickerAllModule } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
 import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
+import { GridAllModule } from '@syncfusion/ej2-angular-grids';
 import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
+
 //Providers
 import { InterventionService } from './intervention/intervention.service';
-
+import { HttpModule, JsonpModule } from '@angular/http';
 
 //Component Declaration
 import { AppRoutingModule } from './app-routing.module';
@@ -33,6 +35,11 @@ import { ListeInterventionComponent } from './intervention/liste-intervention/li
 import { DepartementComponent } from './setting/departement/departement.component';
 import { SettingDepartementComponent } from './setting/departement/setting-departement/setting-departement.component';
 import { ListeDepartementComponent } from './setting/departement/liste-departement/liste-departement.component';
+import { TechnicienComponent } from './setting/technicien/technicien.component';
+import { SettingTechnicienComponent } from './setting/technicien/setting-technicien/setting-technicien.component';
+import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.component';
+import { SettingMetierComponent } from './setting/corpsDeMetier/setting-metier/setting-metier.component'
+import { ListeCorpMetierComponent } from "./setting/corpsDeMetier/liste-corpMetier/liste-corpMetier.component";
 
 @NgModule({
   declarations: [
@@ -43,9 +50,16 @@ import { ListeDepartementComponent } from './setting/departement/liste-departeme
     DepartementComponent,
     SettingDepartementComponent,
     ListeDepartementComponent,
+    TechnicienComponent,
+    SettingTechnicienComponent,
+    CorpsDeMetierComponent,
+    SettingMetierComponent,
+    ListeCorpMetierComponent
 
   ],
-  imports: [
+  imports: [HttpModule,
+    JsonpModule,
+    GridAllModule,
     ButtonModule,
     NumericTextBoxAllModule,
     DropDownListAllModule,

@@ -1,7 +1,11 @@
-<div class="e-card colspan=2">
-  <app-setting-departement></app-setting-departement>
-  <app-liste-departement></app-liste-departement>
+<div class="e-card">
+    <div class="row">
+        <div class="col-3">
+            <app-setting-departement (departementsOut)="addToArrayDep($event)" [departements]="departements"></app-setting-departement>
+        </div>
+        <div class="col-4">
+            <app-liste-departement (departements)="addToArrayDep($event)"[departements]="departements" ></app-liste-departement>
+        </div>
+    </div>
+
 </div>
-
-
-

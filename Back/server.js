@@ -4,9 +4,10 @@ const express = require('express'),
 	cors = require('cors'),
 	mongoose = require('mongoose'),
 	config = require('./DB');
-
+const app = express();
 const interventionRoute = require('./routes/intervention.route');
 const departementRoute = require('./routes/departement.route');
+const metierRoute = require('./routes/metier.route');
 mongoose.Promise = global.Promise;
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(
 	() => {
@@ -17,12 +18,12 @@ mongoose.connect(config.DB, { useNewUrlParser: true }).then(
 	}
 );
 
-const app = express();
+
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/intervention', interventionRoute).use('/departement', departementRoute);
+app.use('/intervention', interventionRoute).use('/departement', departementRoute).use('/metier', metierRoute);
 const port = process.env.PORT || 4000;
 
-const server = app.listen(port, function() {
+const server = app.listen(port, function () {
 	console.log('Listening on port ' + port);
 });

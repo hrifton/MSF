@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input,OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EditService, ToolbarService, PageService,SaveEventArgs } from '@syncfusion/ej2-angular-grids';
-import { DataManager, ODataV4Adaptor,Query } from '@syncfusion/ej2-data';
 import { DepartementService } from '../departement.service';
 import Departement from '../Departement';
 
@@ -10,11 +9,12 @@ import Departement from '../Departement';
   selector: 'app-liste-departement',
   templateUrl: './liste-departement.component.html',
   styleUrls: ['./liste-departement.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ToolbarService, EditService, PageService]
 })
-export class ListeDepartementComponent implements OnInit {
+export class ListeDepartementComponent implements OnInit, OnChanges {
 
-  public departements: Departement[];
+  @Input() departements: Departement[];
   public filterSettings: Object;
   public editSettings: Object;
   public toolbar: string[];
@@ -23,30 +23,39 @@ export class ListeDepartementComponent implements OnInit {
   public freightrules: Object;
   public pageSettings: Object;
   public editparams: Object;
-  public query: Query;
   public priorityrules: Object;
   public dropData: string[];
 
 
 
-  constructor(private ds: DepartementService,route: ActivatedRoute,private router: Router) {
+  constructor(private ds: DepartementService) {
 
    }
 
 
 
   ngOnInit() {
-    this.ds.getDepartements().subscribe((data: Departement[])=>{
-      this.departements=data;
-    });
+    this.filterSettings = {
+      type: 'Menu'
+  };
+
     this.editSettings = { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Dialog' };
-        this.toolbar = ['Edit', 'Delete'];
-        this.orderidrules = { required: true, number: true };
-        this.customeridrules = { required: true };
-        this.freightrules = { required: true };
-        this.editparams = { params: { popupHeight: '100px' }};
-        this.pageSettings = { pageCount: 5};
-        this.dropData = ['Order Placed', 'Processing', 'Delivered'];
+    this.toolbar = ['Edit', 'Delete'];
+    this.orderidrules = { required: true, number: true };
+    this.customeridrules = { required: true };
+    this.freightrules = { required: true };
+    this.editparams = { params: { popupHeight: '100px' }};
+    this.pageSettings = { pageCount: 5};
+    this.dropData = ['Order Placed', 'Processing', 'Delivered'];
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+
+      if(!changes['departements'].firstChange){}
+
+   /* if (changes.departements && !changes.departements.isFirstChange()) {
+      alert("changement")*/
+    }
 }
+
+
