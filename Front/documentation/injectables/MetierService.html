@@ -466,8 +466,8 @@ import {of} from &#x27;rxjs&#x27;;
 export class MetierService {
     uri &#x3D; &#x27;http://localhost:4000/metier&#x27;;
 
-    constructor(private http : HttpClient) {}
-    //Insert a new metier
+    constructor(private http: HttpClient) {}
+    // Insert a new metier
     addMetier(metier) {
         const obj &#x3D; {
             metier
@@ -482,21 +482,21 @@ export class MetierService {
             }));
     }
 
-    //return all metier in Mongodb
+    // return all metier in Mongodb
     getMetiers() {
         return this
             .http
             .get(&#x60;${this.uri}&#x60;);
     }
 
-    //return a metier
-    getMetier(metier){
+    // return a metier
+    getMetier(metier) {
     }
 
-    //Update a metier
-    updateMetier(metier,id){
-      const obj&#x3D;{metier,id};
-      this.http.put(&#x60;${this.uri}/update/${id}&#x60;,obj).subscribe(res&#x3D;&gt;console.log(&quot;OK update&quot;))
+    // Update a metier
+    updateMetier(metier, id) {
+      const obj &#x3D; {metier, id};
+      this.http.put(&#x60;${this.uri}/update/${id}&#x60;, obj).subscribe(res &#x3D;&gt; console.log(&#x27;OK update&#x27;));
     }
 }
 </code></pre>

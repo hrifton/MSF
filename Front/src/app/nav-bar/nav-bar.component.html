@@ -9,7 +9,7 @@
     <button mat-button [matMenuTriggerFor]="Intervention">Intervention</button>
     <button mat-button [matMenuTriggerFor]="Setting">Setting</button>
     <mat-menu #Intervention="matMenu">
-      <a mat-button  routerLink='listInter'>Liste Intervention</a>
+      <a mat-button  routerLink='interventions'>Intervention</a>
       <a mat-button routerLink="formInter">Formulaire Intervention</a>
 
     </mat-menu>
@@ -31,8 +31,9 @@
         >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>MSF</span>
+      <span>MSFGMAO</span>
     </mat-toolbar>
     <!-- Add Content Here -->
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

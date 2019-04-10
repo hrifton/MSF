@@ -527,7 +527,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { MetierService } from &#x27;./../metier.service&#x27;;
 import { Component, OnInit, Input, Output, EventEmitter } from &#x27;@angular/core&#x27;;
 import {FormGroup, FormBuilder, Validators} from &#x27;@angular/forms&#x27;;
-import Metier  from &quot;../Metier&quot;;
+import Metier  from &#x27;../Metier&#x27;;
 
 @Component({
   selector: &#x27;app-setting-metier&#x27;,
@@ -537,8 +537,8 @@ import Metier  from &quot;../Metier&quot;;
 export class SettingMetierComponent implements OnInit {
   @Input()metiers: Metier[];
   @Output() metiersOut &#x3D; new EventEmitter&lt;Metier&gt;();
-  angForm:FormGroup;
-  public metier:string;
+  angForm: FormGroup;
+  public metier: string;
 
   constructor( private fb: FormBuilder, private ms: MetierService) {
     this.createForm();
@@ -555,19 +555,19 @@ export class SettingMetierComponent implements OnInit {
   ngOnInit() {
   }
 
-  addNewMetier(metier){
+  addNewMetier(metier) {
 
  let cptFalse &#x3D; 0;
-    this
+ this
         .metiers
         .forEach(element &#x3D;&gt; {
             if (element.metier !&#x3D; metier) {
                 cptFalse++;
             }
         });
-    if (cptFalse &#x3D;&#x3D; this.metiers.length) {
+ if (cptFalse &#x3D;&#x3D; this.metiers.length) {
       alert(&#x27;pas de doublon&#x27;);
-          this.ms.addMetier(metier).subscribe(res&#x3D;&gt;{this.metiersOut.emit(res.metier)});
+      this.ms.addMetier(metier).subscribe(res &#x3D;&gt; {this.metiersOut.emit(res.metier); });
 
     } else {
         alert(&#x27;doublon&#x27;);
@@ -639,7 +639,7 @@ export class SettingMetierComponent implements OnInit {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="e-card col-12">  <div class="e-card-header-title">    Nouveau metier  </div>  <div class="e-card-content">    <form [formGroup]="angForm">            <div class="row">              <div class=col-10>                <mat-form-field class="full-width">                  <mat-label>metier :</mat-label>                  <input matInput="matInput" placeholder="metier" formControlName="metier" #metier></mat-form-field>              </div>            </div>        <button        (click)="addNewMetier(metier.value)"        mat-raised-button="mat-raised-button-left"            color="primary"            >Save</button>          </form>  </div></div></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListeInterventionComponent', 'selector': 'app-liste-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'}];
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'HistoricInterventionComponent', 'selector': 'app-historic-intervention'},{'name': 'InterventionComponent', 'selector': 'app-intervention'},{'name': 'InterventionsComponent', 'selector': 'app-interventions'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListeInterventionComponent', 'selector': 'app-liste-intervention'},{'name': 'ListInterventionComponent', 'selector': 'app-list-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'ResolutionInterventionComponent', 'selector': 'app-resolution-intervention'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'SettingMetierComponent'};
 </script>

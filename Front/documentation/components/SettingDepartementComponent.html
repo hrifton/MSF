@@ -276,7 +276,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../classes/Departement.html" target="_self" >Departement[]</a></code>
+                        <i>Type : </i>    <code>Departement[]</code>
 
                     </td>
                 </tr>
@@ -623,7 +623,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, OnInit, Input,EventEmitter, Output} from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, OnInit, Input, EventEmitter, Output} from &#x27;@angular/core&#x27;;
 import {FormGroup, FormBuilder, Validators} from &#x27;@angular/forms&#x27;;
 import {DepartementService} from &#x27;../departement.service&#x27;;
 import {Query, DataManager, ODataV4Adaptor} from &#x27;@syncfusion/ej2-data&#x27;;
@@ -646,7 +646,7 @@ export class SettingDepartementComponent implements OnInit {
         this.createForm();
     }
 
-    //Creation du formulaire avec champ validation
+    // Creation du formulaire avec champ validation
     createForm() {
         this.angForm &#x3D; this
             .fb
@@ -679,7 +679,7 @@ export class SettingDepartementComponent implements OnInit {
         if (cptFalse &#x3D;&#x3D; this.departements.length) {
           alert(&#x27;pas de doublon&#x27;);
           let result;
-          this.ds.addDeparement(departement).subscribe(res&#x3D;&gt;{this.departementsOut.emit(res.departement)});
+          this.ds.addDeparement(departement).subscribe(res &#x3D;&gt; {this.departementsOut.emit(res.departement); });
 
 
 
@@ -788,7 +788,7 @@ export class SettingDepartementComponent implements OnInit {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="e-card col-12">  <div class="e-card-header-title">    Nouveau departement  </div>  <div class="e-card-content">    <form [formGroup]="angForm" novalidate="novalidate">            <div class="row">              <div class=col-10>                <mat-form-field class="full-width">                  <mat-label>Departement :</mat-label>                  <input matInput="matInput" placeholder="departement" formControlName="departement" #departement></mat-form-field>              </div>            </div>        <button        (click)="addNewDepartement(departement.value)"        mat-raised-button="mat-raised-button-left"            color="primary"            >Save</button>          </form>  </div></div></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListeInterventionComponent', 'selector': 'app-liste-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'}];
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'HistoricInterventionComponent', 'selector': 'app-historic-intervention'},{'name': 'InterventionComponent', 'selector': 'app-intervention'},{'name': 'InterventionsComponent', 'selector': 'app-interventions'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListeInterventionComponent', 'selector': 'app-liste-intervention'},{'name': 'ListInterventionComponent', 'selector': 'app-list-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'ResolutionInterventionComponent', 'selector': 'app-resolution-intervention'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'SettingDepartementComponent'};
 </script>

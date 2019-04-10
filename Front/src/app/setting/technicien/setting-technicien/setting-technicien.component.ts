@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-//import { MetierService } from '../technicien.service';
+// import { MetierService } from '../technicien.service';
 
 @Component({
   selector: 'app-setting-technicien',

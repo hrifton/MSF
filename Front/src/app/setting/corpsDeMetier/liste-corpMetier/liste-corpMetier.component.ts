@@ -1,8 +1,8 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {EditService, ToolbarService, PageService, SaveEventArgs} from '@syncfusion/ej2-angular-grids';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MetierService} from "../metier.service";
-import Metier from "../Metier";
+import {MetierService} from '../metier.service';
+import Metier from '../Metier';
 
 @Component({
     selector: 'app-liste-corpMetier',
@@ -25,9 +25,9 @@ export class ListeCorpMetierComponent implements OnInit {
     public dropData: string[];
 
     constructor(
-        private ms : MetierService,
-        private route : ActivatedRoute,
-        private router : Router
+        private ms: MetierService,
+        private route: ActivatedRoute,
+        private router: Router
     ) {}
 
     ngOnInit() {
@@ -66,23 +66,23 @@ export class ListeCorpMetierComponent implements OnInit {
 
     actionComplete(args) {
         if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
-            let dialog = args.dialog;
+            const dialog = args.dialog;
             // change the header of the dialog
             dialog.header = args.requestType === 'beginEdit'
-                ? 'Record of ' + args.rowData['_id']
+                ? 'Record of ' + args.rowData._id
                 : 'New Customer';
         }
     }
-    actionBegin(args : SaveEventArgs): void {
+ /*   actionBegin(args: SaveEventArgs): void {
         if (args.requestType === 'beginEdit' || args.requestType === 'add') {
             // alert(args.requestType)
         }
         if (args.requestType === 'save') {
 
-            this.updateMetier(args.data['metier'], args.data['_id']);
+            this.updateMetier(args.data.metier, args.data._id);
         }
 
-    }
+    }*/
 
     updateMetier(metier, id) {
         this

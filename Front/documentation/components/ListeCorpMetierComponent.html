@@ -190,9 +190,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#actionBegin">actionBegin</a>
-                            </li>
-                            <li>
                                 <a href="#actionComplete">actionComplete</a>
                             </li>
                             <li>
@@ -332,76 +329,6 @@
     <h3 id="methods">
         Methods
     </h3>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="actionBegin"></a>
-                    <span class="name">
-                        <b>
-                            actionBegin
-                        </b>
-                        <a href="#actionBegin"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>actionBegin(args: SaveEventArgs)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="76"
-                            class="link-to-prism">src/app/setting/corpsDeMetier/liste-corpMetier/liste-corpMetier.component.ts:76</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>args</td>
-                                    <td>
-                                            <code>SaveEventArgs</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -877,8 +804,8 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, OnInit, Input} from &#x27;@angular/core&#x27;;
 import {EditService, ToolbarService, PageService, SaveEventArgs} from &#x27;@syncfusion/ej2-angular-grids&#x27;;
 import {ActivatedRoute, Router} from &#x27;@angular/router&#x27;;
-import {MetierService} from &quot;../metier.service&quot;;
-import Metier from &quot;../Metier&quot;;
+import {MetierService} from &#x27;../metier.service&#x27;;
+import Metier from &#x27;../Metier&#x27;;
 
 @Component({
     selector: &#x27;app-liste-corpMetier&#x27;,
@@ -901,9 +828,9 @@ export class ListeCorpMetierComponent implements OnInit {
     public dropData: string[];
 
     constructor(
-        private ms : MetierService,
-        private route : ActivatedRoute,
-        private router : Router
+        private ms: MetierService,
+        private route: ActivatedRoute,
+        private router: Router
     ) {}
 
     ngOnInit() {
@@ -942,23 +869,23 @@ export class ListeCorpMetierComponent implements OnInit {
 
     actionComplete(args) {
         if ((args.requestType &#x3D;&#x3D;&#x3D; &#x27;beginEdit&#x27; || args.requestType &#x3D;&#x3D;&#x3D; &#x27;add&#x27;)) {
-            let dialog &#x3D; args.dialog;
+            const dialog &#x3D; args.dialog;
             // change the header of the dialog
             dialog.header &#x3D; args.requestType &#x3D;&#x3D;&#x3D; &#x27;beginEdit&#x27;
-                ? &#x27;Record of &#x27; + args.rowData[&#x27;_id&#x27;]
+                ? &#x27;Record of &#x27; + args.rowData._id
                 : &#x27;New Customer&#x27;;
         }
     }
-    actionBegin(args : SaveEventArgs): void {
+ /*   actionBegin(args: SaveEventArgs): void {
         if (args.requestType &#x3D;&#x3D;&#x3D; &#x27;beginEdit&#x27; || args.requestType &#x3D;&#x3D;&#x3D; &#x27;add&#x27;) {
             // alert(args.requestType)
         }
         if (args.requestType &#x3D;&#x3D;&#x3D; &#x27;save&#x27;) {
 
-            this.updateMetier(args.data[&#x27;metier&#x27;], args.data[&#x27;_id&#x27;]);
+            this.updateMetier(args.data.metier, args.data._id);
         }
 
-    }
+    }*/
 
     updateMetier(metier, id) {
         this
@@ -1035,7 +962,7 @@ export class ListeCorpMetierComponent implements OnInit {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="e-card">  <div class="e-card-contenu">      <ejs-grid      [dataSource]=\'metiers\'      [query]=\'query\'      [allowPaging]=\'true\'      [allowSorting]=\'true\'      [allowFiltering]=\'true\'      [filterSettings]=\'filterSettings\'      [pageSettings]=\'pageSettings\'      [editSettings]=\'editSettings\'      (actionComplete)="actionComplete($event)"      (actionBegin)="actionBegin($event)"      [toolbar]=\'toolbar\'>      <e-columns>         <e-column field=\'metier\' textAlign=\'metier\' format=\'c2\' width=\'120\' editType=\'input\'  [validationRules]=\'priorityrules\'></e-column>       </e-columns >  </ejs-grid>  </div></div></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListeInterventionComponent', 'selector': 'app-liste-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'}];
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'HistoricInterventionComponent', 'selector': 'app-historic-intervention'},{'name': 'InterventionComponent', 'selector': 'app-intervention'},{'name': 'InterventionsComponent', 'selector': 'app-interventions'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListeInterventionComponent', 'selector': 'app-liste-intervention'},{'name': 'ListInterventionComponent', 'selector': 'app-list-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'ResolutionInterventionComponent', 'selector': 'app-resolution-intervention'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ListeCorpMetierComponent'};
 </script>

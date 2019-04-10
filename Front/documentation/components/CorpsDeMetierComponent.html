@@ -310,7 +310,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { MetierService } from &#x27;./metier.service&#x27;;
-import { Component, OnInit,ChangeDetectorRef } from &#x27;@angular/core&#x27;;
+import { Component, OnInit, ChangeDetectorRef } from &#x27;@angular/core&#x27;;
 import Metier from &#x27;./Metier&#x27;;
 import { ListeCorpMetierComponent } from &#x27;./liste-corpMetier/liste-corpMetier.component&#x27;;
 
@@ -321,15 +321,15 @@ import { ListeCorpMetierComponent } from &#x27;./liste-corpMetier/liste-corpMeti
   styleUrls: [&#x27;./corpsDeMetier.component.css&#x27;]
 })
 export class CorpsDeMetierComponent implements OnInit {
-public metiers:Metier[];
+public metiers: Metier[];
 
 
-  constructor(private ms: MetierService, private cd:  ChangeDetectorRef) { }
+  constructor(private ms: MetierService, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.ms.getMetiers().subscribe((data:Metier[])&#x3D;&gt;{
-      this.metiers&#x3D;data;
-      console.log(this.metiers)
+    this.ms.getMetiers().subscribe((data: Metier[]) &#x3D;&gt; {
+      this.metiers &#x3D; data;
+      console.log(this.metiers);
 
     });
 
@@ -387,7 +387,7 @@ public metiers:Metier[];
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="e-card">  <div class="row">      <div class="col-4"><app-setting-metier [metiers]="metiers"></app-setting-metier>      </div>      <div class="col-4"><app-liste-corpMetier [metiers]=\'metiers\'></app-liste-corpMetier>      </div>  </div></div></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListeInterventionComponent', 'selector': 'app-liste-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'}];
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'HistoricInterventionComponent', 'selector': 'app-historic-intervention'},{'name': 'InterventionComponent', 'selector': 'app-intervention'},{'name': 'InterventionsComponent', 'selector': 'app-interventions'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListeInterventionComponent', 'selector': 'app-liste-intervention'},{'name': 'ListInterventionComponent', 'selector': 'app-list-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'ResolutionInterventionComponent', 'selector': 'app-resolution-intervention'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'CorpsDeMetierComponent'};
 </script>

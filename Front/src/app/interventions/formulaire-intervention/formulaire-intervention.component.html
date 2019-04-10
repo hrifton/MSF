@@ -1,0 +1,67 @@
+<div class="container">
+    <form [formGroup]="angForm" novalidate="novalidate">
+  <div fxLayout="row"
+  fxLayoutAlign="space-evenly cente"
+  fxLayout.xs="column"
+  fxFlexFill>
+    <div fxFlex="auto">
+      <mat-form-field class="full-width">
+        <mat-label>Département</mat-label>
+        <mat-select placeholder="departement" disableRipple="disableRipple" formControlName="departement" #departement>
+          <mat-option *ngFor="let dep of departements" [value]="dep.departement">
+            {{dep.departement}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="auto">
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Locality</mat-label>
+            <input matInput="matInput" [matDatepicker]="picker" placeholder="Locality" formControlName="locality" #locality>
+        </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row"
+  fxLayoutAlign="space-evenly cente"
+  fxLayout.xs="column"
+  fxFlexFill>
+  <div fxFlex="auto">
+        <mat-form-field appearance="outline">
+            <mat-label>Priority</mat-label>
+            <mat-select placeholder="Priority" disableRipple="disableRipple" formControlName="priority" #priority>
+                <mat-option value="High">High</mat-option>
+                <mat-option value="Medium">Medium</mat-option>
+                <mat-option value="Low">Low</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div fxFlex="auto">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>date</mat-label>
+        <input matInput="matInput" value="{{today | date :  'dd/MM/yyyy' }}" [disabled]="true" #date>
+      </mat-form-field>
+  </div>
+  </div>
+  <div fxLayout="row"
+  fxLayoutAlign="space-evenly cente"
+  fxLayout.xs="column"
+  fxFlexFill>
+  <div fxFlex="auto">
+      <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Description Intervention</mat-label>
+          <textarea matInput placeholder="Description Intervention" rows="brightness_4" #description></textarea>
+        </mat-form-field>
+      </div>
+      <div fxFlex="auto">
+        <button
+  (click)="addIntervention(departement.value, locality.value, priority.value, date.value, description.value)"
+  mat-raised-button="mat-raised-button-left"
+  color="primary">Save</button>
+        </div>
+
+  </div>
+
+</form>
+
+</div>

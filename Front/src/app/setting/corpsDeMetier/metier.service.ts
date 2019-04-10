@@ -7,8 +7,8 @@ import {of} from 'rxjs';
 export class MetierService {
     uri = 'http://localhost:4000/metier';
 
-    constructor(private http : HttpClient) {}
-    //Insert a new metier
+    constructor(private http: HttpClient) {}
+    // Insert a new metier
     addMetier(metier) {
         const obj = {
             metier
@@ -23,20 +23,20 @@ export class MetierService {
             }));
     }
 
-    //return all metier in Mongodb
+    // return all metier in Mongodb
     getMetiers() {
         return this
             .http
             .get(`${this.uri}`);
     }
 
-    //return a metier
-    getMetier(metier){
+    // return a metier
+    getMetier(metier) {
     }
 
-    //Update a metier
-    updateMetier(metier,id){
-      const obj={metier,id};
-      this.http.put(`${this.uri}/update/${id}`,obj).subscribe(res=>console.log("OK update"))
+    // Update a metier
+    updateMetier(metier, id) {
+      const obj = {metier, id};
+      this.http.put(`${this.uri}/update/${id}`, obj).subscribe(res => console.log('OK update'));
     }
 }

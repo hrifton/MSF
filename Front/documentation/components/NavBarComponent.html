@@ -275,7 +275,7 @@ export class NavBarComponent {
     &lt;button mat-button [matMenuTriggerFor]&#x3D;&quot;Intervention&quot;&gt;Intervention&lt;/button&gt;
     &lt;button mat-button [matMenuTriggerFor]&#x3D;&quot;Setting&quot;&gt;Setting&lt;/button&gt;
     &lt;mat-menu #Intervention&#x3D;&quot;matMenu&quot;&gt;
-      &lt;a mat-button  routerLink&#x3D;&#x27;listInter&#x27;&gt;Liste Intervention&lt;/a&gt;
+      &lt;a mat-button  routerLink&#x3D;&#x27;interventions&#x27;&gt;Intervention&lt;/a&gt;
       &lt;a mat-button routerLink&#x3D;&quot;formInter&quot;&gt;Formulaire Intervention&lt;/a&gt;
 
     &lt;/mat-menu&gt;
@@ -297,9 +297,10 @@ export class NavBarComponent {
         &gt;
         &lt;mat-icon aria-label&#x3D;&quot;Side nav toggle icon&quot;&gt;menu&lt;/mat-icon&gt;
       &lt;/button&gt;
-      &lt;span&gt;MSF&lt;/span&gt;
+      &lt;span&gt;MSFGMAO&lt;/span&gt;
     &lt;/mat-toolbar&gt;
     &lt;!-- Add Content Here --&gt;
+    &lt;router-outlet&gt;&lt;/router-outlet&gt;
   &lt;/mat-sidenav-content&gt;
 &lt;/mat-sidenav-container&gt;
 </code></pre>
@@ -368,8 +369,8 @@ export class NavBarComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><mat-sidenav-container class="sidenav-container">  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"      [attr.role]="(isHandset$ | async) ? \'dialog\' : \'navigation\'"      [mode]="(isHandset$ | async) ? \'over\' : \'side\'"      [opened]="!(isHandset$ | async)">    <mat-toolbar><img id="logo" src="../../assets/img/logo.png" alt="LogoMSF" srcset=""></mat-toolbar>    <button mat-button [matMenuTriggerFor]="Intervention">Intervention</button>    <button mat-button [matMenuTriggerFor]="Setting">Setting</button>    <mat-menu #Intervention="matMenu">      <a mat-button  routerLink=\'listInter\'>Liste Intervention</a>      <a mat-button routerLink="formInter">Formulaire Intervention</a>    </mat-menu>    <mat-menu #Setting="matMenu">      <a mat-button routerLink="setDep">Setting Departement</a>      <a mat-button routerLink="setTec">Setting Technicien</a><br>      <a mat-button routerLink="setMet">Setting Métier</a>    </mat-menu>  </mat-sidenav>  <mat-sidenav-content>    <mat-toolbar color="primary">      <button        type="button"        aria-label="Toggle sidenav"        mat-icon-button        (click)="drawer.toggle()"        >        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>      </button>      <span>MSF</span>    </mat-toolbar>    <!-- Add Content Here -->  </mat-sidenav-content></mat-sidenav-container></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListeInterventionComponent', 'selector': 'app-liste-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'}];
+        var COMPONENT_TEMPLATE = '<div><mat-sidenav-container class="sidenav-container">  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"      [attr.role]="(isHandset$ | async) ? \'dialog\' : \'navigation\'"      [mode]="(isHandset$ | async) ? \'over\' : \'side\'"      [opened]="!(isHandset$ | async)">    <mat-toolbar><img id="logo" src="../../assets/img/logo.png" alt="LogoMSF" srcset=""></mat-toolbar>    <button mat-button [matMenuTriggerFor]="Intervention">Intervention</button>    <button mat-button [matMenuTriggerFor]="Setting">Setting</button>    <mat-menu #Intervention="matMenu">      <a mat-button  routerLink=\'interventions\'>Intervention</a>      <a mat-button routerLink="formInter">Formulaire Intervention</a>    </mat-menu>    <mat-menu #Setting="matMenu">      <a mat-button routerLink="setDep">Setting Departement</a>      <a mat-button routerLink="setTec">Setting Technicien</a><br>      <a mat-button routerLink="setMet">Setting Métier</a>    </mat-menu>  </mat-sidenav>  <mat-sidenav-content>    <mat-toolbar color="primary">      <button        type="button"        aria-label="Toggle sidenav"        mat-icon-button        (click)="drawer.toggle()"        >        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>      </button>      <span>MSFGMAO</span>    </mat-toolbar>    <!-- Add Content Here -->    <router-outlet></router-outlet>  </mat-sidenav-content></mat-sidenav-container></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'HistoricInterventionComponent', 'selector': 'app-historic-intervention'},{'name': 'InterventionComponent', 'selector': 'app-intervention'},{'name': 'InterventionsComponent', 'selector': 'app-interventions'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListeInterventionComponent', 'selector': 'app-liste-intervention'},{'name': 'ListInterventionComponent', 'selector': 'app-list-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'ResolutionInterventionComponent', 'selector': 'app-resolution-intervention'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'NavBarComponent'};
 </script>

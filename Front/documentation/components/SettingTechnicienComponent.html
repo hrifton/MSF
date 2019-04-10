@@ -130,7 +130,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#corpsMetiers">corpsMetiers</a>
+                                <a href="#metiers">metiers</a>
                             </li>
                         </ul>
                     </td>
@@ -170,7 +170,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/app/setting/technicien/setting-technicien/setting-technicien.component.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/setting/technicien/setting-technicien/setting-technicien.component.ts:10</a></div>
                             </td>
                         </tr>
 
@@ -209,8 +209,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="12"
-                            class="link-to-prism">src/app/setting/technicien/setting-technicien/setting-technicien.component.ts:12</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="13"
+                            class="link-to-prism">src/app/setting/technicien/setting-technicien/setting-technicien.component.ts:13</a></div>
                 </td>
             </tr>
 
@@ -236,11 +236,11 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="corpsMetiers"></a>
+                        <a name="metiers"></a>
                         <span class="name">
                             <b>
-                            corpsMetiers</b>
-                            <a href="#corpsMetiers"><span class="icon ion-ios-link"></span></a>
+                            metiers</b>
+                            <a href="#metiers"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
@@ -257,7 +257,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/app/setting/technicien/setting-technicien/setting-technicien.component.ts:9</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/setting/technicien/setting-technicien/setting-technicien.component.ts:10</a></div>
                             </td>
                         </tr>
 
@@ -271,6 +271,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+// import { MetierService } from &#x27;../technicien.service&#x27;;
 
 @Component({
   selector: &#x27;app-setting-technicien&#x27;,
@@ -278,12 +279,15 @@
   styleUrls: [&#x27;./setting-technicien.component.css&#x27;]
 })
 export class SettingTechnicienComponent implements OnInit {
-  corpsMetiers: string[] &#x3D; [&#x27;plombier&#x27;, &#x27; chauffagiste&#x27;, &#x27;électricien&#x27;];
+  metiers: string[] &#x3D; [&#x27;plombier&#x27;, &#x27; chauffagiste&#x27;, &#x27;électricien&#x27;];
   constructor() { }
 
   ngOnInit() {
-this.corpsMetiers;
+		this.metiers;
+
   }
+
+
 
 }
 </code></pre>
@@ -308,6 +312,18 @@ this.corpsMetiers;
                   &lt;input matInput&#x3D;&quot;matInput&quot; placeholder&#x3D;&quot;Prenom&quot; formControlName&#x3D;&quot;prenom&quot; #prenom&gt;&lt;/mat-form-field&gt;
               &lt;/div&gt;
             &lt;/div&gt;
+            &lt;div class&#x3D;&quot;row&quot;&gt;
+              &lt;div class&#x3D;&quot;col-6&quot;&gt;
+            &lt;mat-form-field class&#x3D;&quot;full-width&quot;&gt;
+                    &lt;mat-label&gt;Métier&lt;/mat-label&gt;
+                    &lt;mat-select placeholder&#x3D;&quot;métier&quot; disableRipple&#x3D;&quot;disableRipple&quot; formControlName&#x3D;&quot;metier&quot; #departement&gt;
+                      &lt;mat-option *ngFor&#x3D;&quot;let metier of metiers&quot; [value]&#x3D;&quot;metier&quot;&gt;
+                        {{metier}}
+                      &lt;/mat-option&gt;
+                    &lt;/mat-select&gt;
+                  &lt;/mat-form-field&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
 
         &lt;button
         (click)&#x3D;&quot;addNewDepartement(departement.value)&quot;
@@ -353,8 +369,8 @@ this.corpsMetiers;
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="e-card col-12">  <div class="e-card-header-title">    Technicien  </div>  <div class="e-card-content">    <form [formGroup]="angForm" novalidate="novalidate">            <div class="row">              <div class="col-6">                <mat-form-field class="full-width">                  <mat-label>Nom</mat-label>                  <input matInput="matInput" placeholder="Nom" formControlName="nom" #nom></mat-form-field>              </div>              <div class="col-6">                <mat-form-field class="full-width">                  <mat-label>Prénom</mat-label>                  <input matInput="matInput" placeholder="Prenom" formControlName="prenom" #prenom></mat-form-field>              </div>            </div>        <button        (click)="addNewDepartement(departement.value)"        mat-raised-button="mat-raised-button-left"            color="primary"            >Save</button>          </form>  </div></div></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListeInterventionComponent', 'selector': 'app-liste-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'}];
+        var COMPONENT_TEMPLATE = '<div><div class="e-card col-12">  <div class="e-card-header-title">    Technicien  </div>  <div class="e-card-content">    <form [formGroup]="angForm" novalidate="novalidate">            <div class="row">              <div class="col-6">                <mat-form-field class="full-width">                  <mat-label>Nom</mat-label>                  <input matInput="matInput" placeholder="Nom" formControlName="nom" #nom></mat-form-field>              </div>              <div class="col-6">                <mat-form-field class="full-width">                  <mat-label>Prénom</mat-label>                  <input matInput="matInput" placeholder="Prenom" formControlName="prenom" #prenom></mat-form-field>              </div>            </div>            <div class="row">              <div class="col-6">            <mat-form-field class="full-width">                    <mat-label>Métier</mat-label>                    <mat-select placeholder="métier" disableRipple="disableRipple" formControlName="metier" #departement>                      <mat-option *ngFor="let metier of metiers" [value]="metier">                        {{metier}}                      </mat-option>                    </mat-select>                  </mat-form-field>                </div>              </div>        <button        (click)="addNewDepartement(departement.value)"        mat-raised-button="mat-raised-button-left"            color="primary"            >Save</button>          </form>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'HistoricInterventionComponent', 'selector': 'app-historic-intervention'},{'name': 'InterventionComponent', 'selector': 'app-intervention'},{'name': 'InterventionsComponent', 'selector': 'app-interventions'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListeInterventionComponent', 'selector': 'app-liste-intervention'},{'name': 'ListInterventionComponent', 'selector': 'app-list-intervention'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'ResolutionInterventionComponent', 'selector': 'app-resolution-intervention'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'SettingTechnicienComponent'};
 </script>

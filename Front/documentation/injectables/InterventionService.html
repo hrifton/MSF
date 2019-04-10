@@ -56,7 +56,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/intervention/intervention.service.ts</code>
+            <code>src/app/Service/intervention.service.ts</code>
         </p>
 
 
@@ -121,7 +121,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/app/intervention/intervention.service.ts:6</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/app/Service/intervention.service.ts:6</a></div>
                             </td>
                         </tr>
 
@@ -187,7 +187,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="12"
-                            class="link-to-prism">src/app/intervention/intervention.service.ts:12</a></div>
+                            class="link-to-prism">src/app/Service/intervention.service.ts:12</a></div>
                 </td>
             </tr>
 
@@ -289,7 +289,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="27"
-                            class="link-to-prism">src/app/intervention/intervention.service.ts:27</a></div>
+                            class="link-to-prism">src/app/Service/intervention.service.ts:27</a></div>
                 </td>
             </tr>
 
@@ -328,7 +328,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">src/app/intervention/intervention.service.ts:31</a></div>
+                            class="link-to-prism">src/app/Service/intervention.service.ts:31</a></div>
                 </td>
             </tr>
 
@@ -465,7 +465,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/app/intervention/intervention.service.ts:6</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/app/Service/intervention.service.ts:6</a></div>
                             </td>
                         </tr>
 
@@ -485,31 +485,31 @@ import {HttpClient} from &#x27;@angular/common/http&#x27;;
 export class InterventionService {
     uri &#x3D; &#x27;http://localhost:4000/intervention&#x27;;
 
-    constructor(private http : HttpClient) {
+    constructor(private http: HttpClient) {
 
     }
 
     addIntervention(departement, locality, priority, day, description) {
         const obj &#x3D; {
-            departement: departement,
-            locality: locality,
-            priority: priority,
-            day: day,
-            description: description,
+            departement,
+            locality,
+            priority,
+            day,
+            description,
             status: &#x27;en_cours&#x27;,
-            type:&#x27;JobRequest&#x27;
+            type: &#x27;JobRequest&#x27;
         };
         console.log(&#x60;${this.uri}/add&#x60;, obj);
 
         this.http.post(&#x60;${this.uri}/add&#x60;, obj).subscribe(res &#x3D;&gt; console.log(res));
     }
 
-    getInterventions(){
+    getInterventions() {
       return this.http.get(&#x60;${this.uri}&#x60;);
     }
 
-   updateIntervention(departement, locality, priority, day, description, status, type, id){
-    const techn &#x3D;&#x27;Rudy&#x27;;
+   updateIntervention(departement, locality, priority, day, description, status, type, id) {
+    const techn &#x3D; &#x27;Rudy&#x27;;
     const obj &#x3D; {
 		departement,
 		locality,
@@ -519,14 +519,14 @@ export class InterventionService {
 		status,
     type,
     id,
-    tech:techn,
+    tech: techn,
       };
 
     this
       .http
       .put(&#x60;${this.uri}/update/${id}&#x60;, obj)
       .subscribe(res &#x3D;&gt; console.log(&#x27;Done&#x27;));
-  };
+  }
 
 }
 </code></pre>

@@ -1,4 +1,4 @@
-//Imports
+// Imports
 import {SplitButtonModule} from 'primeng/splitbutton';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -14,18 +14,20 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TreeGridModule } from '@syncfusion/ej2-angular-treegrid';
-import { GridModule,EditService,ToolbarService,PageService, SortService, FilterService, GroupService } from '@syncfusion/ej2-angular-grids';
+//import { GridModule, EditService, ToolbarService, PageService, SortService, FilterService, GroupService } from '@syncfusion/ej2-angular-grids';
 import { DatePickerAllModule } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
 import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
 import { GridAllModule } from '@syncfusion/ej2-angular-grids';
 import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
-//Providers
+
+// Providers
 import { InterventionService } from './intervention/intervention.service';
 import { HttpModule, JsonpModule } from '@angular/http';
 
-//Component Declaration
+// Component Declaration
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -38,8 +40,9 @@ import { ListeDepartementComponent } from './setting/departement/liste-departeme
 import { TechnicienComponent } from './setting/technicien/technicien.component';
 import { SettingTechnicienComponent } from './setting/technicien/setting-technicien/setting-technicien.component';
 import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.component';
-import { SettingMetierComponent } from './setting/corpsDeMetier/setting-metier/setting-metier.component'
-import { ListeCorpMetierComponent } from "./setting/corpsDeMetier/liste-corpMetier/liste-corpMetier.component";
+import { SettingMetierComponent } from './setting/corpsDeMetier/setting-metier/setting-metier.component';
+import { ListeCorpMetierComponent } from './setting/corpsDeMetier/liste-corpMetier/liste-corpMetier.component';
+import { InterventionsModule } from './interventions/interventions.module';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,7 @@ import { ListeCorpMetierComponent } from "./setting/corpsDeMetier/liste-corpMeti
 
   ],
   imports: [HttpModule,
+    FlexLayoutModule,
     JsonpModule,
     GridAllModule,
     ButtonModule,
@@ -89,17 +93,18 @@ import { ListeCorpMetierComponent } from "./setting/corpsDeMetier/liste-corpMeti
     NgbModule,
     MatTableModule,
     SplitButtonModule,
-    GridModule,
+    //GridModule,
+    InterventionsModule,
   ],
-  providers: [
-    ToolbarService,
-    EditService,
-    InterventionService,
-    PageService,
-     SortService,
-      FilterService,
-       GroupService
-      ],
+  //providers: [
+  //  ToolbarService,
+    //EditService,
+    //InterventionService,
+    //PageService,
+     //SortService,
+      //FilterService,
+       //GroupService
+    //  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,7 @@
 import { MetierService } from './../metier.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import Metier  from "../Metier";
+import Metier  from '../Metier';
 
 @Component({
   selector: 'app-setting-metier',
@@ -11,8 +11,8 @@ import Metier  from "../Metier";
 export class SettingMetierComponent implements OnInit {
   @Input()metiers: Metier[];
   @Output() metiersOut = new EventEmitter<Metier>();
-  angForm:FormGroup;
-  public metier:string;
+  angForm: FormGroup;
+  public metier: string;
 
   constructor( private fb: FormBuilder, private ms: MetierService) {
     this.createForm();
@@ -29,19 +29,19 @@ export class SettingMetierComponent implements OnInit {
   ngOnInit() {
   }
 
-  addNewMetier(metier){
+  addNewMetier(metier) {
 
  let cptFalse = 0;
-    this
+ this
         .metiers
         .forEach(element => {
             if (element.metier != metier) {
                 cptFalse++;
             }
         });
-    if (cptFalse == this.metiers.length) {
+ if (cptFalse == this.metiers.length) {
       alert('pas de doublon');
-          this.ms.addMetier(metier).subscribe(res=>{this.metiersOut.emit(res.metier)});
+      this.ms.addMetier(metier).subscribe(res => {this.metiersOut.emit(res.metier); });
 
     } else {
         alert('doublon');

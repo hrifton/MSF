@@ -9,7 +9,7 @@ export class TechnicienService {
 
     uri = 'http://localhost:4000/technicien';
 
-    constructor(private http : HttpClient) {}
+    constructor(private http: HttpClient) {}
 
     addTechnicien(data) {
         const obj = {

@@ -1,5 +1,5 @@
 import { MetierService } from './metier.service';
-import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import Metier from './Metier';
 import { ListeCorpMetierComponent } from './liste-corpMetier/liste-corpMetier.component';
 
@@ -10,15 +10,15 @@ import { ListeCorpMetierComponent } from './liste-corpMetier/liste-corpMetier.co
   styleUrls: ['./corpsDeMetier.component.css']
 })
 export class CorpsDeMetierComponent implements OnInit {
-public metiers:Metier[];
+public metiers: Metier[];
 
 
-  constructor(private ms: MetierService, private cd:  ChangeDetectorRef) { }
+  constructor(private ms: MetierService, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.ms.getMetiers().subscribe((data:Metier[])=>{
-      this.metiers=data;
-      console.log(this.metiers)
+    this.ms.getMetiers().subscribe((data: Metier[]) => {
+      this.metiers = data;
+      console.log(this.metiers);
 
     });
 

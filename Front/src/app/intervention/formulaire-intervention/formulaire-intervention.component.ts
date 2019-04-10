@@ -23,7 +23,7 @@ export class FormulaireInterventionComponent implements OnInit {
 
   }
 
-  createForm(){
+  createForm() {
     this.angForm = this.fb.group({
       departement: [ '', Validators.required ],
       locality: [ '', Validators.required ],
@@ -46,7 +46,7 @@ export class FormulaireInterventionComponent implements OnInit {
     this.breakpoint = (event.target.innerWidth <= 1000) ? 1 : 4;
   }
 
-  addIntervention(departement, locality, priority, day, description){
+  addIntervention(departement, locality, priority, day, description) {
     this.is.addIntervention(departement, locality, priority, day, description);
   }
 

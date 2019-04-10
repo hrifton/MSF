@@ -1,0 +1,15 @@
+<div class="contenaire">
+  <ejs-grid [dataSource]='interventions' [allowPaging]='true' height='450px' [pageSettings]='pageSettings'>
+      <e-columns>
+          <e-column field='_id' headerText='Order ID' textAlign='center' ></e-column>
+          <e-column field='day' headerText='Date' textAlign='center' width=120></e-column>
+          <e-column field='priority' headerText='Priotity' textAlign='center'width=120></e-column>
+          <e-column field='departement' headerText='Departement' textAlign='center' width=120></e-column>
+          <e-column field='description' headerText='Desciption' textAlign='center' ></e-column>
+          <e-column field='locality' headerText='Locality' textAlign='center'width=120 ></e-column>
+          <e-column field='status' headerText='Status' textAlign='center' width=120></e-column>
+
+      </e-columns>
+  </ejs-grid>
+</div>
+

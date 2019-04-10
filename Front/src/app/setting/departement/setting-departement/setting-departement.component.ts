@@ -1,4 +1,4 @@
-import {Component, OnInit, Input,EventEmitter, Output} from '@angular/core';
+import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {DepartementService} from '../departement.service';
 import {Query, DataManager, ODataV4Adaptor} from '@syncfusion/ej2-data';
@@ -21,7 +21,7 @@ export class SettingDepartementComponent implements OnInit {
         this.createForm();
     }
 
-    //Creation du formulaire avec champ validation
+    // Creation du formulaire avec champ validation
     createForm() {
         this.angForm = this
             .fb
@@ -54,7 +54,7 @@ export class SettingDepartementComponent implements OnInit {
         if (cptFalse == this.departements.length) {
           alert('pas de doublon');
           let result;
-          this.ds.addDeparement(departement).subscribe(res=>{this.departementsOut.emit(res.departement)});
+          this.ds.addDeparement(departement).subscribe(res => {this.departementsOut.emit(res.departement); });
 
 
 

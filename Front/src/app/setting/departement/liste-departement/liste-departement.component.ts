@@ -1,6 +1,6 @@
-import { Component, OnInit,Input,OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EditService, ToolbarService, PageService,SaveEventArgs } from '@syncfusion/ej2-angular-grids';
+import { EditService, ToolbarService, PageService, SaveEventArgs } from '@syncfusion/ej2-angular-grids';
 import { DepartementService } from '../departement.service';
 import Departement from '../Departement';
 
@@ -51,7 +51,7 @@ export class ListeDepartementComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
 
-      if(!changes['departements'].firstChange){}
+      if (!changes.departements.firstChange) {}
 
    /* if (changes.departements && !changes.departements.isFirstChange()) {
       alert("changement")*/

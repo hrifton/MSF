@@ -20,7 +20,7 @@ export class ListeInterventionComponent implements OnInit {
 
     public interventions: Intervention[];
 
-    public departements:string[];
+    public departements: string[];
     public filterSettings: Object;
     public editSettings: Object;
     public toolbar: string[];
@@ -35,12 +35,9 @@ export class ListeInterventionComponent implements OnInit {
     public angForm: FormGroup;
     public shipCityDistinctData: Object[];
     public shipCountryDistinctData: Object[];
-    public submitClicked: boolean = false;
+    public submitClicked = false;
   route: any;
-    constructor(
-        private is : InterventionService,
-
-        private ds : DepartementService
+    constructor(private is: InterventionService, private ds: DepartementService
     ) {}
   /*  actionComplete(args) {
         if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
@@ -84,14 +81,14 @@ export class ListeInterventionComponent implements OnInit {
         this
             .is
             .getInterventions()
-            .subscribe((data : Intervention[]) => {
+            .subscribe((data: Intervention[]) => {
                 this.interventions = data;
             });
 
-      this
+        this
             .ds
             .getDepartements()
-            .subscribe((data : Departement[]) => {
+            .subscribe((data: Departement[]) => {
                 this.getDepartement(data);
             });
 
@@ -126,7 +123,7 @@ export class ListeInterventionComponent implements OnInit {
 
 
     createFormGroup(data: IOrderModel): FormGroup {
-data=this.replace_idByid(data);
+data = this.replace_idByid(data);
 return new FormGroup({
           id: new FormControl(data.id, Validators.required),
           departement: new FormControl(data.departement, Validators.required),
@@ -136,7 +133,7 @@ return new FormGroup({
           description: new FormControl(data.description),
           status: new FormControl(data.status),
           type: new FormControl(data.type),
-          tech:new FormControl(data.tech),
+          tech: new FormControl(data.tech),
       });
   }
 
@@ -144,7 +141,7 @@ return new FormGroup({
       return (control: FormControl): null | Object  => {
           return control.value && control.value.getFullYear &&
           (1900 <= control.value.getFullYear() && control.value.getFullYear() <=  2099) ? null : { OrderDate: { value : control.value}};
-      }
+      };
   }
 
   actionBegin(args: SaveEventArgs): void {
@@ -155,13 +152,13 @@ return new FormGroup({
       }
       if (args.requestType === 'save') {
           this.submitClicked = true;
-          console.log(this.angForm.value)
+          console.log(this.angForm.value);
           if (this.angForm.valid) {
-            console.log("go to save");
-              args.data = this.angForm.value;
+            console.log('go to save');
+            args.data = this.angForm.value;
           } else {
-            console.log("Probleme");
-              args.cancel = true;
+            console.log('Probleme');
+            args.cancel = true;
           }
       }
   }
@@ -170,7 +167,7 @@ return new FormGroup({
       if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
           if (Browser.isDevice) {
               args.dialog.height = window.innerHeight - 500 + 'px';
-              (<Dialog>args.dialog).dataBind();
+              (args.dialog as Dialog).dataBind();
           }
           /* Set initail Focus
           if (args.requestType === 'beginEdit') {
@@ -181,11 +178,11 @@ return new FormGroup({
       }
   }
 
-  //get departement(): AbstractControl  { return this.angForm.get('departement'); }
+  // get departement(): AbstractControl  { return this.angForm.get('departement'); }
 
-  //get CustomerName(): AbstractControl { return this.angForm.get('CustomerName'); }
+  // get CustomerName(): AbstractControl { return this.angForm.get('CustomerName'); }
 
-  //get OrderDate(): AbstractControl { return this.angForm.get('OrderDate'); }
+  // get OrderDate(): AbstractControl { return this.angForm.get('OrderDate'); }
 
     updateIntervention(
         departement,
@@ -229,11 +226,11 @@ return new FormGroup({
       this.departements = departementsList;
     }
 
-    replace_idByid(data){
-      data=JSON.stringify(data);
+    replace_idByid(data) {
+      data = JSON.stringify(data);
       data = data.replace(/_id/g, 'id');
-      data=JSON.parse(data);
-      return data
+      data = JSON.parse(data);
+      return data;
     }
   }
 

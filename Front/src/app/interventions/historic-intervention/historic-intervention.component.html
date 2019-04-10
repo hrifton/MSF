@@ -1,0 +1,11 @@
+<!--<ejs-chart id="chart-container" [primaryXAxis]='primaryXAxis'>
+    <e-series-collection>
+        <e-series [dataSource]='chartData' type='Line' xName='month' yName='sales' name='Sales'></e-series>
+    </e-series-collection>
+</ejs-chart>
+-->
+<ejs-accumulationchart id="chart-container" [legendSettings]='legendSettings'>
+    <e-accumulation-series-collection>
+        <e-accumulation-series [dataSource]='piedata' xName='x' yName='y' [pointColorMapping]='map' [dataLabel]='datalabel'></e-accumulation-series>
+    </e-accumulation-series-collection>
+</ejs-accumulationchart>
