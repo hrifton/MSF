@@ -1,3 +1,4 @@
+import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 /*import { FormulaireInterventionComponent } from './intervention/formulaire-intervention/formulaire-intervention.component';
@@ -6,11 +7,13 @@ import { DepartementComponent } from './setting/departement/departement.componen
 import { TechnicienComponent } from './setting/technicien/technicien.component';
 import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.component';
 */
-import { InterventionsComponent } from "./interventions/interventions.component";
+import { InterventionsComponent } from './interventions/interventions.component';
+
 
 const routes: Routes = [
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   { path: 'interventions', component: InterventionsComponent },
+  { path: 'maintenances', component: MaintenancesComponent },
 
 ];
 

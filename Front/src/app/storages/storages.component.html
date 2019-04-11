@@ -1,5 +1,5 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Intervention</h1>
+  <h1 class="mat-h1">Storage</h1>
   <mat-grid-list cols="2" rowHeight="350px">
     <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
       <mat-card class="dashboard-card">
@@ -16,14 +16,9 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-
-            <div *ngIf="card.title=='Liste'"><app-list-intervention [interventions]='interventions' ></app-list-intervention></div>
-            <div *ngIf="card.title=='Analyse'"><app-historic-intervention [interventions]='interventions'></app-historic-intervention></div>
-            <div *ngIf="card.title=='Formulaire'"><app-formulaire-intervention (messageEvent)="update($event)"></app-formulaire-intervention></div>
-            <div *ngIf="card.title=='liste'"><app-historic-intervention></app-historic-intervention></div>
+          <div>Card Content Here</div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
-
 </div>

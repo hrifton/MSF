@@ -14,7 +14,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TreeGridModule } from '@syncfusion/ej2-angular-treegrid';
-//import { GridModule, EditService, ToolbarService, PageService, SortService, FilterService, GroupService } from '@syncfusion/ej2-angular-grids';
+// import { GridModule, EditService, ToolbarService, PageService, SortService, FilterService, GroupService } from '@syncfusion/ej2-angular-grids';
 import { DatePickerAllModule } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
 import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
@@ -43,6 +43,9 @@ import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.co
 import { SettingMetierComponent } from './setting/corpsDeMetier/setting-metier/setting-metier.component';
 import { ListeCorpMetierComponent } from './setting/corpsDeMetier/liste-corpMetier/liste-corpMetier.component';
 import { InterventionsModule } from './interventions/interventions.module';
+import { MaintenancesModule } from './maintenances/maintenances.module';
+import { StoragesModule } from './storages/storages.module';
+
 
 @NgModule({
   declarations: [
@@ -93,17 +96,19 @@ import { InterventionsModule } from './interventions/interventions.module';
     NgbModule,
     MatTableModule,
     SplitButtonModule,
-    //GridModule,
+    // GridModule,
     InterventionsModule,
+    MaintenancesModule,
+    StoragesModule,
   ],
-  //providers: [
+  // providers: [
   //  ToolbarService,
-    //EditService,
-    //InterventionService,
-    //PageService,
-     //SortService,
-      //FilterService,
-       //GroupService
+    // EditService,
+    // InterventionService,
+    // PageService,
+     // SortService,
+      // FilterService,
+       // GroupService
     //  ],
   bootstrap: [AppComponent]
 })

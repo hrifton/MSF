@@ -4,8 +4,16 @@
     </e-series-collection>
 </ejs-chart>
 -->
-<ejs-accumulationchart id="chart-container" [legendSettings]='legendSettings'>
+<div fxLayout="row"
+fxLayoutAlign="space-evenly cente"
+fxLayout.xs="column"
+fxFlexFill>
+
+  <ejs-accumulationchart id="chart" >
     <e-accumulation-series-collection>
-        <e-accumulation-series [dataSource]='piedata' xName='x' yName='y' [pointColorMapping]='map' [dataLabel]='datalabel'></e-accumulation-series>
+        <e-accumulation-series [dataSource]='piedata' xName='x' yName=y [pointColorMapping]='map' [dataLabel]='datalabel'radius="55%"></e-accumulation-series>
     </e-accumulation-series-collection>
 </ejs-accumulationchart>
+
+</div>
+

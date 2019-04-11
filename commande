@@ -40,6 +40,9 @@ ng g m admin --routing -m app.module
 
 ng g c "nomComponent"
 
+//generate dashboard
+ng generate @angular/material:material-dashboard --name material-dashboard
+
 //struture Routing avec enfants
 
 const routes: Routes = [

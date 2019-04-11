@@ -12,7 +12,8 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$Front-primary: mat-palette($mat-indigo);
+
+$Front-primary: mat-palette($mat-red);
 $Front-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
@@ -44,9 +45,4 @@ $Front-theme: mat-light-theme($Front-primary, $Front-accent, $Front-warn);
 @import '../node_modules/@syncfusion/ej2-treegrid/styles/material.css';
 
 
-body{
-  background-color: rgba(236, 236, 236, 0.623);
-}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

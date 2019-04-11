@@ -12,21 +12,21 @@ import {MatInputModule} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogEditEventArgs, SaveEventArgs, EditSettingsModel, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 
-//Chart
+// Chart
 import { ChartModule, PieSeriesService, AccumulationLegendService, AccumulationTooltipService, AccumulationDataLabelService, AccumulationAnnotationService } from '@syncfusion/ej2-angular-charts';
 import { AccumulationChartModule } from '@syncfusion/ej2-angular-charts';
 import { CategoryService, LegendService, TooltipService } from '@syncfusion/ej2-angular-charts';
 import { DataLabelService, LineSeriesService} from '@syncfusion/ej2-angular-charts';
 
 
-//Vue Component Child
+// Vue Component Child
 import { InterventionsRoutingModule } from './interventions-routing.module';
 import { InterventionsComponent } from './interventions.component';
 import { ListInterventionComponent } from './list-intervention/list-intervention.component';
 import { FormulaireInterventionComponent } from './formulaire-intervention/formulaire-intervention.component';
 import { ResolutionInterventionComponent } from './resolution-intervention/resolution-intervention.component';
 import { HistoricInterventionComponent } from './historic-intervention/historic-intervention.component';
-import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule,MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
@@ -70,9 +70,9 @@ import { GridModule, EditService, ToolbarService, PageService } from '@syncfusio
     LayoutModule
   ],
   providers: [EditService, ToolbarService, PageService, CategoryService, LegendService, TooltipService,
-    DataLabelService, LineSeriesService,PieSeriesService, AccumulationLegendService, AccumulationTooltipService, AccumulationDataLabelService,
+    DataLabelService, LineSeriesService, PieSeriesService, AccumulationLegendService, AccumulationTooltipService, AccumulationDataLabelService,
       AccumulationAnnotationService],
-  exports:[FormulaireInterventionComponent,
+  exports: [FormulaireInterventionComponent,
     MatDatepickerModule, MatNativeDateModule],
 })
 export class InterventionsModule { }

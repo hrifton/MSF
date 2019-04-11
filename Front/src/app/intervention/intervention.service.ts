@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class InterventionService {
@@ -10,7 +12,8 @@ export class InterventionService {
     }
 
     addIntervention(departement, locality, priority, day, description) {
-        const obj = {
+      let result:Object;
+      const obj = {
             departement,
             locality,
             priority,
@@ -21,8 +24,10 @@ export class InterventionService {
         };
         console.log(`${this.uri}/add`, obj);
 
-        this.http.post(`${this.uri}/add`, obj).subscribe(res => console.log(res));
-    }
+        //this.http.post(`${this.uri}/add`, obj).subscribe(res => console.log(res));
+      this.http.post(`${this.uri}/add`, obj).subscribe(response =>{console.log(response)})
+
+      }
 
     getInterventions() {
       return this.http.get(`${this.uri}`);

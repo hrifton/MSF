@@ -1,4 +1,3 @@
-import { DepartementComponent } from './../../setting/departement/departement.component';
 import { DepartementService } from './../../setting/departement/departement.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';

@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange, SimpleChanges } from '@angular/core';
 import { Browser } from '@syncfusion/ej2-base';
 import { EditService, ToolbarService, PageService, DialogEditEventArgs, SaveEventArgs } from '@syncfusion/ej2-angular-grids';
 import { FormGroup, AbstractControl, FormControl, Validators } from '@angular/forms';
@@ -8,15 +8,22 @@ import Intervention from 'src/app/intervention/Intervention';
 import { InterventionService } from 'src/app/intervention/intervention.service';
 import { DepartementService } from 'src/app/setting/departement/departement.service';
 import Departement from '../../Class/Departement';
+
+
+
 @Component({
   selector: 'app-list-intervention',
   templateUrl: './list-intervention.component.html',
   styleUrls: ['./list-intervention.component.scss'],
   providers: [ToolbarService, EditService, PageService]
 })
+
+
 export class ListInterventionComponent implements OnInit {
 
-  public interventions: Intervention[];
+  @Input()interventions;
+
+  // public interventions: Intervention[];
 
   public departements: string[];
   public filterSettings: Object;
@@ -38,49 +45,41 @@ route: any;
   constructor(private is: InterventionService, private ds: DepartementService) {}
 
   ngOnInit() {
-    this.filterSettings = {
+      this.filterSettings = {
         type: 'Menu'
     };
 
-
-   /* this
-        .is
-        .getInterventions()
-        .subscribe((data: Intervention[]) => {
-            this.interventions = data;
-        });*/
-
-    this
+      this
         .ds
         .getDepartements()
         .subscribe((data: Departement[]) => {
             this.getDepartement(data);
         });
 
-    this.editSettings = {
+      this.editSettings = {
         allowEditing: true,
         allowAdding: true,
         allowDeleting: true,
         mode: 'Dialog'
     };
-    this.toolbar = ['Edit', 'Delete'];
-    this.orderidrules = {
+      this.toolbar = ['Edit', 'Delete'];
+      this.orderidrules = {
         required: true,
         number: true
     };
-    this.customeridrules = {
+      this.customeridrules = {
         required: true
     };
-    this.freightrules = {
+      this.freightrules = {
         required: true
     };
-    this.editparams = {
+      this.editparams = {
         params: {
             popupHeight: '100px'
         }
     };
-    this.pageSettings = { pageSizes: true, pageSize: 8 };
-    this.dropData = ['Order Placed', 'Processing', 'Delivered'];
+      this.pageSettings = { pageSizes: true, pageSize: 8 };
+      this.dropData = ['Order Placed', 'Processing', 'Delivered'];
 }
 
 
@@ -146,7 +145,7 @@ createFormGroup(data: IOrderModel): FormGroup {
 
     // get OrderDate(): AbstractControl { return this.angForm.get('OrderDate'); }
 
-updateIntervention(departement,locality,priority, day,description,status,type,id) {
+updateIntervention(departement, locality, priority, day, description, status, type, id) {
     this
               .route
               .params
@@ -184,12 +183,19 @@ updateIntervention(departement,locality,priority, day,description,status,type,id
         data = JSON.parse(data);
         return data;
       }
-    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log("ListIntervention")
+          console.log(changes);
+      }
+
+
+}
 
 
 
 
-  export interface IOrderModel {
+export interface IOrderModel {
       id?: number;
       departement?: string;
       locality?: string;

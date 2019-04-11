@@ -1,9 +1,10 @@
 import { DepartementService } from '../../Service/departement.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import Departement from 'src/app/setting/departement/Departement';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { InterventionService } from 'src/app/intervention/intervention.service';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
+import { InterventionService } from '../../Service/intervention.service';
 import { ToastrService } from 'ngx-toastr';
+import Intervention from 'src/app/intervention/Intervention';
 
 
 
@@ -15,25 +16,40 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class FormulaireInterventionComponent implements OnInit {
 
+  @Output() messageEvent = new EventEmitter<Intervention>();
+
+    inter=new Intervention();
+
   today = new Date();
   departements: Departement[];
-
+  locality: String;
+  description: Text;
   angForm: FormGroup;
   breakpoint: number;
+  departement: any;
+  errors = 'errorMessages';
 
-  constructor(private fb: FormBuilder, private is: InterventionService, private ds: DepartementService, private toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private is: InterventionService, private ds: DepartementService) {
     this.createForm();
+
 
   }
   createForm() {
     this.angForm = this.fb.group({
-      departement: [ '', Validators.required ],
-      locality: [ '', Validators.required ],
-      priority: [ '', Validators.required ],
-      date: [ '', Validators.required ],
-      description: [ '', Validators.required ]
+      departement: new FormControl('', [Validators.required ]),
+      locality: new FormControl('', [ Validators.required ]),
+      priority: new FormControl('', [ Validators.required ]),
+      description: new FormControl('', [Validators.required ]),
     });
+    this.messageEvent.emit(this.inter);
   }
+
+ /* getErrorDepartement(){
+  return this.locality.hasError('required')?'Yoi must select a value':
+  this.locality.hasError('deparement')?'Not Valide':'';
+}*/
+
+
 
   ngOnInit() {
     this.breakpoint = (window.innerWidth <= 1000) ? 1 : 4;
@@ -49,13 +65,23 @@ export class FormulaireInterventionComponent implements OnInit {
 
 
   showSuccess() {
-    this.toastr.success('Hello world!', 'Toastr fun!');
+ //   this.toastr.success('Hello world!', 'Toastr fun!');
   }
   addIntervention(departement, locality, priority, day, description) {
-        this.showSuccess();
-        this.is.addIntervention(departement, locality, priority, day, description);
+       // this.showSuccess();
+       this.is.addIntervention(departement, locality, priority, day, description);
+
+       this.inter.departement =departement,
+       this.inter.locality=locality,
+       this.inter.priority=priority,
+       this.inter.day=day,
+       this.inter.description=description,
+       this.messageEvent.emit(this.inter);
+       }
+
+
 
 
   }
 
-}
+

@@ -7,12 +7,21 @@
 
 
     <button mat-button [matMenuTriggerFor]="Intervention">Intervention</button>
+    <button mat-button [matMenuTriggerFor]="Maintenance">Maintenance</button>
+    <button mat-button routerLink="storage">Storage</button>
     <button mat-button [matMenuTriggerFor]="Setting">Setting</button>
-    <mat-menu #Intervention="matMenu">
-      <a mat-button  routerLink='interventions'>Intervention</a>
-      <a mat-button routerLink="formInter">Formulaire Intervention</a>
 
+    <mat-menu #Intervention="matMenu">
+      <a mat-button routerLink='interventions'>Intervention</a>
+      <a mat-button routerLink="formInter">Formulaire Intervention</a>
     </mat-menu>
+
+    <mat-menu #Maintenance="matMenu">
+      <a mat-button routerLink='maintenance'>Maintenance</a>
+      <a mat-button routerLink="formInter">Formulaire Intervention</a>
+    </mat-menu>
+
+
 
     <mat-menu #Setting="matMenu">
       <a mat-button routerLink="setDep">Setting Departement</a>
