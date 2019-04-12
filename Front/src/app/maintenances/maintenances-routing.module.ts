@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MaintenancesComponent } from './maintenances.component';
 
+
 const routes: Routes = [
   {
     path: 'maintenance',

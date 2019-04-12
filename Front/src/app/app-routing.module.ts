@@ -8,10 +8,12 @@ import { TechnicienComponent } from './setting/technicien/technicien.component';
 import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.component';
 */
 import { InterventionsComponent } from './interventions/interventions.component';
+import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
-  {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  { path: 'login', component: LoginComponent },
   { path: 'interventions', component: InterventionsComponent },
   { path: 'maintenances', component: MaintenancesComponent },
 

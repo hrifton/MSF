@@ -45,6 +45,7 @@ import { ListeCorpMetierComponent } from './setting/corpsDeMetier/liste-corpMeti
 import { InterventionsModule } from './interventions/interventions.module';
 import { MaintenancesModule } from './maintenances/maintenances.module';
 import { StoragesModule } from './storages/storages.module';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { StoragesModule } from './storages/storages.module';
     SettingTechnicienComponent,
     CorpsDeMetierComponent,
     SettingMetierComponent,
-    ListeCorpMetierComponent
+    ListeCorpMetierComponent,
+    LoginComponent
 
   ],
   imports: [HttpModule,

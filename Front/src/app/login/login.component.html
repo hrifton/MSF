@@ -1,0 +1,31 @@
+<mat-card>
+
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
+    <img  src="../../assets/img/logo.png">
+  </div>
+    <mat-card-content>
+       <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
+         <mat-form-field>
+        <mat-label>username</mat-label>
+        <input matInput="matInput"  placeholder="username" formControlName="username" #username required>
+         </mat-form-field>
+       </div>
+       <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
+          <mat-form-field>
+         <mat-label>password</mat-label>
+         <input matInput="matInput"  placeholder="password" formControlName="password" #password required>
+          </mat-form-field>
+        </div>
+    </mat-card-content>
+    <mat-card-actions align="center">
+        <button mat-button (click)="onAction1">Sign in</button>
+
+    </mat-card-actions>
+
+</mat-card>
+ <!--  <div class="grid-container">
+  <mat-card-content>
+
+
+</mat-card-content>
+</mat-card>-->
