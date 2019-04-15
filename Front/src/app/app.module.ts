@@ -1,6 +1,11 @@
 // Imports
 import {SplitButtonModule} from 'primeng/splitbutton';
 import { BrowserModule } from '@angular/platform-browser';
+///CodAffection
+import { FormsModule} from '@angular/forms';
+
+
+////
 import { NgModule } from '@angular/core';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -46,6 +51,9 @@ import { InterventionsModule } from './interventions/interventions.module';
 import { MaintenancesModule } from './maintenances/maintenances.module';
 import { StoragesModule } from './storages/storages.module';
 import { LoginComponent } from './login/login.component';
+import { UserComponent } from './user/user.component';
+import { SignUpComponent } from './user/sign-up/sign-up.component';
+import { from } from 'rxjs';
 
 
 @NgModule({
@@ -62,10 +70,13 @@ import { LoginComponent } from './login/login.component';
     CorpsDeMetierComponent,
     SettingMetierComponent,
     ListeCorpMetierComponent,
-    LoginComponent
+    LoginComponent,
+    UserComponent,
+    SignUpComponent
 
   ],
   imports: [HttpModule,
+    FormsModule,
     FlexLayoutModule,
     JsonpModule,
     GridAllModule,
