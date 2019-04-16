@@ -79,3 +79,9 @@ const userSchema = new Schema({
 });
 
 */
+**************************16/04*********************
+verifyJwtToken
+Bearer Interception 
+interception pas actif
+
+app-routing.module.js

@@ -30,12 +30,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
   onLoginSubmit(form:FormGroup){
-    console.log(form.valid);
     this.us.login(form.value).subscribe(res=>{
       this.us.setToken(res['token']);
       this.router.navigateByUrl('/interventions')
     },err=>{
-this.serverErrorMessages=err.error.message;
+        this.serverErrorMessages=err.error.message;
 
     })
   }

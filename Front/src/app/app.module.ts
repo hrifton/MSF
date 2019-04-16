@@ -16,7 +16,7 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
 import { MatMenuModule, MatInputModule, MatSelectModule, MatRadioModule, MatCardModule, MatDividerModule} from '@angular/material';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -120,7 +120,11 @@ import { UsersModule } from './users/users.module';
     StoragesModule,
     UsersModule,
   ],
-  providers:[AuthGuard,AuthInterceptor],
+  providers:[{
+              provide:HTTP_INTERCEPTORS,
+              useClass:AuthInterceptor,
+              multi:true
+  },AuthGuard],
   // providers: [
   //  ToolbarService,
     // EditService,
