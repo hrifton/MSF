@@ -1,13 +1,13 @@
 <mat-card>
-
+  <form [formGroup]="userForm" novalidate="novalidate" >
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
     <img  src="../../assets/img/logo.png">
   </div>
     <mat-card-content>
        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
          <mat-form-field>
-        <mat-label>username</mat-label>
-        <input matInput="matInput"  placeholder="username" formControlName="username" #username required>
+        <mat-label>fullName</mat-label>
+        <input matInput="matInput"  placeholder="fullName" formControlName="fullName" #fullName required>
          </mat-form-field>
        </div>
        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
@@ -18,14 +18,10 @@
         </div>
     </mat-card-content>
     <mat-card-actions align="center">
-        <button mat-button (click)="onAction1">Sign in</button>
+        <button mat-flat-button color="primary"(click)="onLoginSubmit(userForm)" [disabled]=!userForm.valid>Sign in</button>
 
     </mat-card-actions>
-
+</form>
+<div class="alert"*ngIf="serverErrorMessages">{{serverErrorMessages}}</div>
 </mat-card>
- <!--  <div class="grid-container">
-  <mat-card-content>
 
-
-</mat-card-content>
-</mat-card>-->

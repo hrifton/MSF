@@ -1,8 +1,11 @@
+import { AuthGuard } from './auth/auth.guard';
+import { AuthInterceptor } from './auth/auth.interceptor';
 // Imports
 import {SplitButtonModule} from 'primeng/splitbutton';
 import { BrowserModule } from '@angular/platform-browser';
 ///CodAffection
 import { FormsModule} from '@angular/forms';
+
 
 
 ////
@@ -54,6 +57,8 @@ import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { from } from 'rxjs';
+import { UsersModule } from './users/users.module';
+
 
 
 @NgModule({
@@ -113,7 +118,9 @@ import { from } from 'rxjs';
     InterventionsModule,
     MaintenancesModule,
     StoragesModule,
+    UsersModule,
   ],
+  providers:[AuthGuard,AuthInterceptor],
   // providers: [
   //  ToolbarService,
     // EditService,

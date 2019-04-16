@@ -60,7 +60,7 @@ export class FormulaireInterventionComponent implements OnInit {
   showSuccess() {
  //   this.toastr.success('Hello world!', 'Toastr fun!');
   }
-  addIntervention(departement, locality, priority, day, description) {
+ /* addIntervention(departement, locality, priority, day, description) {
 
       let tmp;
        // this.showSuccess();
@@ -77,9 +77,11 @@ export class FormulaireInterventionComponent implements OnInit {
      // this.messageEvent.emit(this.inter);
      // this.angForm.reset();
 
+       }*/
+
+       addIntervention(form:FormGroup) {
+         console.log(form.valid)
        }
-
-
 
 
   }

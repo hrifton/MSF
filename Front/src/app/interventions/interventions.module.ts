@@ -45,7 +45,6 @@ import { GridModule, EditService, ToolbarService, PageService } from '@syncfusio
     CommonModule,
     ChartModule,
     GridModule,
-
     NumericTextBoxAllModule,
     AccumulationChartModule,
     GridAllModule,

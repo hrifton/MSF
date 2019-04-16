@@ -1,3 +1,4 @@
+import { UserService } from './../Service/user.service';
 import Intervention from 'src/app/intervention/Intervention';
 import { InterventionService } from './../Service/intervention.service';
 import { Component, OnInit, OnChanges, ViewEncapsulation } from '@angular/core';
@@ -12,10 +13,13 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 })
 export class InterventionsComponent implements OnInit {
   public interventions: Intervention[];
+  userDetails;
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private is: InterventionService
+    private is: InterventionService,
+    private us: UserService
   ) {
+
     this.is.getInterventions().subscribe((data: Intervention[]) => {
       this.interventions = data; });
   }
@@ -50,8 +54,14 @@ export class InterventionsComponent implements OnInit {
 
 
 
-  ngOnInit(): void {
-
+  ngOnInit(){
+    this.us.getUserProfil().subscribe(
+      res=>{
+        this.userDetails=res['user'];
+        console.log(this.userDetails);
+      },
+      err=>{}
+    )
   }
 
 }

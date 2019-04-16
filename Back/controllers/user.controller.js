@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const passport = require("passport");
-const jwt = require("jsonwebtoken");
+const _ = require("lodash");
 
 module.exports.register = (req, res, next) => {
   var user = new User();
@@ -29,4 +29,24 @@ module.exports.authenticate = (req, res, next) => {
     // unknown user or wrong password
     else return res.status(401).json(info);
   })(req, res);
+};
+
+module.exports.userProfile = (req, res, next) => {
+  console.log("userProfil");
+  User.findOne({ _id: req._id }, (err, user) => {
+    if (!user) {
+      console.log(user);
+      return res
+        .status(404)
+        .json({ status: false, message: "User record not found." });
+    } else {
+      console.log(user);
+      return (
+        res
+          .status(200)
+          //recuperation des champs via lodash pick
+          .json({ status: true, user: _.pick(user, ["fullName", "email"]) })
+      );
+    }
+  });
 };

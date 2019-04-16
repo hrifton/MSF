@@ -57,7 +57,7 @@
       <div fxFlex="auto"> <p>{{angForm.locality}}</p>
         <button  (click)="addIntervention(departement.value, locality.value, priority.value, date.value, description.value)"
           mat-raised-button="mat-raised-button-left"
-              color="primary">Save</button>
+              color="primary" [disabled]=!angForm.valid>Save</button>
         </div>
 
 

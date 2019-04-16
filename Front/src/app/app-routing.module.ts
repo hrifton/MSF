@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth/auth.guard';
 import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -14,10 +15,10 @@ import { SignUpComponent } from './user/sign-up/sign-up.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'signUp', pathMatch: 'full'},
-  { path: 'signUp', component: SignUpComponent },
+  { path: 'signUp', component: SignUpComponent,canActivate:[AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'interventions', component: InterventionsComponent },
-  { path: 'maintenances', component: MaintenancesComponent },
+  { path: 'interventions', component: InterventionsComponent,canActivate:[AuthGuard] },
+  { path: 'maintenances', component: MaintenancesComponent,canActivate:[AuthGuard] },
 
 
 ];
