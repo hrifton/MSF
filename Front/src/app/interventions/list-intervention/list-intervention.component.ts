@@ -185,8 +185,8 @@ updateIntervention(departement, locality, priority, day, description, status, ty
       }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log("ListIntervention")
-          console.log(changes);
+        //console.log("ListIntervention")
+          //console.log(changes);
       }
 
 

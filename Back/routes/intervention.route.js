@@ -1,31 +1,16 @@
 const express = require("express");
 const app = express();
 const interventionRoutes = express.Router();
+const ctrlIntervention = require("../controllers/intervention.controller");
 
-let Intervention = require("../models/Intervention");
 //GetToutesLesIntervention
 interventionRoutes.route("/").get(function(req, res) {
-  Intervention.find(function(err, interventions) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(interventions);
-    }
-  }).sort({ _id: "desc" });
+  ctrlIntervention.liste(req, res);
 });
 
 //AddNewIntervention
-interventionRoutes.route("/add").post(function(req, res) {
-  let intervention = new Intervention(req.body);
-
-  intervention
-    .save()
-    .then(intervention => {
-      res.status(200).json();
-    })
-    .catch(err => {
-      res.status(400).send("unable to save to database");
-    });
+interventionRoutes.route("/add").post(function(req, res, next) {
+  ctrlIntervention.add(req, res, next);
 });
 
 //UpdateD'Intervention

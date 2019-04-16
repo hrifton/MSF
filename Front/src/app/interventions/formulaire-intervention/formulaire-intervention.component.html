@@ -1,5 +1,5 @@
 <div class="container">
-    <form [formGroup]="angForm" novalidate="novalidate">
+    <form [formGroup]="angForm" novalidate="novalidate" >
   <div fxLayout="row"
   fxLayoutAlign="space-evenly cente"
   fxLayout.xs="column"
@@ -7,19 +7,18 @@
     <div fxFlex="auto">
       <mat-form-field class="full-width">
         <mat-label>Département</mat-label>
-        <mat-select placeholder="departement" disableRipple="disableRipple" formControlName="departement" #departement required>
+        <mat-select placeholder="departement" disableRipple="disableRipple" formControlName="departement" #departement>
           <mat-option *ngFor="let dep of departements" [value]="dep.departement">
             {{dep.departement}}
           </mat-option>
         </mat-select>
-
       </mat-form-field>
     </div>
 
     <div fxFlex="auto">
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Locality</mat-label>
-            <input matInput="matInput"  placeholder="Locality" formControlName="locality" #locality required>
+            <input matInput="matInput"  placeholder="Locality" formControlName="locality" #locality>
         </mat-form-field>
     </div>
   </div>
@@ -51,7 +50,7 @@
   <div fxFlex="auto">
       <mat-form-field class="full-width" appearance="outline">
           <mat-label>Description Intervention</mat-label>
-          <textarea matInput placeholder="Description Intervention" rows="brightness_4" #description></textarea>
+          <textarea matInput formControlName="description" placeholder="Description Intervention" rows="brightness_4" #description></textarea>
           <mat-hint align="end">Not more then 260 characters long.</mat-hint>
         </mat-form-field>
       </div>

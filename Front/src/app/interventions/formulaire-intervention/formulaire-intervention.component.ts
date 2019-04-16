@@ -18,7 +18,7 @@ export class FormulaireInterventionComponent implements OnInit {
 
   @Output() messageEvent = new EventEmitter<Intervention>();
 
-    inter=new Intervention();
+    inter = new Intervention();
 
   today = new Date();
   departements: Departement[];
@@ -44,13 +44,6 @@ export class FormulaireInterventionComponent implements OnInit {
     this.messageEvent.emit(this.inter);
   }
 
- /* getErrorDepartement(){
-  return this.locality.hasError('required')?'Yoi must select a value':
-  this.locality.hasError('deparement')?'Not Valide':'';
-}*/
-
-
-
   ngOnInit() {
     this.breakpoint = (window.innerWidth <= 1000) ? 1 : 4;
     this.ds.getDepartements().subscribe((data: Departement[]) => {
@@ -68,15 +61,22 @@ export class FormulaireInterventionComponent implements OnInit {
  //   this.toastr.success('Hello world!', 'Toastr fun!');
   }
   addIntervention(departement, locality, priority, day, description) {
-       // this.showSuccess();
-       this.is.addIntervention(departement, locality, priority, day, description);
 
-       this.inter.departement =departement,
-       this.inter.locality=locality,
-       this.inter.priority=priority,
-       this.inter.day=day,
-       this.inter.description=description,
-       this.messageEvent.emit(this.inter);
+      let tmp;
+       // this.showSuccess();
+       // this.is.addIntervention(departement, locality, priority, day, description);
+      this.inter.departement = departement,
+      this.inter.locality = locality,
+      this.inter.priority = priority,
+      this.inter.day = day,
+      this.inter.description = description,
+      this.inter.status = 'en_cours'
+
+      console.log(this.angForm.value)
+      //tmp = this.is.postInter(this.inter);
+     // this.messageEvent.emit(this.inter);
+     // this.angForm.reset();
+
        }
 
 

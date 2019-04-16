@@ -1,19 +1,21 @@
 const express = require("express");
 const app = express();
 const departementRoutes = express.Router();
-
-let Departement = require("../models/Departement");
+const ctrlDepartement = require("../controllers/departement.controller");
+//let Departement = require("../models/Departement");
 
 //getToutLesDepartement
 departementRoutes.route("/").get(function(req, res) {
-  Departement.find(function(err, departements) {
+  ctrlDepartement.liste(req, res);
+
+  /*Departement.find(function(err, departements) {
     console.log("dans le serveur");
     if (err) {
       console.log(err);
     } else {
       res.json(departements);
-    }
-  });
+    } 
+  });*/
 });
 //returne un departementDefini
 departementRoutes.route("/edit/:departement").get(function(req, res) {

@@ -1,35 +1,38 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+
+import Intervention from '../intervention/Intervention';
+
 
 @Injectable({providedIn: 'root'})
 export class InterventionService {
-    uri = 'http://localhost:4000/intervention';
+
+    uri = 'http://localhost:3000/api/intervention';
+
+    selectedIntervention:Intervention={
+      departement: '',
+      locality: '',
+       priority: '',
+        day:'',
+        description: '',
+        status:'en_cours'
+    }
+
 
     constructor(private http: HttpClient) {
 
     }
+    //add a new Intervention
+    postInter(intervention: Intervention){
 
-    addIntervention(departement, locality, priority, day, description) {
-        const obj = {
-            departement,
-            locality,
-            priority,
-            day,
-            description,
-            status: 'en_cours',
-            type: 'JobRequest'
-        };
-        console.log(`${this.uri}/add`, obj);
-
-        return this.http.post(`${this.uri}/add`, obj)
-        .pipe(map(res => (res)), catchError(err => {
-            console.error(err);
-            return of(null);
-        }));
+      return this.http.post(`${this.uri}/add`, intervention).subscribe(data=>{
+        console.log(data)
+      },err=>{
+        console.log("Error" + err);
+      });
     }
 
+    //Get All Intervention
     getInterventions() {
       return this.http.get(`${this.uri}`);
     }

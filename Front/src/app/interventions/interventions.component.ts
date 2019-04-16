@@ -42,10 +42,10 @@ export class InterventionsComponent implements OnInit {
   );
 
   update($event){
-    console.log(this.interventions.length)
-    console.log($event)
+  //  console.log(this.interventions.length)
+    //console.log($event)
     this.interventions.unshift($event)
-    console.log(this.interventions.length)
+   // console.log(this.interventions.length)
   }
 
 

@@ -1,7 +1,21 @@
 const mongoose = require("mongoose");
+
+require("../models/intervention.model");
 const Intervention = mongoose.model("Intervention");
 
-module.exports.register = (req, res, next) => {
+module.exports.liste = (req, res) => {
+  Intervention.find((err, docs) => {
+    if (!err) {
+      res.send(docs);
+    } else {
+      console.log(
+        "Error in Retriving Interventions:" + JSON.stringify(err, undefined, 2)
+      );
+    }
+  }).sort({ field: "asc", _id: -1 });
+};
+
+module.exports.add = (req, res, next) => {
   var intervention = new Intervention();
   intervention.departement = req.body.departement;
   intervention.locality = req.body.locality;
@@ -11,11 +25,11 @@ module.exports.register = (req, res, next) => {
   intervention.status = req.body.status;
   intervention.type = req.body.type;
   intervention.tech = req.body.tech;
-
+  console.log("Save");
   intervention.save((err, doc) => {
     if (!err) res.send(doc);
     else {
-      if (err.code === 1100) res.status(422).send(["Il y a u une erreur"]);
+      if (err.code === 11000) res.status(422).send(["erreur Intervention"]);
       else return next(err);
     }
   });

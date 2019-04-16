@@ -57,6 +57,7 @@ const interventionRoute = require("./routes/intervention.route");
 const departementRoute = require("./routes/departement.route");
 const metierRoute = require("./routes/metier.route");
 const userRoute = require("./routes/user.route");
+var interventionController = require("./controllers/intervention.controller.js");
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(
@@ -76,6 +77,7 @@ app
   .use("/intervention", interventionRoute)
   .use("/departement", departementRoute)
   .use("/user", userRoute)
+  .use("/interventions", interventionController)
   .use("/metier", metierRoute);
 
 const port = process.env.PORT || 4000;
