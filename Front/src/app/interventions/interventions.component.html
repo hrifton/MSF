@@ -17,7 +17,7 @@
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
 
-            <div *ngIf="card.title=='Liste'"><app-list-intervention [interventions]='interventions' ></app-list-intervention></div>
+            <div *ngIf="card.title=='Liste'"><app-list-intervention [interventions]='interventions' [techs]='techs' [user]="userDetails"></app-list-intervention></div>
             <div *ngIf="card.title=='Analyse'"><app-historic-intervention [interventions]='interventions'></app-historic-intervention></div>
             <div *ngIf="card.title=='Formulaire'"><app-formulaire-intervention (messageEvent)="update($event)" [user]="userDetails"></app-formulaire-intervention></div>
             <div *ngIf="card.title=='liste'"><app-historic-intervention></app-historic-intervention></div>

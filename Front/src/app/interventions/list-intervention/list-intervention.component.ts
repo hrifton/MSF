@@ -1,13 +1,16 @@
+import { JsonpModule } from '@angular/http';
 
 import { Component, OnInit, Input, SimpleChange, SimpleChanges } from '@angular/core';
 import { Browser } from '@syncfusion/ej2-base';
 import { EditService, ToolbarService, PageService, DialogEditEventArgs, SaveEventArgs } from '@syncfusion/ej2-angular-grids';
 import { FormGroup, AbstractControl, FormControl, Validators } from '@angular/forms';
 import { Dialog } from '@syncfusion/ej2-angular-popups';
-import Intervention from 'src/app/intervention/Intervention';
-import { InterventionService } from 'src/app/intervention/intervention.service';
+
+import { InterventionService } from '../../Service/intervention.service';
 import { DepartementService } from 'src/app/setting/departement/departement.service';
 import Departement from '../../Class/Departement';
+
+
 
 
 
@@ -22,8 +25,18 @@ import Departement from '../../Class/Departement';
 export class ListInterventionComponent implements OnInit {
 
   @Input()interventions;
+  @Input()techs;
+  @Input()user;
 
   // public interventions: Intervention[];
+  public priorities: { [key: string]: Object }[] = [
+    { priority: 'High'},
+    { priority: 'Medimum'},
+    { priority: 'Low'}];
+    public lStatus: { [key: string]: Object }[] = [
+      { status: 'en_cours'},
+      { status: 'closed'}];
+
 
   public departements: string[];
   public filterSettings: Object;
@@ -37,6 +50,7 @@ export class ListInterventionComponent implements OnInit {
   public priorityrules: Object;
   public dropData: string[];
   //
+  public text: string = "Select a Technicien";
   public angForm: FormGroup;
   public shipCityDistinctData: Object[];
   public shipCountryDistinctData: Object[];
@@ -45,6 +59,7 @@ route: any;
   constructor(private is: InterventionService, private ds: DepartementService) {}
 
   ngOnInit() {
+
       this.filterSettings = {
         type: 'Menu'
     };
@@ -84,8 +99,8 @@ route: any;
 
 
 createFormGroup(data: IOrderModel): FormGroup {
-  data = this.replace_idByid(data);
-  return new FormGroup({
+ data = this.replace_idByid(data);
+ return new FormGroup({
             id: new FormControl(data.id, Validators.required),
             departement: new FormControl(data.departement, Validators.required),
             locality: new FormControl(data.locality, Validators.required),
@@ -104,19 +119,21 @@ createFormGroup(data: IOrderModel): FormGroup {
             (1900 <= control.value.getFullYear() && control.value.getFullYear() <=  2099) ? null : { OrderDate: { value : control.value}};
         };
     }
-
+//Action sur le tableau
     actionBegin(args: SaveEventArgs): void {
-        if (args.requestType === 'beginEdit' || args.requestType === 'add') {
+       //Verification de l'action debut edit ou ajout
+      if (args.requestType === 'beginEdit' || args.requestType === 'add') {
             this.submitClicked = false;
+            //Creation du formulaire
             this.angForm = this.createFormGroup(args.rowData);
-
         }
-        if (args.requestType === 'save') {
+        //Click SAVE
+      if (args.requestType === 'save') {
             this.submitClicked = true;
-            console.log(this.angForm.value);
+            //verification si le formulaire est valid
             if (this.angForm.valid) {
-              console.log('go to save');
               args.data = this.angForm.value;
+              this.is.updateIntervention(args.data);
             } else {
               console.log('Probleme');
               args.cancel = true;
@@ -145,28 +162,7 @@ createFormGroup(data: IOrderModel): FormGroup {
 
     // get OrderDate(): AbstractControl { return this.angForm.get('OrderDate'); }
 
-updateIntervention(departement, locality, priority, day, description, status, type, id) {
-    this
-              .route
-              .params
-              .subscribe(params => {
-                  this
-                      .is
-                      .updateIntervention(
-                          departement,
-                          locality,
-                          priority,
-                          day,
-                          description,
-                          status,
-                          type,
-                          id
-                      );
-
-              });
-
-      }
-      getDepartement(data) {
+    getDepartement(data) {
 
         const departementsList = new Array();
 

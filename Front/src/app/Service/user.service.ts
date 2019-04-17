@@ -26,6 +26,9 @@ noAuthHeader={ headers: new HttpHeaders({'NoAtuh':'True'})};
   getUserProfil(){
     return this.http.get(environment.apiBaseUrl+'/userProfil');
   }
+  getUserTech(){
+    return this.http.get(environment.apiBaseUrl+'/techs');
+  }
 
 
 

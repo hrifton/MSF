@@ -52,6 +52,7 @@ module.exports.add = (req, res, next) => {
   intervention.user = req.body.user;
   intervention.tech = req.body.tech;
 
+  console.log(intervention);
   intervention.save((err, doc) => {
     if (!err) res.send(doc);
     else {
@@ -59,4 +60,18 @@ module.exports.add = (req, res, next) => {
       else return next(err);
     }
   });
+};
+module.exports.update = (req, res, next) => {
+  console.log("ctrlUpdate");
+  Intervention.findByIdAndUpdate(
+    req.body.id,
+    req.body,
+    { new: true },
+    (err, intervention) => {
+      // Handle any possible database errors
+      if (err) console.log(err);
+      //return res.status(500).send(err);
+      else return console.log(intervention); //res.send(intervention);
+    }
+  );
 };

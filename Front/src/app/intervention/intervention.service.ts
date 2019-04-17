@@ -22,8 +22,6 @@ export class InterventionService {
             status: 'en_cours',
             type: 'JobRequest'
         };
-        console.log(`${this.uri}/add`, obj);
-
         //this.http.post(`${this.uri}/add`, obj).subscribe(res => console.log(res));
       this.http.post(`${this.uri}/add`, obj).subscribe(response =>{console.log(response)})
 
@@ -33,24 +31,16 @@ export class InterventionService {
       return this.http.get(`${this.uri}`);
     }
 
-   updateIntervention(departement, locality, priority, day, description, status, type, id) {
-    const techn = 'Rudy';
-    const obj = {
-		departement,
-		locality,
-		priority,
-		day,
-		description,
-		status,
-    type,
-    id,
-    tech: techn,
-      };
+   updateIntervention(form:any) {
+      console.log("******Update*******")
+      console.log(form.id);
 
-    this
+      this
       .http
-      .put(`${this.uri}/update/${id}`, obj)
+      .put(`${this.uri}/update/${form.id}`, form)
       .subscribe(res => console.log('Done'));
   }
+
+
 
 }

@@ -33,7 +33,6 @@ module.exports.authenticate = (req, res, next) => {
 };
 
 module.exports.userProfile = (req, res, next) => {
-  console.log("userProfil");
   User.findOne({ _id: req._id }, (err, user) => {
     if (!user) {
       console.log(user);
@@ -50,6 +49,18 @@ module.exports.userProfile = (req, res, next) => {
             status: true,
             user: _.pick(user, ["status", "fullName"])
           })
+      );
+    }
+  });
+};
+
+module.exports.getTech = (req, res, next) => {
+  User.find({ status: "tech" }, { fullName: 1, _id: 0 }, (err, techs) => {
+    if (!err) {
+      res.send(techs);
+    } else {
+      console.log(
+        "Error in Retriving Technicien : " + JSON.stringify(err, undefined, 2)
       );
     }
   });

@@ -48,23 +48,12 @@ export class InterventionService {
     }
 
 
-   updateIntervention(departement, locality, priority, day, description, status, type, id) {
-    const techn = 'Rudy';
-    const obj = {
-		departement,
-		locality,
-		priority,
-		day,
-		description,
-		status,
-    type,
-    id,
-    tech: techn,
-      };
+   updateIntervention(form) {
+   console.log(form);
 
     this
       .http
-      .put(`${this.uri}/update/${id}`, obj)
+      .put(`${this.uri}/${form.id}`, form)
       .subscribe(res => console.log('Done'));
   }
 

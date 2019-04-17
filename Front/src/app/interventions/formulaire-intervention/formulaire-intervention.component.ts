@@ -72,8 +72,8 @@ export class FormulaireInterventionComponent implements OnInit {
       this.inter.description = description,
       this.inter.status = 'en_cours',
       this.inter.user=this.user.fullName,
+      this.inter.type='JobRequest',
 
-console.log(this.inter)
 
       tmp = this.is.postInter(this.inter);
       this.messageEvent.emit(this.inter);

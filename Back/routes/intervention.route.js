@@ -24,18 +24,8 @@ interventionRoutes.route("/add").post(function(req, res, next) {
 });
 
 //UpdateD'Intervention
-interventionRoutes.route("/update/:id").put(function(req, res) {
-  Intervention.findByIdAndUpdate(
-    req.body.id,
-    req.body,
-    { new: true },
-    (err, intervention) => {
-      // Handle any possible database errors
-      if (err) return res.status(500).send(err);
-
-      return res.send(intervention);
-    }
-  );
+interventionRoutes.route("/:id").put(function(req, res, next) {
+  ctrlIntervention.update(req, res, next);
 });
 
 //delete a intervention

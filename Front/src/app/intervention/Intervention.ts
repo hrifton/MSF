@@ -4,6 +4,7 @@ export default class Intervention {
   priority: String;
   day: String;
   description: String;
-  status: string;
-  user: any;
+  status: String;
+  user: String;
+  type: String;
 }

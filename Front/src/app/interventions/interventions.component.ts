@@ -4,6 +4,7 @@ import { InterventionService } from './../Service/intervention.service';
 import { Component, OnInit, OnChanges, ViewEncapsulation } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { User } from '../Class/user.model';
 
 @Component({
   selector: 'app-interventions',
@@ -14,6 +15,7 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 export class InterventionsComponent implements OnInit {
   public interventions: Intervention[];
   userDetails;
+  techs: User[];
   constructor(
     private breakpointObserver: BreakpointObserver,
     private is: InterventionService,
@@ -71,7 +73,11 @@ export class InterventionsComponent implements OnInit {
         }
       },
       err=>{}
-    )
+    );
+    this.us.getUserTech().subscribe((data:User[])=>{
+      this.techs=data;
+    });
+
 
   }
 
