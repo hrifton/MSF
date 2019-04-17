@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient,HttpParams} from '@angular/common/http';
 
 import Intervention from '../intervention/Intervention';
 
@@ -7,35 +7,46 @@ import Intervention from '../intervention/Intervention';
 @Injectable({providedIn: 'root'})
 export class InterventionService {
 
+
     uri = 'http://localhost:3000/api/intervention';
 
-    selectedIntervention:Intervention={
+    selectedIntervention: Intervention = {
       departement: '',
       locality: '',
        priority: '',
-        day:'',
+        day: '',
         description: '',
-        status:'en_cours'
-    }
+        status: 'en_cours',
+        user: ''
+    };
 
 
     constructor(private http: HttpClient) {
 
     }
-    //add a new Intervention
-    postInter(intervention: Intervention){
-
-      return this.http.post(`${this.uri}/add`, intervention).subscribe(data=>{
-        console.log(data)
-      },err=>{
-        console.log("Error" + err);
-      });
+    // add a new Intervention
+    postInter(intervention: Intervention) {
+    console.log(intervention);
+      return this.http.post(`${this.uri}/add`, intervention).subscribe(data => {
+            console.log(data);
+          }, err => {
+            console.log('Error' + err);
+          });
     }
 
-    //Get All Intervention
+    // Get All Intervention
     getInterventions() {
       return this.http.get(`${this.uri}`);
     }
+    //Get Interventions byUser
+    getInterventionsByUser(fullName) {
+      return this.http.get(`${this.uri}/ByUser/`,{params:{fullName:fullName}})
+    }
+    //Get Interventions byUser
+    getInterventionsBytech(fullName: any) {
+      return this.http.get(`${this.uri}/ByTech/`,{params:{fullName:fullName}})
+    }
+
 
    updateIntervention(departement, locality, priority, day, description, status, type, id) {
     const techn = 'Rudy';

@@ -21,9 +21,13 @@ export class NavBarComponent {
       map(result => result.matches)
     );
 
-  constructor(private router:Router,private breakpointObserver: BreakpointObserver,private us:UserService) {}
+  constructor(private router:Router,private breakpointObserver: BreakpointObserver,private us:UserService) {
+    var user = localStorage;
+
+  }
 
   LogOut(){
+
     this.us.deleteToken();
     this.router.navigateByUrl('/login')
   }

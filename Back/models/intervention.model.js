@@ -8,6 +8,7 @@ var interventionScheam = new mongoose.Schema({
   description: { type: String },
   status: { type: String },
   type: { type: String },
+  user: { type: String },
   tech: { type: String }
 });
 

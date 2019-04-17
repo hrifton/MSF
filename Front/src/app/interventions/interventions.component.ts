@@ -20,8 +20,7 @@ export class InterventionsComponent implements OnInit {
     private us: UserService
   ) {
 
-    this.is.getInterventions().subscribe((data: Intervention[]) => {
-      this.interventions = data; });
+
   }
 
   /** Based on the screen size, switch from standard to one column per row */
@@ -58,10 +57,22 @@ export class InterventionsComponent implements OnInit {
     this.us.getUserProfil().subscribe(
       res=>{
         this.userDetails=res['user'];
-        console.log(this.userDetails);
+
+        //gestion Du type d'utilisateur
+        if(this.userDetails.status=="user"){
+            this.is.getInterventionsByUser(this.userDetails.fullName).subscribe((data:Intervention[])=>{this.interventions=data})
+        }
+        else if(this.userDetails.status=="tech"){
+          this.is.getInterventionsBytech(this.userDetails.fullName).subscribe((data:Intervention[])=>{this.interventions=data})
+        }
+        else{
+           this.is.getInterventions().subscribe((data: Intervention[]) => {
+      this.interventions = data; });
+        }
       },
       err=>{}
     )
+
   }
 
 }

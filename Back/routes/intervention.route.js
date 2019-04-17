@@ -8,6 +8,16 @@ interventionRoutes.route("/").get(function(req, res) {
   ctrlIntervention.liste(req, res);
 });
 
+//GetToutesLesInterventionByUser
+interventionRoutes.route("/ByUser").get(function(req, res) {
+  ctrlIntervention.listeByUser(req.query.fullName, res);
+});
+
+//GetToutesLesInterventionByUser
+interventionRoutes.route("/ByTech").get(function(req, res) {
+  ctrlIntervention.listeByTech(req.query.fullName, res);
+});
+
 //AddNewIntervention
 interventionRoutes.route("/add").post(function(req, res, next) {
   ctrlIntervention.add(req, res, next);

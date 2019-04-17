@@ -8,6 +8,7 @@ module.exports.register = (req, res, next) => {
   user.fullName = req.body.fullName;
   user.email = req.body.email;
   user.password = req.body.password;
+  user.status = "user";
 
   user.save((err, doc) => {
     if (!err) res.send(doc);
@@ -45,7 +46,10 @@ module.exports.userProfile = (req, res, next) => {
         res
           .status(200)
           //recuperation des champs via lodash pick
-          .json({ status: true, user: _.pick(user, ["fullName", "email"]) })
+          .json({
+            status: true,
+            user: _.pick(user, ["status", "fullName"])
+          })
       );
     }
   });

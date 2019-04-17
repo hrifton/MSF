@@ -5,4 +5,5 @@ export default class Intervention {
   day: String;
   description: String;
   status:String;
+  user:String;
 }

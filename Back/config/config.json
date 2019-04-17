@@ -2,7 +2,7 @@
     "developement":{
         "PORT":3000,
         "MONGODB_URL":"mongodb://localhost:27017/MsfRegie",
-       "JWT_SECRET":"xtiTKEFUiokCi vj05CVo0A",
+       "JWT_SECRET":"xtiTKEFUiokCivj05CVo0A",
         "JWT_EXP": "60m"
     },
     "production":{

@@ -1,5 +1,5 @@
 import { DepartementService } from '../../Service/departement.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import Departement from 'src/app/setting/departement/Departement';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { InterventionService } from '../../Service/intervention.service';
@@ -15,7 +15,7 @@ import Intervention from 'src/app/intervention/Intervention';
   styleUrls: ['./formulaire-intervention.component.scss']
 })
 export class FormulaireInterventionComponent implements OnInit {
-
+@Input() user ;
   @Output() messageEvent = new EventEmitter<Intervention>();
 
     inter = new Intervention();
@@ -60,7 +60,7 @@ export class FormulaireInterventionComponent implements OnInit {
   showSuccess() {
  //   this.toastr.success('Hello world!', 'Toastr fun!');
   }
- /* addIntervention(departement, locality, priority, day, description) {
+  addIntervention(departement, locality, priority, day, description) {
 
       let tmp;
        // this.showSuccess();
@@ -70,18 +70,18 @@ export class FormulaireInterventionComponent implements OnInit {
       this.inter.priority = priority,
       this.inter.day = day,
       this.inter.description = description,
-      this.inter.status = 'en_cours'
+      this.inter.status = 'en_cours',
+      this.inter.user=this.user.fullName,
 
-      console.log(this.angForm.value)
-      //tmp = this.is.postInter(this.inter);
-     // this.messageEvent.emit(this.inter);
-     // this.angForm.reset();
+console.log(this.inter)
 
-       }*/
+      tmp = this.is.postInter(this.inter);
+      this.messageEvent.emit(this.inter);
+      this.angForm.reset();
 
-       addIntervention(form:FormGroup) {
-         console.log(form.valid)
        }
+
+
 
 
   }

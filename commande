@@ -85,3 +85,16 @@ Bearer Interception
 interception pas actif
 
 app-routing.module.js
+
+
+
+
+
+
+
+
+Mongodb
+root@demo:~# chown -Rc mongodb. /var/log/mongodb
+changed ownership of '/var/log/mongodb/mongod.log' from root:root to mongodb:nogroup
+changed ownership of '/var/log/mongodb' from root:root to mongodb:nogroup
+root@demo:~# chown -Rc mongodb. /var/lib/mongodb

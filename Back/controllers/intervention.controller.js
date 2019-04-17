@@ -15,8 +15,33 @@ module.exports.liste = (req, res) => {
   }).sort({ field: "asc", _id: -1 });
 };
 
+module.exports.listeByUser = (req, res) => {
+  Intervention.find({ user: req }, (err, docs) => {
+    if (!err) {
+      res.send(docs);
+    } else {
+      console.log(
+        "Error in Retriving Interventions:" + JSON.stringify(err, undefined, 2)
+      );
+    }
+  }).sort({ field: "asc", _id: -1 });
+};
+
+module.exports.listeByTech = (req, res) => {
+  Intervention.find({ tech: req }, (err, docs) => {
+    if (!err) {
+      res.send(docs);
+    } else {
+      console.log(
+        "Error in Retriving Interventions:" + JSON.stringify(err, undefined, 2)
+      );
+    }
+  }).sort({ field: "asc", _id: -1 });
+};
+
 module.exports.add = (req, res, next) => {
   var intervention = new Intervention();
+
   intervention.departement = req.body.departement;
   intervention.locality = req.body.locality;
   intervention.priority = req.body.priority;
@@ -24,8 +49,9 @@ module.exports.add = (req, res, next) => {
   intervention.description = req.body.description;
   intervention.status = req.body.status;
   intervention.type = req.body.type;
+  intervention.user = req.body.user;
   intervention.tech = req.body.tech;
-  console.log("Save");
+
   intervention.save((err, doc) => {
     if (!err) res.send(doc);
     else {

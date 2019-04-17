@@ -12,6 +12,9 @@ var userSchema = new mongoose.Schema({
     required: "email can't be empty",
     unique: true
   },
+  status: {
+    type: String
+  },
   password: {
     type: String,
     required: "password can't be empty",
