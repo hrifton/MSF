@@ -17,7 +17,8 @@ export class InterventionService {
         day: '',
         description: '',
         status: 'en_cours',
-        user: ''
+        user: '',
+        type:''
     };
 
 
@@ -27,7 +28,7 @@ export class InterventionService {
     // add a new Intervention
     postInter(intervention: Intervention) {
     console.log(intervention);
-      return this.http.post(`${this.uri}/add`, intervention).subscribe(data => {
+    return this.http.post(`${this.uri}/add`, intervention).subscribe(data => {
             console.log(data);
           }, err => {
             console.log('Error' + err);
@@ -49,7 +50,8 @@ export class InterventionService {
 
 
    updateIntervention(form) {
-   console.log(form);
+    console.log(form);
+
 
     this
       .http

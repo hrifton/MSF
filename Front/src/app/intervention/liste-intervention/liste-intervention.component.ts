@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Browser } from '@syncfusion/ej2-base';
 import { EditService, ToolbarService, PageService, DialogEditEventArgs, SaveEventArgs } from '@syncfusion/ej2-angular-grids';
-import { FormGroup, AbstractControl, FormControl, Validators } from '@angular/forms';
+import { FormGroup, AbstractControl, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Dialog } from '@syncfusion/ej2-angular-popups';
 
 import Intervention from '../Intervention';
@@ -19,7 +19,7 @@ import { DepartementService } from 'src/app/setting/departement/departement.serv
 export class ListeInterventionComponent implements OnInit {
 
     public interventions: Intervention[];
-
+    public res:string;
     public departements: string[];
     public filterSettings: Object;
     public editSettings: Object;
@@ -78,12 +78,7 @@ export class ListeInterventionComponent implements OnInit {
             type: 'Menu'
         };
 
-        this
-            .is
-            .getInterventions()
-            .subscribe((data: Intervention[]) => {
-                this.interventions = data;
-            });
+
 
         this
             .ds
@@ -122,8 +117,9 @@ export class ListeInterventionComponent implements OnInit {
 
 
 
-    createFormGroup(data: IOrderModel): FormGroup {
+    createFormGroup(data: any): FormGroup {
 data = this.replace_idByid(data);
+console.log(data)
 return new FormGroup({
           id: new FormControl(data.id, Validators.required),
           departement: new FormControl(data.departement, Validators.required),
@@ -134,6 +130,8 @@ return new FormGroup({
           status: new FormControl(data.status),
           type: new FormControl(data.type),
           tech: new FormControl(data.tech),
+          useMat: new FormControl(data.useMat),
+          asset:new FormControl(data.asset)
       });
   }
 
@@ -146,18 +144,17 @@ return new FormGroup({
 
   actionBegin(args: SaveEventArgs): void {
       if (args.requestType === 'beginEdit' || args.requestType === 'add') {
+        console.log(args.requestType)
           this.submitClicked = false;
           this.angForm = this.createFormGroup(args.rowData);
 
       }
       if (args.requestType === 'save') {
+
           this.submitClicked = true;
-          console.log(this.angForm.value);
           if (this.angForm.valid) {
-            console.log('go to save');
             args.data = this.angForm.value;
           } else {
-            console.log('Probleme');
             args.cancel = true;
           }
       }
@@ -165,6 +162,7 @@ return new FormGroup({
 
   actionComplete(args: DialogEditEventArgs): void {
       if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
+
           if (Browser.isDevice) {
               args.dialog.height = window.innerHeight - 500 + 'px';
               (args.dialog as Dialog).dataBind();
@@ -184,33 +182,15 @@ return new FormGroup({
 
   // get OrderDate(): AbstractControl { return this.angForm.get('OrderDate'); }
 
-    updateIntervention(
-        departement,
-        locality,
-        priority,
-        day,
-        description,
-        status,
-        type,
-        id
-    ) {
-
-        this
+    updateIntervention(data) {
+      console.log(data)
+      this
             .route
             .params
             .subscribe(params => {
                 this
                     .is
-                    .updateIntervention(
-                        departement,
-                        locality,
-                        priority,
-                        day,
-                        description,
-                        status,
-                        type,
-                        id
-                    );
+                    .updateIntervention(data);
 
             });
 
@@ -236,7 +216,7 @@ return new FormGroup({
 
 
 
-
+/*
 export interface IOrderModel {
     id?: number;
     departement?: string;
@@ -249,8 +229,7 @@ export interface IOrderModel {
     tech?: string;
   }
 
-
-/*arrJson = text.replace(/=/g, '":"');
+arrJson = text.replace(/=/g, '":"');
 			arrJson = arrJson.replace(/PropositionStage/g, '');
 			arrJson = arrJson.replace(/\(/g, '{"');
 			arrJson = arrJson.replace(/\)/g, '"}');

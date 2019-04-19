@@ -10,6 +10,7 @@ const passport = require("passport");
 const rtsIndex = require("./routes/index.router");
 const rtsIntervention = require("./routes/intervention.route");
 const rtsDepartement = require("./routes/departement.route");
+const rtsSolution = require("./routes/solution.route");
 
 var app = express();
 //middleware
@@ -20,7 +21,8 @@ app.use("/api", rtsIndex);
 app
   .use("/api", rtsIndex)
   .use("/api/intervention", rtsIntervention)
-  .use("/api/departement", rtsDepartement);
+  .use("/api/departement", rtsDepartement)
+  .use("/api/solution", rtsSolution);
 
 //Error handler
 app.use((err, req, res, next) => {

@@ -9,6 +9,7 @@ import { Dialog } from '@syncfusion/ej2-angular-popups';
 import { InterventionService } from '../../Service/intervention.service';
 import { DepartementService } from 'src/app/setting/departement/departement.service';
 import Departement from '../../Class/Departement';
+import { SolutionService } from 'src/app/Service/solution.service';
 
 
 
@@ -37,7 +38,7 @@ export class ListInterventionComponent implements OnInit {
       { status: 'en_cours'},
       { status: 'closed'}];
 
-
+      today = new Date();
   public departements: string[];
   public filterSettings: Object;
   public editSettings: Object;
@@ -56,7 +57,7 @@ export class ListInterventionComponent implements OnInit {
   public shipCountryDistinctData: Object[];
   public submitClicked = false;
 route: any;
-  constructor(private is: InterventionService, private ds: DepartementService) {}
+  constructor(private is: InterventionService, private ds: DepartementService,private ss:SolutionService) {}
 
   ngOnInit() {
 
@@ -100,16 +101,19 @@ route: any;
 
 createFormGroup(data: IOrderModel): FormGroup {
  data = this.replace_idByid(data);
+
  return new FormGroup({
             id: new FormControl(data.id, Validators.required),
             departement: new FormControl(data.departement, Validators.required),
             locality: new FormControl(data.locality, Validators.required),
             priority: new FormControl(data.priority),
-            day: new FormControl(data.day),
             description: new FormControl(data.description),
             status: new FormControl(data.status),
             type: new FormControl(data.type),
             tech: new FormControl(data.tech),
+            useMat:new FormControl(data.useMat),
+            asset:new FormControl(data.asset),
+            solution:new FormControl(data.solution),
         });
     }
 
@@ -133,7 +137,11 @@ createFormGroup(data: IOrderModel): FormGroup {
             //verification si le formulaire est valid
             if (this.angForm.valid) {
               args.data = this.angForm.value;
-              this.is.updateIntervention(args.data);
+              if(args.data['asset']!=null && args.data['solution']!=null&& args.data['useMat']!=null){
+                console.log(args.data)
+                this.ss.postSolution(args.data);
+              }
+              //this.is.updateIntervention(args.data);
             } else {
               console.log('Probleme');
               args.cancel = true;
@@ -201,6 +209,9 @@ export interface IOrderModel {
       status?: string;
       type?: string;
       tech?: string;
+      useMat?:string;
+      asset?:string;
+      solution?:string;
     }
 
 

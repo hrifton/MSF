@@ -1,3 +1,4 @@
+import { Trackmystuff } from './../Service/Trackmystuff.service';
 import { UserService } from './../Service/user.service';
 import Intervention from 'src/app/intervention/Intervention';
 import { InterventionService } from './../Service/intervention.service';
@@ -5,11 +6,16 @@ import { Component, OnInit, OnChanges, ViewEncapsulation } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { User } from '../Class/user.model';
+import { Ng6OdooRPCService } from 'angular6-odoo-jsonrpc';
+
+// tslint:disable-next-line: no-unused-expression
+
 
 @Component({
   selector: 'app-interventions',
   templateUrl: './interventions.component.html',
   styleUrls: ['./interventions.component.css'],
+  providers: [Ng6OdooRPCService],
   encapsulation: ViewEncapsulation.None
 })
 export class InterventionsComponent implements OnInit {
@@ -19,7 +25,8 @@ export class InterventionsComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private is: InterventionService,
-    private us: UserService
+    private us: UserService,
+    private odooRPC:Ng6OdooRPCService
   ) {
 
 
@@ -54,7 +61,6 @@ export class InterventionsComponent implements OnInit {
   }
 
 
-
   ngOnInit(){
     this.us.getUserProfil().subscribe(
       res=>{
@@ -78,7 +84,15 @@ export class InterventionsComponent implements OnInit {
       this.techs=data;
     });
 
-
+    this.odooRPC.init({
+      odoo_server: 'https://trackmystuff-dev.ocb.msf.org',
+      //http_auth: 'username:password' // optional
+  });
+    this.odooRPC.login('dev.ocb.msf', 'julien.van.de.casteele@brussels.msf.org', 'TMS123').then(res => {
+      console.log('login success');}).catch( err => {
+      console.error('login failed', err);
+  });
+}
   }
 
-}
+

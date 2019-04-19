@@ -52,7 +52,6 @@ module.exports.add = (req, res, next) => {
   intervention.user = req.body.user;
   intervention.tech = req.body.tech;
 
-  console.log(intervention);
   intervention.save((err, doc) => {
     if (!err) res.send(doc);
     else {
