@@ -1,11 +1,10 @@
-import { JsonpModule } from '@angular/http';
 
-import { Component, OnInit, Input, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Browser } from '@syncfusion/ej2-base';
 import { EditService, ToolbarService, PageService, DialogEditEventArgs, SaveEventArgs } from '@syncfusion/ej2-angular-grids';
-import { FormGroup, AbstractControl, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Dialog } from '@syncfusion/ej2-angular-popups';
-
+import Solution from "../../Class/Solution";
 import { InterventionService } from '../../Service/intervention.service';
 import { DepartementService } from 'src/app/setting/departement/departement.service';
 import Departement from '../../Class/Departement';
@@ -29,6 +28,7 @@ export class ListInterventionComponent implements OnInit {
   @Input()techs;
   @Input()user;
 
+
   // public interventions: Intervention[];
   public priorities: { [key: string]: Object }[] = [
     { priority: 'High'},
@@ -37,7 +37,7 @@ export class ListInterventionComponent implements OnInit {
     public lStatus: { [key: string]: Object }[] = [
       { status: 'en_cours'},
       { status: 'closed'}];
-
+public resolution : any[];
       today = new Date();
   public departements: string[];
   public filterSettings: Object;
@@ -57,7 +57,7 @@ export class ListInterventionComponent implements OnInit {
   public shipCountryDistinctData: Object[];
   public submitClicked = false;
 route: any;
-  constructor(private is: InterventionService, private ds: DepartementService,private ss:SolutionService) {}
+  constructor(private ds: DepartementService,private ss:SolutionService) {}
 
   ngOnInit() {
 
@@ -129,7 +129,10 @@ createFormGroup(data: IOrderModel): FormGroup {
       if (args.requestType === 'beginEdit' || args.requestType === 'add') {
             this.submitClicked = false;
             //Creation du formulaire
+
             this.angForm = this.createFormGroup(args.rowData);
+            console.log(this.angForm.value.id)
+
         }
         //Click SAVE
       if (args.requestType === 'save') {
@@ -148,7 +151,13 @@ createFormGroup(data: IOrderModel): FormGroup {
             }
         }
     }
+    historique(data){
 
+  this.ss.getSolutionByIdIntervention(data);
+  ;
+
+
+    }
     actionComplete(args: DialogEditEventArgs): void {
         if ((args.requestType === 'beginEdit' || args.requestType === 'add')) {
             if (Browser.isDevice) {
@@ -174,7 +183,7 @@ createFormGroup(data: IOrderModel): FormGroup {
 
         const departementsList = new Array();
 
-        data.forEach((element, index) => {
+        data.forEach((element) => {
            departementsList.push(element.departement );
           });
 
@@ -188,7 +197,7 @@ createFormGroup(data: IOrderModel): FormGroup {
         return data;
       }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(): void {
         //console.log("ListIntervention")
           //console.log(changes);
       }

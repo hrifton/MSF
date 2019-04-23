@@ -4,6 +4,19 @@ require("../models/solution.model");
 
 const Solution = mongoose.model("Solution");
 
+module.exports.liste = (req, res) => {
+  console.log("List");
+  Solution.find((err, docs) => {
+    if (!err) {
+      res.send(docs);
+    } else {
+      console.log(
+        "Error in Retriving Interventions:" + JSON.stringify(err, undefined, 2)
+      );
+    }
+  }).sort({ field: "asc", _id: -1 });
+};
+
 module.exports.add = (req, res, next) => {
   var solution = new Solution();
 
@@ -19,6 +32,19 @@ module.exports.add = (req, res, next) => {
       console.log(err);
       if (err.code === 11000) res.status(422).send(["Duplicate email."]);
       else return next(err);
+    }
+  });
+};
+
+module.exports.listeByIntervention = (req, res, next) => {
+  Solution.find({ idIntervention: req }, (err, docs) => {
+    if (!err) {
+      console.log(docs);
+      res.send(docs);
+    } else {
+      console.log(
+        "Error in Soltion IdIntervention:" + JSON.stringify(err, undefined, 2)
+      );
     }
   });
 };

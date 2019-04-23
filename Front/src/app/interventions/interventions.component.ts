@@ -1,21 +1,19 @@
-import { Trackmystuff } from './../Service/Trackmystuff.service';
 import { UserService } from './../Service/user.service';
+import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import Intervention from 'src/app/intervention/Intervention';
 import { InterventionService } from './../Service/intervention.service';
 import { Component, OnInit, OnChanges, ViewEncapsulation } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { User } from '../Class/user.model';
-import { Ng6OdooRPCService } from 'angular6-odoo-jsonrpc';
+import { Ng6OdooRPCService } from "../Service/odoo.service";
 
-// tslint:disable-next-line: no-unused-expression
 
 
 @Component({
   selector: 'app-interventions',
   templateUrl: './interventions.component.html',
   styleUrls: ['./interventions.component.css'],
-  providers: [Ng6OdooRPCService],
   encapsulation: ViewEncapsulation.None
 })
 export class InterventionsComponent implements OnInit {
@@ -26,11 +24,9 @@ export class InterventionsComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private is: InterventionService,
     private us: UserService,
-    private odooRPC:Ng6OdooRPCService
-  ) {
+    private odooRPC: Ng6OdooRPCService
 
-
-  }
+  ) {}
 
   /** Based on the screen size, switch from standard to one column per row */
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -40,7 +36,7 @@ export class InterventionsComponent implements OnInit {
           { title: 'Formulaire', cols: 1, rows: 1 },
         { title: 'Analyse', cols: 1, rows: 1 },
         { title: 'Liste', cols: 2, rows: 2, content: 'liste' },
-        { title: 'Card 4', cols: 2, rows: 2 }
+        { title: 'Solution', cols: 2, rows: 2 }
         ];
       }
 
@@ -48,7 +44,7 @@ export class InterventionsComponent implements OnInit {
         { title: 'Formulaire', cols: 1, rows: 1 },
         { title: 'Analyse', cols: 1, rows: 1 },
         { title: 'Liste', cols: 2, rows: 2, content: 'liste' },
-        { title: 'Card 4', cols: 2, rows: 2 }
+        { title: 'Solution', cols: 2, rows: 2 }
       ];
     })
   );
@@ -85,13 +81,17 @@ export class InterventionsComponent implements OnInit {
     });
 
     this.odooRPC.init({
-      odoo_server: 'https://trackmystuff-dev.ocb.msf.org',
-      //http_auth: 'username:password' // optional
-  });
-    this.odooRPC.login('dev.ocb.msf', 'julien.van.de.casteele@brussels.msf.org', 'TMS123').then(res => {
-      console.log('login success');}).catch( err => {
+      odoo_server: 'http://trackmystuff-dev.ocb.msf.org',
+      http_auth: 'HQ@brussels.msf.org:TMS123' // optional
+    });
+    this.odooRPC.login('MSF', 'HQ@brussels.msf.org', 'TMS123').then(res => {
+      console.log('login success');
+    }).catch( err => {
       console.error('login failed', err);
-  });
+    });
+
+
+
 }
   }
 

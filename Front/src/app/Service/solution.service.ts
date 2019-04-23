@@ -1,29 +1,32 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import Solution from '../Class/Solution';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root'})
 export class SolutionService {
   uri = 'http://localhost:3000/api/solution';
 
 
 constructor(private http: HttpClient) { }
-
+list:Solution[];
 postSolution(data: any) {
-let date = new Date();
+const date = new Date();
 const solution = new Solution();
 solution.idIntervention = data.id ;
 solution.solution =  data.solution ;
 solution.date = date.toLocaleDateString();
 solution.asset =  data.asset ;
 solution.mat = data.useMat ;
-console.log(solution);
-return this.http.post(`${this.uri}/add`,solution).subscribe(data=>{
-  console.log(data);
-},err=>{console.log("Error"+err);
-})
+
+return this.http.post(`${this.uri}/add`, solution).subscribe(data => {
+
+}, err => {console.log('Error' + err);
+});
+
+}
+
+getSolutionByIdIntervention(idIntervention) {
+this.http.get(`${this.uri}/ByIntervention/`,{params:{idIntervention:idIntervention}})
 
 }
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { Ng6OdooRPCService } from "./odoo.service";
 
 
 
@@ -8,14 +9,7 @@ import { Injectable } from '@angular/core';
 })
 export class Trackmystuff{
 
-constructor() { }
-
-url  =  'https://trackmystuff-dev.ocb.msf.org';
-db  = 'trackmystuff';
-username = "julien.van.de.casteele@brussels.msf.org"
-password = "TMS123"
-
-
+constructor(private odooRPC: Ng6OdooRPCService) { }
 
 
 

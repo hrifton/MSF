@@ -54,7 +54,7 @@
           <mat-hint align="end">Not more then 260 characters long.</mat-hint>
         </mat-form-field>
       </div>
-      <div fxFlex="auto"> <p>{{angForm.locality}}</p>
+      <div fxFlex="auto">
         <button  (click)="addIntervention(departement.value, locality.value, priority.value, date.value, description.value)"
           mat-raised-button="mat-raised-button-left"
               color="primary" [disabled]=!angForm.valid>Save</button>

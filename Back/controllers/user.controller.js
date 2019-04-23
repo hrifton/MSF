@@ -35,12 +35,12 @@ module.exports.authenticate = (req, res, next) => {
 module.exports.userProfile = (req, res, next) => {
   User.findOne({ _id: req._id }, (err, user) => {
     if (!user) {
-      console.log(user);
+      //console.log(user);
       return res
         .status(404)
         .json({ status: false, message: "User record not found." });
     } else {
-      console.log(user);
+      //console.log(user);
       return (
         res
           .status(200)

@@ -9,7 +9,8 @@ var interventionScheam = new mongoose.Schema({
   status: { type: String },
   type: { type: String },
   user: { type: String },
-  tech: { type: String }
+  tech: { type: String },
+  metier: { type: String }
 });
 
 mongoose.model("Intervention", interventionScheam);

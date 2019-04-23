@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { BrowserModule } from '@angular/platform-browser';
 
 
 // Outils
@@ -33,6 +33,7 @@ import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
 import { DatePickerAllModule } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
 import { GridModule, EditService, ToolbarService, PageService } from '@syncfusion/ej2-angular-grids';
+import { HistoricSolutionComponent } from './historic-solution/historic-solution.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { GridModule, EditService, ToolbarService, PageService } from '@syncfusio
       ListInterventionComponent,
        FormulaireInterventionComponent,
         ResolutionInterventionComponent,
-         HistoricInterventionComponent],
+         HistoricInterventionComponent,
+         HistoricSolutionComponent],
   imports: [
     CommonModule,
     ChartModule,
@@ -66,7 +68,8 @@ import { GridModule, EditService, ToolbarService, PageService } from '@syncfusio
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    LayoutModule
+    LayoutModule,
+    BrowserModule
   ],
   providers: [EditService, ToolbarService, PageService, CategoryService, LegendService, TooltipService,
     DataLabelService, LineSeriesService, PieSeriesService, AccumulationLegendService, AccumulationTooltipService, AccumulationDataLabelService,

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient,HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 
-import Intervention from '../intervention/Intervention';
+import Intervention from '../Class/Intervention';
 
 
 @Injectable({providedIn: 'root'})
@@ -22,12 +22,9 @@ export class InterventionService {
     };
 
 
-    constructor(private http: HttpClient) {
-
-    }
+    constructor(private http: HttpClient) {  }
     // add a new Intervention
     postInter(intervention: Intervention) {
-    console.log(intervention);
     return this.http.post(`${this.uri}/add`, intervention).subscribe(data => {
             console.log(data);
           }, err => {
@@ -41,17 +38,15 @@ export class InterventionService {
     }
     //Get Interventions byUser
     getInterventionsByUser(fullName) {
-      return this.http.get(`${this.uri}/ByUser/`,{params:{fullName:fullName}})
+      return this.http.get(`${this.uri}/ByUser/`, {params:{fullName}})
     }
     //Get Interventions byUser
     getInterventionsBytech(fullName: any) {
-      return this.http.get(`${this.uri}/ByTech/`,{params:{fullName:fullName}})
+      return this.http.get(`${this.uri}/ByTech/`, {params:{fullName}})
     }
 
 
    updateIntervention(form) {
-    console.log(form);
-
 
     this
       .http
