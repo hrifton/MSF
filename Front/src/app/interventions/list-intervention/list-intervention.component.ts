@@ -17,7 +17,7 @@ import { SolutionService } from 'src/app/Service/solution.service';
 @Component({
   selector: 'app-list-intervention',
   templateUrl: './list-intervention.component.html',
-  styleUrls: ['./list-intervention.component.scss'],
+  //styleUrls: ['./list-intervention.component.scss'],
   providers: [ToolbarService, EditService, PageService]
 })
 
@@ -57,7 +57,7 @@ public resolution : any[];
   public shipCountryDistinctData: Object[];
   public submitClicked = false;
 route: any;
-  constructor(private ds: DepartementService,private ss:SolutionService) {}
+  constructor(private ds: DepartementService,private ss:SolutionService,private is:InterventionService) {}
 
   ngOnInit() {
 
@@ -78,7 +78,7 @@ route: any;
         allowDeleting: true,
         mode: 'Dialog'
     };
-      this.toolbar = ['Edit', 'Delete'];
+
       this.orderidrules = {
         required: true,
         number: true
@@ -143,8 +143,11 @@ createFormGroup(data: IOrderModel): FormGroup {
               if(args.data['asset']!=null && args.data['solution']!=null&& args.data['useMat']!=null){
                 console.log(args.data)
                 this.ss.postSolution(args.data);
+              }else{
+
+                this.is.updateIntervention(args.data);
               }
-              //this.is.updateIntervention(args.data);
+
             } else {
               console.log('Probleme');
               args.cancel = true;

@@ -17,6 +17,7 @@ solution.solution =  data.solution ;
 solution.date = date.toLocaleDateString();
 solution.asset =  data.asset ;
 solution.mat = data.useMat ;
+solution.idTech = data.tech ;
 
 return this.http.post(`${this.uri}/add`, solution).subscribe(data => {
 

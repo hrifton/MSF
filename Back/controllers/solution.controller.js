@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 
 require("../models/solution.model");
-
+require("../models/user.model");
 const Solution = mongoose.model("Solution");
-
+const User = mongoose.model("User");
+var test;
 module.exports.liste = (req, res) => {
   console.log("List");
   Solution.find((err, docs) => {
@@ -20,17 +21,24 @@ module.exports.liste = (req, res) => {
 module.exports.add = (req, res, next) => {
   var solution = new Solution();
 
+  User.findOne({ fullName: req.body.idTech }, (err, res) => {
+    this.test = res;
+  });
+
   solution.idIntervention = req.body.idIntervention;
   solution.solution = req.body.solution;
   solution.date = req.body.date;
   solution.asset = req.body.asset;
   solution.mat = req.body.mat;
+  solution.idTech = this.test.id;
 
   solution.save((err, doc) => {
-    if (!err) res.send(doc);
-    else {
+    if (!err) {
+      console.log("save ok");
+      res.send(doc);
+    } else {
       console.log(err);
-      if (err.code === 11000) res.status(422).send(["Duplicate email."]);
+      if (err.code === 11000) res.status(422).send(["error."]);
       else return next(err);
     }
   });

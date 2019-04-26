@@ -23,7 +23,7 @@ Serial: eNrzzU/OLi0odswsqnHLSSzOqDGoca7JKCkpsNLXLy8v1ytJTczVLUotKNFLzs8FAJHYETc=
 ------------Dataseeding-----------
 https://github.com/toymachiner62/node-mongo-seeds
 envoi de SeedData
-depuis backend commande seed
+depuis backend commande "seed"
 
 
 /////GRID
@@ -94,7 +94,8 @@ app-routing.module.js
 
 
 Mongodb
-root@demo:~# chown -Rc mongodb. /var/log/mongodb
-changed ownership of '/var/log/mongodb/mongod.log' from root:root to mongodb:nogroup
-changed ownership of '/var/log/mongodb' from root:root to mongodb:nogroup
-root@demo:~# chown -Rc mongodb. /var/lib/mongodb
+*****avoir s'il faut crée le dossier" /var/log/mongodb"
+1)chown -Rc mongodb. /var/log/mongodb
+2)chown -Rc mongodb. /var/lib/mongodb
+3)systemctl restart mongod
+4)systemctl status mongod

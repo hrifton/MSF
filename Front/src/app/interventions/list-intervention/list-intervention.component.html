@@ -1,13 +1,13 @@
 <div class="contenaire">
-  <ejs-grid [dataSource]='interventions' [allowPaging]='true' height='450px' [pageSettings]='pageSettings' [editSettings]='editSettings' (actionBegin)='actionBegin($event)' (actionComplete)='actionComplete($event) '>
+  <ejs-grid [dataSource]='interventions' allowPaging='true' allowFiltering='true' [pageSettings]='pageSettings'  [editSettings]='editSettings' [filterSettings]='filterSettings'(actionBegin)='actionBegin($event)' (actionComplete)='actionComplete($event) '>
       <e-columns>
-          <e-column field='_id' headerText='Order ID' textAlign='center' ></e-column>
-          <e-column field='day' headerText='Date' textAlign='center' width=120></e-column>
-          <e-column field='priority' headerText='Priotity' textAlign='center'width=120></e-column>
-          <e-column field='departement' headerText='Departement' textAlign='center' width=120></e-column>
+          <e-column field='_id' headerText='Order ID' textAlign='center'  ></e-column>
+          <e-column field='day' headerText='Date' textAlign='center' width=120 ></e-column>
+          <e-column field='priority' headerText='Priotity' textAlign='center'width=120 ></e-column>
+          <e-column field='departement' headerText='Departement' textAlign='center' width=120 ></e-column>
           <e-column field='description' headerText='Desciption' textAlign='center' ></e-column>
           <e-column field='locality' headerText='Locality' textAlign='center'width=120 ></e-column>
-         <e-column field='tech' headerText='Assign' textAlign='center'></e-column>
+          <e-column field='tech' headerText='tech' textAlign='center'></e-column>
           <e-column field='status' headerText='Status' textAlign='center' width=120></e-column>
       </e-columns>
       <ng-template #editSettingsTemplate let-data>

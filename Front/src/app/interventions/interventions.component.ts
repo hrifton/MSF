@@ -13,7 +13,7 @@ import { Ng6OdooRPCService } from "../Service/odoo.service";
 @Component({
   selector: 'app-interventions',
   templateUrl: './interventions.component.html',
-  styleUrls: ['./interventions.component.css'],
+  //styleUrls: ['./interventions.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class InterventionsComponent implements OnInit {
@@ -21,39 +21,14 @@ export class InterventionsComponent implements OnInit {
   userDetails;
   techs: User[];
   constructor(
-    private breakpointObserver: BreakpointObserver,
     private is: InterventionService,
     private us: UserService,
     private odooRPC: Ng6OdooRPCService
 
   ) {}
 
-  /** Based on the screen size, switch from standard to one column per row */
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'Formulaire', cols: 1, rows: 1 },
-        { title: 'Analyse', cols: 1, rows: 1 },
-        { title: 'Liste', cols: 2, rows: 2, content: 'liste' },
-        { title: 'Solution', cols: 2, rows: 2 }
-        ];
-      }
-
-      return [
-        { title: 'Formulaire', cols: 1, rows: 1 },
-        { title: 'Analyse', cols: 1, rows: 1 },
-        { title: 'Liste', cols: 2, rows: 2, content: 'liste' },
-        { title: 'Solution', cols: 2, rows: 2 }
-      ];
-    })
-  );
-
   update($event){
-  //  console.log(this.interventions.length)
-    //console.log($event)
     this.interventions.unshift($event)
-   // console.log(this.interventions.length)
   }
 
 
@@ -79,7 +54,7 @@ export class InterventionsComponent implements OnInit {
     this.us.getUserTech().subscribe((data:User[])=>{
       this.techs=data;
     });
-
+/*
     this.odooRPC.init({
       odoo_server: 'http://trackmystuff-dev.ocb.msf.org',
       http_auth: 'HQ@brussels.msf.org:TMS123' // optional
@@ -88,7 +63,7 @@ export class InterventionsComponent implements OnInit {
       console.log('login success');
     }).catch( err => {
       console.error('login failed', err);
-    });
+    });*/
 
 
 

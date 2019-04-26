@@ -10,12 +10,13 @@ import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.co
 */
 import { InterventionsComponent } from './interventions/interventions.component';
 import { LoginComponent } from './login/login.component';
-import { SignUpComponent } from './user/sign-up/sign-up.component';
+import { UserComponent } from './user/user.component';
+
 
 
 const routes: Routes = [
   {path: '', redirectTo: 'signUp', pathMatch: 'full'},
-  { path: 'signUp', component: SignUpComponent,canActivate:[AuthGuard] },
+  { path: 'signUp', component: UserComponent},
   { path: 'login', component: LoginComponent },
   { path: 'interventions', component: InterventionsComponent,canActivate:[AuthGuard] },
   { path: 'maintenances', component: MaintenancesComponent,canActivate:[AuthGuard] },

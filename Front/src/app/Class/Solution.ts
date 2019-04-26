@@ -5,5 +5,6 @@ export default class Solution{
   asset:  String ;
   mat:  String ;
   date: String;
+  idTech: Object;
 
 }

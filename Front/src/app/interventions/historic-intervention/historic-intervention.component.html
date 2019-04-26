@@ -1,19 +1,22 @@
-<!--<ejs-chart id="chart-container" [primaryXAxis]='primaryXAxis'>
-    <e-series-collection>
-        <e-series [dataSource]='chartData' type='Line' xName='month' yName='sales' name='Sales'></e-series>
-    </e-series-collection>
-</ejs-chart>
--->
-<div fxLayout="row"
-fxLayoutAlign="space-evenly cente"
-fxLayout.xs="column"
-fxFlexFill>
-
-  <ejs-accumulationchart id="chart" background='#fafafa00'>
+<!--<div class="control-section">
+  <div class="col-md-8">
+    <ejs-accumulationchart id="container" #pie style='display:center;  width: 92%' [legendSettings]="legendSettings" [tooltip]="tooltip" [title]="title" (load)='load($event)' [enableAnimation]= 'enableAnimation' [center]='center'>
     <e-accumulation-series-collection>
-        <e-accumulation-series [dataSource]='piedata' xName='x' yName=y [pointColorMapping]='map' [dataLabel]='datalabel'radius="55%"></e-accumulation-series>
+        <e-accumulation-series [dataSource]='piedata' xName='x' yName=y [pointColorMapping]='map' [dataLabel]='datalabel'radius="80%"></e-accumulation-series>
     </e-accumulation-series-collection>
 </ejs-accumulationchart>
+
+</div>
+-->
+<div class="control-section">
+  <div class="col-md-8">
+      <ejs-accumulationchart id="container" #pie style='display:block;  width: 92%' [legendSettings]="legendSettings" [tooltip]="tooltip" [title]="title" (load)='load($event)' [enableAnimation]= 'enableAnimation' [center]='center'>
+          <e-accumulation-series-collection>
+              <e-accumulation-series name='JobRequest' [pointColorMapping]='map' [dataSource]='piedata' xName='x' yName='y' [startAngle]="startAngle" [endAngle]="endAngle" innerRadius="0%" radius="70%" [dataLabel]="dataLabel" [explode]='explode' explodeOffset='10%' [explodeIndex]='0' >
+              </e-accumulation-series>
+          </e-accumulation-series-collection>
+      </ejs-accumulationchart>
+  </div>
 
 </div>
 

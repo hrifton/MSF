@@ -1,0 +1,27 @@
+[
+    {
+        "executor": "Biomed",
+        "task": "Hospital Round",
+        "description": "Check with the biomed the weekly actvities. Check the equipment preventive maintenance and reporting done by biomed (preventive maintenance sheets, reparation cards, …).",
+        "periodicity": "weekly",
+        "duration": "1 d",
+        "recurrence": "Everyweek on: Monday",
+        "domaine": "5cc2b84d9313d82a0af9b5ce"
+    }, {
+        "executor": "Biomed",
+        "task": "Biomed check",
+        "description": "Round of the hospital within all services to report change in the status of the biomed equipment. A fast and simple checklist on what to do will be developed in the Biomed Referential.",
+        "periodicity": "monthly",
+        "duration": "3 h",
+        "recurrence": "The First Thursday of every month",
+        "domaine": "5cc2b84d9313d82a0af9b5ce"
+    }, {
+        "executor": "Electrician",
+        "task": "Inventory of equipments",
+        "description": "Check that all equipments are in place and working.",
+        "periodicity": "daily",
+        "duration": "15 min",
+        "recurrence": "Everyday",
+        "domaine": "5cc2b84d9313d82a0af9b5ce"
+    }
+]

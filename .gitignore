@@ -9,7 +9,7 @@ Front/bazel-out
 
 # dependencies
 Front/node_modules
-Back/node_modules
+./Back/node_modules
 
 # profiling files
 Front/chrome-profiler-events.json
@@ -47,3 +47,4 @@ Front/.DS_Store
 Front/Thumbs.db
 
 ./commande
+

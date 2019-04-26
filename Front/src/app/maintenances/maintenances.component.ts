@@ -1,33 +1,34 @@
-import { Component } from '@angular/core';
+
+import { Component, Inject, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { MaintenanceService } from '../Service/maintenance.service';
+import { Maintenance } from '../Class/Maintenance';
 
 @Component({
   selector: 'app-maintenances',
   templateUrl: './maintenances.component.html',
-  styleUrls: ['./maintenances.component.css']
+  //styleUrls: ['./maintenances.component.css']
 })
-export class MaintenancesComponent {
-  /** Based on the screen size, switch from standard to one column per row */
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'Card 1', cols: 1, rows: 1 },
-          { title: 'Card 2', cols: 1, rows: 1 },
-          { title: 'Card 3', cols: 1, rows: 1 },
-          { title: 'Card 4', cols: 1, rows: 1 }
-        ];
-      }
+export class MaintenancesComponent implements OnInit {
+  maintenance:any;
 
-      return [
-        { title: 'Card 1', cols: 2, rows: 1 },
-        { title: 'Card 2', cols: 1, rows: 1 },
-        { title: 'Card 3', cols: 1, rows: 2 },
-        { title: 'Card 4', cols: 1, rows: 1 }
-      ];
-    })
-  );
+  constructor(private ms: MaintenanceService) {
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+
+  }
+
+
+ngOnInit(){
+
+
+
+
 }
+
+
+
+  }
+
+
+

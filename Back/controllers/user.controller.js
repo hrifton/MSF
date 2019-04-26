@@ -54,8 +54,30 @@ module.exports.userProfile = (req, res, next) => {
   });
 };
 
+module.exports.getUserFullName = (req, res, next) => {
+  User.findOne({ fullName: req.fullName }, (err, user) => {
+    if (!user) {
+      //console.log(user);
+      return res
+        .status(404)
+        .json({ status: false, message: "User record not found." });
+    } else {
+      //console.log(user);
+      return (
+        res
+          .status(200)
+          //recuperation des champs via lodash pick
+          .json({
+            status: true,
+            user: _.pick(user, ["status", "fullName", "_id"])
+          })
+      );
+    }
+  });
+};
+
 module.exports.getTech = (req, res, next) => {
-  User.find({ status: "tech" }, { fullName: 1, _id: 0 }, (err, techs) => {
+  User.find({ status: "tech" }, { fullName: 1, _id: 1 }, (err, techs) => {
     if (!err) {
       res.send(techs);
     } else {

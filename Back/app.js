@@ -11,18 +11,20 @@ const rtsIndex = require("./routes/index.router");
 const rtsIntervention = require("./routes/intervention.route");
 const rtsDepartement = require("./routes/departement.route");
 const rtsSolution = require("./routes/solution.route");
+const rtsMaintenance = require("./routes/maintenance.route");
 
 var app = express();
 //middleware
 app.use(bodyParser.json());
 app.use(cors());
 app.use(passport.initialize());
-app.use("/api", rtsIndex);
+
 app
   .use("/api", rtsIndex)
   .use("/api/intervention", rtsIntervention)
   .use("/api/departement", rtsDepartement)
-  .use("/api/solution", rtsSolution);
+  .use("/api/solution", rtsSolution)
+  .use("/api/maintenance", rtsMaintenance);
 
 //Error handler
 app.use((err, req, res, next) => {

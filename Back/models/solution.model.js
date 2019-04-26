@@ -5,7 +5,8 @@ var solutionSchema = new mongoose.Schema({
   solution: { type: String },
   date: { type: String },
   asset: { type: String },
-  mat: { type: String }
+  mat: { type: String },
+  idTech: { type: mongoose.Schema.Types.ObjectId, ref: "Users", required: true }
 });
 
 mongoose.model("Solution", solutionSchema);

@@ -5,10 +5,11 @@
       [opened]="!(isHandset$ | async)">
     <mat-toolbar><img id="logo" src="../../assets/img/logo.png" alt="LogoMSF" srcset=""></mat-toolbar>
 
-
+    <button mat-button routerLink="signUp">User</button>
     <button mat-button [matMenuTriggerFor]="Intervention">Intervention</button>
     <button mat-button [matMenuTriggerFor]="Maintenance">Maintenance</button>
     <button mat-button routerLink="storage">Storage</button>
+
     <button mat-button [matMenuTriggerFor]="Setting">Setting</button>
 
     <mat-menu #Intervention="matMenu">
