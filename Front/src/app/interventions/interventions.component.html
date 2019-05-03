@@ -18,60 +18,58 @@ aria-label="Toggle menu"> <mat-icon>more_vert</mat-icon> </button> <mat-menu
 *ngIf="card.title=='Solution'"><app-historic-solution></app-historic-solution></div>
 </mat-card-content> </mat-card> </mat-grid-tile> </mat-grid-list> </div>-->
 <div class="col-lg-12 control-section card-control-section basic_card_layout">
-    <div class="e-sample-resize-container e-card-resize-container">
+  <div class="e-sample-resize-container e-card-resize-container">
+    <div class='row'>
+      <div class="col-xs-8 col-sm-8 col-lg-8 col-md-8 mt-3 mb-3">
+        <div class="e-card" id="basic_card">
+          <div class="e-card-header">
+            <div class="e-card-header-caption">
+              <div class="e-card-header-title">
+                <h3>Demande d'intervention</h3>
+              </div>
+            </div>
+          </div>
+          <div class="e-card-content center_focus_strong">
+            <app-formulaire-intervention (messageEvent)="update($event)" [user]="userDetails">
+            </app-formulaire-intervention>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4 mt-3 mb-3">
+        <div class="e-card" id="basic_card">
+          <div class="e-card-header">
+            <div class="e-card-header-caption">
+              <div class="e-card-header-title">
+                <h3>Analyse Job Request</h3>
+              </div>
+            </div>
+          </div>
+          <div class="e-card-content">
+            <app-historic-intervention *ngIf="interventions.length > 0" [interventions]='interventions'
+             ></app-historic-intervention>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 control-section card-control-section basic_card_layout">
+      <div class="e-sample-resize-container e-card-resize-container">
         <div class='row'>
-            <div class="col-xs-8 col-sm-8 col-lg-8 col-md-8 mt-3 mb-3">
-                <div class="e-card" id="basic_card">
-                    <div class="e-card-header">
-                        <div class="e-card-header-caption">
-                            <div class="e-card-header-title">
-                                <h3>Demande d'intervention</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="e-card-content center_focus_strong">
-                        <app-formulaire-intervention
-                            (messageEvent)="update($event)"
-                            [user]="userDetails"></app-formulaire-intervention>
-                    </div>
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 mt-3 mb-3">
+            <div class="e-card" id="basic_card">
+              <div class="e-card-header">
+                <div class="e-card-header-caption">
+                  <div class="e-card-header-title">
+                    <h3>Liste JobRequest</h3>
+                  </div>
                 </div>
+              </div>
+              <div class="e-card-content">
+                <app-list-intervention [interventions]='interventions' [techs]='techs' [user]="userDetails"  (messageEvent)="check($event)">
+                </app-list-intervention>
+              </div>
             </div>
-            <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4 mt-3 mb-3">
-                <div class="e-card" id="basic_card">
-                    <div class="e-card-header">
-                        <div class="e-card-header-caption">
-                            <div class="e-card-header-title">
-                                <h3>Analyse Job Request</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="e-card-content">
-                        <app-historic-intervention [interventions]='interventions'></app-historic-intervention>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-        <div class="col-lg-12 control-section card-control-section basic_card_layout">
-            <div class="e-sample-resize-container e-card-resize-container">
-                <div class='row'>
-                    <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 mt-3 mb-3">
-                        <div class="e-card" id="basic_card">
-                            <div class="e-card-header">
-                                <div class="e-card-header-caption">
-                                    <div class="e-card-header-title">
-                                        <h3>Liste JobRequest</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="e-card-content">
-                                <app-list-intervention
-                                    [interventions]='interventions'
-                                    [techs]='techs'
-                                    [user]="userDetails"></app-list-intervention>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-        </div>
+      </div>
+    </div>

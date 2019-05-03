@@ -1,5 +1,5 @@
 import { DepartementService } from '../../Service/departement.service';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 import Departement from 'src/app/setting/departement/Departement';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { InterventionService } from '../../Service/intervention.service';
@@ -29,7 +29,7 @@ export class FormulaireInterventionComponent implements OnInit {
   departement: any;
   errors = 'errorMessages';
 
-  constructor(private fb: FormBuilder, private is: InterventionService, private ds: DepartementService) {
+  constructor(private fb: FormBuilder, private is: InterventionService, private ds: DepartementService,private ref: ChangeDetectorRef) {
     this.createForm();
 
 
@@ -78,6 +78,8 @@ export class FormulaireInterventionComponent implements OnInit {
       tmp = this.is.postInter(this.inter);
       this.messageEvent.emit(this.inter);
       this.angForm.reset();
+
+
 
        }
 

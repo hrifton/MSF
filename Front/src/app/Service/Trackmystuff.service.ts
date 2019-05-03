@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 
 import { Ng6OdooRPCService } from "./odoo.service";
 
@@ -15,3 +15,4 @@ constructor(private odooRPC: Ng6OdooRPCService) { }
 
 }
 
+*/

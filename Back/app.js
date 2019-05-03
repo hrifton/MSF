@@ -12,6 +12,7 @@ const rtsIntervention = require("./routes/intervention.route");
 const rtsDepartement = require("./routes/departement.route");
 const rtsSolution = require("./routes/solution.route");
 const rtsMaintenance = require("./routes/maintenance.route");
+const rtsDateMaintenance = require("./routes/dateMaintenance.route");
 
 var app = express();
 //middleware
@@ -24,7 +25,8 @@ app
   .use("/api/intervention", rtsIntervention)
   .use("/api/departement", rtsDepartement)
   .use("/api/solution", rtsSolution)
-  .use("/api/maintenance", rtsMaintenance);
+  .use("/api/maintenance", rtsMaintenance)
+  .use("/api/datemaintenance", rtsDateMaintenance);
 
 //Error handler
 app.use((err, req, res, next) => {

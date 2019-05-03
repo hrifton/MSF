@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 var dateMaintenanceSchema = new mongoose.Schema({
-  dateStart: { type: Date, required: true },
+  StartTime: { type: Date, required: true },
+  EndTime: { type: Date, required: true },
   idMaintenance: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Maintenances",

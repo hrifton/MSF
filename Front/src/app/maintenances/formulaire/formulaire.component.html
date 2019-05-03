@@ -1,6 +1,6 @@
 
 
-      <form id="formId" [formGroup]="maintenanceForm" #formDir="ngForm" class="form-horizontal" novalidate="">
+      <form id="formId" [formGroup]="maintenanceForm" class="form-horizontal" novalidate="">
 
           <div class="form-group">
             <!--  <div class="e-float-input">
@@ -52,7 +52,7 @@
           </div>
           <div class="form-group">
             <div class="e-float-input">
-                <input id="duration" type="text" formControlName="duration">
+                <input id="duration" type="text" formControlName="duration" placeholder="hour or minute">
                 <span class="e-float-line"></span>
                 <label for="duration" class="e-float-text">duration</label>
                <!--  <div *ngIf="periodicity.errors ">
@@ -64,20 +64,23 @@
         </div>
         <div class="form-group">
           <div class="e-float-input">
-              <textarea rows="4" id="description" name="description" formControlName="description"></textarea>
+              <textarea rows="2" id="description" name="description" formControlName="description"></textarea>
               <span class="e-float-line"></span>
-              <label class="e-float-text" for="address">description</label>
+              <label class="e-float-text" for="description">description</label>
           </div>
       </div>
-
-
+      <div class="form-group">
+        <div class="e-float-input">
+            <ejs-datetimepicker id="datetimepicker" name="date" format='dd/MM/yyy hh:mm'formControlName="date"  width='245px' (change)='onChange($event)'></ejs-datetimepicker>
+        </div>
+      </div>
 
 
           <div class="row">
               <div style="width: 320px;margin:0px auto;height: 100px;padding-top: 25px;">
                   <div style="display: inline-block;">
-                      <button id="validateSubmit" mat-raised-button="mat-raised-button-left"
-                      color="primary" type="submit" style="height:40px;width: 150px;" data-ripple="true">save</button>
+                      <button (click)="saveDate(maintenanceForm)" color="primary"
+                              data-ripple="true" id="validateSubmit" mat-raised-button="mat-raised-button-left">save</button>
                   </div>
                   <div style="float: right;">
                       <button id="resetbtn" class="samplebtn e-control e-btn" mat-raised-button="mat-raised-button-left"
