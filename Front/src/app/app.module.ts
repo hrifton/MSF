@@ -8,6 +8,7 @@ import { FormsModule} from '@angular/forms';
 
 
 
+
 ////
 import { NgModule } from '@angular/core';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
@@ -22,6 +23,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TreeGridModule } from '@syncfusion/ej2-angular-treegrid';
+import { RadioButtonModule } from '@syncfusion/ej2-angular-buttons';
 // import { GridModule, EditService, ToolbarService, PageService, SortService, FilterService, GroupService } from '@syncfusion/ej2-angular-grids';
 import { DatePickerAllModule } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';

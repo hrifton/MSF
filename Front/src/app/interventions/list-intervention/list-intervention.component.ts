@@ -73,9 +73,8 @@ export class ListInterventionComponent implements OnInit {
   constructor(
     private ds: DepartementService,
     private ss: SolutionService,
-    private is: InterventionService,
-    private ref: ChangeDetectorRef
-  ) {}
+    private is: InterventionService
+  ) { }
 
   ngOnInit() {
     this.filterSettings = {
@@ -221,7 +220,6 @@ export class ListInterventionComponent implements OnInit {
   }
 
   refreshInterventionTable() {
-    console.log("Called");
     this.grid.refresh();
   }
 }

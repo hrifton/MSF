@@ -26,6 +26,43 @@ $Front-theme: mat-light-theme($Front-primary, $Front-accent, $Front-warn);
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($Front-theme);
+/* custom code start*/
+.radiobutton-control {
+    margin: 5% 0 5% 40%;
+}
+
+@media only screen and (max-width: 500px) {
+    .radiobutton-control {
+        margin-left: 21%;
+        margin-top: 20%;
+        margin-bottom: 27%;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .checkbox-control {
+        margin-left: 35%;
+        margin-top: 8%;
+    }
+
+    .control-section {
+        min-height: 200px;
+    }
+}
+
+.control-section .row {
+    margin: 20px 0;
+}
+
+.radiobutton-control h4 {
+    font-size: 18px;
+}
+
+.e-bigger .radiobutton-control h4 {
+    font-size: 20px;
+}
+
+/* custom code end*/
 
 /* You can add global styles to this file, and also import other style files */
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';

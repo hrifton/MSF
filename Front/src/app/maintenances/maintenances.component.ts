@@ -1,11 +1,11 @@
-import { DateMaintenanceService } from "./../Service/dateMaintenance.service";
-import { Component, Inject, OnInit } from "@angular/core";
-import { map } from "rxjs/operators";
-import { Breakpoints, BreakpointObserver } from "@angular/cdk/layout";
-import { MaintenanceService } from "../Service/maintenance.service";
-import { Maintenance } from "../Class/Maintenance";
-import Intervention from "../intervention/Intervention";
-import { DateMaintenance } from "../Class/DateMaintenance";
+import { DateMaintenanceService } from './../Service/dateMaintenance.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { MaintenanceService } from '../Service/maintenance.service';
+import { Maintenance } from '../Class/Maintenance';
+import Intervention from '../intervention/Intervention';
+import { DateMaintenance } from '../Class/DateMaintenance';
 
 import * as moment from 'moment';
 
@@ -27,7 +27,7 @@ export class MaintenancesComponent implements OnInit {
     this.dms.getDateMaintenance().subscribe((data: DateMaintenance[]) => {
 
       this.datemaitenance = data;
-      console.log(this.datemaitenance)
+      console.log(this.datemaitenance);
     });
 
     console.log('compoment parent: Constructor');
@@ -49,7 +49,7 @@ export class MaintenancesComponent implements OnInit {
     });
 
 
-    console.log("compoment parent  : OnInit");
+    console.log('compoment parent  : OnInit');
     console.log(this.maintenance);
   }
 }

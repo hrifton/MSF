@@ -121,7 +121,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/app/intervention/intervention.service.ts:6</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/intervention/intervention.service.ts:8</a></div>
                             </td>
                         </tr>
 
@@ -186,8 +186,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="12"
-                            class="link-to-prism">src/app/intervention/intervention.service.ts:12</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="14"
+                            class="link-to-prism">src/app/intervention/intervention.service.ts:14</a></div>
                 </td>
             </tr>
 
@@ -288,8 +288,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="27"
-                            class="link-to-prism">src/app/intervention/intervention.service.ts:27</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="30"
+                            class="link-to-prism">src/app/intervention/intervention.service.ts:30</a></div>
                 </td>
             </tr>
 
@@ -320,15 +320,15 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>updateIntervention(departement, locality, priority, day, description, status, type, id)</code>
+<code>updateIntervention(form: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">src/app/intervention/intervention.service.ts:31</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="34"
+                            class="link-to-prism">src/app/intervention/intervention.service.ts:34</a></div>
                 </td>
             </tr>
 
@@ -342,75 +342,16 @@
                             <thead>
                                 <tr>
                                     <td>Name</td>
+                                    <td>Type</td>
                                     <td>Optional</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>departement</td>
-
+                                    <td>form</td>
                                     <td>
-                                        No
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
                                     </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>locality</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>priority</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>day</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>description</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>status</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>type</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>id</td>
 
                                     <td>
                                         No
@@ -460,12 +401,12 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>&#x27;http://localhost:4000/intervention&#x27;</code>
+                            <i>Default value : </i><code>&#x27;http://localhost:3000/intervention&#x27;</code>
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/app/intervention/intervention.service.ts:6</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/intervention/intervention.service.ts:8</a></div>
                             </td>
                         </tr>
 
@@ -480,17 +421,20 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
 import {HttpClient} from &#x27;@angular/common/http&#x27;;
+import { map, catchError } from &#x27;rxjs/operators&#x27;;
+import { of } from &#x27;rxjs&#x27;;
 
 @Injectable({providedIn: &#x27;root&#x27;})
 export class InterventionService {
-    uri &#x3D; &#x27;http://localhost:4000/intervention&#x27;;
+    uri &#x3D; &#x27;http://localhost:3000/intervention&#x27;;
 
     constructor(private http: HttpClient) {
 
     }
 
     addIntervention(departement, locality, priority, day, description) {
-        const obj &#x3D; {
+      let result:Object;
+      const obj &#x3D; {
             departement,
             locality,
             priority,
@@ -499,34 +443,26 @@ export class InterventionService {
             status: &#x27;en_cours&#x27;,
             type: &#x27;JobRequest&#x27;
         };
-        console.log(&#x60;${this.uri}/add&#x60;, obj);
+        //this.http.post(&#x60;${this.uri}/add&#x60;, obj).subscribe(res &#x3D;&gt; console.log(res));
+      this.http.post(&#x60;${this.uri}/add&#x60;, obj).subscribe(response &#x3D;&gt;{console.log(response)})
 
-        this.http.post(&#x60;${this.uri}/add&#x60;, obj).subscribe(res &#x3D;&gt; console.log(res));
-    }
+      }
 
     getInterventions() {
       return this.http.get(&#x60;${this.uri}&#x60;);
     }
 
-   updateIntervention(departement, locality, priority, day, description, status, type, id) {
-    const techn &#x3D; &#x27;Rudy&#x27;;
-    const obj &#x3D; {
-		departement,
-		locality,
-		priority,
-		day,
-		description,
-		status,
-    type,
-    id,
-    tech: techn,
-      };
+   updateIntervention(form:any) {
+      console.log(&quot;******Update*******&quot;)
+      console.log(form.id);
 
-    this
+      this
       .http
-      .put(&#x60;${this.uri}/update/${id}&#x60;, obj)
+      .put(&#x60;${this.uri}/update/${form.id}&#x60;, form)
       .subscribe(res &#x3D;&gt; console.log(&#x27;Done&#x27;));
   }
+
+
 
 }
 </code></pre>

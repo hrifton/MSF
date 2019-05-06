@@ -1,18 +1,23 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input } from '@angular/core';
+import { DatePicker } from '@syncfusion/ej2-calendars';
+import { DropDownList } from '@syncfusion/ej2-dropdowns';
 import {
   DayService,
   WeekService,
   WorkWeekService,
   MonthService,
-  AgendaService,
   MonthAgendaService,
   TimelineViewsService,
   TimelineMonthService,
   EventSettingsModel,
+  PopupOpenEventArgs,
   View,
   EventRenderedArgs
 } from "@syncfusion/ej2-angular-schedule";
 import { extend } from "@syncfusion/ej2-grids/src";
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
+import { MaintenanceService } from 'src/app/Service/maintenance.service';
+import { now } from 'moment';
 
 @Component({
   selector: "app-calendrier",
@@ -31,7 +36,10 @@ import { extend } from "@syncfusion/ej2-grids/src";
 export class CalendrierComponent implements OnInit {
   @Input() maintenance;
   @Input() datemaitenance;
-  constructor() {
+
+
+  public maintenanceForm: FormGroup;
+  constructor(private fb: FormBuilder, private ms: MaintenanceService) {
     console.log("maintenance calendier constructor");
   }
   scheduleData: Object[] = [
@@ -228,40 +236,65 @@ export class CalendrierComponent implements OnInit {
       CategoryColor: "#7fa900"
     }
   ];
-
+  
   public data: Object[] = extend([], this.scheduleData, null) as Object[];
   public selectedDate: Date = new Date();
+  public minDate: Date = new Date();
   public eventSettings: EventSettingsModel = {};
   public currentView: View = "Week";
+  public lrepeat: { [key: string]: Object }[] = [
+    { repeat: "Never" },
+    { repeat: "Daily" },
+    { repeat: "Weekly" },
+    { repeat: "Monthly" },
+    { repeat: "Yearly" },
 
-  oneventRendered(args: EventRenderedArgs): void {
-    const categoryColor: string = args.data.CategoryColor as string;
-    if (!args.element || !categoryColor) {
-      return;
-    }
-    if (this.currentView === "Agenda") {
-      (args.element
-        .firstChild as HTMLElement).style.borderLeftColor = categoryColor;
-    } else {
-      args.element.style.backgroundColor = categoryColor;
-    }
+  ];
+
+  public lEnd: { [key: string]: Object }[] = [
+    { end: "Never" },
+    { end: "Until" },
+    { end: "Count" },
+  
+
+  ];
+  //Creation du formulaire
+  createForm() {
+    this.maintenanceForm = this.fb.group({
+      status: new FormControl('', [Validators.required]),
+      repeat: new FormControl('', [Validators.required]),
+      StartTime: new FormControl('', [Validators.required]),
+      EndTime: new FormControl('', [Validators.required])
+    })
+  }
+  public onChange(args: any): void {
+
+    
   }
 
-  cre;
+  onEventRendered(args: any): void {
+    console.log(args)
+  }
+  onPopupOpen(args: PopupOpenEventArgs): void {
+    console.log("PopupOpenEventArgs")
+  }
+  onActionBegin(args: EventRenderedArgs): void {
+    console.log("onActionBegin")
+  }
 
   ngOnInit() {
     this.createlisteMaintenance(this.datemaitenance, this.maintenance);
     console.log("maintenance calendier Init");
     console.log("Maintenance was initialized with : ", this.maintenance);
-    
-    //this.maintenance[0].StartTime = new Date();
-    //this.maintenance[0].EndTime = new Date();
-    //this.maintenance[0].Subject = this.maintenance[0].description;
 
-    //this.data.push(...this.maintenance);
-    //this.eventSettings = {
-      //dataSource: this.data
-    //};
+    this.maintenance[0].StartTime = new Date();
+    this.maintenance[0].EndTime = new Date();
+    this.maintenance[0].Subject = this.maintenance[0].description;
+
+    this.data.push(...this.maintenance);
+    this.eventSettings = {
+      dataSource: this.data
+    };
   }
   createlisteMaintenance(datemaintenance: any, maintenance: any) {
     console.log("test")
@@ -269,9 +302,10 @@ export class CalendrierComponent implements OnInit {
     datemaintenance.forEach(datemain => {
       console.log(datemain.idMaintenance)
       maintenance.forEach(maint => {
-        console.log(maint); 
+        console.log(maint);
 
       });
     });
   }
+
 }

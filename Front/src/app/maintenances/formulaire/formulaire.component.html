@@ -1,93 +1,97 @@
+<form id="formId" [formGroup]="maintenanceForm" class="form-horizontal" novalidate="">
 
-
-      <form id="formId" [formGroup]="maintenanceForm" class="form-horizontal" novalidate="">
-
-          <div class="form-group">
-            <!--  <div class="e-float-input">
+    <div class="form-group">
+        <!--  <div class="e-float-input">
                   <input id="maintenance" type="text" formControlName="maintenance">
                   <span class="e-float-line"></span>
                   <label for="maintenance" class="e-float-text">maintenance</label>
               </div>-->
-              <div fxFlex="auto">
-                <mat-form-field class="full-width">
-                  <mat-label>Maintenance</mat-label>
-                  <mat-select  disableRipple="disableRipple" (selectionChange)="onSelection($event)" formControlName="maintenance" #maintenance>
+
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+            <mat-form-field class="full-width">
+                <mat-label>Maintenance</mat-label>
+                <mat-select disableRipple="disableRipple" (selectionChange)="onSelection($event)"
+                    formControlName="maintenance" #maintenance>
                     <mat-option *ngFor="let mainte of maintenances" [value]="mainte">
-                      {{mainte.task}}
+                        {{mainte.task}}
                     </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            <!--  <div *ngIf="maintenance.errors">
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <!--  <div *ngIf="maintenance.errors">
                   <div *ngIf="maintenance.errors.required && chmaintenanceeck.touched" class="e-error">
                       This field is required.
                   </div>
               </div>-->
-          </div>
-
-          <div class="form-group">
-              <div class="e-float-input">
-                  <input id="executor" type="text" formControlName="executor">
-                  <span class="e-float-line"></span>
-                  <label for="executor" class="e-float-text">executor</label>
-              </div>
-               <!-- <div *ngIf="executor.errors ">
+    </div>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+            <div class="form-group">
+                <div class="e-float-input">
+                    <input id="executor" type="text" formControlName="executor">
+                    <span class="e-float-line"></span>
+                    <label for="executor" class="e-float-text">executor</label>
+                </div>
+            </div>
+            <!-- <div *ngIf="executor.errors ">
                   <div *ngIf="executor.errors.executor && executor.touched" class="e-error">
                       Please enter a valid executor address.
                   </div>
               </div>-->
-          </div>
-
-          <div class="form-group">
-              <div class="e-float-input">
-                  <input id="periodicity" type="text" formControlName="periodicity">
-                  <span class="e-float-line"></span>
-                  <label for="periodicity" class="e-float-text">periodicity</label>
-                 <!--  <div *ngIf="periodicity.errors ">
+        </div>
+        <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+            <div class="form-group">
+                <div class="e-float-input">
+                    <input id="periodicity" type="text" formControlName="periodicity">
+                    <span class="e-float-line"></span>
+                    <label for="periodicity" class="e-float-text">periodicity</label>
+                    <!--  <div *ngIf="periodicity.errors ">
                       <div *ngIf="periodicity.errors.date && periodicity.touched" class="e-error">
                           Please enter a valid date.
                       </div>
                   </div>-->
-              </div>
-          </div>
-          <div class="form-group">
-            <div class="e-float-input">
-                <input id="duration" type="text" formControlName="duration" placeholder="hour or minute">
-                <span class="e-float-line"></span>
-                <label for="duration" class="e-float-text">duration</label>
-               <!--  <div *ngIf="periodicity.errors ">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="e-float-input">
+            <input id="duration" type="text" formControlName="duration" placeholder="hour or minute">
+            <span class="e-float-line"></span>
+            <label for="duration" class="e-float-text">duration</label>
+            <!--  <div *ngIf="periodicity.errors ">
                     <div *ngIf="periodicity.errors.date && periodicity.touched" class="e-error">
                         Please enter a valid date.
                     </div>
                 </div>-->
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="e-float-input">
+            <textarea rows="2" id="description" name="description" formControlName="description"></textarea>
+            <span class="e-float-line"></span>
+            <label class="e-float-text" for="description">description</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="e-float-input">
+            <ejs-datetimepicker id="datetimepicker" name="date" format='dd/MM/yyy hh:mm' formControlName="date"
+                width='245px' (change)='onChange($event)'></ejs-datetimepicker>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div style="width: 320px;margin:0px auto;height: 100px;padding-top: 25px;">
+            <div style="display: inline-block;">
+                <button (click)="saveDate(maintenanceForm)" color="primary" data-ripple="true" id="validateSubmit"
+                    mat-raised-button="mat-raised-button-left">save</button>
+            </div>
+            <div style="float: right;">
+                <button id="resetbtn" class="samplebtn e-control e-btn" mat-raised-button="mat-raised-button-left"
+                    color="primary" type="reset" data-ripple="true">Clear</button>
             </div>
         </div>
-        <div class="form-group">
-          <div class="e-float-input">
-              <textarea rows="2" id="description" name="description" formControlName="description"></textarea>
-              <span class="e-float-line"></span>
-              <label class="e-float-text" for="description">description</label>
-          </div>
-      </div>
-      <div class="form-group">
-        <div class="e-float-input">
-            <ejs-datetimepicker id="datetimepicker" name="date" format='dd/MM/yyy hh:mm'formControlName="date"  width='245px' (change)='onChange($event)'></ejs-datetimepicker>
-        </div>
-      </div>
-
-
-          <div class="row">
-              <div style="width: 320px;margin:0px auto;height: 100px;padding-top: 25px;">
-                  <div style="display: inline-block;">
-                      <button (click)="saveDate(maintenanceForm)" color="primary"
-                              data-ripple="true" id="validateSubmit" mat-raised-button="mat-raised-button-left">save</button>
-                  </div>
-                  <div style="float: right;">
-                      <button id="resetbtn" class="samplebtn e-control e-btn" mat-raised-button="mat-raised-button-left"
-              color="primary"type="reset"  data-ripple="true">Clear</button>
-                  </div>
-              </div>
-          </div>
-      </form>
-
-
+    </div>
+</form>
