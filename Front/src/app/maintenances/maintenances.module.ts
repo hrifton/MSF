@@ -2,17 +2,14 @@ import { FormulaireComponent } from "./formulaire/formulaire.component";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { DashboardLayoutModule } from "@syncfusion/ej2-angular-layouts";
-import {
-  ChartModule,
-  AccumulationChartModule
-} from "@syncfusion/ej2-angular-charts";
-import { RadioButtonModule } from '@syncfusion/ej2-angular-buttons';
+import { CheckBoxModule,RadioButtonModule } from '@syncfusion/ej2-angular-buttons';
+import { ChartModule, AccumulationChartModule} from "@syncfusion/ej2-angular-charts";
 
 import { MaintenancesRoutingModule } from "./maintenances-routing.module";
 import { MaintenancesComponent } from "./maintenances.component";
 import { ScheduleModule } from "@syncfusion/ej2-angular-schedule";
 import { DayService, WeekService, WorkWeekService, MonthService, AgendaService, MonthAgendaService } from '@syncfusion/ej2-angular-schedule';
-import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
+import { DropDownListAllModule,MultiSelectAllModule } from '@syncfusion/ej2-angular-dropdowns';
 import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
 import {
   MatGridListModule,
@@ -36,7 +33,10 @@ import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
     FormulaireComponent,
     CalendrierComponent
   ],
-  imports: [DatePickerModule,
+  imports: [
+    MultiSelectAllModule,
+    CheckBoxModule,
+    DatePickerModule,
     NumericTextBoxModule,
     DropDownListAllModule,
     RadioButtonModule,

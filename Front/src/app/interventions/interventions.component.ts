@@ -50,10 +50,10 @@ export class InterventionsComponent implements OnInit {
   ngOnInit() {
     this.us.getUserProfil().subscribe(
       res => {
-        this.userDetails = res["user"];
+        this.userDetails = res['user'];
 
         //gestion Du type d'utilisateur
-        // tslint:disable-next-line:triple-equals
+        
         if (this.userDetails.status == "user") {
           this.is
             .getInterventionsByUser(this.userDetails.fullName)
@@ -61,8 +61,9 @@ export class InterventionsComponent implements OnInit {
               this.interventions = data;
             });
         }
-        // tslint:disable-next-line:triple-equals
-        else if (this.userDetails.status == "tech") {
+       
+
+        else if (this.userDetails.status === 'tech') {
           this.is
             .getInterventionsBytech(this.userDetails.fullName)
             .subscribe((data: Intervention[]) => {

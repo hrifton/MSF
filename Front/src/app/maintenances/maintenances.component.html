@@ -21,6 +21,7 @@
     </div>
 
     <div class="row ">
+      
       <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
         <div tabindex="0" class="e-card" id="basic_card">
           <div class="e-card-header">
@@ -31,7 +32,7 @@
             </div>
           </div>
           <div class="e-card-content">
-            <app-formulaire (messageEvent)="saveMaintenance($event)"></app-formulaire>
+            <app-formulaire *ngIf="lrepeat.length > 0" (messageEvent)="saveMaintenance($event)" [lrepeat]="lrepeat" [lEnd]="lEnd"></app-formulaire>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { DateMaintenanceService } from './../Service/dateMaintenance.service';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MaintenanceService } from '../Service/maintenance.service';
@@ -8,6 +8,8 @@ import Intervention from '../intervention/Intervention';
 import { DateMaintenance } from '../Class/DateMaintenance';
 
 import * as moment from 'moment';
+import { CalendrierComponent } from './calendrier/calendrier.component';
+
 
 @Component({
   selector: 'app-maintenances',
@@ -17,6 +19,25 @@ import * as moment from 'moment';
 export class MaintenancesComponent implements OnInit {
   maintenance: any;
   datemaitenance: DateMaintenance[];
+  public lrepeat: { [key: string]: Object }[] = [
+    { repeat: 'Never' },
+    { repeat: 'Daily' },
+    { repeat: 'Weekly' },
+    { repeat: 'Monthly' },
+    { repeat: 'Yearly' },
+
+  ];
+
+  public lEnd: { [key: string]: Object }[] = [
+    { end: 'Never' },
+    { end: 'Until' },
+    { end: 'Count' },
+
+
+  ];
+
+  @ViewChild(CalendrierComponent)
+  calendrier: CalendrierComponent;
 
   constructor(
     private ms: MaintenanceService,
@@ -24,32 +45,31 @@ export class MaintenancesComponent implements OnInit {
   ) {
     this.maintenance = [];
     this.datemaitenance = [];
-    this.dms.getDateMaintenance().subscribe((data: DateMaintenance[]) => {
 
+    this.dms.getDateMaintenance().subscribe((data: DateMaintenance[]) => {
       this.datemaitenance = data;
-      console.log(this.datemaitenance);
+    });
+
+    this.ms.getMaintenance().subscribe((data: Maintenance[]) => {
+      this.maintenance = data;
     });
 
     console.log('compoment parent: Constructor');
   }
 
-  saveMaintenance(maintenance) {
-    // TODO: Verifier si Hour ou Min Regex
+  saveMaintenance($event) {
 
-    maintenance.value.StartTime = moment(maintenance.value.date).format('L LT');
-
-    maintenance.value.EndTime = moment(maintenance.value.date).add(2, 'hours').format('L LT');
-
-
-    // this.dms.postDateMaintenance(maintenance.value);
+    $event.forEach(element => {
+      this.dms.postDateMaintenance(element);
+      element.CategoryColor='#7fa900',
+      this.datemaitenance.push(element);
+    });
+    this.calendrier.refreshAgenda();
   }
   ngOnInit() {
-    this.ms.getMaintenance().subscribe((data: Maintenance[]) => {
-      this.maintenance = data;
-    });
 
 
-    console.log('compoment parent  : OnInit');
-    console.log(this.maintenance);
+    // console.log('compoment parent  : OnInit');
+    // console.log(this.maintenance);
   }
 }

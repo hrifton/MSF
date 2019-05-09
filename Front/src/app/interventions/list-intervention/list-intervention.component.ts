@@ -2,10 +2,8 @@ import {
   Component,
   OnInit,
   Input,
-  SimpleChanges,
   Output,
   EventEmitter,
-  ChangeDetectorRef,
   ViewChild
 } from "@angular/core";
 import { Browser } from "@syncfusion/ej2-base";
@@ -19,7 +17,6 @@ import {
 } from "@syncfusion/ej2-angular-grids";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Dialog } from "@syncfusion/ej2-angular-popups";
-import Solution from "../../Class/Solution";
 import { InterventionService } from "../../Service/intervention.service";
 import { DepartementService } from "src/app/setting/departement/departement.service";
 import Departement from "../../Class/Departement";

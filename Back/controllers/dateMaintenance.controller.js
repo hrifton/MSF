@@ -5,22 +5,19 @@ const DateMaintenance = mongoose.model("DateMaintenance");
 
 module.exports.add = (req, res, next) => {
   var dateMaintenance = new DateMaintenance();
+console.log(req.body)
+  dateMaintenance.StartTime = req.body.StartTime
+  dateMaintenance.EndTime = req.body.EndTime
+  dateMaintenance.idMaintenance = req.body.idMaintenance
+ 
 
-  array = Object.keys(req.body).map(function (key) {
-    return String(key), req.body[key]
-  })
-  dateMaintenance.idMaintenance = array[0];
-  dateMaintenance.StartTime = req.body.date;
-  finish=req.body.date
-  
-  console.log(finish)
-  /*dateMaintenance.save((err, doc) => {
+  dateMaintenance.save((err, doc) => {
     if (!err) res.send(doc);
     else {
       if (err.code === 1000) res.status(422).send(["erreur Date Maintenance"]);
       else return next(err);
     }
-  });*/
+  });
 };
 module.exports.getAll = (req, res) => {
   DateMaintenance.find((err, docs) => {

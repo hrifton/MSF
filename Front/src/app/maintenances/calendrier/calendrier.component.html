@@ -1,12 +1,13 @@
-<ejs-schedule width='100%' height='550px' [selectedDate]="selectedDate" [eventSettings]="eventSettings"
+<ejs-schedule #agenda width='100%' height='550px' [selectedDate]="selectedDate" [eventSettings]="eventSettings"
     (actionBegin)="onActionBegin($event)" (popupOpen)="onPopupOpen($event)" (eventRendered)="onEventRendered($event)"
     [showQuickInfo]="showQuickInfo">
     <e-views>
         <e-view option="Day"></e-view>
         <e-view option="Week"></e-view>
         <e-view option="WorkWeek"></e-view>
-        <e-view option="Month"></e-view>
+        <e-view option="Month"></e-view>       
     </e-views>
+    
     <ng-template #editorTemplate>
         <form [formGroup]="maintenanceForm" class="form-horizontal" novalidate="">
             <div class="form-row">
@@ -82,4 +83,5 @@
 
         </form>
     </ng-template>
+   
 </ejs-schedule>
