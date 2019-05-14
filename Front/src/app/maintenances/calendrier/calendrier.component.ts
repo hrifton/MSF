@@ -126,6 +126,7 @@ export class CalendrierComponent implements OnInit {
       maintenance.forEach(maint => {
         if (maint._id === datemain.idMaintenance) {
           datemain.Subject = maint.task;
+          // TODO Hicham  Switch Color maintenance
           switch (maint.executor) {
             case 'Biomed':
               datemain.CategoryColor='#1ea519'

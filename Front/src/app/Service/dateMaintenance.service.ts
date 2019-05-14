@@ -12,13 +12,13 @@ export class DateMaintenanceService {
   constructor(private http: HttpClient) {}
 // Post a new datemaintenance
   postDateMaintenance(datemaintenance: DateMaintenance) {
-    console.log(datemaintenance)
+    
     return this.http.post(`${this.uri}/add`, datemaintenance).subscribe(
       data => {
-        console.log(data);
+        //console.log(data);
       },
       err => {
-        console.log('Erro' + err);
+        //console.log('Erro' + err);
       }
     );
   }

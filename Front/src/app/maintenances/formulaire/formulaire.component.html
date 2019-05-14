@@ -200,7 +200,7 @@
                         <div *ngIf="end.value==='Count'">
 
                             <ejs-numerictextbox formControlName="count" format='###.##' placeholder="Count" decimals='0'
-                                value="0" min="0" max="100" step="1" #count>
+                                value="0" min="0" max="1000" step="1" #count>
                             </ejs-numerictextbox>
 
 
@@ -325,7 +325,7 @@
     <div class="row">
         <div style="width: 320px;margin:0px auto;height: 100px;padding-top: 25px;">
             <div style="display: inline-block;">
-                <button (click)="saveDate(maintenanceForm)" color="primary" data-ripple="true" id="validateSubmit"
+                <button class="samplebtn e-control e-btn" (click)="saveDate(maintenanceForm)" color="primary" data-ripple="true" id="validateSubmit"
                     mat-raised-button="mat-raised-button-left">save</button>
             </div>
             <div style="float: right;">
