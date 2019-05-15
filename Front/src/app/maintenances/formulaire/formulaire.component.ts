@@ -185,9 +185,6 @@ export class FormulaireComponent {
     // this.messageEvent.emit(date);
   }
 
-
-
-
   //#region save by Year
   saveYearly(maintenance) {
 
@@ -468,6 +465,8 @@ export class FormulaireComponent {
   }
   //#endregion
 
+
+  
   public onChangeDrop(): void {
     // enable or disable the dropdown button in Multiselect based on CheckBox checked state
     this.mulObj.showDropDownIcon = this.dropdownObj.checked;

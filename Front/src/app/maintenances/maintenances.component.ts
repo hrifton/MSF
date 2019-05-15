@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MaintenanceService } from '../Service/maintenance.service';
 import { Maintenance } from '../Class/Maintenance';
-import Intervention from '../intervention/Intervention';
+
 import { DateMaintenance } from '../Class/DateMaintenance';
 
 import * as moment from 'moment';
@@ -68,8 +68,5 @@ export class MaintenancesComponent implements OnInit {
   }
   ngOnInit() {
 
-
-    // console.log('compoment parent  : OnInit');
-    // console.log(this.maintenance);
   }
 }

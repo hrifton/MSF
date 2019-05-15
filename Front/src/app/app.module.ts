@@ -34,16 +34,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 // Providers
-import { InterventionService } from './intervention/intervention.service';
+
 import { HttpModule, JsonpModule } from '@angular/http';
 
 // Component Declaration
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { FormulaireInterventionComponent } from './intervention/formulaire-intervention/formulaire-intervention.component';
+
 import {MatTableModule} from '@angular/material/table';
-import { ListeInterventionComponent } from './intervention/liste-intervention/liste-intervention.component';
+
 import { DepartementComponent } from './setting/departement/departement.component';
 import { SettingDepartementComponent } from './setting/departement/setting-departement/setting-departement.component';
 import { ListeDepartementComponent } from './setting/departement/liste-departement/liste-departement.component';
@@ -67,8 +67,6 @@ import { UsersModule } from './users/users.module';
   declarations: [
     AppComponent,
     NavBarComponent,
-    FormulaireInterventionComponent,
-    ListeInterventionComponent,
     DepartementComponent,
     SettingDepartementComponent,
     ListeDepartementComponent,

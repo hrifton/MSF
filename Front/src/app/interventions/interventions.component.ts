@@ -4,13 +4,14 @@ import {
   HttpHeaders,
   HttpClientModule
 } from "@angular/common/http";
-import Intervention from "src/app/intervention/Intervention";
+
 import { InterventionService } from "./../Service/intervention.service";
 import { Component, OnInit, ViewEncapsulation, ViewChild } from "@angular/core";
 import { User } from "../Class/user.model";
 import { Ng6OdooRPCService } from "angular6-odoo-jsonrpc";
 import { ListInterventionComponent } from "./list-intervention/list-intervention.component";
 import { HistoricInterventionComponent } from "./historic-intervention/historic-intervention.component";
+import Intervention from '../Class/Intervention';
 
 @Component({
   selector: "app-interventions",

@@ -4,7 +4,8 @@ import Departement from 'src/app/setting/departement/Departement';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { InterventionService } from '../../Service/intervention.service';
 import { ToastrService } from 'ngx-toastr';
-import Intervention from 'src/app/intervention/Intervention';
+import Intervention from 'src/app/Class/Intervention';
+
 
 
 
