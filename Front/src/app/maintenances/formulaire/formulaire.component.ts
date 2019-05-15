@@ -1,29 +1,15 @@
-import { Component, EventEmitter, Output, Input, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormsModule, AbstractControl, FormBuilder } from '@angular/forms';
-import { FormValidators } from '@syncfusion/ej2-angular-inputs';
-import { Maintenance } from 'src/app/Class/Maintenance';
-import { ChangeEventArgs, FilterType, MultiSelectComponent } from '@syncfusion/ej2-angular-dropdowns';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CheckBoxComponent } from '@syncfusion/ej2-angular-buttons';
-import { MaintenanceService } from 'src/app/Service/maintenance.service';
-
-
-import {
-  DayService,
-  WeekService,
-  WorkWeekService,
-  MonthService,
-  MonthAgendaService,
-  TimelineViewsService,
-  TimelineMonthService,
-  EventSettingsModel,
-  PopupOpenEventArgs,
-  View,
-  RecurrenceEditor,
-  EventRenderedArgs
-} from '@syncfusion/ej2-angular-schedule';
-
+import { MultiSelectComponent } from '@syncfusion/ej2-angular-dropdowns';
+import { RecurrenceEditor } from '@syncfusion/ej2-angular-schedule';
 import * as moment from 'moment';
-import { MatIcon, MatNativeDateModule } from '@angular/material';
+import { Maintenance } from 'src/app/Class/Maintenance';
+import { MaintenanceService } from 'src/app/Service/maintenance.service';
+import { MatNativeDateModule } from '@angular/material';
+
+
+
 // var momentDay = require('moment-weekdaysin');
 
 @Component({
@@ -37,6 +23,7 @@ export class FormulaireComponent {
   constructor(private fb: FormBuilder, private ms: MaintenanceService) {
     this.createForm();
   }
+  //#region Declaration Variable
   maintenances: Maintenance[];
 
   // date = new Date();
@@ -99,6 +86,7 @@ export class FormulaireComponent {
   public checkWaterMark = 'Select Day(s)';
   // set the MultiSelect popup height
   public popHeight = '350px';
+  //#endregion
 
   createForm() {
     this.maintenanceForm = this.fb.group({
@@ -198,72 +186,47 @@ export class FormulaireComponent {
   }
 
 
-  // ***********************************************Traitement By Yearly
+
+
+  //#region save by Year
   saveYearly(maintenance) {
+
     console.log('traitement Yearly');
     console.log(maintenance.end);
   }
-  // ***********************************************Traitement By monthly
+  //#endregion
+
+  //#region save by Month
   saveMonthly(maintenance) {
     if (maintenance.end === 'Until') { this.planMonthlyUntil(maintenance); } else { this.planMonthlyCount(maintenance); }
   }
+  /**
+   *
+   * @param maintenance
+   * premet la plannification d'un nombre de fois definit
+   *
+   * soit selon un le neme jours du mois
+   * ou selon une date definit
+   */
   planMonthlyCount(maintenance: any) {
 
     // splite date month year
-    const month = moment(maintenance.StartTime).format("MM");
-    const year = parseInt(moment(maintenance.StartTime).format("YYYY"));
+    const month = moment(maintenance.StartTime).format('MM');
+    const year = parseInt(moment(maintenance.StartTime).format('YYYY'));
     const time = moment(maintenance.StartTime).format('LT');
     // create date with month and year
-    let date = moment(month + "" + year, "M/YYYY");
+    const date = moment(month + '' + year, 'M/YYYY');
 
     // array for stock new Maintenance
     const newMaintenances: any = [];
 
-    // first second theerd or last currence of month
-    const current = maintenance.current;
-
     // loop for nomber occurence ask
     for (let index = 0; index < maintenance.count; index++) {
-      // first occurence
-      if (current == 1) {
-        
-        date = moment(date, "M YYYY").startOf('month').day(maintenance.day);
-        maintenance.StartTime = this.firstWeek(date);
-        
-
-      } else if (current == 2) {
-        date = moment(date, "M YYYY").startOf('month').day(maintenance.day);
-        date = this.firstWeek(date);
-        
-
-        // startOf('month) return first week of month day('maintenance.day') var with number of day add(7,'d') add 7 days up first day
-        maintenance.StartTime = moment(date).add(7, 'd');
-       
-        
-      } else if (current == 3) {
-        date = moment(date, "M YYYY").startOf('month').day(maintenance.day);
-        date = this.firstWeek(date);
-        // startOf('month) return first week of month day('maintenance.day') var with number of day add(14,'d') add 14 days up first day
-        maintenance.StartTime = moment(date).add(14, 'd');
-        
-       
-      } else {
-        // endOF('month) return last week of month day('maintenance.day') var with number of day
-        maintenance.StartTime=this.checkLastWeekofMonth(moment(date, "M YYYY").endOf('month').day(maintenance.day))
-       
-        //maintenance.StartTime = moment(date, "M YYYY").endOf('month').day(maintenance.day);
-        
-      }
-     
-      //maintenance.StartTime=moment(moment(maintenance.StartTime,"DD/MM/YYYY")+''+time)
-      console.log(maintenance.StartTime)
-      maintenance.StartTime = (moment(maintenance.StartTime.format("ll") + ' ' + time).format('llll'));
-      console.log(maintenance.StartTime)
-      this.traitementPlanByDay(maintenance, newMaintenances);
-
-
-      date.add(maintenance.interval, 'M');
-
+      //this.traitementCurrentByMonth(maintenance.current, date, maintenance);
+      //maintenance.StartTime = (moment(maintenance.StartTime.format('ll') + ' ' + time).format('llll'));
+      //this.traitementPlanByDay(maintenance, newMaintenances);
+      //date.add(maintenance.interval, 'M');
+      this.traitementByMonth(maintenance,newMaintenances,date,time)
     }
 
     this.messageEvent.emit(newMaintenances);
@@ -271,50 +234,52 @@ export class FormulaireComponent {
 
 
   }
-
+  /**
+   *
+   * @param maintenance
+   *
+   * premet la plannification jusqu'une date limite
+   *
+   * soit selon un le neme jours du mois
+   * ou selon une date definit
+   */
   planMonthlyUntil(maintenance: any) {
-    console.log("Until");
     const newMaintenances: any = [];
+    const time = moment(maintenance.StartTime).format('LT');
+    const month = moment(maintenance.StartTime).format('M');
+    const year = moment(maintenance.StartTime).format('YYYY');
+    const date = moment(month + ' ' + year, 'M YYYY').day(maintenance.day);
 
-    const month = moment(maintenance.StartTime).format("M");
-    const year = moment(maintenance.StartTime).format("YYYY");
-    const date = moment(month + " " + year, "M YYYY").day(maintenance.day);
 
 
-    let i = 0;
-    while (moment(maintenance.StartTime).isBefore(maintenance.until)) {
-      const month = moment(maintenance.StartTime).format("M");
-      const year = moment(maintenance.StartTime).format("YYYY");
-      const date = moment(month + " " + year, "M YYYY").day(maintenance.day);
-
-      maintenance.StartTime = date;
-      newMaintenances.push(maintenance);
-      console.log(maintenance.StartTime);
-      if (i = 5) { break; }
-
-      i++;
+    while (moment(maintenance.StartTime).isBefore(moment(maintenance.until))) {
+     this.traitementByMonth(maintenance,newMaintenances,date,time);
     }
+    this.messageEvent.emit(newMaintenances);
+    this.createForm();
 
-    // console.log(newMaintenances)
-
-
-    // console.log(maintenance)
-
-
-
-
-    // console.log(date.format("M") === date2.format("M"))
 
   }
+  //#endregion
 
-
-
-
-
-  // ***********************************************Traitement By Weekly
+  //#region save by Week
+  /**
+   *
+   * @param maintenance
+   * determine si la fin de la plannification
+   * se fait selon une date limite ou un nombre de repetition
+   *  pour une plannification par semaine
+   */
   saveWeekly(maintenance) {
     if (maintenance.end === 'Until') { this.planWeekUntil(maintenance); } else { this.planWeekCount(maintenance); }
   }
+
+  /**
+   *
+   * @param maintenance
+   *
+   * traitement du planning par semaine avec nombre de repétition determiner
+   */
   planWeekCount(maintenance: any) {
 
     const nbWeek = moment(moment(maintenance.StartTime)).week();;
@@ -337,7 +302,11 @@ export class FormulaireComponent {
     this.createForm();
 
   }
-
+  /**
+   *
+   * @param maintenance
+   * traitement du planning par semaine avec date de limite
+   */
   planWeekUntil(maintenance: any) {
     let nbWeek;
     const newMaintenances: any = [];
@@ -360,8 +329,16 @@ export class FormulaireComponent {
     this.messageEvent.emit(newMaintenances);
     this.createForm();
   }
+  //#endregion
 
-  // ***********************************************Traitement By Daily
+  //#region save by Day
+  /**
+   *
+   * @param maintenance
+   * determine si la fin de la plannification
+   * se fait selon une date limite ou un nombre de repetition
+   * pour plannification par jour
+   */
   saveDaily(maintenance) {
     if (maintenance.end === 'Until') { this.planDayUntil(maintenance); } else { this.planDayCount(maintenance); }
 
@@ -385,46 +362,98 @@ export class FormulaireComponent {
     this.messageEvent.emit(newMaintenances);
     this.createForm();
   }
+  //#endregion
 
-  checkLastWeekofMonth(date){
-    console.log("checkLastWeekofMonth")
-    if(date.format("DD")<10){
-       date.add(-1,'w')
-      return date
+
+  //#region Tools
+  /**
+ *
+ * @param current definit le numero de la semaine
+ * @param date definit le mois a traité
+ * @param maintenance definit le jour de la semaine
+ *
+ * si current == 1 premier semaine
+ * permet de calculer soit premier "jour (ex:lundi du mois")
+ *
+ * si current == 2 deuxieme semaine
+ * permet de calculer soit deuxieme "jour (ex:lundi du mois")
+ */
+  traitementCurrentByMonth(current, date, maintenance) {
+    if (current == 1) {
+
+      date = moment(date, 'M YYYY').startOf('month').day(maintenance.day);
+      maintenance.StartTime = this.firstWeek(date);
+
+
+
+    } else if (current == 2) {
+      date = moment(date, 'M YYYY').startOf('month').day(maintenance.day);
+      date = this.firstWeek(date);
+
+
+      // startOf('month) return first week of month day('maintenance.day') var with number of day add(7,'d') add 7 days up first day
+      maintenance.StartTime = moment(date).add(7, 'd');
+
+
+    } else if (current == 3) {
+      date = moment(date, 'M YYYY').startOf('month').day(maintenance.day);
+      date = this.firstWeek(date);
+      // startOf('month) return first week of month day('maintenance.day') var with number of day add(14,'d') add 14 days up first day
+      maintenance.StartTime = moment(date).add(14, 'd');
+      //TODO verifier si c'est pas 30 ou 31 modifier date
+
+    } else {
+      // endOF('month) return last week of month day('maintenance.day') var with number of day
+      maintenance.StartTime = this.checkLastWeekofMonth(moment(date, 'M YYYY').endOf('month').day(maintenance.day));
+
+      // maintenance.StartTime = moment(date, "M YYYY").endOf('month').day(maintenance.day);
+
     }
-   return date
   }
+  checkLastWeekofMonth(date) {
 
-
-
-
+    if (date.format('DD') < 10) {
+      date.add(-1, 'w');
+      return date;
+    }
+    return date;
+  }
   firstWeek(date) {
-    console.log("firstWeek")
-    console.log(moment(date).format('llll'))
     if (date.format('DD') > 20) {
       return date.add(1, 'w');
     } else {
       return date;
     }
   }
+  traitementByMonth(maintenance,newMaintenances,date,time){
+    if (maintenance.choix === 'current') {
+      this.traitementCurrentByMonth(maintenance.current, date, maintenance);
+      maintenance.StartTime = (moment(maintenance.StartTime.format('ll') + ' ' + time).format('llll'));
+      this.traitementPlanByDay(maintenance, newMaintenances);
 
-
+      maintenance.StartTime = date.add(maintenance.interval, 'M');
+    } else {
+      maintenance.StartTime = date.date(maintenance.dayOcc).format("llll")
+      this.traitementPlanByDay(maintenance, newMaintenances)
+      maintenance.StartTime = date.add(maintenance.interval, 'M');
+    }
+  }
   traitementPlanByDay(maintenance, newMaintenances) {
     maintenance.StartTime = moment(maintenance.StartTime).format('LLLL');
     maintenance.EndTime = this.addTime(moment(maintenance.StartTime, 'LLLL'), maintenance.duration);
-
+    console.log(moment(maintenance.StartTime).format('llll'));
     const dayMain: DayMain = {
       StartTime: maintenance.StartTime,
       EndTime: maintenance.EndTime,
       Subject: maintenance.maintenance,
       idMaintenance: maintenance.idMaintnance
     };
+
     newMaintenances.push(dayMain);
 
     maintenance.StartTime = moment(maintenance.StartTime, 'LLLL').add(maintenance.interval, 'days');
 
   }
-
   addTime(StartTime, duration) {
     // split  string nb unité (hours or minutes)
     const tab = duration.split(' ');
@@ -437,6 +466,7 @@ export class FormulaireComponent {
     return moment(EndTime).format('LLLL');
 
   }
+  //#endregion
 
   public onChangeDrop(): void {
     // enable or disable the dropdown button in Multiselect based on CheckBox checked state

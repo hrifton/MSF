@@ -435,8 +435,7 @@ export class MaintenancesComponent implements OnInit {
   }
 
   saveMaintenance(maintenance) {
-    // TODO: Verifier si Hour ou Min Regex
-
+  
     maintenance.value.StartTime &#x3D; moment(maintenance.value.date).format(&#x27;L LT&#x27;);
 
     maintenance.value.EndTime &#x3D; moment(maintenance.value.date).add(2, &#x27;hours&#x27;).format(&#x27;L LT&#x27;);
