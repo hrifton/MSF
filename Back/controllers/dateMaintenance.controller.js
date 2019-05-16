@@ -5,7 +5,6 @@ const DateMaintenance = mongoose.model("DateMaintenance");
 
 module.exports.add = (req, res, next) => {
   var dateMaintenance = new DateMaintenance();
-console.log(req.body)
   dateMaintenance.StartTime = req.body.StartTime
   dateMaintenance.EndTime = req.body.EndTime
   dateMaintenance.idMaintenance = req.body.idMaintenance
@@ -19,6 +18,18 @@ console.log(req.body)
     }
   });
 };
+
+module.exports.delete=(req,res)=>{
+ 
+  DateMaintenance.findByIdAndDelete(req.params.datemaintenance,(err,doc)=>{
+  
+    if (!err) return res.sendStatus(200);
+  
+    return res.sendStatus(500);
+  });
+};
+
+
 module.exports.getAll = (req, res) => {
   DateMaintenance.find((err, docs) => {
     if (!err) {

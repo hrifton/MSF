@@ -13,7 +13,7 @@ interventionRoutes.route("/ByUser").get(function(req, res) {
   ctrlIntervention.listeByUser(req.query.fullName, res);
 });
 
-//GetToutesLesInterventionByUser
+//GetToutesLesInterventionByUser 
 interventionRoutes.route("/ByTech").get(function(req, res) {
   ctrlIntervention.listeByTech(req.query.fullName, res);
 });

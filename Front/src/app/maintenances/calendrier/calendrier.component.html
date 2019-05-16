@@ -21,10 +21,10 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <ejs-datetimepicker format='dd-MM-yyyy HH:mm' placeholder="Start Date" #StartDate></ejs-datetimepicker>
+                    <ejs-datetimepicker format='dd-MM-yyyy HH:mm'  formControlName="StartTime" placeholder="Start Date" #StartTime></ejs-datetimepicker>
                 </div>
                 <div class="form-group col-md-6">
-                    <ejs-datetimepicker format='dd-MM-yyyy HH:mm' placeholder="End Date"#EndDate></ejs-datetimepicker>
+                    <ejs-datetimepicker format='dd-MM-yyyy HH:mm'  formControlName="EndTime" placeholder="End Date" #EndTime></ejs-datetimepicker>
                 </div>
             </div>
             <div *ngIf="repeat.value">

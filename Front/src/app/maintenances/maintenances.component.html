@@ -12,8 +12,8 @@
               </div>
             </div>
             <div class="e-card-content">
-              <app-calendrier *ngIf="maintenance.length > 0 && datemaitenance.length > 0" [maintenance]="maintenance"
-                [datemaitenance]="datemaitenance"></app-calendrier>
+              <app-calendrier *ngIf="maintenance.length > 0 && datemaitenance.length > 0" (messageEvent)="deleteMaintenance($event)" [maintenance]="maintenance"
+                [datemaitenance]="datemaitenance" ></app-calendrier>
             </div>
           </div>
         </div>

@@ -23,6 +23,19 @@ export class DateMaintenanceService {
     );
   }
 
+  deleteDateMaintenance(datemaintenance) {
+    return this.http.delete(`${this.uri}/${datemaintenance}`).subscribe(data => {
+     console.log(data);
+    },
+    err => {
+     console.log(err);
+    }
+
+    );
+  }
+
+
+
 // Get all datemaintenance
 getDateMaintenance() {
   return this.http.get(`${this.uri}`);

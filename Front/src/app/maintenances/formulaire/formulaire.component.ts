@@ -438,7 +438,7 @@ export class FormulaireComponent {
   traitementPlanByDay(maintenance, newMaintenances) {
     maintenance.StartTime = moment(maintenance.StartTime).format('LLLL');
     maintenance.EndTime = this.addTime(moment(maintenance.StartTime, 'LLLL'), maintenance.duration);
-    console.log(moment(maintenance.StartTime).format('llll'));
+   
     const dayMain: DayMain = {
       StartTime: maintenance.StartTime,
       EndTime: maintenance.EndTime,

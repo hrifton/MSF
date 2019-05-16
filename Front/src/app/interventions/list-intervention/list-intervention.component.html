@@ -19,79 +19,88 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <div class="e-float-input e-control-wrapper">
-                <ejs-dropdownlist id="Departement" formControlName="departement" [dataSource]='departements'
-                  [fields]="{text:'departement',value:'departement' }" placeholder="Departement" popupHeight='200px'
+                <ejs-dropdownlist id="Domaine" formControlName="domaine" [dataSource]='domaines'
+                  [fields]="{text:'domaine',value:'domaine' }" placeholder="Somaine" popupHeight='200px'
                   floatLabelType='Always'></ejs-dropdownlist>
               </div>
+            </div>
+          </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id="Departement" formControlName="departement" [dataSource]='departements'
+                    [fields]="{text:'departement',value:'departement' }" placeholder="Departement" popupHeight='200px'
+                    floatLabelType='Always'></ejs-dropdownlist>
+                </div>
+
+              </div>
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id="priority" formControlName="priority" [dataSource]='priorities'
+                    [fields]="{text:'priority',value:'priority' }" placeholder="priority" popupHeight='200px'
+                    floatLabelType='Always' #priority></ejs-dropdownlist>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id='tech' #samples formControlName="tech" [dataSource]='techs'
+                    [fields]="{text:'fullName',value:'fullName' }" [placeholder]='text' [popupHeight]='height'>
+                  </ejs-dropdownlist>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <input matInput="matInput" placeholder="Locality" formControlName="locality" #locality>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <mat-form-field class="form-group col-md-12">
+                <mat-label>Description Intervention</mat-label>
+                <textarea matInput formControlName="description" placeholder="Description Intervention"
+                  rows="brightness_4" #description></textarea>
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <input matInput="matInput" placeholder="Materiel utilisé" formControlName="useMat" #useMat>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <input matInput="matInput" placeholder="Asset" formControlName="asset" #asset>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <mat-form-field class="form-group col-md-12">
+                <mat-label>Description Solution</mat-label>
+                <textarea matInput formControlName="solution" placeholder="Description solution" rows="brightness_4"
+                  #solution></textarea>
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <mat-form-field class="form-group col-md-8">
+                <div class="e-float-input e-control-wrapper">
+                  <input matInput="matInput" value="{{today | date :  'dd/MM/yyyy' }}" [disabled]="true" #date>
+                </div>
+              </mat-form-field>
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id="status" formControlName="status" [dataSource]='lStatus'
+                    [fields]="{text:'status',value:'status' }" placeholder="status" popupHeight='200px'
+                    floatLabelType='Always' #status></ejs-dropdownlist>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <button (click)="historique(angForm.value.id)" mat-raised-button color="warn">Historique</button>
+              </div>
+
 
             </div>
-            <div class="form-group col-md-6">
-              <div class="e-float-input e-control-wrapper">
-                <ejs-dropdownlist id="priority" formControlName="priority" [dataSource]='priorities'
-                  [fields]="{text:'priority',value:'priority' }" placeholder="priority" popupHeight='200px'
-                  floatLabelType='Always' #priority></ejs-dropdownlist>
-              </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <div class="e-float-input e-control-wrapper">
-                <ejs-dropdownlist id='tech' #samples formControlName="tech" [dataSource]='techs'
-                  [fields]="{text:'fullName',value:'fullName' }" [placeholder]='text' [popupHeight]='height'>
-                </ejs-dropdownlist>
-              </div>
-            </div>
-            <div class="form-group col-md-6">
-              <div class="e-float-input e-control-wrapper">
-                <input matInput="matInput" placeholder="Locality" formControlName="locality" #locality>
-              </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <mat-form-field class="form-group col-md-12">
-              <mat-label>Description Intervention</mat-label>
-              <textarea matInput formControlName="description" placeholder="Description Intervention"
-                rows="brightness_4" #description></textarea>
-            </mat-form-field>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <div class="e-float-input e-control-wrapper">
-                <input matInput="matInput" placeholder="Materiel utilisé" formControlName="useMat" #useMat>
-              </div>
-            </div>
-            <div class="form-group col-md-6">
-              <div class="e-float-input e-control-wrapper">
-                <input matInput="matInput" placeholder="Asset" formControlName="asset" #asset>
-              </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <mat-form-field class="form-group col-md-12">
-              <mat-label>Description Solution</mat-label>
-              <textarea matInput formControlName="solution" placeholder="Description solution" rows="brightness_4"
-                #solution></textarea>
-            </mat-form-field>
-          </div>
-          <div class="form-row">
-            <mat-form-field class="form-group col-md-8">
-              <div class="e-float-input e-control-wrapper">
-                <input matInput="matInput" value="{{today | date :  'dd/MM/yyyy' }}" [disabled]="true" #date>
-              </div>
-            </mat-form-field>
-            <div class="form-group col-md-6">
-              <div class="e-float-input e-control-wrapper">
-                <ejs-dropdownlist id="status" formControlName="status" [dataSource]='lStatus'
-                  [fields]="{text:'status',value:'status' }" placeholder="status" popupHeight='200px'
-                  floatLabelType='Always' #status></ejs-dropdownlist>
-              </div>
-            </div>
-            <div class="form-group col-md-4">
-              <button (click)="historique(angForm.value.id)" mat-raised-button color="warn">Historique</button>
-            </div>
-
-
-          </div>
 
         </form>
       </div>

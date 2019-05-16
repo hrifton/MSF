@@ -44,8 +44,10 @@ export class ListInterventionComponent implements OnInit {
     { priority: "Low" }
   ];
   public lStatus: { [key: string]: Object }[] = [
-    { status: "en_cours" },
-    { status: "closed" }
+    { status: "In progress" },
+    { status: "Waiting" },
+    { status: "Canceled" },
+    { status: "Closed" }
   ];
   public resolution: any[];
   today = new Date();

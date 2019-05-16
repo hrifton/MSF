@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { DatePicker } from '@syncfusion/ej2-calendars';
 import { DropDownList } from '@syncfusion/ej2-dropdowns';
 import {
@@ -14,15 +14,15 @@ import {
   View,
   EventRenderedArgs,
   ScheduleComponent
-} from "@syncfusion/ej2-angular-schedule";
-import { extend } from "@syncfusion/ej2-grids/src";
+} from '@syncfusion/ej2-angular-schedule';
+import { extend } from '@syncfusion/ej2-grids/src';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { MaintenanceService } from 'src/app/Service/maintenance.service';
 import { now } from 'moment';
 
 @Component({
-  selector: "app-calendrier",
-  templateUrl: "./calendrier.component.html",
+  selector: 'app-calendrier',
+  templateUrl: './calendrier.component.html',
   //styleUrls: ['./calendrier.component.scss'],
   providers: [
     DayService,
@@ -37,12 +37,14 @@ import { now } from 'moment';
 export class CalendrierComponent implements OnInit {
   @Input() maintenance;
   @Input() datemaitenance;
+  @Output() messageEvent = new EventEmitter<any>();
   @ViewChild('agenda') public agenda: ScheduleComponent;
 
 
   public maintenanceForm: FormGroup;
+
   constructor(private fb: FormBuilder, private ms: MaintenanceService) {
-    console.log("maintenance calendier constructor");
+    console.log('maintenance calendier constructor');
   }
   scheduleData: Object[] = [
     // {
@@ -60,53 +62,73 @@ export class CalendrierComponent implements OnInit {
   public selectedDate: Date = new Date();
   public minDate: Date = new Date();
   public eventSettings: EventSettingsModel = {};
-  public currentView: View = "Week";
+  public currentView: View = 'Week';
   public lrepeat: { [key: string]: Object }[] = [
-    { repeat: "Never" },
-    { repeat: "Daily" },
-    { repeat: "Weekly" },
-    { repeat: "Monthly" },
-    { repeat: "Yearly" },
+    { repeat: 'Never' },
+    { repeat: 'Daily' },
+    { repeat: 'Weekly' },
+    { repeat: 'Monthly' },
+    { repeat: 'Yearly' },
 
   ];
 
   public lEnd: { [key: string]: Object }[] = [
-    { end: "Never" },
-    { end: "Until" },
-    { end: "Count" },
+    { end: 'Never' },
+    { end: 'Until' },
+    { end: 'Count' },
 
 
   ];
   //Creation du formulaire
-  createForm() {
+  createForm(data) {
     this.maintenanceForm = this.fb.group({
       status: new FormControl('', [Validators.required]),
       repeat: new FormControl('', [Validators.required]),
-      StartTime: new FormControl('', [Validators.required]),
-      EndTime: new FormControl('', [Validators.required])
+      StartTime: new FormControl(data.StartTime, [Validators.required]),
+      EndTime: new FormControl(data.EndTime, [Validators.required])
     });
   }
   public onChange(args: any): void {
-    console.log("changement")
+    console.log('changement');
 
   }
 
   onEventRendered(args: EventRenderedArgs): void {
-    let categoryColor: string = args.data.CategoryColor as string;
+    const categoryColor: string = args.data.CategoryColor as string;
     if (!args.element || !categoryColor) {
-        return;
+      return;
     }
     if (this.currentView === 'Agenda') {
-        (args.element.firstChild as HTMLElement).style.borderLeftColor = categoryColor;
+      (args.element.firstChild as HTMLElement).style.borderLeftColor = categoryColor;
     } else {
-        args.element.style.backgroundColor = categoryColor;
+      args.element.style.backgroundColor = categoryColor;
     }
-}
+  }
   onPopupOpen(args: PopupOpenEventArgs): void {
-    //console.log("PopupOpenEventArgs");
+    console.log(args);
+    if (args.type === 'Editor') {
+      this.createForm(args.data);
+    }
+    if (args.type === 'DeleteAlert') {
+      const data = args.data;
+      console.log(data);
+    }
   }
   onActionBegin(args: EventRenderedArgs): void {
-    //console.log("onActionBegin");
+    const type = Object.entries(args);
+
+    if (type[0][1] === 'eventChange') {
+      console.log('update');
+    }
+    if (type[0][1] === 'eventRemove') {
+
+      this.removeMaintenance(type[2][[1][0]]);
+
+    }
+  }
+  removeMaintenance(data: any) {
+
+    this.messageEvent.emit(data[0]._id);
   }
 
   ngOnInit() {
@@ -118,7 +140,7 @@ export class CalendrierComponent implements OnInit {
     this.eventSettings = {
       dataSource: this.data
     };
-    console.log(this.data.length)
+    console.log(this.data.length);
   }
   createlisteMaintenance(datemaintenance: any, maintenance: any) {
     console.log('test');
@@ -129,12 +151,12 @@ export class CalendrierComponent implements OnInit {
           // TODO Hicham  Switch Color maintenance
           switch (maint.executor) {
             case 'Biomed':
-              datemain.CategoryColor='#1ea519'
+              datemain.CategoryColor = '#1ea519';
               break;
-              case 'Electrician':
-              datemain.CategoryColor='#4974A2'
+            case 'Electrician':
+              datemain.CategoryColor = '#4974A2';
               break;
-          
+
             default:
               break;
           }

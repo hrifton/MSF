@@ -66,6 +66,15 @@ export class MaintenancesComponent implements OnInit {
     });
     this.calendrier.refreshAgenda();
   }
+
+  deleteMaintenance($event){
+   console.log(this.dms.deleteDateMaintenance($event))
+
+   
+    this.datemaitenance.forEach(element => {
+     //console.log(element)
+    });
+  }
   ngOnInit() {
 
   }

@@ -8,6 +8,11 @@ const ctrlDateMaintenance = require("../controllers/dateMaintenance.controller")
 dateMaintenanceRoutes.route("/add").post((req, res, next) => {
   ctrlDateMaintenance.add(req, res, next);
 });
+//DeleteDateMaintenance
+dateMaintenanceRoutes.route("/:datemaintenance").delete((req,res)=>{
+ctrlDateMaintenance.delete(req,res);
+});
+ 
 
 
 //GetAllDateMaintenance

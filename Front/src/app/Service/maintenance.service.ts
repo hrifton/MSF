@@ -17,5 +17,4 @@ getMaintenance() {
       return this.http.get(`${this.uri}`);
   }
 
-
 }
