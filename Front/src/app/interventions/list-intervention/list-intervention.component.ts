@@ -118,7 +118,7 @@ export class ListInterventionComponent implements OnInit {
       departement: new FormControl(data.departement, Validators.required),
       locality: new FormControl(data.locality, Validators.required),
       priority: new FormControl(data.priority),
-      description: new FormControl(data.description),
+      description: new FormControl(data.description,Validators.required),
       status: new FormControl(data.status),
       type: new FormControl(data.type),
       tech: new FormControl(data.tech),

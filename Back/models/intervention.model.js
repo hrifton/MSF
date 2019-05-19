@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 var interventionScheam = new mongoose.Schema({
   departement: { type: String },
@@ -12,5 +13,5 @@ var interventionScheam = new mongoose.Schema({
   tech: { type: String },
   metier: { type: String }
 });
-
+interventionScheam.plugin(AutoIncrement,{inc_field: 'Slug'});
 mongoose.model("Intervention", interventionScheam);

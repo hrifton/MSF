@@ -47,7 +47,7 @@ module.exports.listeByTech = (req, res) => {
 module.exports.add = (req, res, next) => {
   var intervention = new Intervention();
 
-  intervention.departement = req.body.departement;
+  intervention.departement = req.body.departement;  
   intervention.locality = req.body.locality;
   intervention.priority = req.body.priority;
   intervention.day = req.body.day;
