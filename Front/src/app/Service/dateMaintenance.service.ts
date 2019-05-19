@@ -40,4 +40,10 @@ export class DateMaintenanceService {
 getDateMaintenance() {
   return this.http.get(`${this.uri}`);
 }
+
+
+getMaintenanceAndIntervention() {
+  return this.http.get(`${this.uri}/maintenancedate`)
+}
+
 }

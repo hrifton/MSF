@@ -1,27 +1,29 @@
-import { UserService } from "../Service/user.service";
+import { UserService } from '../Service/user.service';
 import {
   HttpClient,
   HttpHeaders,
   HttpClientModule
-} from "@angular/common/http";
+} from '@angular/common/http';
 
-import { InterventionService } from "./../Service/intervention.service";
-import { Component, OnInit, ViewEncapsulation, ViewChild } from "@angular/core";
-import { User } from "../Class/user.model";
-import { Ng6OdooRPCService } from "angular6-odoo-jsonrpc";
-import { ListInterventionComponent } from "./list-intervention/list-intervention.component";
-import { HistoricInterventionComponent } from "./historic-intervention/historic-intervention.component";
+import { InterventionService } from './../Service/intervention.service';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { User } from '../Class/user.model';
+import { Ng6OdooRPCService } from 'angular6-odoo-jsonrpc';
+import { ListInterventionComponent } from './list-intervention/list-intervention.component';
+import { HistoricInterventionComponent } from './historic-intervention/historic-intervention.component';
 import Intervention from '../Class/Intervention';
+import { DateMaintenanceService } from '../Service/dateMaintenance.service';
 
 @Component({
-  selector: "app-interventions",
-  templateUrl: "./interventions.component.html",
+  selector: 'app-interventions',
+  templateUrl: './interventions.component.html',
   // styleUrls: ['./interventions.component.css'],
   encapsulation: ViewEncapsulation.None,
   providers: [Ng6OdooRPCService]
 })
 export class InterventionsComponent implements OnInit {
   public interventions: Intervention[];
+  public maintenance: any[];
   userDetails;
   techs: User[];
 
@@ -33,10 +35,12 @@ export class InterventionsComponent implements OnInit {
   constructor(
     private is: InterventionService,
     private us: UserService,
+    private ds: DateMaintenanceService,
     private odooRPC: Ng6OdooRPCService
   ) {
     this.interventions = [];
-    console.log("compoment parent: Constructor");
+    this.maintenance = [];
+    console.log('compoment parent: Constructor');
   }
 
   update($event) {
@@ -44,8 +48,8 @@ export class InterventionsComponent implements OnInit {
     this.interentionList.refreshInterventionTable();
     this.HistoricIntervention.refreshChart();
   }
-  check($event){
-    console.log("inter closed :",$event)
+  check($event) {
+    console.log('inter closed :', $event);
   }
 
   ngOnInit() {
@@ -53,30 +57,31 @@ export class InterventionsComponent implements OnInit {
       res => {
         this.userDetails = res['user'];
 
-        //gestion Du type d'utilisateur
-        
-        if (this.userDetails.status == "user") {
+        // gestion Du type d'utilisateur
+
+        if (this.userDetails.status === 'user') {
           this.is
             .getInterventionsByUser(this.userDetails.fullName)
             .subscribe((data: Intervention[]) => {
               this.interventions = data;
             });
-        }
-       
-
-        else if (this.userDetails.status === 'tech') {
+        } else if (this.userDetails.status === 'tech') {
           this.is
             .getInterventionsBytech(this.userDetails.fullName)
             .subscribe((data: Intervention[]) => {
               this.interventions = data;
             });
         } else {
-          this.is.getInterventions().subscribe((data: Intervention[]) => {
+          this.is.getInterventions().subscribe((data: any[]) => {
             this.interventions = data;
           });
+          this.ds.getMaintenanceAndIntervention().subscribe((data: any[]) => {
+            this.maintenance=data
+
+          })
         }
       },
-      err => {}
+      err => { }
     );
     this.us.getUserTech().subscribe((data: User[]) => {
       this.techs = data;

@@ -4,7 +4,12 @@ require("../models/intervention.model");
 const Intervention = mongoose.model("Intervention");
 
 module.exports.liste = (req, res) => {
-  Intervention.find((err, docs) => {
+  Intervention.aggregate([{$lookup:{
+    from: "solutions",
+       localField: "_id",
+       foreignField: "idIntervention",
+       as: "solution"
+  }}],(err, docs) => {
     if (!err) {
       res.send(docs);
     } else {
@@ -61,7 +66,6 @@ module.exports.add = (req, res, next) => {
   });
 };
 module.exports.update = (req, res, next) => {
-  console.log("ctrlUpdate");
   Intervention.findByIdAndUpdate(
     req.body.id,
     req.body,

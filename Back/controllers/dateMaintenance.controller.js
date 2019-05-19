@@ -8,7 +8,7 @@ module.exports.add = (req, res, next) => {
   dateMaintenance.StartTime = req.body.StartTime
   dateMaintenance.EndTime = req.body.EndTime
   dateMaintenance.idMaintenance = req.body.idMaintenance
- 
+
 
   dateMaintenance.save((err, doc) => {
     if (!err) res.send(doc);
@@ -19,12 +19,12 @@ module.exports.add = (req, res, next) => {
   });
 };
 
-module.exports.delete=(req,res)=>{
- 
-  DateMaintenance.findByIdAndDelete(req.params.datemaintenance,(err,doc)=>{
-  
+module.exports.delete = (req, res) => {
+
+  DateMaintenance.findByIdAndDelete(req.params.datemaintenance, (err, doc) => {
+
     if (!err) return res.sendStatus(200);
-  
+
     return res.sendStatus(500);
   });
 };
@@ -38,4 +38,20 @@ module.exports.getAll = (req, res) => {
       console.log("error in retriving DateMaintenances: " + JSON.stringify(err, undefined, 2));
     }
   })
+}
+
+module.exports.getAllMaintDate = (req, res) => { 
+  DateMaintenance.aggregate([{
+    $lookup: {
+      from: 'maintenances',
+      localField: "idMaintenance",
+      foreignField: "_id",
+      as: "resultat"
+    }
+  },{$sort:{'StartTime':1}},{$limit:10}], function (err, datemaintenances) {
+    if (err) res.send(err);
+    else{}
+    res.json(datemaintenances);
+  });
+
 }

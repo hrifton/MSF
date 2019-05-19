@@ -6,7 +6,6 @@ const Solution = mongoose.model("Solution");
 const User = mongoose.model("User");
 var test;
 module.exports.liste = (req, res) => {
-  console.log("List");
   Solution.find((err, docs) => {
     if (!err) {
       res.send(docs);
@@ -45,7 +44,14 @@ module.exports.add = (req, res, next) => {
 };
 
 module.exports.listeByIntervention = (req, res, next) => {
-  Solution.find({ idIntervention: req }, (err, docs) => {
+  Solution.aggregate([{
+    $lookup: {
+      from: 'maintenances',
+      localField: "idMaintenance",
+      foreignField: "_id",
+      as: "resultat"
+    }
+  }], (err, docs) => {
     if (!err) {
       console.log(docs);
       res.send(docs);
@@ -55,4 +61,15 @@ module.exports.listeByIntervention = (req, res, next) => {
       );
     }
   });
+};
+module.exports.solutionbyIntervention = (req, res) => {
+  Solution.find((err, docs) => {
+    if (!err) {
+      res.send(docs);
+    } else {
+      console.log(
+        "Error in Retriving Interventions:" + JSON.stringify(err, undefined, 2)
+      );
+    }
+  }).sort({ field: "asc", _id: -1 });
 };

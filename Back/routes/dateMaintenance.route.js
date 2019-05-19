@@ -20,4 +20,8 @@ dateMaintenanceRoutes.route("/").get((req, res) => {
   ctrlDateMaintenance.getAll(req, res);
 })
 
+dateMaintenanceRoutes.route("/maintenancedate").get((req, res) => {
+  ctrlDateMaintenance.getAllMaintDate(req, res);
+})
+
 module.exports = dateMaintenanceRoutes;

@@ -23,6 +23,7 @@ import { GridComponent } from "@syncfusion/ej2-angular-grids";
 })
 export class HistoricInterventionComponent implements OnInit {
   @Input() interventions;
+  @Input() maintenance;
   @ViewChild("chart") public chart: ChartComponent;
   public status = { open: 0, close: 0, canceled: 0, waiting: 0 };
   public piedata: Object[];
@@ -49,11 +50,13 @@ export class HistoricInterventionComponent implements OnInit {
     this.chart.refresh();
   }
   getNumberOpenClose(data) {
+   console.log(this.maintenance)
+   console.log(this.interventions)
     let open = 0;
     let canceled = 0;
     let close = 0;
     let waiting = 0;
-    this.interventions.forEach(element => {
+    data.forEach(element => {
       switch (element.status) {
         case "In progress":
           open++;
@@ -72,7 +75,7 @@ export class HistoricInterventionComponent implements OnInit {
           waiting++;
           break;
       }
-      
+
     });
     this.status.open = open;
     this.status.close = close;
@@ -87,19 +90,19 @@ export class HistoricInterventionComponent implements OnInit {
       // tslint:disable-next-line:max-line-length
       {
         x: "Open :" + data.open,
-        y: Math.round((data.open * 100) / (data.open + data.close+data.waiting+data.canceled)),
+        y: Math.round((data.open * 100) / (data.open + data.close + data.waiting + data.canceled)),
         text: "open :" + data.open,
         fill: "#51cf66"
       },
       {
         x: "Waiting :" + data.waiting,
-        y: Math.round((data.waiting * 100) / (data.open + data.close+data.waiting+data.canceled)),
+        y: Math.round((data.waiting * 100) / (data.open + data.close + data.waiting + data.canceled)),
         text: "waiting :" + data.waiting,
         fill: "#fab005"
       },
       {
         x: "Canceled :" + data.canceled,
-        y: Math.round((data.canceled * 100) / (data.open + data.close+data.waiting+data.canceled)),
+        y: Math.round((data.canceled * 100) / (data.open + data.close + data.waiting + data.canceled)),
         text: "canceled :" + data.canceled,
         fill: "#ffd8a8"
       },
@@ -121,10 +124,10 @@ export class HistoricInterventionComponent implements OnInit {
 
   // custom code end
   public center: Object = { x: "50%", y: "50%" };
-  public startAngle: number = 0;
-  public endAngle: number = 360;
-  public explode: boolean = true;
-  public enableAnimation: boolean = false;
+  public startAngle = 0;
+  public endAngle = 360;
+  public explode = true;
+  public enableAnimation = false;
   public tooltip: Object = {
     enable: true,
     format: "${point.x} : <b>${point.y}%</b>"

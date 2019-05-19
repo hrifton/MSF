@@ -7,15 +7,6 @@ const ctrlDepartement = require("../controllers/departement.controller");
 //getToutLesDepartement
 departementRoutes.route("/").get(function(req, res) {
   ctrlDepartement.liste(req, res);
-
-  /*Departement.find(function(err, departements) {
-    console.log("dans le serveur");
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(departements);
-    } 
-  });*/
 });
 //returne un departementDefini
 departementRoutes.route("/edit/:departement").get(function(req, res) {

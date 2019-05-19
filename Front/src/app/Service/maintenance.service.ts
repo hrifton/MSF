@@ -1,6 +1,6 @@
 import { Maintenance } from './../Class/Maintenance';
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -8,13 +8,14 @@ import {HttpClient} from '@angular/common/http';
 })
 export class MaintenanceService {
   uri = 'http://localhost:3000/api/maintenance';
-constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-//getAll Maintenance
+  //getAll Maintenance
 
 
-getMaintenance() {
-      return this.http.get(`${this.uri}`);
+  getMaintenance() {
+    return this.http.get(`${this.uri}`);
   }
+  
 
 }

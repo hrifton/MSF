@@ -11,8 +11,14 @@ soltionRoutes.route("/").get(function(req, res) {
   ctrlSolution.liste(req, res);
 });
 
-soltionRoutes.route("/ByIntervention").get(function(req, res) {
+soltionRoutes.route("/ByIntervention/:idAsset").get(function(req, res) {
+  console.log(req.params.idAsset)
   ctrlSolution.listeByIntervention(req.query.idIntervention, res);
+  //ctrlSolution.listeByIntervention(req.query.fullName, res);
+});
+soltionRoutes.route("/solutionByIntervention").get(function(req, res) {
+  
+  ctrlSolution.listeByIntervention(req, res);
   //ctrlSolution.listeByIntervention(req.query.fullName, res);
 });
 

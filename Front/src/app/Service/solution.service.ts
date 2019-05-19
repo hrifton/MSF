@@ -27,7 +27,10 @@ return this.http.post(`${this.uri}/add`, solution).subscribe(data => {
 }
 
 getSolutionByIdIntervention(idIntervention) {
-this.http.get(`${this.uri}/ByIntervention/`,{params:{idIntervention:idIntervention}})
+  return this
+  .http
+  .get(`${this.uri}/ByIntervention/${idIntervention}`)
+  .subscribe(res => console.log(res));
 
 }
 

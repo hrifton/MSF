@@ -172,7 +172,9 @@ export class ListInterventionComponent implements OnInit {
     }
   }
   historique(data) {
-    this.ss.getSolutionByIdIntervention(data);
+   this.ss.getSolutionByIdIntervention(data);
+   
+  
   }
   actionComplete(args: DialogEditEventArgs): void {
     if (args.requestType === "beginEdit" || args.requestType === "add") {
