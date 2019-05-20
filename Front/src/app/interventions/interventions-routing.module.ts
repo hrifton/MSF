@@ -19,6 +19,7 @@ const routes: Routes = [
       { path: 'historic', component: HistoricInterventionComponent },
       { path: 'historic-solution', component: HistoricSolutionComponent },
       { path: 'resolution', component: ResolutionInterventionComponent }
+      
     ]
   }
 ];

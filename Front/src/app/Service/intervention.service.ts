@@ -18,7 +18,8 @@ export class InterventionService {
         description: '',
         status: 'en_cours',
         user: '',
-        type:''
+        type: '',
+        tech:''
     };
 
 
@@ -36,13 +37,13 @@ export class InterventionService {
     getInterventions() {
       return this.http.get(`${this.uri}`);
     }
-    //Get Interventions byUser
+    // Get Interventions byUser
     getInterventionsByUser(fullName) {
-      return this.http.get(`${this.uri}/ByUser/`, {params:{fullName}})
+      return this.http.get(`${this.uri}/ByUser/`, {params: {fullName}});
     }
-    //Get Interventions byUser
+    // Get Interventions byUser
     getInterventionsBytech(fullName: any) {
-      return this.http.get(`${this.uri}/ByTech/`, {params:{fullName}})
+      return this.http.get(`${this.uri}/ByTech/`, {params: {fullName}});
     }
 
 

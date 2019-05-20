@@ -74,11 +74,25 @@ export class InterventionsComponent implements OnInit {
         } else {
           this.is.getInterventions().subscribe((data: any[]) => {
             this.interventions = data;
+
           });
           this.ds.getMaintenanceAndIntervention().subscribe((data: any[]) => {
-            this.maintenance=data
-
-          })
+            data.forEach(element => {
+              const inter = {
+                _id: element.idMaintenance,
+                day: element.StartTime,
+                departement: element.resultat[0].executor,
+                description: element.resultat[0].description,
+                locality: '',
+                priority: 'Medium',
+                status: 'In process',
+                tech: "",
+                type: 'Maintenance',
+                user: '',
+              };
+              this.interventions.push(inter);
+            });
+          });
         }
       },
       err => { }
@@ -86,21 +100,5 @@ export class InterventionsComponent implements OnInit {
     this.us.getUserTech().subscribe((data: User[]) => {
       this.techs = data;
     });
-    /*
-    // https://trackmystuff-dev.ocb.msf.org/web
-    this.odooRPC.init({
-      odoo_server: "https://trackmystuff-dev.ocb.msf.org", // 'http://trackmystuff-dev.ocb.msf.org',
-      http_auth: "HQ@brussels.msf.org:TMS123" // optional
-    });
-
-    this.odooRPC
-      .login("MSF", "HQ@brussels.msf.org", "TMS123")
-      .then(res => {
-        console.log("login success");
-      })
-      .catch(err => {
-        console.error("login failed", err);
-      });
-  }*/
   }
 }
