@@ -53,6 +53,7 @@ import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.co
 import { SettingMetierComponent } from './setting/corpsDeMetier/setting-metier/setting-metier.component';
 import { ListeCorpMetierComponent } from './setting/corpsDeMetier/liste-corpMetier/liste-corpMetier.component';
 import { InterventionsModule } from './interventions/interventions.module';
+import { AnalyseMixIntermaintModule } from './analyse-mix-intermaint/analyse-mix-intermaint.module';
 import { MaintenancesModule } from './maintenances/maintenances.module';
 import { StoragesModule } from './storages/storages.module';
 import { LoginComponent } from './login/login.component';
@@ -116,6 +117,7 @@ import { UsersModule } from './users/users.module';
     SplitButtonModule,
     // GridModule,
     InterventionsModule,
+    AnalyseMixIntermaintModule,
     MaintenancesModule,
     StoragesModule,
     UsersModule,

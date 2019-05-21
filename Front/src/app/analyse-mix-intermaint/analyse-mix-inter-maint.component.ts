@@ -1,38 +1,49 @@
 import {
   Component,
   ViewChild,
-  ViewEncapsulation,
   OnInit,
   Input,
-  SimpleChanges,
   ChangeDetectorRef
 } from '@angular/core';
+
 import {
-  AccumulationChart,
-  AccumulationChartComponent,
-  IAccLoadedEventArgs,
-  AccumulationTheme,
-  ChartComponent
+  ChartComponent, IAccLoadedEventArgs, AccumulationTheme
 } from '@syncfusion/ej2-angular-charts';
-import { GridComponent } from '@syncfusion/ej2-angular-grids';
+import { TabComponent } from '@syncfusion/ej2-angular-navigations';
+import { AnalyseInterventionComponent } from './analyse-intervention/analyse-intervention.component';
+import { AnalyseMaintenanceComponent } from './analyse-maintenance/analyse-maintenance.component';
+
 
 @Component({
-  selector: 'app-historic-intervention',
-  templateUrl: './historic-intervention.component.html',
-  styleUrls: ['./historic-intervention.component.scss']
+  selector: 'app-analyse-mix-intermaint',
+  templateUrl: './analyse-mix-intermaint.component.html',
+  styleUrls: ['./analyse-mix-intermaint.component.scss']
 })
-export class HistoricInterventionComponent implements OnInit {
-  @Input() interventions;
-  @Input() maintenance;
+export class AnalyseMixIntermaintComponent implements OnInit {
+  //public interventions : Object[]
+  public maintenance : Object[];
+  public analyseIntervention: Object[];
+  public analyseMaintenance: Object[];
+@Input() interventions;
+
+  @ViewChild(AnalyseInterventionComponent)
+  AnalyseIntervention: AnalyseInterventionComponent;
+  @ViewChild(AnalyseMaintenanceComponent)
+  HistoricIntervention: AnalyseMaintenanceComponent;
+
+
+
   @ViewChild('chart') public chart: ChartComponent;
   public status = { open: 0, close: 0, canceled: 0, waiting: 0 };
-// tslint:disable-next-line: ban-types
+  // tslint:disable-next-line: ban-types
   public piedata: Object[];
   public legendSettings: Object;
   public map: Object = 'fill';
   public datalabel: Object;
   public open: number;
   public close: number;
+  @ViewChild('tab_html_markup') tabObj: TabComponent;
+  public headerText: Object = [{ 'text': 'Inter./Maint.' }, { 'text': 'Intervention' }, { 'text': 'Maintenance' }];
 
   /* ngOnChanges(changes: any): void {
       var sizeOpenChange=changes.sizeOpen.currentValue;
@@ -42,18 +53,38 @@ export class HistoricInterventionComponent implements OnInit {
 
     }*/
 
+  public load(args: IAccLoadedEventArgs): void {
+    let selectedTheme: string = location.hash.split('/')[1];
+    selectedTheme = selectedTheme ? selectedTheme : 'Material';
+    args.accumulation.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark') as AccumulationTheme;
+  }
+
   ngOnInit(): void {
-    console.log(this.maintenance)
+    
     this.getNumberOpenClose(this.interventions);
-    this.getNumberOpenCloseMaintenance(this.maintenance)
+    console.log("icidsfqsfd");
+    this.checkMaintInter(this.interventions);
+    
   }
 
   refreshChart() {
     this.getNumberOpenClose(this.interventions);
     this.chart.refresh();
   }
+  checkMaintInter(data) {
+    console.log(data);
+    data.forEach(element => {
+  if (element.type === 'Maintenance') {
+    this.analyseMaintenance.push(element);
+  } else {
+    this.analyseIntervention.push(element);
+  }
+});
+    console.log(this.analyseMaintenance);
+    console.log(this.analyseIntervention);
+  }
   getNumberOpenClose(data) {
-    console.log(data)
+    console.log(data);
     let open = 0;
     let canceled = 0;
     let close = 0;
@@ -86,13 +117,20 @@ export class HistoricInterventionComponent implements OnInit {
 
     this.getChart(this.status);
   }
-  getNumberOpenCloseMaintenance(data){
-console.log(data)
+  getNumberOpenCloseMaintenance(data) {
+    console.log(data);
   }
 
   getChart(data) {
+    console.log(data);
     this.piedata = [
       // tslint:disable-next-line:max-line-length
+      {
+        x: 'Closed : ' + data.close,
+        y: Math.round((data.close * 100) / (data.open + data.close + data.waiting + data.canceled)),
+        text: 'closed',
+        fill: '#d9480f'
+      },
       {
         x: 'Open :' + data.open,
         y: Math.round((data.open * 100) / (data.open + data.close + data.waiting + data.canceled)),
@@ -111,12 +149,7 @@ console.log(data)
         text: 'canceled :' + data.canceled,
         fill: '#ffd8a8'
       },
-      {
-        x: 'Closed : ' + data.close,
-        y: Math.round((data.close * 100) / (data.open + data.close)),
-        text: 'closed',
-        fill: '#d9480f'
-      }
+      
     ];
 
     this.datalabel = { visible: true, name: 'text', position: 'Outside' };
@@ -124,6 +157,7 @@ console.log(data)
     this.legendSettings = {
       visible: true
     };
+    console.log(this.piedata);
   }
   @ViewChild('pie') public pie: ChartComponent;
 
@@ -139,7 +173,7 @@ console.log(data)
   };
   //public title: string = "Analyse JobRequest";
   constructor(private cd: ChangeDetectorRef) {
-    console.log(this.maintenance)
+    console.log(this.maintenance);
     //code
   }
 }

@@ -1,18 +1,16 @@
 import { UserService } from '../Service/user.service';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpClientModule
-} from '@angular/common/http';
+// tslint:disable-next-line: import-spacing
+import{ AnalyseMixIntermaintComponent } from '../analyse-mix-intermaint/analyse-mix-inter-maint.component';
 
 import { InterventionService } from './../Service/intervention.service';
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { User } from '../Class/user.model';
 import { Ng6OdooRPCService } from 'angular6-odoo-jsonrpc';
 import { ListInterventionComponent } from './list-intervention/list-intervention.component';
-import { HistoricInterventionComponent } from './historic-intervention/historic-intervention.component';
+
 import Intervention from '../Class/Intervention';
 import { DateMaintenanceService } from '../Service/dateMaintenance.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-interventions',
@@ -29,9 +27,10 @@ export class InterventionsComponent implements OnInit {
 
   @ViewChild(ListInterventionComponent)
   interentionList: ListInterventionComponent;
-  @ViewChild(HistoricInterventionComponent)
-  HistoricIntervention: HistoricInterventionComponent;
 
+  @ViewChild(AnalyseMixIntermaintComponent)
+  AnalyseMixIntermaint: AnalyseMixIntermaintComponent;
+  
   constructor(
     private is: InterventionService,
     private us: UserService,
@@ -46,7 +45,7 @@ export class InterventionsComponent implements OnInit {
   update($event) {
     this.interventions.unshift($event);
     this.interentionList.refreshInterventionTable();
-    this.HistoricIntervention.refreshChart();
+    //this.HistoricIntervention.refreshChart();
   }
   check($event) {
     console.log('inter closed :', $event);
@@ -73,14 +72,12 @@ export class InterventionsComponent implements OnInit {
             });
         } else {
           this.is.getInterventions().subscribe((data: any[]) => {
-            this.interventions = data;
-
-          });
-          this.ds.getMaintenanceAndIntervention().subscribe((data: any[]) => {
-            data.forEach(element => {
+            this.ds.getMaintenanceAndIntervention().subscribe((maindata: any[]) => {
+            
+            maindata.forEach(element => {
               const inter = {
                 _id: element.idMaintenance,
-                day: element.StartTime,
+                day: moment(element.StartTime).format("DD/MM/YYYY"),
                 departement: element.resultat[0].executor,
                 description: element.resultat[0].description,
                 locality: '',
@@ -90,9 +87,14 @@ export class InterventionsComponent implements OnInit {
                 type: 'Maintenance',
                 user: '',
               };
-              this.interventions.push(inter);
+              data.push(inter);
             });
+this.interventions=data
+this.interventions.sort((a,b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
+
           });
+          });
+         
         }
       },
       err => { }
@@ -101,4 +103,6 @@ export class InterventionsComponent implements OnInit {
       this.techs = data;
     });
   }
+
+  
 }

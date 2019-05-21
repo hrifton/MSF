@@ -183,20 +183,8 @@ export class ListInterventionComponent implements OnInit {
         args.dialog.height = window.innerHeight - 500 + 'px';
         (args.dialog as Dialog).dataBind();
       }
-      /* Set initail Focus
-            if (args.requestType === 'beginEdit') {
-                (args.form.elements.namedItem('id') as HTMLInputElement).focus();
-            } else if (args.requestType === 'add') {
-                (args.form.elements.namedItem('id') as HTMLInputElement).focus();
-            }*/
     }
   }
-
-  // get departement(): AbstractControl  { return this.angForm.get('departement'); }
-
-  // get CustomerName(): AbstractControl { return this.angForm.get('CustomerName'); }
-
-  // get OrderDate(): AbstractControl { return this.angForm.get('OrderDate'); }
 
   getDepartement(data) {
     const departementsList = new Array();

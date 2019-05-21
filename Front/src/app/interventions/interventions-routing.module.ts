@@ -3,10 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { ResolutionInterventionComponent } from './resolution-intervention/resolution-intervention.component';
 import { InterventionsComponent } from './interventions.component';
 
-import { HistoricInterventionComponent } from './historic-intervention/historic-intervention.component';
-import { HistoricSolutionComponent } from './historic-solution/historic-solution.component';
+
+
 import { ListInterventionComponent } from './list-intervention/list-intervention.component';
 import { FormulaireInterventionComponent } from './formulaire-intervention/formulaire-intervention.component';
+import { AnalyseMixIntermaintComponent } from '../analyse-mix-intermaint/analyse-mix-inter-maint.component';
+import { AnalyseMaintenanceComponent } from '../analyse-mix-intermaint/analyse-maintenance/analyse-maintenance.component';
 
 
 const routes: Routes = [
@@ -16,8 +18,8 @@ const routes: Routes = [
     children: [
       { path: '', component: ListInterventionComponent },
       { path: 'formulaires', component: FormulaireInterventionComponent },
-      { path: 'historic', component: HistoricInterventionComponent },
-      { path: 'historic-solution', component: HistoricSolutionComponent },
+      { path: 'analyseMaintenance', component: AnalyseMaintenanceComponent },
+    
       { path: 'resolution', component: ResolutionInterventionComponent }
       
     ]

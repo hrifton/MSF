@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AnalyseMaintenanceComponent } from './analyse-maintenance.component';
 
-import { HistoricSolutionComponent } from './historic-solution.component';
 
-describe('HistoricSolutionComponent', () => {
-  let component: HistoricSolutionComponent;
-  let fixture: ComponentFixture<HistoricSolutionComponent>;
+describe('InterventionComponent', () => {
+  let component: AnalyseMaintenanceComponent;
+  let fixture: ComponentFixture<AnalyseMaintenanceComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HistoricSolutionComponent ]
+      declarations: [ AnalyseMaintenanceComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HistoricSolutionComponent);
+    fixture = TestBed.createComponent(AnalyseMaintenanceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

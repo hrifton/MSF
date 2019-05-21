@@ -21,7 +21,7 @@
             {{angForm.value.id}}
           </div>
           <div class="col-md-6">
-            {{today | date :  'dd/MM/yyyy' }}
+            {{today | date :  'dd/MM/yyyy' }} {{angForm.value.type}}
           </div>
         </div>
         <form [formGroup]="angForm">

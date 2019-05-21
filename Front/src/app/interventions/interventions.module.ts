@@ -12,12 +12,14 @@ import {MatInputModule} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogEditEventArgs, SaveEventArgs, EditSettingsModel, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 
+
 // Chart
 import { ChartModule, PieSeriesService, AccumulationLegendService, AccumulationTooltipService, AccumulationDataLabelService, AccumulationAnnotationService } from '@syncfusion/ej2-angular-charts';
 import { AccumulationChartModule } from '@syncfusion/ej2-angular-charts';
 import { CategoryService, LegendService, TooltipService } from '@syncfusion/ej2-angular-charts';
 import { DataLabelService, LineSeriesService} from '@syncfusion/ej2-angular-charts';
-
+import { TabModule } from '@syncfusion/ej2-angular-navigations';
+import{ AnalyseMixIntermaintModule} from '../analyse-mix-intermaint/analyse-mix-intermaint.module';
 
 // Vue Component Child
 import { InterventionsRoutingModule } from './interventions-routing.module';
@@ -25,7 +27,7 @@ import { InterventionsComponent } from './interventions.component';
 import { ListInterventionComponent } from './list-intervention/list-intervention.component';
 import { FormulaireInterventionComponent } from './formulaire-intervention/formulaire-intervention.component';
 import { ResolutionInterventionComponent } from './resolution-intervention/resolution-intervention.component';
-import { HistoricInterventionComponent } from './historic-intervention/historic-intervention.component';
+
 import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -33,7 +35,6 @@ import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
 import { DatePickerAllModule } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
 import { GridModule, EditService, ToolbarService, PageService } from '@syncfusion/ej2-angular-grids';
-import { HistoricSolutionComponent } from './historic-solution/historic-solution.component';
 
 
 @NgModule({
@@ -41,9 +42,11 @@ import { HistoricSolutionComponent } from './historic-solution/historic-solution
       ListInterventionComponent,
        FormulaireInterventionComponent,
         ResolutionInterventionComponent,
-         HistoricInterventionComponent,
-         HistoricSolutionComponent],
+       ],
   imports: [
+    
+    AnalyseMixIntermaintModule,
+    TabModule,
     CommonModule,
     ChartModule,
     GridModule,
@@ -75,6 +78,6 @@ import { HistoricSolutionComponent } from './historic-solution/historic-solution
     DataLabelService, LineSeriesService, PieSeriesService, AccumulationLegendService, AccumulationTooltipService, AccumulationDataLabelService,
       AccumulationAnnotationService],
   exports: [FormulaireInterventionComponent,
-    MatDatepickerModule, MatNativeDateModule],
+    MatDatepickerModule, MatNativeDateModule,AnalyseMixIntermaintModule],
 })
 export class InterventionsModule { }
