@@ -9,7 +9,7 @@ import {
 import {
   ChartComponent, IAccLoadedEventArgs, AccumulationTheme
 } from '@syncfusion/ej2-angular-charts';
-import { TabComponent } from '@syncfusion/ej2-angular-navigations';
+import { TabComponent, SelectEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { AnalyseInterventionComponent } from './analyse-intervention/analyse-intervention.component';
 import { AnalyseMaintenanceComponent } from './analyse-maintenance/analyse-maintenance.component';
 
@@ -20,38 +20,67 @@ import { AnalyseMaintenanceComponent } from './analyse-maintenance/analyse-maint
   styleUrls: ['./analyse-mix-intermaint.component.scss']
 })
 export class AnalyseMixIntermaintComponent implements OnInit {
+  //public title: string = "Analyse JobRequest";
+  constructor(private cd: ChangeDetectorRef) {
+
+    //code
+  }
   //public interventions : Object[]
-  public maintenance : Object[];
+  public maintenance: Object[];
   public analyseIntervention: Object[];
   public analyseMaintenance: Object[];
-@Input() interventions;
+  @Input() interventions;
 
   @ViewChild(AnalyseInterventionComponent)
   AnalyseIntervention: AnalyseInterventionComponent;
   @ViewChild(AnalyseMaintenanceComponent)
-  HistoricIntervention: AnalyseMaintenanceComponent;
-
-
-
+  AnalyseMaintenance: AnalyseMaintenanceComponent;
   @ViewChild('chart') public chart: ChartComponent;
-  public status = { open: 0, close: 0, canceled: 0, waiting: 0 };
+  private status = { open: 0, close: 0, canceled: 0, waiting: 0 };
   // tslint:disable-next-line: ban-types
-  public piedata: Object[];
-  public legendSettings: Object;
-  public map: Object = 'fill';
-  public datalabel: Object;
-  public open: number;
-  public close: number;
-  @ViewChild('tab_html_markup') tabObj: TabComponent;
+  private piedata: Object[];
+  private legendSettings: Object;
+  private map: Object = 'fill';
+  private datalabel: Object;
+  private open: number;
+  private close: number;
+  @ViewChild('element') tabObj: TabComponent;
   public headerText: Object = [{ 'text': 'Inter./Maint.' }, { 'text': 'Intervention' }, { 'text': 'Maintenance' }];
+  @ViewChild('pie') public pie: ChartComponent;
 
-  /* ngOnChanges(changes: any): void {
-      var sizeOpenChange=changes.sizeOpen.currentValue;
-      if(sizeOpenChange){
-       console.log(changes.sizeOpen.currentValue)
-      }
+  // custom code end
+  public center: Object = { x: '50%', y: '50%' };
+  public startAngle = 0;
+  public endAngle = 360;
+  public explode = true;
+  public enableAnimation = false;
+  public tooltip: Object = {
+    enable: true,
+    format: '${point.x} : <b>${point.y}%</b>'
+  };
 
-    }*/
+
+  public tabSelected(e: SelectEventArgs): void {
+    switch (e.selectedItem.innerText) {
+      case "INTER./MAINT.":
+        this.refreshChart();
+        break;
+
+        case "MAINTENANCE":
+          this.AnalyseMaintenance.getNumberOpenClose(this.analyseMaintenance);
+        break;
+    
+        case "INTERVENTION":
+          this.AnalyseIntervention.getNumberOpenClose(this.analyseIntervention);
+        break;
+    }
+    console.log(e.selectedItem.innerText)
+}
+  
+
+  ngOnChanges(ChangeEventArgs: any): void {
+     console.log(ChangeEventArgs)
+    }
 
   public load(args: IAccLoadedEventArgs): void {
     let selectedTheme: string = location.hash.split('/')[1];
@@ -60,11 +89,11 @@ export class AnalyseMixIntermaintComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.analyseIntervention = [];
+    this.analyseMaintenance = [];
     this.getNumberOpenClose(this.interventions);
-    console.log("icidsfqsfd");
     this.checkMaintInter(this.interventions);
-    
+
   }
 
   refreshChart() {
@@ -72,19 +101,17 @@ export class AnalyseMixIntermaintComponent implements OnInit {
     this.chart.refresh();
   }
   checkMaintInter(data) {
-    console.log(data);
     data.forEach(element => {
-  if (element.type === 'Maintenance') {
-    this.analyseMaintenance.push(element);
-  } else {
-    this.analyseIntervention.push(element);
-  }
-});
-    console.log(this.analyseMaintenance);
-    console.log(this.analyseIntervention);
+      if (element.type === 'Maintenance') {
+        this.analyseMaintenance.push(element);
+      } else {
+        this.analyseIntervention.push(element);
+      }
+    });
+
   }
   getNumberOpenClose(data) {
-    console.log(data);
+
     let open = 0;
     let canceled = 0;
     let close = 0;
@@ -107,7 +134,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
         default:
           waiting++;
           break;
-      }
+      } 
 
     });
     this.status.open = open;
@@ -122,7 +149,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
   }
 
   getChart(data) {
-    console.log(data);
+
     this.piedata = [
       // tslint:disable-next-line:max-line-length
       {
@@ -149,7 +176,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
         text: 'canceled :' + data.canceled,
         fill: '#ffd8a8'
       },
-      
+
     ];
 
     this.datalabel = { visible: true, name: 'text', position: 'Outside' };
@@ -157,23 +184,6 @@ export class AnalyseMixIntermaintComponent implements OnInit {
     this.legendSettings = {
       visible: true
     };
-    console.log(this.piedata);
-  }
-  @ViewChild('pie') public pie: ChartComponent;
 
-  // custom code end
-  public center: Object = { x: '50%', y: '50%' };
-  public startAngle = 0;
-  public endAngle = 360;
-  public explode = true;
-  public enableAnimation = false;
-  public tooltip: Object = {
-    enable: true,
-    format: '${point.x} : <b>${point.y}%</b>'
-  };
-  //public title: string = "Analyse JobRequest";
-  constructor(private cd: ChangeDetectorRef) {
-    console.log(this.maintenance);
-    //code
   }
 }
