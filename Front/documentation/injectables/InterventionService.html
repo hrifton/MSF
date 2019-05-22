@@ -130,7 +130,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/Service/intervention.service.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/Service/intervention.service.ts:23</a></div>
                             </td>
                         </tr>
 
@@ -195,8 +195,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="36"
-                            class="link-to-prism">src/app/Service/intervention.service.ts:36</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">src/app/Service/intervention.service.ts:37</a></div>
                 </td>
             </tr>
 
@@ -234,8 +234,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="44"
-                            class="link-to-prism">src/app/Service/intervention.service.ts:44</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="45"
+                            class="link-to-prism">src/app/Service/intervention.service.ts:45</a></div>
                 </td>
             </tr>
 
@@ -304,8 +304,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="40"
-                            class="link-to-prism">src/app/Service/intervention.service.ts:40</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="41"
+                            class="link-to-prism">src/app/Service/intervention.service.ts:41</a></div>
                 </td>
             </tr>
 
@@ -370,8 +370,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="27"
-                            class="link-to-prism">src/app/Service/intervention.service.ts:27</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="28"
+                            class="link-to-prism">src/app/Service/intervention.service.ts:28</a></div>
                 </td>
             </tr>
 
@@ -440,8 +440,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="49"
-                            class="link-to-prism">src/app/Service/intervention.service.ts:49</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="50"
+                            class="link-to-prism">src/app/Service/intervention.service.ts:50</a></div>
                 </td>
             </tr>
 
@@ -518,7 +518,8 @@
         description: &#x27;&#x27;,
         status: &#x27;en_cours&#x27;,
         user: &#x27;&#x27;,
-        type:&#x27;&#x27;
+        type: &#x27;&#x27;,
+        tech:&#x27;&#x27;
     }</code>
                         </td>
                     </tr>
@@ -589,7 +590,8 @@ export class InterventionService {
         description: &#x27;&#x27;,
         status: &#x27;en_cours&#x27;,
         user: &#x27;&#x27;,
-        type:&#x27;&#x27;
+        type: &#x27;&#x27;,
+        tech:&#x27;&#x27;
     };
 
 
@@ -607,13 +609,13 @@ export class InterventionService {
     getInterventions() {
       return this.http.get(&#x60;${this.uri}&#x60;);
     }
-    //Get Interventions byUser
+    // Get Interventions byUser
     getInterventionsByUser(fullName) {
-      return this.http.get(&#x60;${this.uri}/ByUser/&#x60;, {params:{fullName}})
+      return this.http.get(&#x60;${this.uri}/ByUser/&#x60;, {params: {fullName}});
     }
-    //Get Interventions byUser
+    // Get Interventions byUser
     getInterventionsBytech(fullName: any) {
-      return this.http.get(&#x60;${this.uri}/ByTech/&#x60;, {params:{fullName}})
+      return this.http.get(&#x60;${this.uri}/ByTech/&#x60;, {params: {fullName}});
     }
 
 

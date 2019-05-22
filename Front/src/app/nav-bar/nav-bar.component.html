@@ -6,25 +6,14 @@
     <mat-toolbar><img id="logo" src="../../assets/img/logo.png" alt="LogoMSF" srcset=""></mat-toolbar>
 
     <button mat-button routerLink="signUp">User</button>
-    <button mat-button [matMenuTriggerFor]="Intervention">Intervention</button>
-    <button mat-button [matMenuTriggerFor]="Maintenance">Maintenance</button>
+    <button mat-button routerLink="interventions">Intervention</button>
+    <button mat-button routerLink="maintenance">Maintenance</button>
     <button mat-button routerLink="storage">Storage</button>
 
     <button mat-button [matMenuTriggerFor]="Setting">Setting</button>
 
-    <mat-menu #Intervention="matMenu">
-      <a mat-button routerLink='interventions'>Intervention</a>
-      <a mat-button routerLink="formInter">Formulaire Intervention</a>
-    </mat-menu>
-
-    <mat-menu #Maintenance="matMenu">
-      <a mat-button routerLink='maintenance'>Maintenance</a>
-      <a mat-button routerLink="formInter">Formulaire Intervention</a>
-    </mat-menu>
-
-
-
     <mat-menu #Setting="matMenu">
+        <a mat-button routerLink="settings">settings</a>
       <a mat-button routerLink="setDep">Setting Departement</a>
       <a mat-button routerLink="setTec">Setting Technicien</a><br>
       <a mat-button routerLink="setMet">Setting Métier</a>

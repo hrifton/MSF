@@ -8,6 +8,7 @@ import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.co
 import { InterventionsComponent } from './interventions/interventions.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'setDep', component: DepartementComponent, canActivate: [AuthGuard] },
   { path: 'setTec', component: TechnicienComponent, canActivate: [AuthGuard] },
   { path: 'setMet', component: CorpsDeMetierComponent, canActivate: [AuthGuard] },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
 
 
 ];

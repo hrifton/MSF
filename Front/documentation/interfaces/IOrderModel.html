@@ -554,13 +554,11 @@
   Component,
   OnInit,
   Input,
-  SimpleChanges,
   Output,
   EventEmitter,
-  ChangeDetectorRef,
   ViewChild
-} from &quot;@angular/core&quot;;
-import { Browser } from &quot;@syncfusion/ej2-base&quot;;
+} from &#x27;@angular/core&#x27;;
+import { Browser } from &#x27;@syncfusion/ej2-base&#x27;;
 import {
   EditService,
   ToolbarService,
@@ -568,39 +566,41 @@ import {
   DialogEditEventArgs,
   SaveEventArgs,
   GridComponent
-} from &quot;@syncfusion/ej2-angular-grids&quot;;
-import { FormGroup, FormControl, Validators } from &quot;@angular/forms&quot;;
-import { Dialog } from &quot;@syncfusion/ej2-angular-popups&quot;;
-import Solution from &quot;../../Class/Solution&quot;;
-import { InterventionService } from &quot;../../Service/intervention.service&quot;;
-import { DepartementService } from &quot;src/app/setting/departement/departement.service&quot;;
-import Departement from &quot;../../Class/Departement&quot;;
-import { SolutionService } from &quot;src/app/Service/solution.service&quot;;
-import Intervention from &quot;src/app/Class/Intervention&quot;;
+} from &#x27;@syncfusion/ej2-angular-grids&#x27;;
+import { FormGroup, FormControl, Validators } from &#x27;@angular/forms&#x27;;
+import { Dialog } from &#x27;@syncfusion/ej2-angular-popups&#x27;;
+import { InterventionService } from &#x27;../../Service/intervention.service&#x27;;
+import { DepartementService } from &#x27;src/app/setting/departement/departement.service&#x27;;
+import Departement from &#x27;../../Class/Departement&#x27;;
+import { SolutionService } from &#x27;src/app/Service/solution.service&#x27;;
+import Intervention from &#x27;src/app/Class/Intervention&#x27;;
 
 @Component({
-  selector: &quot;app-list-intervention&quot;,
-  templateUrl: &quot;./list-intervention.component.html&quot;,
+  selector: &#x27;app-list-intervention&#x27;,
+  templateUrl: &#x27;./list-intervention.component.html&#x27;,
   //styleUrls: [&#x27;./list-intervention.component.scss&#x27;],
   providers: [ToolbarService, EditService, PageService]
 })
 export class ListInterventionComponent implements OnInit {
   @Input() interventions;
+  @Input() maintenance;
   @Input() techs;
   @Input() user;
   @Output() MessageEvent &#x3D; new EventEmitter&lt;Intervention&gt;();
 
-  @ViewChild(&quot;grid&quot;) public grid: GridComponent;
+  @ViewChild(&#x27;grid&#x27;) public grid: GridComponent;
 
   // public interventions: Intervention[];
   public priorities: { [key: string]: Object }[] &#x3D; [
-    { priority: &quot;High&quot; },
-    { priority: &quot;Medimum&quot; },
-    { priority: &quot;Low&quot; }
+    { priority: &#x27;High&#x27; },
+    { priority: &#x27;Medimum&#x27; },
+    { priority: &#x27;Low&#x27; }
   ];
   public lStatus: { [key: string]: Object }[] &#x3D; [
-    { status: &quot;en_cours&quot; },
-    { status: &quot;closed&quot; }
+    { status: &#x27;In progress&#x27; },
+    { status: &#x27;Waiting&#x27; },
+    { status: &#x27;Canceled&#x27; },
+    { status: &#x27;Closed&#x27; }
   ];
   public resolution: any[];
   today &#x3D; new Date();
@@ -616,7 +616,7 @@ export class ListInterventionComponent implements OnInit {
   public priorityrules: Object;
   public dropData: string[];
   //
-  public text: string &#x3D; &quot;Select a Technicien&quot;;
+  public text: string &#x3D; &#x27;Select a Technicien&#x27;;
   public angForm: FormGroup;
   public shipCityDistinctData: Object[];
   public shipCountryDistinctData: Object[];
@@ -630,7 +630,7 @@ export class ListInterventionComponent implements OnInit {
 
   ngOnInit() {
     this.filterSettings &#x3D; {
-      type: &quot;Menu&quot;
+      type: &#x27;Menu&#x27;
     };
 
     this.ds.getDepartements().subscribe((data: Departement[]) &#x3D;&gt; {
@@ -641,7 +641,7 @@ export class ListInterventionComponent implements OnInit {
       allowEditing: true,
       allowAdding: true,
       allowDeleting: true,
-      mode: &quot;Dialog&quot;
+      mode: &#x27;Dialog&#x27;
     };
 
     this.orderidrules &#x3D; {
@@ -656,11 +656,11 @@ export class ListInterventionComponent implements OnInit {
     };
     this.editparams &#x3D; {
       params: {
-        popupHeight: &quot;100px&quot;
+        popupHeight: &#x27;100px&#x27;
       }
     };
     this.pageSettings &#x3D; { pageSizes: true, pageSize: 8 };
-    this.dropData &#x3D; [&quot;Order Placed&quot;, &quot;Processing&quot;, &quot;Delivered&quot;];
+    this.dropData &#x3D; [&#x27;Order Placed&#x27;, &#x27;Processing&#x27;, &#x27;Delivered&#x27;];
   }
 
   createFormGroup(data: IOrderModel): FormGroup {
@@ -677,7 +677,7 @@ export class ListInterventionComponent implements OnInit {
       tech: new FormControl(data.tech),
       useMat: new FormControl(data.useMat),
       asset: new FormControl(data.asset),
-      solution: new FormControl(data.solution)
+      solution: new FormControl(&#x27;&#x27;)
     });
   }
 
@@ -694,7 +694,7 @@ export class ListInterventionComponent implements OnInit {
   //Action sur le tableau
   actionBegin(args: SaveEventArgs): void {
     //Verification de l&#x27;action debut edit ou ajout
-    if (args.requestType &#x3D;&#x3D;&#x3D; &quot;beginEdit&quot; || args.requestType &#x3D;&#x3D;&#x3D; &quot;add&quot;) {
+    if (args.requestType &#x3D;&#x3D;&#x3D; &#x27;beginEdit&#x27; || args.requestType &#x3D;&#x3D;&#x3D; &#x27;add&#x27;) {
       this.submitClicked &#x3D; false;
       //Creation du formulaire
 
@@ -702,15 +702,15 @@ export class ListInterventionComponent implements OnInit {
       console.log(this.angForm.value.id);
     }
     //Click SAVE
-    if (args.requestType &#x3D;&#x3D;&#x3D; &quot;save&quot;) {
+    if (args.requestType &#x3D;&#x3D;&#x3D; &#x27;save&#x27;) {
       this.submitClicked &#x3D; true;
       //verification si le formulaire est valid
       if (this.angForm.valid) {
         args.data &#x3D; this.angForm.value;
         if (
-          args.data[&quot;asset&quot;] !&#x3D; null &amp;&amp;
-          args.data[&quot;solution&quot;] !&#x3D; null &amp;&amp;
-          args.data[&quot;useMat&quot;] !&#x3D; null
+          args.data[&#x27;asset&#x27;] !&#x3D; null &amp;&amp;
+          args.data[&#x27;solution&#x27;] !&#x3D; null &amp;&amp;
+          args.data[&#x27;useMat&#x27;] !&#x3D; null
         ) {
           console.log(args.data);
           this.ss.postSolution(args.data);
@@ -719,34 +719,24 @@ export class ListInterventionComponent implements OnInit {
           this.MessageEvent.emit(this.interventions);
         }
       } else {
-        console.log(&quot;Probleme&quot;);
+        console.log(&#x27;Probleme&#x27;);
         args.cancel &#x3D; true;
       }
     }
   }
   historique(data) {
     this.ss.getSolutionByIdIntervention(data);
+
+
   }
   actionComplete(args: DialogEditEventArgs): void {
-    if (args.requestType &#x3D;&#x3D;&#x3D; &quot;beginEdit&quot; || args.requestType &#x3D;&#x3D;&#x3D; &quot;add&quot;) {
+    if (args.requestType &#x3D;&#x3D;&#x3D; &#x27;beginEdit&#x27; || args.requestType &#x3D;&#x3D;&#x3D; &#x27;add&#x27;) {
       if (Browser.isDevice) {
-        args.dialog.height &#x3D; window.innerHeight - 500 + &quot;px&quot;;
+        args.dialog.height &#x3D; window.innerHeight - 500 + &#x27;px&#x27;;
         (args.dialog as Dialog).dataBind();
       }
-      /* Set initail Focus
-            if (args.requestType &#x3D;&#x3D;&#x3D; &#x27;beginEdit&#x27;) {
-                (args.form.elements.namedItem(&#x27;id&#x27;) as HTMLInputElement).focus();
-            } else if (args.requestType &#x3D;&#x3D;&#x3D; &#x27;add&#x27;) {
-                (args.form.elements.namedItem(&#x27;id&#x27;) as HTMLInputElement).focus();
-            }*/
     }
   }
-
-  // get departement(): AbstractControl  { return this.angForm.get(&#x27;departement&#x27;); }
-
-  // get CustomerName(): AbstractControl { return this.angForm.get(&#x27;CustomerName&#x27;); }
-
-  // get OrderDate(): AbstractControl { return this.angForm.get(&#x27;OrderDate&#x27;); }
 
   getDepartement(data) {
     const departementsList &#x3D; new Array();
@@ -760,7 +750,7 @@ export class ListInterventionComponent implements OnInit {
 
   replace_idByid(data) {
     data &#x3D; JSON.stringify(data);
-    data &#x3D; data.replace(/_id/g, &quot;id&quot;);
+    data &#x3D; data.replace(/_id/g, &#x27;id&#x27;);
     data &#x3D; JSON.parse(data);
     return data;
   }

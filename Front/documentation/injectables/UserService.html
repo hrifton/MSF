@@ -651,7 +651,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>{ headers: new HttpHeaders({&#x27;NoAtuh&#x27;:&#x27;True&#x27;})}</code>
+                            <i>Default value : </i><code>{ headers: new HttpHeaders({&#x27;NoAtuh&#x27;: &#x27;True&#x27;})}</code>
                         </td>
                     </tr>
                         <tr>
@@ -684,9 +684,9 @@
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>{
-  fullName:&#x27;&#x27;,
-  email:&#x27;&#x27;,
-  password:&#x27;&#x27;
+  fullName: &#x27;&#x27;,
+  email: &#x27;&#x27;,
+  password: &#x27;&#x27;
 }</code>
                         </td>
                     </tr>
@@ -715,36 +715,36 @@ import { User } from &#x27;../Class/user.model&#x27;;
   providedIn: &#x27;root&#x27;
 })
 export class UserService {
-selectedUser:User &#x3D;{
-  fullName:&#x27;&#x27;,
-  email:&#x27;&#x27;,
-  password:&#x27;&#x27;
+selectedUser: User &#x3D; {
+  fullName: &#x27;&#x27;,
+  email: &#x27;&#x27;,
+  password: &#x27;&#x27;
 };
-noAuthHeader&#x3D;{ headers: new HttpHeaders({&#x27;NoAtuh&#x27;:&#x27;True&#x27;})};
-  constructor(private http:HttpClient) { }
+noAuthHeader &#x3D; { headers: new HttpHeaders({&#x27;NoAtuh&#x27;: &#x27;True&#x27;})};
+  constructor(private http: HttpClient) { }
 
-  postUser(user:User) {
-    return this.http.post(environment.apiBaseUrl+&#x27;/register&#x27;,user,this.noAuthHeader);
+  postUser(user: User) {
+    return this.http.post(environment.apiBaseUrl + &#x27;/register&#x27;, user, this.noAuthHeader);
   }
 
   login(authCredentials) {
-    return this.http.post(environment.apiBaseUrl+&#x27;/authenticate&#x27;,authCredentials,this.noAuthHeader);
+    return this.http.post(environment.apiBaseUrl + &#x27;/authenticate&#x27;, authCredentials, this.noAuthHeader);
   }
-  getUserProfil(){
-    return this.http.get(environment.apiBaseUrl+&#x27;/userProfil&#x27;);
+  getUserProfil() {
+    return this.http.get(environment.apiBaseUrl + &#x27;/userProfil&#x27;);
   }
-  getUserTech(){
-    return this.http.get(environment.apiBaseUrl+&#x27;/techs&#x27;);
+  getUserTech() {
+    return this.http.get(environment.apiBaseUrl + &#x27;/techs&#x27;);
   }
 
 
 
 
-  setToken(token:string) {
-    localStorage.setItem(&#x27;token&#x27;,token);
+  setToken(token: string) {
+    localStorage.setItem(&#x27;token&#x27;, token);
   }
-  getToken(){
-   return localStorage.getItem(&#x27;token&#x27;)
+  getToken() {
+   return localStorage.getItem(&#x27;token&#x27;);
   }
 
   deleteToken() {
@@ -754,15 +754,15 @@ noAuthHeader&#x3D;{ headers: new HttpHeaders({&#x27;NoAtuh&#x27;:&#x27;True&#x27
 
   getUserPayload() {
     var token &#x3D; this.getToken();
-    if(token) {
-      var userPlayoad&#x3D;atob(token.split(&#x27;.&#x27;)[1]);
+    if (token) {
+      var userPlayoad &#x3D; atob(token.split(&#x27;.&#x27;)[1]);
       return JSON.parse(userPlayoad);
-    } else {return null}
+    } else {return null; }
   }
 
   isLoginIn() {
-    var userPlayload &#x3D;this.getUserPayload();
-    if( userPlayload) {
+    var userPlayload &#x3D; this.getUserPayload();
+    if ( userPlayload) {
     return userPlayload.exp &gt; Date.now() / 1000;
     } else { return false; }
   }

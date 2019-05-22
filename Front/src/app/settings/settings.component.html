@@ -1,0 +1,51 @@
+<div class="col-lg-12 control-section card-control-section basic_card_layout">
+  <div class="e-sample-resize-container e-card-resize-container">
+    <div class='row'>
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 mt-3 mb-3">
+            <div class="e-card" id="basic_card">
+              <div class="e-card-header">
+                <div class="e-card-header-caption">
+                  <div class="e-card-header-title">
+                    <h3>Settings</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="e-card-content center_focus_strong">
+                  <div class="control-section e-tab-section">
+                      <div class="e-sample-resize-container">
+                        <!-- Render the Tab Component -->
+                        <ejs-tab id="tab_default" heightAdjustMode='Auto'>
+                          <e-tabitems>
+                            <e-tabitem [header]='headerText[0]'>
+                              <ng-template #content>
+                                <app-maintenance></app-maintenance>
+                              </ng-template>
+                            </e-tabitem>
+                            <e-tabitem [header]='headerText[1]'>
+                              <ng-template #content>
+                               <app-asset></app-asset>
+                              </ng-template>
+                            </e-tabitem>
+                            <e-tabitem [header]='headerText[2]'>
+                              <ng-template #content>
+                                WhatsApp Messenger is a proprietary cross-platform instant messaging client for smartphones that operates
+                                under a subscription
+                                business model. It uses the Internet to send text messages, images, video, user location and audio media
+                                messages to
+                                other users using standard cellular mobile numbers. As of February 2016, WhatsApp had a user base of up to
+                                one billion,[10]
+                                making it the most globally popular messaging application. WhatsApp Inc., based in Mountain View,
+                                California, was acquired
+                                by Facebook Inc. on February 19, 2014, for approximately US$19.3 billion.
+                              </ng-template>
+                            </e-tabitem>
+                          </e-tabitems>
+                        </ejs-tab>
+                      </div>
+                    </div>
+              </div>
+            </div>
+          </div>
+    </div>
+  </div>
+</div>

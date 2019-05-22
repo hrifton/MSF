@@ -29,7 +29,7 @@ depuis backend commande "seed"
 /////GRID
 https://ej2.syncfusion.com/angular/demos/?utm_source=npm&utm_campaign=grid#/material/grid/column/column-menu
 
-angular Structure
+**********************************angular Structure************************************
 create module routing 
 //ng generate module admin + routing + mise a jour du module "app.module doit etre le module// racine du module ou racine projet si module principal
 

@@ -243,7 +243,7 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Maintenance } from &#x27;./../Class/Maintenance&#x27;;
 import { Injectable } from &#x27;@angular/core&#x27;;
-import {HttpClient} from &#x27;@angular/common/http&#x27;;
+import { HttpClient } from &#x27;@angular/common/http&#x27;;
 
 
 @Injectable({
@@ -251,15 +251,15 @@ import {HttpClient} from &#x27;@angular/common/http&#x27;;
 })
 export class MaintenanceService {
   uri &#x3D; &#x27;http://localhost:3000/api/maintenance&#x27;;
-constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-//getAll Maintenance
+  //getAll Maintenance
 
 
-getMaintenance() {
-      return this.http.get(&#x60;${this.uri}&#x60;);
+  getMaintenance() {
+    return this.http.get(&#x60;${this.uri}&#x60;);
   }
-
+  
 
 }
 </code></pre>

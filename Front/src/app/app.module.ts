@@ -61,6 +61,7 @@ import { UserComponent } from './user/user.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { from } from 'rxjs';
 import { UsersModule } from './users/users.module';
+import { SettingsModule } from './settings/settings.module';
 
 
 
@@ -121,6 +122,7 @@ import { UsersModule } from './users/users.module';
     MaintenancesModule,
     StoragesModule,
     UsersModule,
+    SettingsModule,
   ],
   providers:[{
               provide:HTTP_INTERCEPTORS,

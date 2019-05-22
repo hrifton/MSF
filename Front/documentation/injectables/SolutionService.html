@@ -220,7 +220,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
                     </div>
                     <div class="io-description">
@@ -400,7 +400,10 @@ return this.http.post(&#x60;${this.uri}/add&#x60;, solution).subscribe(data &#x3
 }
 
 getSolutionByIdIntervention(idIntervention) {
-this.http.get(&#x60;${this.uri}/ByIntervention/&#x60;,{params:{idIntervention:idIntervention}})
+  return this
+  .http
+  .get(&#x60;${this.uri}/ByIntervention/${idIntervention}&#x60;)
+  .subscribe(res &#x3D;&gt; console.log(res));
 
 }
 

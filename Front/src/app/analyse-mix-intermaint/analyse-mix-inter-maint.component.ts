@@ -25,7 +25,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
 
     //code
   }
-  //public interventions : Object[]
+
   public maintenance: Object[];
   public analyseIntervention: Object[];
   public analyseMaintenance: Object[];
@@ -59,7 +59,11 @@ export class AnalyseMixIntermaintComponent implements OnInit {
     format: '${point.x} : <b>${point.y}%</b>'
   };
 
-
+/**
+ * 
+ * @param e value de l'onglet
+ * refesh le chart 
+ */
   public tabSelected(e: SelectEventArgs): void {
     switch (e.selectedItem.innerText) {
       case "INTER./MAINT.":
@@ -74,7 +78,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
           this.AnalyseIntervention.getNumberOpenClose(this.analyseIntervention);
         break;
     }
-    console.log(e.selectedItem.innerText)
+    
 }
   
 

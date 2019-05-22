@@ -201,17 +201,14 @@
 import { NgModule } from &quot;@angular/core&quot;;
 import { CommonModule } from &quot;@angular/common&quot;;
 import { DashboardLayoutModule } from &quot;@syncfusion/ej2-angular-layouts&quot;;
-import {
-  ChartModule,
-  AccumulationChartModule
-} from &quot;@syncfusion/ej2-angular-charts&quot;;
-import { RadioButtonModule } from &#x27;@syncfusion/ej2-angular-buttons&#x27;;
+import { CheckBoxModule,RadioButtonModule } from &#x27;@syncfusion/ej2-angular-buttons&#x27;;
+import { ChartModule, AccumulationChartModule} from &quot;@syncfusion/ej2-angular-charts&quot;;
 
 import { MaintenancesRoutingModule } from &quot;./maintenances-routing.module&quot;;
 import { MaintenancesComponent } from &quot;./maintenances.component&quot;;
 import { ScheduleModule } from &quot;@syncfusion/ej2-angular-schedule&quot;;
 import { DayService, WeekService, WorkWeekService, MonthService, AgendaService, MonthAgendaService } from &#x27;@syncfusion/ej2-angular-schedule&#x27;;
-import { DropDownListAllModule } from &#x27;@syncfusion/ej2-angular-dropdowns&#x27;;
+import { DropDownListAllModule,MultiSelectAllModule } from &#x27;@syncfusion/ej2-angular-dropdowns&#x27;;
 import { NumericTextBoxModule } from &#x27;@syncfusion/ej2-angular-inputs&#x27;;
 import {
   MatGridListModule,
@@ -235,7 +232,10 @@ import { DatePickerModule } from &#x27;@syncfusion/ej2-angular-calendars&#x27;;
     FormulaireComponent,
     CalendrierComponent
   ],
-  imports: [DatePickerModule,
+  imports: [
+    MultiSelectAllModule,
+    CheckBoxModule,
+    DatePickerModule,
     NumericTextBoxModule,
     DropDownListAllModule,
     RadioButtonModule,

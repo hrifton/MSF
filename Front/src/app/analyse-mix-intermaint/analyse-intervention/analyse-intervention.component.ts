@@ -8,11 +8,11 @@ import { ChartComponent, IAccLoadedEventArgs, AccumulationTheme } from '@syncfus
 })
 export class AnalyseInterventionComponent implements OnInit {
 
-  
+
   @Input() analyseIntervention;
-  constructor() { 
-    this.analyseIntervention=[]
-    
+  constructor() {
+    this.analyseIntervention = [];
+
   }
   @ViewChild('chart1') public chart1: ChartComponent;
   public status1 = { open: 0, close: 0, canceled: 0, waiting: 0 };
@@ -23,7 +23,7 @@ export class AnalyseInterventionComponent implements OnInit {
   public datalabel1: Object;
   public open1: number;
   public close1: number;
-  
+
 
   ngOnInit() {
   }
@@ -33,15 +33,15 @@ export class AnalyseInterventionComponent implements OnInit {
     args.accumulation.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark') as AccumulationTheme;
   }
   ngOnChanges(changes: SimpleChanges): void {
-   
+
    this.getNumberOpenClose(changes.analyseIntervention.currentValue);
-   this.analyseIntervention=changes.analyseIntervention.currentValue
+   this.analyseIntervention = changes.analyseIntervention.currentValue;
   }
 
  public refreshChart() {
-   console.log(this.analyseIntervention)
-   // this.getNumberOpenClose(this.analyseMaintenance);
-    //this.chart1.refresh();
+   
+   this.getNumberOpenClose(this.analyseIntervention);
+   this.chart1.refresh();
   }
 
   getNumberOpenClose(data) {

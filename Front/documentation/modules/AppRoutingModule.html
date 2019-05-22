@@ -74,12 +74,9 @@
 import { MaintenancesComponent } from &#x27;./maintenances/maintenances.component&#x27;;
 import { NgModule } from &#x27;@angular/core&#x27;;
 import { Routes, RouterModule } from &#x27;@angular/router&#x27;;
-/*import { FormulaireInterventionComponent } from &#x27;./intervention/formulaire-intervention/formulaire-intervention.component&#x27;;
-import { ListeInterventionComponent } from &#x27;./intervention/liste-intervention/liste-intervention.component&#x27;;
 import { DepartementComponent } from &#x27;./setting/departement/departement.component&#x27;;
 import { TechnicienComponent } from &#x27;./setting/technicien/technicien.component&#x27;;
 import { CorpsDeMetierComponent } from &#x27;./setting/corpsDeMetier/corpsDeMetier.component&#x27;;
-*/
 import { InterventionsComponent } from &#x27;./interventions/interventions.component&#x27;;
 import { LoginComponent } from &#x27;./login/login.component&#x27;;
 import { UserComponent } from &#x27;./user/user.component&#x27;;
@@ -87,11 +84,14 @@ import { UserComponent } from &#x27;./user/user.component&#x27;;
 
 
 const routes: Routes &#x3D; [
-  {path: &#x27;&#x27;, redirectTo: &#x27;signUp&#x27;, pathMatch: &#x27;full&#x27;},
-  { path: &#x27;signUp&#x27;, component: UserComponent},
-  { path: &#x27;login&#x27;, component: LoginComponent},
-  { path: &#x27;interventions&#x27;, component: InterventionsComponent,canActivate:[AuthGuard] },
-  { path: &#x27;maintenances&#x27;, component: MaintenancesComponent,canActivate:[AuthGuard] },
+  { path: &#x27;&#x27;, redirectTo: &#x27;login&#x27;, pathMatch: &#x27;full&#x27; },
+  { path: &#x27;signUp&#x27;, component: UserComponent },
+  { path: &#x27;login&#x27;, component: LoginComponent },
+  { path: &#x27;interventions&#x27;, component: InterventionsComponent, canActivate: [AuthGuard] },
+  { path: &#x27;maintenances&#x27;, component: MaintenancesComponent, canActivate: [AuthGuard] },
+  { path: &#x27;setDep&#x27;, component: DepartementComponent, canActivate: [AuthGuard] },
+  { path: &#x27;setTec&#x27;, component: TechnicienComponent, canActivate: [AuthGuard] },
+  { path: &#x27;setMet&#x27;, component: CorpsDeMetierComponent, canActivate: [AuthGuard] },
 
 
 ];
