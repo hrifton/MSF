@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const departementRoutes = express.Router();
 const ctrlDepartement = require("../controllers/departement.controller");
 //let Departement = require("../models/Departement");

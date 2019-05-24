@@ -6,6 +6,7 @@ import {
   EventEmitter,
   ViewChild
 } from '@angular/core';
+import { Router } from "@angular/router";
 import { Browser } from '@syncfusion/ej2-base';
 import {
   EditService,
@@ -69,11 +70,13 @@ export class ListInterventionComponent implements OnInit {
   public shipCityDistinctData: Object[];
   public shipCountryDistinctData: Object[];
   public submitClicked = false;
-  route: any;
+  //router: Router;
+
   constructor(
     private ds: DepartementService,
     private ss: SolutionService,
-    private is: InterventionService
+    private is: InterventionService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -110,10 +113,15 @@ export class ListInterventionComponent implements OnInit {
     this.pageSettings = { pageSizes: true, pageSize: 8 };
     this.dropData = ['Order Placed', 'Processing', 'Delivered'];
   }
+  sendLink(data) {
+
+    this.router.navigate(['historic/'], { queryParams: { asset: data } });
+  }
+
 
   createFormGroup(data: IOrderModel): FormGroup {
     data = this.replace_idByid(data);
-
+    console.log(data)
     return new FormGroup({
       id: new FormControl(data.id, Validators.required),
       departement: new FormControl(data.departement, Validators.required),
@@ -125,6 +133,7 @@ export class ListInterventionComponent implements OnInit {
       tech: new FormControl(data.tech),
       useMat: new FormControl(data.useMat),
       asset: new FormControl(data.asset),
+      slug: new FormControl(data.slug),
       solution: new FormControl('')
     });
   }
@@ -155,14 +164,11 @@ export class ListInterventionComponent implements OnInit {
       //verification si le formulaire est valid
       if (this.angForm.valid) {
         args.data = this.angForm.value;
-        if (
-          args.data['asset'] != null &&
-          args.data['solution'] != null &&
-          args.data['useMat'] != null
-        ) {
-          console.log(args.data);
+        if (args.data['solution'] != null) {
+          console.log("save")
           this.ss.postSolution(args.data);
         } else {
+          console.log("update")
           this.is.updateIntervention(args.data);
           this.MessageEvent.emit(this.interventions);
         }
@@ -215,6 +221,7 @@ export class ListInterventionComponent implements OnInit {
 }
 
 export interface IOrderModel {
+  slug?: any;
   id?: number;
   departement?: string;
   locality?: string;

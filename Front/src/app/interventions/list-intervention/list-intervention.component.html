@@ -1,14 +1,14 @@
 <div class="contenaire">
-  <ejs-grid #grid [dataSource]='interventions' allowPaging='true' allowFiltering='true' [pageSettings]='pageSettings'
+  <ejs-grid #grid [dataSource]='interventions' allowPaging='true' allowSorting='true' allowFiltering='true' [pageSettings]='pageSettings'
     [editSettings]='editSettings' [filterSettings]='filterSettings' (actionBegin)='actionBegin($event)'
     (actionComplete)='actionComplete($event) '>
     <e-columns>
-      <e-column field='_id' headerText='Order ID' textAlign='center'></e-column>
-      <e-column field='type' headerText='Type' textAlign='center'></e-column>
-      <e-column field='user' headerText='User' textAlign='center' width=120></e-column>
-      <e-column field='day' headerText='Date' textAlign='center' width=120></e-column>
-      <e-column field='priority' headerText='Priotity' textAlign='center' width=120></e-column>
-      <e-column field='departement' headerText='Departement' textAlign='center' width=120></e-column>
+      <e-column field='slug' headerText='ID' textAlign='center' width=auto></e-column>
+      <e-column field='type' headerText='Type' textAlign='center' width=auto></e-column>
+      <e-column field='user' headerText='User' textAlign='center' width=auto></e-column>
+      <e-column field='day' headerText='Date' textAlign='center' width=auto></e-column>
+      <e-column field='priority' headerText='Priotity' textAlign='center' width=auto></e-column>
+      <e-column field='departement' headerText='Departement' textAlign='center' width=auto></e-column>
       <e-column field='description' headerText='Desciption' textAlign='center'></e-column>
       <e-column field='locality' headerText='Locality' textAlign='center' width=120></e-column>
       <e-column field='tech' headerText='tech' textAlign='center'></e-column>
@@ -18,7 +18,7 @@
       <div *ngIf="user.status!='user'">
         <div class="row">
           <div class="col-md-6">
-            {{angForm.value.id}}
+            {{angForm.value.slug}}
           </div>
           <div class="col-md-6">
             {{today | date :  'dd/MM/yyyy' }} {{angForm.value.type}}
@@ -101,19 +101,15 @@
           <div class="form-row">
 
             <input matInput="matInput" value="{{today | date :  'dd/MM/yyyy' }}" [hidden]="true" #date>
-
-
             <div class="form-group col-md-4">
-              <button (click)="historique(angForm.value.asset)" mat-raised-button color="warn">History by assets
-              </button>
-            </div>
-            <div class="form-group col-md-2">
-
-            </div>
-            <div class="form-group col-md-4">
-              <button mat-raised-button color="warn" [routerLink]="['/historic-solution']">home</button >
+              <button mat-raised-button color="warn" [routerLink]="['/historic/',angForm.value.asset]">historic asset {{angForm.value.asset}}</button >
                
               </div>
+
+              <div class="form-group col-md-4">
+                <button mat-raised-button color="warn" (click)="sendLink(angForm.value.asset)" > function istoric asset {{angForm.value.asset}}</button >
+                 
+                </div>
           </div>
 
         </form>

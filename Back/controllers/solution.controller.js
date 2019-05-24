@@ -18,12 +18,13 @@ module.exports.liste = (req, res) => {
 };
 
 module.exports.add = (req, res, next) => {
+  console.log("iciciciciic")
   var solution = new Solution();
 
   User.findOne({ fullName: req.body.idTech }, (err, res) => {
     this.test = res;
   });
-
+console.log('save')
   solution.idIntervention = req.body.idIntervention;
   solution.solution = req.body.solution;
   solution.date = req.body.date;
@@ -33,7 +34,7 @@ module.exports.add = (req, res, next) => {
 
   solution.save((err, doc) => {
     if (!err) {
-      console.log("save ok");
+      
       res.send(doc);
     } else {
       console.log(err);
@@ -63,6 +64,7 @@ module.exports.listeByIntervention = (req, res, next) => {
   });
 };
 module.exports.solutionbyIntervention = (req, res) => {
+  console.log("update")
   Solution.find((err, docs) => {
     if (!err) {
       res.send(docs);

@@ -23,14 +23,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TreeGridModule } from '@syncfusion/ej2-angular-treegrid';
-import { RadioButtonModule } from '@syncfusion/ej2-angular-buttons';
+import { RadioButtonModule, CheckBoxModule } from '@syncfusion/ej2-angular-buttons';
 // import { GridModule, EditService, ToolbarService, PageService, SortService, FilterService, GroupService } from '@syncfusion/ej2-angular-grids';
 import { DatePickerAllModule } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
-import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
+import { NumericTextBoxAllModule, UploaderModule } from '@syncfusion/ej2-angular-inputs';
 import { GridAllModule } from '@syncfusion/ej2-angular-grids';
 import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AccordionModule } from '@syncfusion/ej2-angular-navigations';
 
 
 // Providers
@@ -62,6 +63,9 @@ import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { from } from 'rxjs';
 import { UsersModule } from './users/users.module';
 import { SettingsModule } from './settings/settings.module';
+import { DialogModule } from '@syncfusion/ej2-angular-popups';
+import { HistoricModule } from './historic/historic.module';
+import { HistoricComponent } from './historic/historic.component';
 
 
 
@@ -79,10 +83,16 @@ import { SettingsModule } from './settings/settings.module';
     ListeCorpMetierComponent,
     LoginComponent,
     UserComponent,
-    SignUpComponent
+    SignUpComponent,
+    HistoricComponent
 
   ],
-  imports: [HttpModule,
+  imports: [
+    AccordionModule,
+    UploaderModule,
+    DialogModule,
+    CheckBoxModule,
+    HttpModule,
     FormsModule,
     FlexLayoutModule,
     JsonpModule,
@@ -123,6 +133,7 @@ import { SettingsModule } from './settings/settings.module';
     StoragesModule,
     UsersModule,
     SettingsModule,
+    HistoricModule,
   ],
   providers:[{
               provide:HTTP_INTERCEPTORS,

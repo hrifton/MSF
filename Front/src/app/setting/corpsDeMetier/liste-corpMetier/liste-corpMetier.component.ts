@@ -1,8 +1,9 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {EditService, ToolbarService, PageService, SaveEventArgs} from '@syncfusion/ej2-angular-grids';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MetierService} from '../metier.service';
+
 import Metier from '../Metier';
+import { MetierService } from 'src/app/Service/metier.service';
 
 @Component({
     selector: 'app-liste-corpMetier',

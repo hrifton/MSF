@@ -13,7 +13,8 @@ const rtsDepartement = require("./routes/departement.route");
 const rtsSolution = require("./routes/solution.route");
 const rtsMaintenance = require("./routes/maintenance.route");
 const rtsDateMaintenance = require("./routes/dateMaintenance.route");
-
+const rtsMetier=require('./routes/metier.route');
+const rtsAsset = require('./routes/asset.route');
 var app = express();
 //middleware
 app.use(bodyParser.json());
@@ -26,7 +27,9 @@ app
   .use("/api/departement", rtsDepartement)
   .use("/api/solution", rtsSolution)
   .use("/api/maintenance", rtsMaintenance)
-  .use("/api/datemaintenance", rtsDateMaintenance);
+  .use("/api/datemaintenance", rtsDateMaintenance)
+  .use("/api/asset",rtsAsset)
+  .use("/api/metier",rtsMetier);
 
 //Error handler
 app.use((err, req, res, next) => {

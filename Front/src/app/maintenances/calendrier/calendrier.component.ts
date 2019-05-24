@@ -45,6 +45,7 @@ export class CalendrierComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private ms: MaintenanceService) {
     console.log('maintenance calendier constructor');
+
   }
   scheduleData: Object[] = [
     // {
@@ -140,14 +141,13 @@ export class CalendrierComponent implements OnInit {
     this.eventSettings = {
       dataSource: this.data
     };
-    console.log(this.data.length);
   }
   createlisteMaintenance(datemaintenance: any, maintenance: any) {
     console.log('test');
     datemaintenance.forEach(datemain => {
       maintenance.forEach(maint => {
         if (maint._id === datemain.idMaintenance) {
-          datemain.Subject = maint.task;
+          datemain.Subject = maint.maintenance;
           // TODO Hicham  Switch Color maintenance
           switch (maint.executor) {
             case 'Biomed':

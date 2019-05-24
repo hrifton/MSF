@@ -23,7 +23,7 @@ export class DateMaintenanceService {
     );
   }
 
-  deleteDateMaintenance(datemaintenance) {
+deleteDateMaintenance(datemaintenance) {
     return this.http.delete(`${this.uri}/${datemaintenance}`).subscribe(data => {
      console.log(data);
     },
@@ -34,13 +34,10 @@ export class DateMaintenanceService {
     );
   }
 
-
-
 // Get all datemaintenance
 getDateMaintenance() {
   return this.http.get(`${this.uri}`);
 }
-
 
 getMaintenanceAndIntervention() {
   return this.http.get(`${this.uri}/maintenancedate`);

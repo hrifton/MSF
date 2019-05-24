@@ -5,7 +5,7 @@ import {of} from 'rxjs';
 @Injectable({providedIn: 'root'})
 
 export class MetierService {
-    uri = 'http://localhost:4000/metier';
+    uri = 'http://localhost:3000/api/metier';
 
     constructor(private http: HttpClient) {}
     // Insert a new metier

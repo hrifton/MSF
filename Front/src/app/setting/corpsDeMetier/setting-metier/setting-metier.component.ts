@@ -1,7 +1,8 @@
-import { MetierService } from './../metier.service';
+
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import Metier  from '../Metier';
+import { MetierService } from 'src/app/Service/metier.service';
 
 @Component({
   selector: 'app-setting-metier',

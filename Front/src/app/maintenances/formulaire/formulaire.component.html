@@ -4,7 +4,7 @@
         <div class="form-row">
             <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
                 <ejs-dropdownlist id="maintenance" formControlName="maintenance" [dataSource]='maintenances'
-                    (change)='onChange($event)' [fields]="{text:'task',value:'task' }" placeholder="Maintenance"
+                    (change)='onChange($event)' [fields]="{text:'maintenance',value:'maintenance' }" placeholder="Maintenance"
                     popupHeight='200px' floatLabelType='Always' #maintenance></ejs-dropdownlist>
             </div>
 
@@ -36,6 +36,9 @@
 
         </div>
     </div>
+
+
+    
     <div [ngSwitch]="periodicity.value">
         <!--Formulaire by Day-->
         <div *ngSwitchCase="'Daily'">

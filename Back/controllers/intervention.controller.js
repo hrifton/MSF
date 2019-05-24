@@ -45,9 +45,11 @@ module.exports.listeByTech = (req, res) => {
 };
 
 module.exports.add = (req, res, next) => {
-  var intervention = new Intervention();
+  
+  var intervention = new Intervention(req.body);
+//intervention=req.body
 
-  intervention.departement = req.body.departement;  
+ /*intervention.departement = req.body.departement;  
   intervention.locality = req.body.locality;
   intervention.priority = req.body.priority;
   intervention.day = req.body.day;
@@ -55,7 +57,9 @@ module.exports.add = (req, res, next) => {
   intervention.status = req.body.status;
   intervention.type = req.body.type;
   intervention.user = req.body.user;
-  intervention.tech = req.body.tech;
+  intervention.tech = req.body.tech;*/
+  console.log(typeof intervention)
+  console.log(intervention)
 
   intervention.save((err, doc) => {
     if (!err) res.send(doc);
@@ -65,6 +69,9 @@ module.exports.add = (req, res, next) => {
     }
   });
 };
+
+
+
 module.exports.update = (req, res, next) => {
   Intervention.findByIdAndUpdate(
     req.body.id,

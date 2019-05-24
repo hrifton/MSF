@@ -14,11 +14,19 @@
                   <div class="control-section e-tab-section">
                       <div class="e-sample-resize-container">
                         <!-- Render the Tab Component -->
-                        <ejs-tab id="tab_default" heightAdjustMode='Auto'>
+                        <ejs-tab id="tab_default">
                           <e-tabitems>
                             <e-tabitem [header]='headerText[0]'>
                               <ng-template #content>
-                                <app-maintenance></app-maintenance>
+                                <div class="row-span-2 mt-3">
+                                
+                                  <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+                                    <app-maintenance></app-maintenance>
+                                  </div>
+                                   
+                                </div>
+                               
+                               
                               </ng-template>
                             </e-tabitem>
                             <e-tabitem [header]='headerText[1]'>

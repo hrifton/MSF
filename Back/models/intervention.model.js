@@ -11,7 +11,8 @@ var interventionScheam = new mongoose.Schema({
   type: { type: String },
   user: { type: String },
   tech: { type: String },
-  metier: { type: String }
+  metier: { type: String },
+  asset:{type: String}
 });
 interventionScheam.plugin(AutoIncrement,{inc_field: 'slug'});
 mongoose.model("Intervention", interventionScheam);

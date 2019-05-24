@@ -1,6 +1,6 @@
-import { Maintenance } from './../Class/Maintenance';
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Maintenance } from '../Class/Maintenance';
 
 
 @Injectable({
@@ -16,6 +16,17 @@ export class MaintenanceService {
   getMaintenance() {
     return this.http.get(`${this.uri}`);
   }
-  
+  PostNewMaintenance(maintenance: Maintenance) {
+
+    return this.http.post(`${this.uri}/add`, maintenance).subscribe(
+      data => {
+        //console.log(data);
+      },
+      err => {
+        //console.log('Erro' + err);
+      }
+    );
+  }
+
 
 }

@@ -5,7 +5,7 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 import { InterventionService } from '../../Service/intervention.service';
 import { ToastrService } from 'ngx-toastr';
 import Intervention from 'src/app/Class/Intervention';
-
+import * as moment from 'moment';
 
 
 
@@ -16,31 +16,36 @@ import Intervention from 'src/app/Class/Intervention';
   styleUrls: ['./formulaire-intervention.component.scss']
 })
 export class FormulaireInterventionComponent implements OnInit {
-@Input() user ;
+  @Input() user;
   @Output() messageEvent = new EventEmitter<Intervention>();
 
-    inter = new Intervention();
-
+  inter = new Intervention();
+  public lPriority: { [key: string]: Object }[] = [
+    { priority: 'High', code: 'High' },
+    { priority: 'Medium', code: 'Medium' },
+    { priority: 'Low', code: 'Low' },
+  ];
   today = new Date();
   departements: Departement[];
-  locality: String;
+
   description: Text;
   angForm: FormGroup;
   breakpoint: number;
   departement: any;
   errors = 'errorMessages';
 
-  constructor(private fb: FormBuilder, private is: InterventionService, private ds: DepartementService,private ref: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, private is: InterventionService, private ds: DepartementService, private ref: ChangeDetectorRef) {
     this.createForm();
 
 
   }
   createForm() {
     this.angForm = this.fb.group({
-      departement: new FormControl('', [Validators.required ]),
-      locality: new FormControl('', [ Validators.required ]),
-      priority: new FormControl('', [ Validators.required ]),
-      description: new FormControl('', [Validators.required ]),
+      departement: new FormControl('', [Validators.required]),
+      locality: new FormControl('', [Validators.required]),
+      priority: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
+      asset: new FormControl('')
     });
     this.messageEvent.emit(this.inter);
   }
@@ -59,9 +64,9 @@ export class FormulaireInterventionComponent implements OnInit {
 
 
   showSuccess() {
- //   this.toastr.success('Hello world!', 'Toastr fun!');
+    //   this.toastr.success('Hello world!', 'Toastr fun!');
   }
-  addIntervention(departement, locality, priority, day, description) {
+  /*addIntervention(departement, locality, priority, day, description) {
 
       let tmp;
        // this.showSuccess();
@@ -82,11 +87,24 @@ export class FormulaireInterventionComponent implements OnInit {
 
 
 
-       }
+       }*/
 
+  addIntervention(data) {
+    console.log(data.value)
+    const inter = data.value;
+    inter.user = this.user.fullName;
+    inter.type = 'JobRequest';
+    inter.status = 'In progress';
+    inter.day = moment().format('DD/MM/YYYY');
 
-
-
+    this.is.postInter(inter);
+    this.messageEvent.emit(inter);
+    this.angForm.reset();
   }
+
+
+
+
+}
 
 

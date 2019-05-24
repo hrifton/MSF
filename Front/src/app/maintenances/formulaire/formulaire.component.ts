@@ -105,10 +105,9 @@ export class FormulaireComponent {
 
   public onChange(args: any): void {
     // TODO Hicham trouver une solution
-    if (args.itemData.task != undefined) {
+    if (args.itemData.maintenance != undefined) {
       this.onSelection(args.itemData);
     }
-    console.log(args.itemData.StartTime);
     this.mulObj.showSelectAll = this.checkboxObj.checked;
 
   }
@@ -132,14 +131,14 @@ export class FormulaireComponent {
   onSelection(value) {
 
     this.periode = value.periodicity;
-
+console.log(value)
     this.maintenanceForm = this.fb.group({
       idMaintnance: new FormControl(value._id, [Validators.required]),
-      maintenance: new FormControl(value.task, [Validators.required]),
+      maintenance: new FormControl(value.maintenance, [Validators.required]),
       executor: new FormControl(value.executor, [Validators.required]),
-      periodicity: new FormControl(value.periodicity, [Validators.required]),
+      periodicity: new FormControl('', [Validators.required]),
       duration: new FormControl(value.duration, [Validators.required]),
-      recurrence: new FormControl(value.recurrence, [Validators.required]),
+      recurrence: new FormControl('', [Validators.required]),
       description: new FormControl(value.description, [Validators.required]),
       StartTime: new FormControl('', [Validators.required]),
       // TODO Hicham  count ou until a false
@@ -147,7 +146,7 @@ export class FormulaireComponent {
       until: new FormControl(''),
       listDay: new FormControl([]),
       end: new FormControl(''),
-      interval: new FormControl(''),
+      interval: new FormControl(value.interval, [Validators.required]),
       dayOcc: new FormControl(''),
       day: new FormControl(''),
       choix: new FormControl(''),
@@ -283,7 +282,7 @@ export class FormulaireComponent {
     const newMaintenances: any = [];
     const time = moment(maintenance.StartTime).format('LT');
     for (let index = 0; index < maintenance.count; index++) {
-      console.log(index);
+      
       maintenance.listDay.forEach(element => {
         const date = (moment().day(element).week(nbWeek + index).format('LL'));
         maintenance.StartTime = (moment(date + ' ' + time).format('llll'));

@@ -10,6 +10,7 @@ export class SolutionService {
 constructor(private http: HttpClient) { }
 list:Solution[];
 postSolution(data: any) {
+  console.log("save solution")
 const date = new Date();
 const solution = new Solution();
 solution.idIntervention = data.id ;

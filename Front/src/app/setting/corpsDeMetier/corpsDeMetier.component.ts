@@ -1,7 +1,8 @@
-import { MetierService } from './metier.service';
+
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import Metier from './Metier';
 import { ListeCorpMetierComponent } from './liste-corpMetier/liste-corpMetier.component';
+import { MetierService } from 'src/app/Service/metier.service';
 
 
 @Component({

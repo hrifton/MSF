@@ -1,6 +1,6 @@
 import { UserService } from '../Service/user.service';
 // tslint:disable-next-line: import-spacing
-import{ AnalyseMixIntermaintComponent } from '../analyse-mix-intermaint/analyse-mix-inter-maint.component';
+import { AnalyseMixIntermaintComponent } from '../analyse-mix-intermaint/analyse-mix-inter-maint.component';
 
 import { InterventionService } from './../Service/intervention.service';
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
@@ -30,7 +30,7 @@ export class InterventionsComponent implements OnInit {
 
   @ViewChild(AnalyseMixIntermaintComponent)
   AnalyseMixIntermaint: AnalyseMixIntermaintComponent;
-  
+
   constructor(
     private is: InterventionService,
     private us: UserService,
@@ -73,28 +73,44 @@ export class InterventionsComponent implements OnInit {
         } else {
           this.is.getInterventions().subscribe((data: any[]) => {
             this.ds.getMaintenanceAndIntervention().subscribe((maindata: any[]) => {
-            
-            maindata.forEach(element => {
-              const inter = {
-                _id: element.idMaintenance,
-                day: moment(element.StartTime).format("DD/MM/YYYY"),
-                departement: element.resultat[0].executor,
-                description: element.resultat[0].description,
-                locality: '',
-                priority: 'Medium',
-                status: 'In process',
-                tech: "",
-                type: 'Maintenance',
-                user: '',
-              };
-              data.push(inter);
-            });
-this.interventions=data
-this.interventions.sort((a,b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
 
+              maindata.forEach(element => {
+                if(element.resultat.length<=0){
+                  const inter = {
+                  _id: element.idMaintenance,
+                  day: moment(element.StartTime).format("DD/MM/YYYY"),
+                  departement:"",
+                  description: "",
+                  locality: '',
+                  priority: 'Medium',
+                  status: 'In process',
+                  tech: "",
+                  type: 'Maintenance',
+                  user: '',
+                };
+                data.push(inter);
+                }else{
+                  const inter = {
+                    _id: element.idMaintenance,
+                    day: moment(element.StartTime).format("DD/MM/YYYY"),
+                    departement: element.resultat[0].executor,
+                    description: element.resultat[0].description,
+                    locality: '',
+                    priority: 'Medium',
+                    status: 'In process',
+                    tech: "",
+                    type: 'Maintenance',
+                    user: '',
+                  };
+                  data.push(inter);
+                }
+              });
+              this.interventions = data
+              this.interventions.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
+
+            });
           });
-          });
-         
+
         }
       },
       err => { }
@@ -104,5 +120,5 @@ this.interventions.sort((a,b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0
     });
   }
 
-  
+
 }

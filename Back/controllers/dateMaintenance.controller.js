@@ -48,7 +48,8 @@ module.exports.getAllMaintDate = (req, res) => {
       foreignField: "_id",
       as: "resultat"
     }
-  },{$sort:{'StartTime':1}},{$limit:10}], function (err, datemaintenances) {
+  },//{$sort:{'StartTime':1}},{$limit:10}], function (err, datemaintenances) {
+    {$sort:{'StartTime':1}}], function (err, datemaintenances) {
     if (err) res.send(err);
     else{}
     res.json(datemaintenances);

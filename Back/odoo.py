@@ -1,5 +1,5 @@
 __author__ = 'AsbaguiHicham'
-import xmlrpc.client
+import xmlrpclib
 import json
 import ssl
 
@@ -9,9 +9,9 @@ db = 'MSF'
 username = 'julien.van.de.casteele@brussels.msf.org'
 password = 'TMS123'
 
-server = xmlrpc.client.ServerProxy(url+'/xmlrpc/2/common',verbose=False, use_datetime=True,context=ssl._create_unverified_context())
+server = xmlrpclib.ServerProxy(url+'/xmlrpc/2/common',verbose=False, use_datetime=True,context=ssl._create_unverified_context())
 
-common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url)) 
+common = xmlrpclib.ServerProxy('{}/xmlrpc/2/common'.format(url)) 
 print("server--------------")
 print(server)
 print("common//////////////////////////")
@@ -22,8 +22,8 @@ uid = server.authenticate(db, username, password, {})
 print (uid)
 id=server.authenticate(db,username,password,{})
 print (id)
-models = xmlrpc.client.ServerProxy('{}/xmlrpc/object'.format(url))
+models = xmlrpclib.ServerProxy('{}/xmlrpc/object'.format(url))
 
 models.execute_kw(db, uid, password,
-    'product', 'check_access_rights',
-    ['read'], {'raise_exception': False})
+                  'res.partner', 'check_access_rights',
+                  ['read'], {'raise_exception': False})

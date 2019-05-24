@@ -1,18 +1,11 @@
 const express = require("express");
-const app = express();
 const metierRoutes = express.Router();
+const ctrlMetier= require('../controllers/metier.controller');
 
-let Metier = require("../models/Metier");
 
 //route for get all metier
 metierRoutes.route("/").get(function(req, res) {
-  Metier.find(function(err, metiers) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(metiers);
-    }
-  });
+  ctrlMetier.all(req, res);
 });
 //route for add a metier
 metierRoutes.route("/add").post(function(req, res) {
