@@ -1,38 +1,38 @@
 <div class="col-lg-12 control-section card-control-section basic_card_layout">
   <div class="e-sample-resize-container e-card-resize-container">
     <div class='row'>
-      <div class="col-xs-8 col-sm-8 col-lg-8 col-md-8 mb-3">
-        <div class="row">
+      <div class="col-xs-8 col-sm-8 col-lg-8 col-md-8">
+        <div class="row" style="margin-top: 0px;">
           <div class="e-card" id="basic_card">
             <div class="e-card-header">
               <div class="e-card-header-caption">
                 <div class="e-card-header-title">
-                  <h3>Demande d'intervention</h3>
+                  <h3>Intervention Request</h3>
                 </div>
               </div>
             </div>
-            <div class="e-card-content center_focus_strong">
+            <div class="e-card-content">
               <app-formulaire-intervention (messageEvent)="update($event)" [user]="userDetails">
               </app-formulaire-intervention>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="e-card" id="basic_card">
+          <div *ngFor="let dom of domaine" class="e-card col-xs-4 col-sm-4 col-lg-2 col-md-2  mt-3 " id="basic_card">
             <div class="e-card-header">
               <div class="e-card-header-caption">
                 <div class="e-card-header-title">
-                  <h3>By Domaine</h3>
+                 <h6 class="text-center">{{dom.domaine}}</h6> 
                 </div>
               </div>
             </div>
             <div class="e-card-content center_focus_strong">
-              <p>number Intervention By Domaine</p>
+              <h5 class="text-center">5</h5> 
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4 mt-3 mb-3">
+      <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4 ">
         <div class="e-card" id="basic_card">
           <div class="e-card-header">
             <div class="e-card-header-caption">
@@ -51,7 +51,7 @@
     <div class="col-lg-12 control-section card-control-section basic_card_layout">
       <div class="e-sample-resize-container e-card-resize-container">
         <div class='row'>
-          <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 mt-3 mb-3">
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 ">
             <div class="e-card" id="basic_card">
               <div class="e-card-header">
                 <div class="e-card-header-caption">
@@ -61,7 +61,7 @@
                 </div>
               </div>
               <div class="e-card-content">
-                <app-list-intervention [interventions]='interventions' [maintenance]='maintenance' [techs]='techs'
+                <app-list-intervention [interventions]='interventions' [maintenance]='maintenance' [domaine]='domaine'[techs]='techs'
                   [user]="userDetails" (messageEvent)="check($event)">
                 </app-list-intervention>
               </div>

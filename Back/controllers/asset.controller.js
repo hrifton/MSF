@@ -18,7 +18,12 @@ module.exports.findInterByAsset=(req,res)=>{
         from: "interventions",
         localField: "codeBarre",
         foreignField: "asset",
-        as: "result"
+        as: "intervention"
+      }},{$lookup: {
+        from: "solutions",
+        localField: "codeBarre",
+        foreignField: "asset",
+        as: "solutions"
       }}],(err, docs) => {
         if (!err) {
           res.send(docs);

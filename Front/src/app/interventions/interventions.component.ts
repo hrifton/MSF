@@ -11,6 +11,7 @@ import { ListInterventionComponent } from './list-intervention/list-intervention
 import Intervention from '../Class/Intervention';
 import { DateMaintenanceService } from '../Service/dateMaintenance.service';
 import * as moment from 'moment';
+import { DomaineService } from '../Service/domaine.service';
 
 @Component({
   selector: 'app-interventions',
@@ -21,6 +22,7 @@ import * as moment from 'moment';
 })
 export class InterventionsComponent implements OnInit {
   public interventions: Intervention[];
+  public domaine: Object = [];
   public maintenance: any[];
   userDetails;
   techs: User[];
@@ -35,8 +37,10 @@ export class InterventionsComponent implements OnInit {
     private is: InterventionService,
     private us: UserService,
     private ds: DateMaintenanceService,
+    private doms: DomaineService,
     private odooRPC: Ng6OdooRPCService
   ) {
+   
     this.interventions = [];
     this.maintenance = [];
     console.log('compoment parent: Constructor');
@@ -52,6 +56,7 @@ export class InterventionsComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this.us.getUserProfil().subscribe(
       res => {
         this.userDetails = res['user'];
@@ -75,11 +80,11 @@ export class InterventionsComponent implements OnInit {
             this.ds.getMaintenanceAndIntervention().subscribe((maindata: any[]) => {
 
               maindata.forEach(element => {
-                if(element.resultat.length<=0){
+                if (element.resultat.length <= 0){
                   const inter = {
                   _id: element.idMaintenance,
                   day: moment(element.StartTime).format("DD/MM/YYYY"),
-                  departement:"",
+                  departement: "",
                   description: "",
                   locality: '',
                   priority: 'Medium',
@@ -88,7 +93,7 @@ export class InterventionsComponent implements OnInit {
                   type: 'Maintenance',
                   user: '',
                 };
-                data.push(inter);
+                  data.push(inter);
                 }else{
                   const inter = {
                     _id: element.idMaintenance,
@@ -105,7 +110,9 @@ export class InterventionsComponent implements OnInit {
                   data.push(inter);
                 }
               });
-              this.interventions = data
+              this.interventions = data;
+              this.compteDomaine(this.domaine,this.interventions)
+
               this.interventions.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
 
             });
@@ -117,6 +124,19 @@ export class InterventionsComponent implements OnInit {
     );
     this.us.getUserTech().subscribe((data: User[]) => {
       this.techs = data;
+    });
+    this.doms.getAll().subscribe((data) => {
+      console.log(data);
+      this.domaine = data;
+      
+    });
+  }
+
+  compteDomaine(domaine,intervention){
+    intervention.forEach(element => {
+      if(element.type==="JobRequest"){
+        console.log("JobRequest")
+      }
     });
   }
 

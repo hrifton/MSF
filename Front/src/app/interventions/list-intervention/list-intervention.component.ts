@@ -23,6 +23,7 @@ import { DepartementService } from 'src/app/setting/departement/departement.serv
 import Departement from '../../Class/Departement';
 import { SolutionService } from 'src/app/Service/solution.service';
 import Intervention from 'src/app/Class/Intervention';
+import { DomaineService } from 'src/app/Service/domaine.service';
 
 @Component({
   selector: 'app-list-intervention',
@@ -32,6 +33,7 @@ import Intervention from 'src/app/Class/Intervention';
 })
 export class ListInterventionComponent implements OnInit {
   @Input() interventions;
+  @Input() domaine;
   @Input() maintenance;
   @Input() techs;
   @Input() user;
@@ -42,7 +44,7 @@ export class ListInterventionComponent implements OnInit {
   // public interventions: Intervention[];
   public priorities: { [key: string]: Object }[] = [
     { priority: 'High' },
-    { priority: 'Medimum' },
+    { priority: 'Medium' },
     { priority: 'Low' }
   ];
   public lStatus: { [key: string]: Object }[] = [
@@ -80,6 +82,7 @@ export class ListInterventionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.domaine)
     this.filterSettings = {
       type: 'Menu'
     };
@@ -134,6 +137,7 @@ export class ListInterventionComponent implements OnInit {
       useMat: new FormControl(data.useMat),
       asset: new FormControl(data.asset),
       slug: new FormControl(data.slug),
+      domaine: new FormControl(data.domaine),
       solution: new FormControl('')
     });
   }
@@ -164,7 +168,7 @@ export class ListInterventionComponent implements OnInit {
       //verification si le formulaire est valid
       if (this.angForm.valid) {
         args.data = this.angForm.value;
-        if (args.data['solution'] != null) {
+        if (args.data['solution'] === null) {
           console.log("save")
           this.ss.postSolution(args.data);
         } else {
@@ -221,6 +225,7 @@ export class ListInterventionComponent implements OnInit {
 }
 
 export interface IOrderModel {
+  domaine?: any;
   slug?: any;
   id?: number;
   departement?: string;

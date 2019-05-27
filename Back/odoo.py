@@ -22,8 +22,11 @@ uid = server.authenticate(db, username, password, {})
 print (uid)
 id=server.authenticate(db,username,password,{})
 print (id)
-models = xmlrpclib.ServerProxy('{}/xmlrpc/object'.format(url))
+models = xmlrpclib.ServerProxy(url + '/xmlrpc/object',verbose=False, use_datetime=True,context=ssl._create_unverified_context())
 
-models.execute_kw(db, uid, password,
+value=models.execute_kw(db, uid, password,
                   'res.partner', 'check_access_rights',
                   ['read'], {'raise_exception': False})
+
+print(models)
+print(value)

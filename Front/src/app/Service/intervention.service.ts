@@ -48,7 +48,7 @@ export class InterventionService {
 
 
    updateIntervention(form) {
-
+console.log('updateIntervention')
     this
       .http
       .put(`${this.uri}/${form.id}`, form)

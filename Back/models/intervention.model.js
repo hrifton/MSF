@@ -3,6 +3,7 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 var interventionScheam = new mongoose.Schema({
   departement: { type: String },
+  domaine:{ type: String },
   locality: { type: String },
   priority: { type: String },
   day: { type: String },

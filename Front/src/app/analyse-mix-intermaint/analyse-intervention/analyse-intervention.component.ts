@@ -14,15 +14,15 @@ export class AnalyseInterventionComponent implements OnInit {
     this.analyseIntervention = [];
 
   }
-  @ViewChild('chart1') public chart1: ChartComponent;
-  public status1 = { open: 0, close: 0, canceled: 0, waiting: 0 };
+  @ViewChild('chart') public chart: ChartComponent;
+  public status = { open: 0, close: 0, canceled: 0, waiting: 0 };
   // tslint:disable-next-line: ban-types
-  private piedata1: Object[];
-  public legendSettings1: Object;
-  public map1: Object = 'fill';
-  public datalabel1: Object;
-  public open1: number;
-  public close1: number;
+  private piedata: Object[];
+  public legendSettings: Object;
+  public map: Object = 'fill';
+  public datalabel: Object;
+  public open: number;
+  public close: number;
 
 
   ngOnInit() {
@@ -41,7 +41,7 @@ export class AnalyseInterventionComponent implements OnInit {
  public refreshChart() {
    
    this.getNumberOpenClose(this.analyseIntervention);
-   this.chart1.refresh();
+   this.chart.refresh();
   }
 
   getNumberOpenClose(data) {
@@ -71,16 +71,16 @@ export class AnalyseInterventionComponent implements OnInit {
       }
 
     });
-    this.status1.open = open;
-    this.status1.close = close;
-    this.status1.canceled = canceled;
-    this.status1.waiting = waiting;
+    this.status.open = open;
+    this.status.close = close;
+    this.status.canceled = canceled;
+    this.status.waiting = waiting;
 
-    this.getChart(this.status1);
+    this.getChart(this.status);
   }
   getChart(data) {
 
-    this.piedata1 = [
+    this.piedata = [
       // tslint:disable-next-line:max-line-length
       {
         x: 'Closed : ' + data.close,
@@ -109,14 +109,14 @@ export class AnalyseInterventionComponent implements OnInit {
 
     ];
 
-    this.datalabel1 = { visible: true, name: 'text', position: 'Outside' };
+    this.datalabel = { visible: true, name: 'text', position: 'Outside' };
 
-    this.legendSettings1 = {
+    this.legendSettings = {
       visible: true
     };
 
   }
-  @ViewChild('pie1') public pie1: ChartComponent;
+  @ViewChild('pie') public pie: ChartComponent;
 
   // custom code end
   public center: Object = { x: '50%', y: '50%' };

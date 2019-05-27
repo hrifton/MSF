@@ -14,9 +14,17 @@
                         <!-- Render the Accoridon Component -->
                         <ejs-accordion>
                           <e-accordionitems>
-                            <e-accordionitem *ngFor="let item of asset[0].result" expanded='true'>
+                            <e-accordionitem *ngFor="let item of asset[0].intervention ; index as i" expanded='true'>
                               <ng-template #header>
-                                <div>{{item.slug}}</div>
+                                <div class=row>
+                                  <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                                    <p>id Intervention: {{asset[0].intervention[i].slug}}   date : {{asset[0].intervention[i].day}}</p> 
+                                  </div>
+                                  <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                                    <p> id Solution : {{asset[0].solutions[i]._id}}   date : {{asset[0].solutions[i].date}}</p>
+                                  </div>
+                                  
+                                </div>
                               </ng-template>
                               <ng-template #content>
                                 <div class="row">
@@ -24,28 +32,31 @@
                                     <div tabindex="0" class="e-card" id="basic_card">
                                       <div class="e-card-header">
                                         <div class="e-card-header-caption">
-                                          <div class="e-card-header-title">Intervention : {{item.status}}</div>
-                                          <div class="e-card-header-title">Priority : {{item.priority}}</div>
-                                          <div class="e-card-sub-title">{{item.day}}</div>
+                                          <div class="e-card-header-title">Intervention :
+                                            {{asset[0].intervention[i].day}}</div>
+                                          <div class="e-card-header-title">Priority :
+                                            {{asset[0].intervention[i].priority}}</div>
+
                                         </div>
                                       </div>
                                       <div class="e-card-content m-3">
-                                       {{item.description}}
+                                        {{asset[0].intervention[i].description}}
                                       </div>
-                                      
+
                                     </div>
                                   </div>
                                   <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
                                     <div tabindex="0" class="e-card" id="basic_card">
                                       <div class="e-card-header">
                                         <div class="e-card-header-caption">
-                                          <div class="e-card-header-title">Solution:  </div>
-                                          <div class="e-card-sub-title">By John Doe | Jan 20, 2018 </div>
+                                          <div class="e-card-header-title">Solution: {{asset[0].solutions[i].date}}
+                                          </div>
+                                          <div class="e-card-sub-title">Technicien : {{asset[0].intervention[i].tech}}
+                                          </div>
                                         </div>
                                       </div>
                                       <div class="e-card-content m-3">
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem, repellat. Ut harum molestiae aliquid rerum unde voluptatum ducimus, amet excepturi voluptate a quas, suscipit dolor temporibus ad repellendus dicta doloribus.
-                                      </div>
+                                        {{asset[0].solutions[i].solution}} </div>
                                     </div>
                                   </div>
                                 </div>

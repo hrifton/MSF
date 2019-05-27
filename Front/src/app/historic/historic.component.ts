@@ -9,21 +9,20 @@ import { AssetService } from '../Service/asset.service';
 })
 export class HistoricComponent implements OnInit {
   [x: string]: {};
-  promise: Promise<any>;
-  private sub: any;
-  asset: any;
-  data: any
-  isloading=false;
 
+  asset: any;
+ intervention:any=[]
+ solution:any=[]
   constructor(private route: ActivatedRoute, private as: AssetService) {}
 
   ngOnInit() {
     if (this.route.snapshot.queryParamMap.get('asset')) {
       console.log(this.route.snapshot.queryParamMap.get('asset'))
       this.as.findInterSolByAsset(this.route.snapshot.queryParamMap.get('asset')).subscribe(x=>{
-        console.log(x)
+        
         this.asset=x;
       });
+      console.log(this.asset)
      }
   }
 
