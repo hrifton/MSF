@@ -9,10 +9,9 @@ import { Maintenance } from '../Class/Maintenance';
 export class DateMaintenanceService {
   uri = 'http://localhost:3000/api/datemaintenance';
 
-  constructor(private http: HttpClient) {}
-// Post a new datemaintenance
+  constructor(private http: HttpClient) { }
+  // Post a new datemaintenance
   postDateMaintenance(datemaintenance: DateMaintenance) {
-
     return this.http.post(`${this.uri}/add`, datemaintenance).subscribe(
       data => {
         // console.log(data);
@@ -23,24 +22,32 @@ export class DateMaintenanceService {
     );
   }
 
-deleteDateMaintenance(datemaintenance) {
-    return this.http.delete(`${this.uri}/${datemaintenance}`).subscribe(data => {
-     console.log(data);
+  deleteDateMaintenance(datemaintenance) {
+    const id = datemaintenance.event._id;
+    console.log('deleteDateMaintenance ' + id);
+    return this.http.delete(`${this.uri}/${id}`).subscribe(data => {
+      console.log(data);
     },
-    err => {
-     console.log(err);
-    }
+      err => {
+        console.log(err);
+      }
 
     );
   }
+  deleteSerieDateMaintenance(datemaintenance) {
+    const id = datemaintenance.event.idMaintenance;
+    const codeBarre = datemaintenance.event.codeBarre;
 
-// Get all datemaintenance
-getDateMaintenance() {
-  return this.http.get(`${this.uri}`);
-}
+    return this.http.delete(`${this.uri}/delete/${id}/${codeBarre}`).toPromise().then((response) => response);
+  }
 
-getMaintenanceAndIntervention() {
-  return this.http.get(`${this.uri}/maintenancedate`);
-}
+  // Get all datemaintenance
+  getDateMaintenance() {
+    return this.http.get(`${this.uri}`);
+  }
+
+  getMaintenanceAndIntervention() {
+    return this.http.get(`${this.uri}/maintenancedate`);
+  }
 
 }

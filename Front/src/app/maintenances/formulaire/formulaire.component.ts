@@ -1,3 +1,5 @@
+
+//#region
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CheckBoxComponent } from '@syncfusion/ej2-angular-buttons';
@@ -7,6 +9,7 @@ import * as moment from 'moment';
 import { Maintenance } from 'src/app/Class/Maintenance';
 import { MaintenanceService } from 'src/app/Service/maintenance.service';
 import { MatNativeDateModule } from '@angular/material';
+//#endregion
 
 
 
@@ -100,6 +103,7 @@ export class FormulaireComponent {
       StartTime: new FormControl('', [Validators.required]),
       count: new FormControl(''),
       until: new FormControl(''),
+      codeBarre: new FormControl(''),
     });
   }
 
@@ -131,7 +135,6 @@ export class FormulaireComponent {
   onSelection(value) {
 
     this.periode = value.periodicity;
-console.log(value)
     this.maintenanceForm = this.fb.group({
       idMaintnance: new FormControl(value._id, [Validators.required]),
       maintenance: new FormControl(value.maintenance, [Validators.required]),
@@ -146,11 +149,12 @@ console.log(value)
       until: new FormControl(''),
       listDay: new FormControl([]),
       end: new FormControl(''),
-      interval: new FormControl(value.interval, [Validators.required]),
+      interval: new FormControl(value.interval),
       dayOcc: new FormControl(''),
       day: new FormControl(''),
       choix: new FormControl(''),
       current: new FormControl(''),
+      codeBarre: new FormControl(''),
     });
 
   }
@@ -218,11 +222,11 @@ console.log(value)
 
     // loop for nomber occurence ask
     for (let index = 0; index < maintenance.count; index++) {
-      //this.traitementCurrentByMonth(maintenance.current, date, maintenance);
-      //maintenance.StartTime = (moment(maintenance.StartTime.format('ll') + ' ' + time).format('llll'));
-      //this.traitementPlanByDay(maintenance, newMaintenances);
-      //date.add(maintenance.interval, 'M');
-      this.traitementByMonth(maintenance,newMaintenances,date,time)
+      // this.traitementCurrentByMonth(maintenance.current, date, maintenance);
+      // maintenance.StartTime = (moment(maintenance.StartTime.format('ll') + ' ' + time).format('llll'));
+      // this.traitementPlanByDay(maintenance, newMaintenances);
+      // date.add(maintenance.interval, 'M');
+      this.traitementByMonth(maintenance, newMaintenances, date, time);
     }
 
     this.messageEvent.emit(newMaintenances);
@@ -249,7 +253,7 @@ console.log(value)
 
 
     while (moment(maintenance.StartTime).isBefore(moment(maintenance.until))) {
-     this.traitementByMonth(maintenance,newMaintenances,date,time);
+     this.traitementByMonth(maintenance, newMaintenances, date, time);
     }
     this.messageEvent.emit(newMaintenances);
     this.createForm();
@@ -278,7 +282,7 @@ console.log(value)
    */
   planWeekCount(maintenance: any) {
 
-    const nbWeek = moment(moment(maintenance.StartTime)).week();;
+    const nbWeek = moment(moment(maintenance.StartTime)).week(); 
     const newMaintenances: any = [];
     const time = moment(maintenance.StartTime).format('LT');
     for (let index = 0; index < maintenance.count; index++) {
@@ -362,7 +366,7 @@ console.log(value)
 
 
   //#region Tools
-  /**
+  /**traitementCurrentByMonth(current, date, maintenance)
  *
  * @param current definit le numero de la semaine
  * @param date definit le mois a traité
@@ -396,7 +400,7 @@ console.log(value)
       date = this.firstWeek(date);
       // startOf('month) return first week of month day('maintenance.day') var with number of day add(14,'d') add 14 days up first day
       maintenance.StartTime = moment(date).add(14, 'd');
-      //TODO verifier si c'est pas 30 ou 31 modifier date
+      // verifier si c'est pas 30 ou 31 modifier date
 
     } else {
       // endOF('month) return last week of month day('maintenance.day') var with number of day
@@ -406,6 +410,11 @@ console.log(value)
 
     }
   }
+  /**checkLastWeekofMonth(date)
+   * 
+   * @param date 
+   * verifie si le numero du jour est inferieur a 10 si oui on recule d'une semaine
+   */
   checkLastWeekofMonth(date) {
 
     if (date.format('DD') < 10) {
@@ -414,6 +423,11 @@ console.log(value)
     }
     return date;
   }
+  /**firstWeek(date)
+   * 
+   * @param date 
+   * verifie si le numero du jour est superieur a 70 si oui on avance d'une semaine
+   */
   firstWeek(date) {
     if (date.format('DD') > 20) {
       return date.add(1, 'w');
@@ -421,7 +435,16 @@ console.log(value)
       return date;
     }
   }
-  traitementByMonth(maintenance,newMaintenances,date,time){
+  /**traitementByMonth(maintenance, newMaintenances, date, time)
+   * 
+   * @param maintenance 
+   * @param newMaintenances 
+   * @param date 
+   * @param time 
+   * 
+   * verification du roulement de maintenance via un nombre defini de fois a execute ou jusqu'une date de fin
+   */
+  traitementByMonth(maintenance, newMaintenances, date, time){
     if (maintenance.choix === 'current') {
       this.traitementCurrentByMonth(maintenance.current, date, maintenance);
       maintenance.StartTime = (moment(maintenance.StartTime.format('ll') + ' ' + time).format('llll'));
@@ -429,16 +452,23 @@ console.log(value)
 
       maintenance.StartTime = date.add(maintenance.interval, 'M');
     } else {
-      maintenance.StartTime = date.date(maintenance.dayOcc).format("llll")
-      this.traitementPlanByDay(maintenance, newMaintenances)
+      maintenance.StartTime = date.date(maintenance.dayOcc).format("llll");
+      this.traitementPlanByDay(maintenance, newMaintenances);
       maintenance.StartTime = date.add(maintenance.interval, 'M');
     }
   }
+  /**traitementPlanByDay(maintenance, newMaintenances) 
+   * 
+   * @param maintenance 
+   * @param newMaintenances 
+   * Traitement sur la durée de la maitenance par occurence
+   */
   traitementPlanByDay(maintenance, newMaintenances) {
     maintenance.StartTime = moment(maintenance.StartTime).format('LLLL');
     maintenance.EndTime = this.addTime(moment(maintenance.StartTime, 'LLLL'), maintenance.duration);
-   
+   console.log(maintenance);
     const dayMain: DayMain = {
+      codeBarre: maintenance.codeBarre,
       StartTime: maintenance.StartTime,
       EndTime: maintenance.EndTime,
       Subject: maintenance.maintenance,
@@ -480,4 +510,5 @@ export interface DayMain {
   EndTime?: Date;
   Subject?: string;
   idMaintenance?: any;
+  codeBarre?: string;
 }

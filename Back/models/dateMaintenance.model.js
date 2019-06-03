@@ -7,7 +7,8 @@ var dateMaintenanceSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Maintenances",
     required: true
-  }
+  },
+  codeBarre:{type:String}
 });
 
 

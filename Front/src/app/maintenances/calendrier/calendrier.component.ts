@@ -1,6 +1,9 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+//#region iMPORT
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, SimpleChanges, ElementRef, HostListener } from '@angular/core';
 import { DatePicker } from '@syncfusion/ej2-calendars';
 import { DropDownList } from '@syncfusion/ej2-dropdowns';
+import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
+import { ToastComponent, ToastCloseArgs } from '@syncfusion/ej2-angular-notifications';
 import {
   DayService,
   WeekService,
@@ -15,15 +18,19 @@ import {
   EventRenderedArgs,
   ScheduleComponent
 } from '@syncfusion/ej2-angular-schedule';
-import { extend } from '@syncfusion/ej2-grids/src';
+import { extend, dataSourceChanged } from '@syncfusion/ej2-grids/src';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { MaintenanceService } from 'src/app/Service/maintenance.service';
 import { now } from 'moment';
+import { DialogComponent } from '@syncfusion/ej2-angular-popups';
+import { EmitType } from '@syncfusion/ej2-base';
+import { DateMaintenanceService } from 'src/app/Service/dateMaintenance.service';
+//#endregion
 
 @Component({
   selector: 'app-calendrier',
   templateUrl: './calendrier.component.html',
-  //styleUrls: ['./calendrier.component.scss'],
+  styleUrls: ['./calendrier.component.scss'],
   providers: [
     DayService,
     WeekService,
@@ -35,30 +42,17 @@ import { now } from 'moment';
   ]
 })
 export class CalendrierComponent implements OnInit {
+  //#region variable
   @Input() maintenance;
   @Input() datemaitenance;
   @Output() messageEvent = new EventEmitter<any>();
   @ViewChild('agenda') public agenda: ScheduleComponent;
 
-
-  public maintenanceForm: FormGroup;
-
-  constructor(private fb: FormBuilder, private ms: MaintenanceService) {
-    console.log('maintenance calendier constructor');
-
-  }
-  scheduleData: Object[] = [
-    // {
-    //     Id: 1,
-    //     Subject: 'Explosion of Betelgeuse Star',
-    //     Location: 'Space Centre USA',
-    //     StartTime: new Date(),
-    //     EndTime: new Date(),
-    //     CategoryColor: '#1aaa55'
-    // },
-
-  ];
-
+  public del: any;
+  public scheduleData: Object[] = [];
+  public messageDelete: any;
+  public show: Boolean = false;
+  public toast: any;
   public data: Object[] = extend([], this.scheduleData, null) as Object[];
   public selectedDate: Date = new Date();
   public minDate: Date = new Date();
@@ -70,9 +64,7 @@ export class CalendrierComponent implements OnInit {
     { repeat: 'Weekly' },
     { repeat: 'Monthly' },
     { repeat: 'Yearly' },
-
   ];
-
   public lEnd: { [key: string]: Object }[] = [
     { end: 'Never' },
     { end: 'Until' },
@@ -80,7 +72,20 @@ export class CalendrierComponent implements OnInit {
 
 
   ];
-  //Creation du formulaire
+  public maintenanceForm: FormGroup;
+  //#endregion
+
+
+  constructor(private fb: FormBuilder, private ms: MaintenanceService, private ds: DateMaintenanceService) {
+    console.log('maintenance calendier constructor');
+
+  }
+
+
+  /**Creation formulaire avec champs date precomplété
+   * 
+   * @param data 
+   */
   createForm(data) {
     this.maintenanceForm = this.fb.group({
       status: new FormControl('', [Validators.required]),
@@ -89,10 +94,73 @@ export class CalendrierComponent implements OnInit {
       EndTime: new FormControl(data.EndTime, [Validators.required])
     });
   }
-  public onChange(args: any): void {
-    console.log('changement');
+  /**fermture popup
+   * 
+   */
+  cancel() {
+    this.show = false;
+  }
+  /**async delSerie()
+   *  fonction async pour attendre le retour de la requete
+   * fermeture du popup 
+   * affichage d'un toast
+   * 
+   */
+  async delSerie() {
+    this.messageDelete = await this.ds.deleteSerieDateMaintenance(this.del);
+    this.cancel();
+    this.toastObj.show();
+    this.removeMaintenance(this.del);
+    this.deleteElements();
+    this.refreshAgenda();
 
   }
+  /**deleteElement()
+   * suppression de plusieur element
+   * array tmp
+   * foreach sur liste des date de maintenance
+   * si element.idMaintenance different de l'idMaintenant a delete && element.codeBarre different du codeBarre a delete
+   * on push element dans l'array tmp
+   * une fois foreach fini ecrase liste DateMaintenance avec tmp qui contien les dateMaintenance restant 
+   */
+  deleteElements() {
+
+    var tmp: any = [];
+    this.datemaitenance.forEach((element) => {
+      if ((element.idMaintenance !== this.del.event.idMaintenance) && (element.codeBarre !== this.del.event.codeBarre)) {
+        tmp.push(element);
+      }
+    });
+
+    this.datemaitenance = tmp;
+    this.removeMaintenance(this.datemaitenance);
+    this.refreshAgenda();
+  }
+  /**delOccu()
+   *  1 supprime element dans la DB
+   *  2 supprime element dans le tableau
+   *  3 fermeture voite de dialog
+   */
+  async delOccu() {
+    this.messageDelete = await this.ds.deleteDateMaintenance(this.del);
+    this.deleteElement()
+    this.cancel();
+    this.toastObj.show();
+    this.refreshAgenda();
+
+  }
+  deleteElement() {
+    var tmp: any = [];
+    this.datemaitenance.forEach((element) => {
+      if (element._id !== this.del.event._id) {
+        tmp.push(element);
+      }
+    });
+    this.datemaitenance = tmp;
+    this.removeMaintenance( this.datemaitenance);
+    this.refreshAgenda();
+  }
+
 
   onEventRendered(args: EventRenderedArgs): void {
     const categoryColor: string = args.data.CategoryColor as string;
@@ -107,14 +175,21 @@ export class CalendrierComponent implements OnInit {
   }
   onPopupOpen(args: PopupOpenEventArgs): void {
     console.log(args);
+    if (args.type === 'EventContainer') {
+      args.cancel = true;
+    }
     if (args.type === 'Editor') {
       this.createForm(args.data);
     }
     if (args.type === 'DeleteAlert') {
-      const data = args.data;
-      console.log(data);
+
+      this.show = true;
+      this.del = args.data;
+      args.cancel = true;
     }
   }
+
+
   onActionBegin(args: EventRenderedArgs): void {
     const type = Object.entries(args);
 
@@ -122,17 +197,19 @@ export class CalendrierComponent implements OnInit {
       console.log('update');
     }
     if (type[0][1] === 'eventRemove') {
+      console.log('removemovemovemove');
 
       this.removeMaintenance(type[2][[1][0]]);
 
     }
   }
   removeMaintenance(data: any) {
+    this.messageEvent.emit(data);
 
-    this.messageEvent.emit(data[0]._id);
   }
 
   ngOnInit() {
+    this.toastObj.hide('All');
     this.createlisteMaintenance(this.datemaitenance, this.maintenance);
     console.log('maintenance calendier Init');
     console.log('Maintenance was initialized with : ', this.maintenance);
@@ -174,6 +251,14 @@ export class CalendrierComponent implements OnInit {
     this.agenda.refresh();
 
   }
+  /**
+   * Toast
+   */
 
+  @ViewChild('defaulttoast')
+  public toastObj: ToastComponent;
+  @ViewChild('toastBtnShow')
+  public btnEleShow: ElementRef;
+  public position: Object = { X: 'Center' };
 
 }

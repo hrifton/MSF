@@ -10,10 +10,13 @@ dateMaintenanceRoutes.route("/add").post((req, res, next) => {
 });
 //DeleteDateMaintenance
 dateMaintenanceRoutes.route("/:datemaintenance").delete((req,res)=>{
+  console.log("occu delete")
 ctrlDateMaintenance.delete(req,res);
 });
  
-
+dateMaintenanceRoutes.route("/delete/:idMaintenance/:codeBarre").delete((req,res)=>{
+  ctrlDateMaintenance.deleteSerie(req,res);
+})
 
 //GetAllDateMaintenance
 dateMaintenanceRoutes.route("/").get((req, res) => {

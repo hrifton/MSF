@@ -1,14 +1,12 @@
+
+//#region Import
 import { DateMaintenanceService } from './../Service/dateMaintenance.service';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MaintenanceService } from '../Service/maintenance.service';
 import { Maintenance } from '../Class/Maintenance';
-
 import { DateMaintenance } from '../Class/DateMaintenance';
-
-import * as moment from 'moment';
 import { CalendrierComponent } from './calendrier/calendrier.component';
+//#endregion
 
 
 @Component({
@@ -17,6 +15,7 @@ import { CalendrierComponent } from './calendrier/calendrier.component';
   // styleUrls: ['./maintenances.component.css']
 })
 export class MaintenancesComponent implements OnInit {
+  
   maintenance: any;
   datemaitenance: DateMaintenance[];
   public lrepeat: { [key: string]: Object }[] = [
@@ -27,7 +26,6 @@ export class MaintenancesComponent implements OnInit {
     { repeat: 'Yearly' },
 
   ];
-
   public lEnd: { [key: string]: Object }[] = [
     { end: 'Never' },
     { end: 'Until' },
@@ -39,10 +37,8 @@ export class MaintenancesComponent implements OnInit {
   @ViewChild(CalendrierComponent)
   calendrier: CalendrierComponent;
 
-  constructor(
-    private ms: MaintenanceService,
-    private dms: DateMaintenanceService
-  ) {
+  constructor(private ms: MaintenanceService,private dms: DateMaintenanceService)
+   {
     this.maintenance = [];
     this.datemaitenance = [];
 
@@ -61,19 +57,14 @@ export class MaintenancesComponent implements OnInit {
 
     $event.forEach(element => {
       this.dms.postDateMaintenance(element);
-      element.CategoryColor='#7fa900',
-      this.datemaitenance.push(element);
+      element.CategoryColor = '#7fa900',
+        this.datemaitenance.push(element);
     });
     this.calendrier.refreshAgenda();
   }
-
-  deleteMaintenance($event){
-   console.log(this.dms.deleteDateMaintenance($event))
-
-   
-    this.datemaitenance.forEach(element => {
-     //console.log(element)
-    });
+  // mise ajout de la variable apres modification dans le componenent enfant
+  deleteMaintenance($event) {
+  this.datemaitenance = $event;
   }
   ngOnInit() {
 

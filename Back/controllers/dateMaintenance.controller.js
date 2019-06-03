@@ -1,13 +1,16 @@
 const mongoose = require("mongoose");
 
+const { ObjectId } = require('mongodb');
 require("../models/dateMaintenance.model");
 const DateMaintenance = mongoose.model("DateMaintenance");
 
 module.exports.add = (req, res, next) => {
+  console.log(req.body)
   var dateMaintenance = new DateMaintenance();
   dateMaintenance.StartTime = req.body.StartTime
   dateMaintenance.EndTime = req.body.EndTime
   dateMaintenance.idMaintenance = req.body.idMaintenance
+  dateMaintenance.codeBarre = req.body.codeBarre
 
 
   dateMaintenance.save((err, doc) => {
@@ -21,14 +24,33 @@ module.exports.add = (req, res, next) => {
 
 module.exports.delete = (req, res) => {
 
-  DateMaintenance.findByIdAndDelete(req.params.datemaintenance, (err, doc) => {
+  console.log("occu delete")
+  DateMaintenance.findByIdAndDelete(req.params.datemaintenance, (err, docs) => {
 
-    if (!err) return res.sendStatus(200);
-
-    return res.sendStatus(500);
+    if (!err) {
+      res.send(docs)
+    }
+    else {
+      console.log(
+        "Error in Retriving Domaine: " + JSON.stringify(err, undefined, 2)
+      )
+    }
   });
 };
+module.exports.deleteSerie = (req, res) => {
+  var id = ObjectId(req.params.idMaintenance)
+  DateMaintenance.deleteMany({ "idMaintenance": id, "codeBarre": req.params.codeBarre }, function (err, docs) {
+    if (!err) {
+      res.send(docs)
+    }
+    else {
+      console.log(
+        "Error in Retriving Domaine: " + JSON.stringify(err, undefined, 2)
+      )
+    }
+  });
 
+}
 
 module.exports.getAll = (req, res) => {
   DateMaintenance.find((err, docs) => {
@@ -40,7 +62,7 @@ module.exports.getAll = (req, res) => {
   })
 }
 
-module.exports.getAllMaintDate = (req, res) => { 
+module.exports.getAllMaintDate = (req, res) => {
   DateMaintenance.aggregate([{
     $lookup: {
       from: 'maintenances',
@@ -49,9 +71,9 @@ module.exports.getAllMaintDate = (req, res) => {
       as: "resultat"
     }
   },//{$sort:{'StartTime':1}},{$limit:10}], function (err, datemaintenances) {
-    {$sort:{'StartTime':1}}], function (err, datemaintenances) {
+  { $sort: { 'StartTime': 1 } }], function (err, datemaintenances) {
     if (err) res.send(err);
-    else{}
+    else { }
     res.json(datemaintenances);
   });
 

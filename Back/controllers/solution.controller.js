@@ -18,7 +18,7 @@ module.exports.liste = (req, res) => {
 };
 
 module.exports.add = (req, res, next) => {
-  console.log("iciciciciic")
+  
   var solution = new Solution();
 
   User.findOne({ fullName: req.body.idTech }, (err, res) => {
