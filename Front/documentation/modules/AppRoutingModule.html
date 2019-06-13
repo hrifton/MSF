@@ -74,12 +74,15 @@
 import { MaintenancesComponent } from &#x27;./maintenances/maintenances.component&#x27;;
 import { NgModule } from &#x27;@angular/core&#x27;;
 import { Routes, RouterModule } from &#x27;@angular/router&#x27;;
-import { DepartementComponent } from &#x27;./setting/departement/departement.component&#x27;;
-import { TechnicienComponent } from &#x27;./setting/technicien/technicien.component&#x27;;
-import { CorpsDeMetierComponent } from &#x27;./setting/corpsDeMetier/corpsDeMetier.component&#x27;;
+//import { DepartementComponent } from &#x27;./setting/departement/departement.component&#x27;;
+//import { TechnicienComponent } from &#x27;./setting/technicien/technicien.component&#x27;;
+//import { CorpsDeMetierComponent } from &#x27;./setting/corpsDeMetier/corpsDeMetier.component&#x27;;
 import { InterventionsComponent } from &#x27;./interventions/interventions.component&#x27;;
 import { LoginComponent } from &#x27;./login/login.component&#x27;;
 import { UserComponent } from &#x27;./user/user.component&#x27;;
+import { SettingsComponent } from &#x27;./settings/settings.component&#x27;;
+import { HistoricComponent } from &#x27;./historic/historic.component&#x27;;
+
 
 
 
@@ -89,9 +92,10 @@ const routes: Routes &#x3D; [
   { path: &#x27;login&#x27;, component: LoginComponent },
   { path: &#x27;interventions&#x27;, component: InterventionsComponent, canActivate: [AuthGuard] },
   { path: &#x27;maintenances&#x27;, component: MaintenancesComponent, canActivate: [AuthGuard] },
-  { path: &#x27;setDep&#x27;, component: DepartementComponent, canActivate: [AuthGuard] },
-  { path: &#x27;setTec&#x27;, component: TechnicienComponent, canActivate: [AuthGuard] },
-  { path: &#x27;setMet&#x27;, component: CorpsDeMetierComponent, canActivate: [AuthGuard] },
+  { path: &#x27;historic&#x27;, component: HistoricComponent, canActivate: [AuthGuard]},
+  //{ path: &#x27;setTec&#x27;, component: TechnicienComponent, canActivate: [AuthGuard] },
+  //{ path: &#x27;setMet&#x27;, component: CorpsDeMetierComponent, canActivate: [AuthGuard] },
+  { path: &#x27;settings&#x27;, component: SettingsComponent, canActivate: [AuthGuard] },
 
 
 ];

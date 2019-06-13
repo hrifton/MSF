@@ -208,7 +208,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -276,7 +276,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:13</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -300,7 +300,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:14</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -335,8 +335,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="32"
-                            class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:32</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="33"
+                            class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:33</a></div>
                 </td>
             </tr>
 
@@ -401,8 +401,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="21"
-                            class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:21</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:22</a></div>
                 </td>
             </tr>
 
@@ -440,8 +440,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="29"
-                            class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:29</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="30"
+                            class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:30</a></div>
                 </td>
             </tr>
 
@@ -483,7 +483,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -511,7 +511,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:15</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/setting/corpsDeMetier/setting-metier/setting-metier.component.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -524,10 +524,10 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { MetierService } from &#x27;./../metier.service&#x27;;
-import { Component, OnInit, Input, Output, EventEmitter } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Input, Output, EventEmitter } from &#x27;@angular/core&#x27;;
 import {FormGroup, FormBuilder, Validators} from &#x27;@angular/forms&#x27;;
 import Metier  from &#x27;../Metier&#x27;;
+import { MetierService } from &#x27;src/app/Service/metier.service&#x27;;
 
 @Component({
   selector: &#x27;app-setting-metier&#x27;,
@@ -639,7 +639,7 @@ export class SettingMetierComponent implements OnInit {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="e-card col-12">  <div class="e-card-header-title">    Nouveau metier  </div>  <div class="e-card-content">    <form [formGroup]="angForm">            <div class="row">              <div class=col-10>                <mat-form-field class="full-width">                  <mat-label>metier :</mat-label>                  <input matInput="matInput" placeholder="metier" formControlName="metier" #metier></mat-form-field>              </div>            </div>        <button        (click)="addNewMetier(metier.value)"        mat-raised-button="mat-raised-button-left"            color="primary"            >Save</button>          </form>  </div></div></div>'
-    var COMPONENTS = [{'name': 'AnalyseInterventionComponent', 'selector': 'app-analyse-intervention'},{'name': 'AnalyseMaintenanceComponent', 'selector': 'app-analyse-maintenance'},{'name': 'AnalyseMixIntermaintComponent', 'selector': 'app-analyse-mix-intermaint'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CalendrierComponent', 'selector': 'app-calendrier'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireComponent', 'selector': 'app-formulaire'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'InterventionsComponent', 'selector': 'app-interventions'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListInterventionComponent', 'selector': 'app-list-intervention'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MaintenancesComponent', 'selector': 'app-maintenances'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ResolutionInterventionComponent', 'selector': 'app-resolution-intervention'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'SignUpComponent', 'selector': 'app-sign-up'},{'name': 'StoragesComponent', 'selector': 'app-storages'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UsersComponent', 'selector': 'app-users'}];
+    var COMPONENTS = [{'name': 'AnalyseInterventionComponent', 'selector': 'app-analyse-intervention'},{'name': 'AnalyseMaintenanceComponent', 'selector': 'app-analyse-maintenance'},{'name': 'AnalyseMixIntermaintComponent', 'selector': 'app-analyse-mix-intermaint'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AssetComponent', 'selector': 'app-asset'},{'name': 'CalendrierComponent', 'selector': 'app-calendrier'},{'name': 'CorpsDeMetierComponent', 'selector': 'app-corpsDeMetier'},{'name': 'DepartementComponent', 'selector': 'app-departement'},{'name': 'FormulaireComponent', 'selector': 'app-formulaire'},{'name': 'FormulaireInterventionComponent', 'selector': 'app-formulaire-intervention'},{'name': 'HistoricByassetComponent', 'selector': 'app-historic-byasset'},{'name': 'HistoricComponent', 'selector': 'app-historic'},{'name': 'InterventionsComponent', 'selector': 'app-interventions'},{'name': 'ListeCorpMetierComponent', 'selector': 'app-liste-corpMetier'},{'name': 'ListeDepartementComponent', 'selector': 'app-liste-departement'},{'name': 'ListInterventionComponent', 'selector': 'app-list-intervention'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MaintenanceComponent', 'selector': 'app-maintenance'},{'name': 'MaintenancesComponent', 'selector': 'app-maintenances'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ResolutionInterventionComponent', 'selector': 'app-resolution-intervention'},{'name': 'SettingDepartementComponent', 'selector': 'app-setting-departement'},{'name': 'SettingMetierComponent', 'selector': 'app-setting-metier'},{'name': 'SettingsComponent', 'selector': 'app-settings'},{'name': 'SettingTechnicienComponent', 'selector': 'app-setting-technicien'},{'name': 'SignUpComponent', 'selector': 'app-sign-up'},{'name': 'StoragesComponent', 'selector': 'app-storages'},{'name': 'TechnicienComponent', 'selector': 'app-technicien'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UsersComponent', 'selector': 'app-users'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'SettingMetierComponent'};
 </script>

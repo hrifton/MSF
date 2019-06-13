@@ -168,7 +168,8 @@ export class ListInterventionComponent implements OnInit {
       //verification si le formulaire est valid
       if (this.angForm.valid) {
         args.data = this.angForm.value;
-        if (args.data['solution'] === null) {
+        console.log(args.data)
+        if (args.data['solution'] !== "") {
           console.log("save")
           this.ss.postSolution(args.data);
         } else {

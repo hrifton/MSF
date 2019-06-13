@@ -22,6 +22,7 @@ export class HistoricComponent implements OnInit {
         
         this.asset=x;
       });
+      console.log("historique")
       console.log(this.asset)
      }
   }

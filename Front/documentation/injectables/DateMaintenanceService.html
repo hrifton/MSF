@@ -93,6 +93,9 @@
                                 <a href="#deleteDateMaintenance">deleteDateMaintenance</a>
                             </li>
                             <li>
+                                <a href="#deleteSerieDateMaintenance">deleteSerieDateMaintenance</a>
+                            </li>
+                            <li>
                                 <a href="#getDateMaintenance">getDateMaintenance</a>
                             </li>
                             <li>
@@ -189,8 +192,74 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="26"
-                            class="link-to-prism">src/app/Service/dateMaintenance.service.ts:26</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="25"
+                            class="link-to-prism">src/app/Service/dateMaintenance.service.ts:25</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>datemaintenance</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteSerieDateMaintenance"></a>
+                    <span class="name">
+                        <b>
+                            deleteSerieDateMaintenance
+                        </b>
+                        <a href="#deleteSerieDateMaintenance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteSerieDateMaintenance(datemaintenance)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">src/app/Service/dateMaintenance.service.ts:37</a></div>
                 </td>
             </tr>
 
@@ -255,8 +324,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="40"
-                            class="link-to-prism">src/app/Service/dateMaintenance.service.ts:40</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="45"
+                            class="link-to-prism">src/app/Service/dateMaintenance.service.ts:45</a></div>
                 </td>
             </tr>
 
@@ -294,8 +363,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="45"
-                            class="link-to-prism">src/app/Service/dateMaintenance.service.ts:45</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="49"
+                            class="link-to-prism">src/app/Service/dateMaintenance.service.ts:49</a></div>
                 </td>
             </tr>
 
@@ -436,10 +505,9 @@ import { Maintenance } from &#x27;../Class/Maintenance&#x27;;
 export class DateMaintenanceService {
   uri &#x3D; &#x27;http://localhost:3000/api/datemaintenance&#x27;;
 
-  constructor(private http: HttpClient) {}
-// Post a new datemaintenance
+  constructor(private http: HttpClient) { }
+  // Post a new datemaintenance
   postDateMaintenance(datemaintenance: DateMaintenance) {
-
     return this.http.post(&#x60;${this.uri}/add&#x60;, datemaintenance).subscribe(
       data &#x3D;&gt; {
         // console.log(data);
@@ -451,27 +519,32 @@ export class DateMaintenanceService {
   }
 
   deleteDateMaintenance(datemaintenance) {
-    return this.http.delete(&#x60;${this.uri}/${datemaintenance}&#x60;).subscribe(data &#x3D;&gt; {
-     console.log(data);
+    const id &#x3D; datemaintenance.event._id;
+    console.log(&#x27;deleteDateMaintenance &#x27; + id);
+    return this.http.delete(&#x60;${this.uri}/${id}&#x60;).subscribe(data &#x3D;&gt; {
+      console.log(data);
     },
-    err &#x3D;&gt; {
-     console.log(err);
-    }
+      err &#x3D;&gt; {
+        console.log(err);
+      }
 
     );
   }
+  deleteSerieDateMaintenance(datemaintenance) {
+    const id &#x3D; datemaintenance.event.idMaintenance;
+    const codeBarre &#x3D; datemaintenance.event.codeBarre;
 
+    return this.http.delete(&#x60;${this.uri}/delete/${id}/${codeBarre}&#x60;).toPromise().then((response) &#x3D;&gt; response);
+  }
 
+  // Get all datemaintenance
+  getDateMaintenance() {
+    return this.http.get(&#x60;${this.uri}&#x60;);
+  }
 
-// Get all datemaintenance
-getDateMaintenance() {
-  return this.http.get(&#x60;${this.uri}&#x60;);
-}
-
-
-getMaintenanceAndIntervention() {
-  return this.http.get(&#x60;${this.uri}/maintenancedate&#x60;);
-}
+  getMaintenanceAndIntervention() {
+    return this.http.get(&#x60;${this.uri}/maintenancedate&#x60;);
+  }
 
 }
 </code></pre>

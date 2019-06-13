@@ -74,6 +74,7 @@ module.exports.add = (req, res, next) => {
 
 module.exports.update = (req, res, next) => {
   console.log("ctrlUpdate");
+  console.log(req.body)
   Intervention.findByIdAndUpdate(
     req.body.id,
     req.body,

@@ -13,7 +13,7 @@ module.exports.byId=(req,res)=>{
 
 module.exports.findInterByAsset=(req,res)=>{
     
-    
+    console.log("asset Historique")
     Asset.aggregate([{$match:{codeBarre: req.params.asset}},{$lookup: {
         from: "interventions",
         localField: "codeBarre",

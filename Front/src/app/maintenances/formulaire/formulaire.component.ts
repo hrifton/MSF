@@ -368,9 +368,12 @@ export class FormulaireComponent {
   //#region Tools
   /**traitementCurrentByMonth(current, date, maintenance)
  *
- * @param current definit le numero de la semaine
- * @param date definit le mois a traité
- * @param maintenance definit le jour de la semaine
+ * @param current 
+ * definit le numero de la semaine
+ * @param date 
+ * definit le mois a traité
+ * @param maintenance 
+ * definit le jour de la semaine
  *
  * si current == 1 premier semaine
  * permet de calculer soit premier "jour (ex:lundi du mois")

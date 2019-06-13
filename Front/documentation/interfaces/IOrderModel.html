@@ -96,6 +96,10 @@
                                 </li>
                                 <li>
                                             <span class="modifier">Optional</span>
+                                        <a href="#domaine">domaine</a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
                                         <a href="#id">id</a>
                                 </li>
                                 <li>
@@ -105,6 +109,10 @@
                                 <li>
                                             <span class="modifier">Optional</span>
                                         <a href="#priority">priority</a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#slug">slug</a>
                                 </li>
                                 <li>
                                             <span class="modifier">Optional</span>
@@ -277,6 +285,40 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
+                                        <a name="domaine"></a>
+                                        <span class="name"><b>domaine</b><a href="#domaine"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>domaine:         <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
                                         <a name="id"></a>
                                         <span class="name"><b>id</b><a href="#id"><span class="icon ion-ios-link"></span></a></span>
                                     </td>
@@ -360,6 +402,40 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="slug"></a>
+                                        <span class="name"><b>slug</b><a href="#slug"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>slug:         <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
                                         </td>
                                     </tr>
@@ -558,6 +634,7 @@
   EventEmitter,
   ViewChild
 } from &#x27;@angular/core&#x27;;
+import { Router } from &quot;@angular/router&quot;;
 import { Browser } from &#x27;@syncfusion/ej2-base&#x27;;
 import {
   EditService,
@@ -574,6 +651,7 @@ import { DepartementService } from &#x27;src/app/setting/departement/departement
 import Departement from &#x27;../../Class/Departement&#x27;;
 import { SolutionService } from &#x27;src/app/Service/solution.service&#x27;;
 import Intervention from &#x27;src/app/Class/Intervention&#x27;;
+import { DomaineService } from &#x27;src/app/Service/domaine.service&#x27;;
 
 @Component({
   selector: &#x27;app-list-intervention&#x27;,
@@ -583,6 +661,7 @@ import Intervention from &#x27;src/app/Class/Intervention&#x27;;
 })
 export class ListInterventionComponent implements OnInit {
   @Input() interventions;
+  @Input() domaine;
   @Input() maintenance;
   @Input() techs;
   @Input() user;
@@ -593,7 +672,7 @@ export class ListInterventionComponent implements OnInit {
   // public interventions: Intervention[];
   public priorities: { [key: string]: Object }[] &#x3D; [
     { priority: &#x27;High&#x27; },
-    { priority: &#x27;Medimum&#x27; },
+    { priority: &#x27;Medium&#x27; },
     { priority: &#x27;Low&#x27; }
   ];
   public lStatus: { [key: string]: Object }[] &#x3D; [
@@ -621,14 +700,17 @@ export class ListInterventionComponent implements OnInit {
   public shipCityDistinctData: Object[];
   public shipCountryDistinctData: Object[];
   public submitClicked &#x3D; false;
-  route: any;
+  //router: Router;
+
   constructor(
     private ds: DepartementService,
     private ss: SolutionService,
-    private is: InterventionService
+    private is: InterventionService,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    console.log(this.domaine)
     this.filterSettings &#x3D; {
       type: &#x27;Menu&#x27;
     };
@@ -662,10 +744,15 @@ export class ListInterventionComponent implements OnInit {
     this.pageSettings &#x3D; { pageSizes: true, pageSize: 8 };
     this.dropData &#x3D; [&#x27;Order Placed&#x27;, &#x27;Processing&#x27;, &#x27;Delivered&#x27;];
   }
+  sendLink(data) {
+
+    this.router.navigate([&#x27;historic/&#x27;], { queryParams: { asset: data } });
+  }
+
 
   createFormGroup(data: IOrderModel): FormGroup {
     data &#x3D; this.replace_idByid(data);
-
+    console.log(data)
     return new FormGroup({
       id: new FormControl(data.id, Validators.required),
       departement: new FormControl(data.departement, Validators.required),
@@ -677,6 +764,8 @@ export class ListInterventionComponent implements OnInit {
       tech: new FormControl(data.tech),
       useMat: new FormControl(data.useMat),
       asset: new FormControl(data.asset),
+      slug: new FormControl(data.slug),
+      domaine: new FormControl(data.domaine),
       solution: new FormControl(&#x27;&#x27;)
     });
   }
@@ -707,14 +796,12 @@ export class ListInterventionComponent implements OnInit {
       //verification si le formulaire est valid
       if (this.angForm.valid) {
         args.data &#x3D; this.angForm.value;
-        if (
-          args.data[&#x27;asset&#x27;] !&#x3D; null &amp;&amp;
-          args.data[&#x27;solution&#x27;] !&#x3D; null &amp;&amp;
-          args.data[&#x27;useMat&#x27;] !&#x3D; null
-        ) {
-          console.log(args.data);
+        console.log(args.data)
+        if (args.data[&#x27;solution&#x27;] !&#x3D;&#x3D; &quot;&quot;) {
+          console.log(&quot;save&quot;)
           this.ss.postSolution(args.data);
         } else {
+          console.log(&quot;update&quot;)
           this.is.updateIntervention(args.data);
           this.MessageEvent.emit(this.interventions);
         }
@@ -767,6 +854,8 @@ export class ListInterventionComponent implements OnInit {
 }
 
 export interface IOrderModel {
+  domaine?: any;
+  slug?: any;
   id?: number;
   departement?: string;
   locality?: string;

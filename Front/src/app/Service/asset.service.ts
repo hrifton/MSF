@@ -14,12 +14,13 @@ export class AssetService {
   
   
   sendFile(file: any) {
+    console.log(file)
     return this.http.post(`${this.uri}/add`, file).subscribe(
       data => {
-        // console.log(data);
+         console.log(data);
       },
       err => {
-        // console.log('Erro' + err);
+         console.log('Erro' + err);
       }
     );
   }

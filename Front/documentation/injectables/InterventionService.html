@@ -620,7 +620,7 @@ export class InterventionService {
 
 
    updateIntervention(form) {
-
+console.log(&#x27;updateIntervention&#x27;)
     this
       .http
       .put(&#x60;${this.uri}/${form.id}&#x60;, form)

@@ -18,30 +18,22 @@ module.exports.liste = (req, res) => {
 };
 
 module.exports.add = (req, res, next) => {
-  
+
   var solution = new Solution();
 
   User.findOne({ fullName: req.body.idTech }, (err, res) => {
-    this.test = res;
-  });
-console.log('save')
-  solution.idIntervention = req.body.idIntervention;
-  solution.solution = req.body.solution;
-  solution.date = req.body.date;
-  solution.asset = req.body.asset;
-  solution.mat = req.body.mat;
-  solution.idTech = this.test.id;
 
-  solution.save((err, doc) => {
-    if (!err) {
-      
-      res.send(doc);
-    } else {
-      console.log(err);
-      if (err.code === 11000) res.status(422).send(["error."]);
-      else return next(err);
-    }
+    solution.idIntervention = req.body.idIntervention;
+    solution.solution = req.body.solution;
+    solution.date = req.body.date;
+    solution.asset = req.body.asset;
+    solution.mat = req.body.mat;
+    solution.idTech = res.id;
+
+
+    sauvegarde(solution, res, next)
   });
+
 };
 
 module.exports.listeByIntervention = (req, res, next) => {
@@ -75,3 +67,23 @@ module.exports.solutionbyIntervention = (req, res) => {
     }
   }).sort({ field: "asc", _id: -1 });
 };
+
+
+function sauvegarde(data, res, next) {
+  var solution = new Solution();
+  solution = data;
+  console.log(solution)
+  solution.save((err, doc) => {
+    if (!err) {
+
+      return doc;
+    } else {
+      console.log(err);
+      if (err.code === 11000) res.status(422).send(["error."]);
+      else return next(err);
+    }
+  });
+}
+
+
+

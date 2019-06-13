@@ -2,9 +2,9 @@ import { AuthGuard } from './auth/auth.guard';
 import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DepartementComponent } from './setting/departement/departement.component';
-import { TechnicienComponent } from './setting/technicien/technicien.component';
-import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.component';
+//import { DepartementComponent } from './setting/departement/departement.component';
+//import { TechnicienComponent } from './setting/technicien/technicien.component';
+//import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.component';
 import { InterventionsComponent } from './interventions/interventions.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
@@ -21,8 +21,8 @@ const routes: Routes = [
   { path: 'interventions', component: InterventionsComponent, canActivate: [AuthGuard] },
   { path: 'maintenances', component: MaintenancesComponent, canActivate: [AuthGuard] },
   { path: 'historic', component: HistoricComponent, canActivate: [AuthGuard]},
-  { path: 'setTec', component: TechnicienComponent, canActivate: [AuthGuard] },
-  { path: 'setMet', component: CorpsDeMetierComponent, canActivate: [AuthGuard] },
+  //{ path: 'setTec', component: TechnicienComponent, canActivate: [AuthGuard] },
+  //{ path: 'setMet', component: CorpsDeMetierComponent, canActivate: [AuthGuard] },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
 
 

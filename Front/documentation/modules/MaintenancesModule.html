@@ -203,13 +203,15 @@ import { CommonModule } from &quot;@angular/common&quot;;
 import { DashboardLayoutModule } from &quot;@syncfusion/ej2-angular-layouts&quot;;
 import { CheckBoxModule,RadioButtonModule } from &#x27;@syncfusion/ej2-angular-buttons&#x27;;
 import { ChartModule, AccumulationChartModule} from &quot;@syncfusion/ej2-angular-charts&quot;;
-
+import { DialogModule } from &#x27;@syncfusion/ej2-angular-popups&#x27;;
 import { MaintenancesRoutingModule } from &quot;./maintenances-routing.module&quot;;
 import { MaintenancesComponent } from &quot;./maintenances.component&quot;;
 import { ScheduleModule } from &quot;@syncfusion/ej2-angular-schedule&quot;;
 import { DayService, WeekService, WorkWeekService, MonthService, AgendaService, MonthAgendaService } from &#x27;@syncfusion/ej2-angular-schedule&#x27;;
 import { DropDownListAllModule,MultiSelectAllModule } from &#x27;@syncfusion/ej2-angular-dropdowns&#x27;;
 import { NumericTextBoxModule } from &#x27;@syncfusion/ej2-angular-inputs&#x27;;
+import { DropDownButtonModule, SplitButtonModule, ProgressButtonModule } from &#x27;@syncfusion/ej2-angular-splitbuttons&#x27;;
+import { ToastModule } from &#x27;@syncfusion/ej2-angular-notifications&#x27;;
 import {
   MatGridListModule,
   MatCardModule,
@@ -232,7 +234,11 @@ import { DatePickerModule } from &#x27;@syncfusion/ej2-angular-calendars&#x27;;
     FormulaireComponent,
     CalendrierComponent
   ],
-  imports: [
+  imports: [ToastModule,
+    SplitButtonModule, 
+    ProgressButtonModule,
+    DropDownButtonModule,
+    DialogModule,
     MultiSelectAllModule,
     CheckBoxModule,
     DatePickerModule,

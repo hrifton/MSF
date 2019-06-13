@@ -5,7 +5,7 @@ import { HistoricRoutingModule } from './historic-routing.module';
 import { HistoricByassetComponent } from './historic-byasset/historic-byasset.component';
 
 @NgModule({
-  declarations: [HistoricByassetComponent, HistoricByassetComponent],
+  declarations: [HistoricByassetComponent],
   imports: [
    
     CommonModule,

@@ -1,39 +1,38 @@
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 // Imports
-//import {SplitButtonModule} from 'primeng/splitbutton';
+// import {SplitButtonModule} from 'primeng/splitbutton';
 import { BrowserModule } from '@angular/platform-browser';
-///CodAffection
-import { FormsModule} from '@angular/forms';
+/// CodAffection
+import { FormsModule } from '@angular/forms';
 
 
 
-import { ButtonModule, CheckBoxModule, RadioButtonModule, SwitchModule } from '@syncfusion/ej2-angular-buttons';
-
-////
-import { NgModule } from '@angular/core';
-import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
-import { MatMenuModule, MatInputModule, MatSelectModule, MatRadioModule, MatCardModule, MatDividerModule} from '@angular/material';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTabsModule } from '@angular/material/tabs';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TreeGridModule } from '@syncfusion/ej2-angular-treegrid';
-
-// import { GridModule, EditService, ToolbarService, PageService, SortService, FilterService, GroupService } from '@syncfusion/ej2-angular-grids';
+import { ButtonModule, CheckBoxModule, SwitchModule } from '@syncfusion/ej2-angular-buttons';
 import { DatePickerAllModule } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
 import { NumericTextBoxAllModule, UploaderModule } from '@syncfusion/ej2-angular-inputs';
 import { GridAllModule } from '@syncfusion/ej2-angular-grids';
+import { AccordionModule } from '@syncfusion/ej2-angular-navigations';
+import { SplitButtonModule, ProgressButtonModule } from '@syncfusion/ej2-angular-splitbuttons';
+import { DialogModule } from '@syncfusion/ej2-angular-popups';
+
+////
+import { NgModule } from '@angular/core';
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatMenuModule, MatInputModule, MatSelectModule, MatCardModule } from '@angular/material';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
+
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AccordionModule } from '@syncfusion/ej2-angular-navigations';
-import { DropDownButtonModule, SplitButtonModule, ProgressButtonModule } from '@syncfusion/ej2-angular-splitbuttons';
+
 
 
 // Providers
@@ -45,27 +44,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 
-import {MatTableModule} from '@angular/material/table';
-
-import { DepartementComponent } from './setting/departement/departement.component';
-import { SettingDepartementComponent } from './setting/departement/setting-departement/setting-departement.component';
-import { ListeDepartementComponent } from './setting/departement/liste-departement/liste-departement.component';
-import { TechnicienComponent } from './setting/technicien/technicien.component';
-import { SettingTechnicienComponent } from './setting/technicien/setting-technicien/setting-technicien.component';
-import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.component';
-import { SettingMetierComponent } from './setting/corpsDeMetier/setting-metier/setting-metier.component';
-import { ListeCorpMetierComponent } from './setting/corpsDeMetier/liste-corpMetier/liste-corpMetier.component';
 import { InterventionsModule } from './interventions/interventions.module';
-import { AnalyseMixIntermaintModule } from './analyse-mix-intermaint/analyse-mix-intermaint.module';
 import { MaintenancesModule } from './maintenances/maintenances.module';
 import { StoragesModule } from './storages/storages.module';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
-import { from } from 'rxjs';
 import { UsersModule } from './users/users.module';
 import { SettingsModule } from './settings/settings.module';
-import { DialogModule } from '@syncfusion/ej2-angular-popups';
+
 import { HistoricModule } from './historic/historic.module';
 import { HistoricComponent } from './historic/historic.component';
 
@@ -75,14 +62,6 @@ import { HistoricComponent } from './historic/historic.component';
   declarations: [
     AppComponent,
     NavBarComponent,
-    DepartementComponent,
-    SettingDepartementComponent,
-    ListeDepartementComponent,
-    TechnicienComponent,
-    SettingTechnicienComponent,
-    CorpsDeMetierComponent,
-    SettingMetierComponent,
-    ListeCorpMetierComponent,
     LoginComponent,
     UserComponent,
     SignUpComponent,
@@ -90,8 +69,6 @@ import { HistoricComponent } from './historic/historic.component';
 
   ],
   imports: [SwitchModule,
-    RadioButtonModule,
-    DropDownButtonModule,
     ProgressButtonModule,
     AccordionModule,
     UploaderModule,
@@ -106,11 +83,9 @@ import { HistoricComponent } from './historic/historic.component';
     NumericTextBoxAllModule,
     DropDownListAllModule,
     DatePickerAllModule,
-    TreeGridModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    LayoutModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -119,41 +94,25 @@ import { HistoricComponent } from './historic/historic.component';
     MatMenuModule,
     MatInputModule,
     MatSelectModule,
-    MatRadioModule,
     MatCardModule,
     ReactiveFormsModule,
     MatGridListModule,
     SlimLoadingBarModule,
     HttpClientModule,
-    MatTabsModule,
-    DragDropModule,
-    MatDividerModule,
     NgbModule,
-    MatTableModule,
     SplitButtonModule,
-    // GridModule,
     InterventionsModule,
-    AnalyseMixIntermaintModule,
     MaintenancesModule,
     StoragesModule,
     UsersModule,
     SettingsModule,
     HistoricModule,
   ],
-  providers:[{
-              provide:HTTP_INTERCEPTORS,
-              useClass:AuthInterceptor,
-              multi:true
-  },AuthGuard],
-  // providers: [
-  //  ToolbarService,
-    // EditService,
-    // InterventionService,
-    // PageService,
-     // SortService,
-      // FilterService,
-       // GroupService
-    //  ],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -186,8 +186,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="29"
-                            class="link-to-prism">src/app/Service/solution.service.ts:29</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="30"
+                            class="link-to-prism">src/app/Service/solution.service.ts:30</a></div>
                 </td>
             </tr>
 
@@ -383,6 +383,7 @@ export class SolutionService {
 constructor(private http: HttpClient) { }
 list:Solution[];
 postSolution(data: any) {
+  console.log(&quot;save solution&quot;)
 const date &#x3D; new Date();
 const solution &#x3D; new Solution();
 solution.idIntervention &#x3D; data.id ;

@@ -1,0 +1,25 @@
+[{
+    "name":"Generator",
+    "codeBarre":"1"
+},
+{
+    "name":"Boiler",
+    "codeBarre":"2"
+},
+{
+    "name":"Ordinateur",
+    "codeBarre":"3"
+},
+{
+    "name":"Car",
+    "codeBarre":"4"
+},
+{
+    "name":"Truck",
+    "codeBarre":"5"
+},
+{
+    "name":"Watsan",
+    "codeBarre":"6"
+}]
+

@@ -5,7 +5,7 @@ import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './settings.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { AssetComponent } from './asset/asset.component';
-
+import { PapaParseModule } from 'ngx-papaparse';
 
 import { AutoCompleteAllModule, MultiSelectAllModule, DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
 
@@ -36,6 +36,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AssetComponent],
   imports: [CheckBoxModule, UploaderModule, DialogModule, FormsModule, CommonModule, ReactiveFormsModule,
     MultiSelectAllModule,
+    PapaParseModule,
     CheckBoxModule,
     DatePickerModule,
     NumericTextBoxModule,

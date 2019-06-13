@@ -10,6 +10,8 @@ import { AccumulationChartModule } from '@syncfusion/ej2-angular-charts';
     CommonModule, TabModule, AccumulationChartModule
   ],
   declarations: [AnalyseMixIntermaintComponent, AnalyseInterventionComponent, AnalyseMaintenanceComponent],
-  exports:[AnalyseMixIntermaintComponent, AnalyseInterventionComponent, AnalyseMaintenanceComponent]
+  exports:[AnalyseMixIntermaintComponent,// AnalyseInterventionComponent, AnalyseMaintenanceComponent
+  
+  ]
 })
 export class AnalyseMixIntermaintModule { }

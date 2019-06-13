@@ -1,8 +1,19 @@
 <div class="control-section">
   <div class="col-lg-9">
       <div class="control_wrapper">
-          <input type="file" (change)="onFileSelected($event)">
+          <input type="file" (change)='onChange($event)'>
       </div>
+  </div>
+  <div *ngIf="data.length>0" class="control-section">
+    <ejs-grid #grid [dataSource]='data' allowPaging='true' [enableHover]="false" [allowSelection]="true" [selectionSettings]="selectOptions" [editSettings]='editSettings' [toolbar]='toolbar'>
+      <e-columns>
+          <e-column type='categ_id/name' width='50'></e-column>
+          <e-column field="categ_id/name" headerText='categ_id/name' width='120' textAlign='Right'></e-column>
+          <e-column field='serial_number' headerText='serial_number' width='150'></e-column>
+         
+      </e-columns>
+  </ejs-grid>
+
   </div>
   
 </div>

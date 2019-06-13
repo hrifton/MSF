@@ -18,16 +18,16 @@
           </div>
         </div>
         <div class="row">
-          <div *ngFor="let dom of domaine" class="e-card col-xs-4 col-sm-4 col-lg-2 col-md-2  mt-3 " id="basic_card">
+          <div *ngFor="let dom of compte" class="e-card col-xs-4 col-sm-4 col-lg-2 col-md-2  mt-3 " id="basic_card">
             <div class="e-card-header">
               <div class="e-card-header-caption">
                 <div class="e-card-header-title">
-                 <h6 class="text-center">{{dom.domaine}}</h6> 
+                 <h6 class="text-center">{{dom.name}}</h6> 
                 </div>
               </div>
             </div>
             <div class="e-card-content center_focus_strong">
-              <h5 class="text-center">5</h5> 
+              <h5 class="text-center">{{dom.nb}}</h5> 
             </div>
           </div>
         </div>

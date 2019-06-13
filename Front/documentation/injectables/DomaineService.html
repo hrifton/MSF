@@ -38,7 +38,7 @@
 
 <ol class="breadcrumb">
   <li>Injectables</li>
-  <li>InterventionService</li>
+  <li>DomaineService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -56,7 +56,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/intervention/intervention.service.ts</code>
+            <code>src/app/Service/domaine.service.ts</code>
         </p>
 
 
@@ -90,13 +90,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#addIntervention">addIntervention</a>
-                            </li>
-                            <li>
-                                <a href="#getInterventions">getInterventions</a>
-                            </li>
-                            <li>
-                                <a href="#updateIntervention">updateIntervention</a>
+                                <a href="#getAll">getAll</a>
                             </li>
                         </ul>
                     </td>
@@ -121,7 +115,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/intervention/intervention.service.ts:8</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/Service/domaine.service.ts:8</a></div>
                             </td>
                         </tr>
 
@@ -168,128 +162,26 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="addIntervention"></a>
+                    <a name="getAll"></a>
                     <span class="name">
                         <b>
-                            addIntervention
+                            getAll
                         </b>
-                        <a href="#addIntervention"><span class="icon ion-ios-link"></span></a>
+                        <a href="#getAll"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>addIntervention(departement, locality, priority, day, description)</code>
+<code>getAll()</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="14"
-                            class="link-to-prism">src/app/intervention/intervention.service.ts:14</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>departement</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>locality</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>priority</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>day</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>description</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getInterventions"></a>
-                    <span class="name">
-                        <b>
-                            getInterventions
-                        </b>
-                        <a href="#getInterventions"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>getInterventions()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="30"
-                            class="link-to-prism">src/app/intervention/intervention.service.ts:30</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="12"
+                            class="link-to-prism">src/app/Service/domaine.service.ts:12</a></div>
                 </td>
             </tr>
 
@@ -300,76 +192,6 @@
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="updateIntervention"></a>
-                    <span class="name">
-                        <b>
-                            updateIntervention
-                        </b>
-                        <a href="#updateIntervention"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>updateIntervention(form: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="34"
-                            class="link-to-prism">src/app/intervention/intervention.service.ts:34</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>form</td>
-                                    <td>
-                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
                     </div>
                 </td>
             </tr>
@@ -401,12 +223,12 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>&#x27;http://localhost:3000/intervention&#x27;</code>
+                            <i>Default value : </i><code>&#x27;http://localhost:3000/api/domaine&#x27;</code>
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/intervention/intervention.service.ts:8</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/Service/domaine.service.ts:8</a></div>
                             </td>
                         </tr>
 
@@ -419,49 +241,20 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
-import {HttpClient} from &#x27;@angular/common/http&#x27;;
-import { map, catchError } from &#x27;rxjs/operators&#x27;;
-import { of } from &#x27;rxjs&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { HttpClient } from &#x27;@angular/common/http&#x27;;
 
-@Injectable({providedIn: &#x27;root&#x27;})
-export class InterventionService {
-    uri &#x3D; &#x27;http://localhost:3000/intervention&#x27;;
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class DomaineService {
+  uri &#x3D; &#x27;http://localhost:3000/api/domaine&#x27;;
 
-    constructor(private http: HttpClient) {
+constructor(private http:HttpClient) { }
 
-    }
-
-    addIntervention(departement, locality, priority, day, description) {
-      let result:Object;
-      const obj &#x3D; {
-            departement,
-            locality,
-            priority,
-            day,
-            description,
-            status: &#x27;en_cours&#x27;,
-            type: &#x27;JobRequest&#x27;
-        };
-        //this.http.post(&#x60;${this.uri}/add&#x60;, obj).subscribe(res &#x3D;&gt; console.log(res));
-      this.http.post(&#x60;${this.uri}/add&#x60;, obj).subscribe(response &#x3D;&gt;{console.log(response)})
-
-      }
-
-    getInterventions() {
-      return this.http.get(&#x60;${this.uri}&#x60;);
-    }
-
-   updateIntervention(form:any) {
-      console.log(&quot;******Update*******&quot;)
-      console.log(form.id);
-
-      this
-      .http
-      .put(&#x60;${this.uri}/update/${form.id}&#x60;, form)
-      .subscribe(res &#x3D;&gt; console.log(&#x27;Done&#x27;));
-  }
-
+getAll(){
+  return this.http.get(&#x60;${this.uri}&#x60;);
+}
 
 
 }
@@ -497,7 +290,7 @@ export class InterventionService {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
-            var COMPODOC_CURRENT_PAGE_URL = 'InterventionService-1.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'DomaineService.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
