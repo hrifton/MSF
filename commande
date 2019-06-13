@@ -58,7 +58,8 @@ const routes: Routes = [
 ];
 
 
-
+Ternaire:
+(first > second) ? "That is true : 5>3" : "That is false : 5<3";  
 
 
 Angular correction
@@ -87,16 +88,6 @@ interception pas actif
 app-routing.module.js
 
 
-======================================================
-Tache 
-*historique asset(intervention, maintenance)
-*CSV asset trackmystuff import
-*nouvelle Maintenance (setting)
-*visualisation chart intervention vs maintenance 
-						total maintenance
-
-
-
 
 Mongodb
 *****avoir s'il faut crée le dossier" /var/log/mongodb"
@@ -111,53 +102,6 @@ Mongodb
 
 
 <button mat-raised-button color="warn" [routerLink]="['/maintenance']">home</button >
-
-
-
-
-
-day: "02/05/2019"
-departement: "Kitchen"
-description: "Evié boucher"
-locality: "CK1"
-priority: "Medium"
-status: "Canceled"
-tech: "tech2"
-type: "JobRequest"
-user: "admin"
-
-
-
-EndTime: "2019-05-16T11:00:00.000Z"
-StartTime: "2019-05-16T10:00:00.000Z"
-idMaintenance: "5ccad309eebefc2b95275e07"
-resultat: Array(1)
-0:
-description: "Check with the biomed the weekly actvities. Check the equipment preventive maintenance and reporting done by biomed (preventive maintenance sheets, reparation cards, …)."
-domaine: "5cc2b84d9313d82a0af9b5ce"
-duration: "1 d"
-executor: "Biomed"
-periodicity: "Weekly"
-recurrence: "Everyweek on: Monday"
-task: "Hospital Round"
-_id: "5ccad309eebefc2b95275e07"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 wifi
 msevent078as

@@ -1,19 +1,59 @@
 <div class="control-section">
-  <div class="col-lg-9">
-      <div class="control_wrapper">
-          <input type="file" (change)='onChange($event)'>
+  <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+    <div class="row" style="margin-top: 0px;">
+      <div class="e-card" id="basic_card">
+        <div class="e-card-header">
+          <div class="e-card-header-caption">
+            <div class="e-card-header-title">
+              <h3>New Asset</h3>
+            </div>
+          </div>
+        </div>
+        <div class="e-card-content">
+          <app-historique-asset></app-historique-asset>
+        </div>
       </div>
+    </div>
   </div>
-  <div *ngIf="data.length>0" class="control-section">
-    <ejs-grid #grid [dataSource]='data' allowPaging='true' [enableHover]="false" [allowSelection]="true" [selectionSettings]="selectOptions" [editSettings]='editSettings' [toolbar]='toolbar'>
-      <e-columns>
-          <e-column type='categ_id/name' width='50'></e-column>
-          <e-column field="categ_id/name" headerText='categ_id/name' width='120' textAlign='Right'></e-column>
-          <e-column field='serial_number' headerText='serial_number' width='150'></e-column>
-         
-      </e-columns>
-  </ejs-grid>
 
+
+
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+      <div class="row" style="margin-top: 0px;">
+        <div class="e-card" id="basic_card">
+          <div class="e-card-header">
+            <div class="e-card-header-caption">
+              <div class="e-card-header-title">
+                <h3>Import data</h3>
+              </div>
+            </div>
+          </div>
+          <div class="e-card-content">
+            <div class="col-lg-9 mt-1 mb-5">
+              <div class="control_wrapper">
+                <input type="file" (change)='onChange($event)'>
+              </div>
+            </div>
+            <div *ngIf="assets.length>0" class="control-section">
+              <ejs-grid #grid [dataSource]='assets' [allowPaging]='true' [pageSettings]="pageSettings"
+                [editSettings]='editOptions' [allowSorting]='true'>
+                <e-columns>
+                  <e-column field="codeBarre" headerText='codeBarre' width='50' [validationRules]='orderidrules'>
+                  </e-column>
+                  <e-column field="domaine" headerText='domaine' width='50' textAlign='center'></e-column>
+                  <e-column field='serial_number' headerText='serial_number' width='50' textAlign='center'></e-column>
+                  <e-column field="buphagus" headerText='buphagus' width='50' textAlign='center'></e-column>
+                  <e-column field="brand" headerText='brand' width='50' textAlign='center'></e-column>
+                  <e-column field="model" headerText='model' width='50' textAlign='center'></e-column>
+                </e-columns>
+              </ejs-grid>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  
 </div>

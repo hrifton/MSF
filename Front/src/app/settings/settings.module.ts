@@ -28,12 +28,15 @@ import { MaintenancesRoutingModule } from '../maintenances/maintenances-routing.
 import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatInputModule, MatSelectModule, MatRadioModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+//import { AssetModule } from './asset/asset.module';
+import { HistoriqueAssetComponent } from './asset/historique-asset/historique-asset.component';
 
 
 @NgModule({
   declarations: [SettingsComponent,
     MaintenanceComponent,
-    AssetComponent],
+    AssetComponent,
+  HistoriqueAssetComponent],
   imports: [CheckBoxModule, UploaderModule, DialogModule, FormsModule, CommonModule, ReactiveFormsModule,
     MultiSelectAllModule,
     PapaParseModule,
@@ -61,7 +64,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     NumericTextBoxAllModule, TabAllModule, GridAllModule, DialogAllModule, DatePickerAllModule, DropDownListModule, AutoCompleteAllModule,
     CommonModule,
-    SettingsRoutingModule
+    SettingsRoutingModule,
+    //AssetModule
   ]
 })
 export class SettingsModule { }
