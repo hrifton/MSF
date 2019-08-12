@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 var solutionSchema = new mongoose.Schema({
-  idIntervention: { type: mongoose.Schema.Types.ObjectId, ref: "Interventions", required: true },
+  idIntervention: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Interventions",
+    required: true
+  },
   solution: { type: String },
   date: { type: String },
   asset: { type: String },

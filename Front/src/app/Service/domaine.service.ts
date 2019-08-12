@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DomaineService {
-  uri = 'http://localhost:3000/api/domaine';
+  uri = '/api/domaine';
 
 constructor(private http:HttpClient) { }
 

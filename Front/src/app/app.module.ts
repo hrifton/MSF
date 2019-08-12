@@ -58,6 +58,7 @@ import { HistoricComponent } from './historic/historic.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,8 +66,8 @@ import { HistoricComponent } from './historic/historic.component';
     LoginComponent,
     UserComponent,
     SignUpComponent,
-    HistoricComponent
-
+    HistoricComponent,
+    
   ],
   imports: [SwitchModule,
     ProgressButtonModule,

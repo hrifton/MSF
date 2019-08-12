@@ -7,7 +7,7 @@ import {of} from 'rxjs';
 
 export class DepartementService {
 
-    uri = 'http://localhost:3000/api/departement';
+    uri = '/api/departement';
 
     constructor(private http: HttpClient) {}
 

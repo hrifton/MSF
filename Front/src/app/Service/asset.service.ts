@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AssetService {
-  uri = 'http://localhost:3000/api/asset';
+  uri = '/api/asset';
 
   constructor(private http: HttpClient) {}
 // Post a new datemaintenance

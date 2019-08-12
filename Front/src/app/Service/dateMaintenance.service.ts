@@ -7,11 +7,12 @@ import { Maintenance } from '../Class/Maintenance';
   providedIn: 'root'
 })
 export class DateMaintenanceService {
-  uri = 'http://localhost:3000/api/datemaintenance';
+  uri = '/api/datemaintenance';
 
   constructor(private http: HttpClient) { }
   // Post a new datemaintenance
   postDateMaintenance(datemaintenance: DateMaintenance) {
+    console.log(datemaintenance)
     return this.http.post(`${this.uri}/add`, datemaintenance).subscribe(
       data => {
         // console.log(data);

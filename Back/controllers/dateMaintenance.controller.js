@@ -5,7 +5,7 @@ require("../models/dateMaintenance.model");
 const DateMaintenance = mongoose.model("DateMaintenance");
 
 module.exports.add = (req, res, next) => {
-  console.log(req.body)
+  console.log("add Maintenance")
   var dateMaintenance = new DateMaintenance();
   dateMaintenance.StartTime = req.body.StartTime
   dateMaintenance.EndTime = req.body.EndTime

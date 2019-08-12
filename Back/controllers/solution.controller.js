@@ -18,11 +18,9 @@ module.exports.liste = (req, res) => {
 };
 
 module.exports.add = (req, res, next) => {
-
   var solution = new Solution();
 
   User.findOne({ fullName: req.body.idTech }, (err, res) => {
-
     solution.idIntervention = req.body.idIntervention;
     solution.solution = req.body.solution;
     solution.date = req.body.date;
@@ -30,33 +28,36 @@ module.exports.add = (req, res, next) => {
     solution.mat = req.body.mat;
     solution.idTech = res.id;
 
-
-    sauvegarde(solution, res, next)
+    sauvegarde(solution, res, next);
   });
-
 };
 
 module.exports.listeByIntervention = (req, res, next) => {
-  Solution.aggregate([{
-    $lookup: {
-      from: 'maintenances',
-      localField: "idMaintenance",
-      foreignField: "_id",
-      as: "resultat"
+  Solution.aggregate(
+    [
+      {
+        $lookup: {
+          from: "maintenances",
+          localField: "idMaintenance",
+          foreignField: "_id",
+          as: "resultat"
+        }
+      }
+    ],
+    (err, docs) => {
+      if (!err) {
+        console.log(docs);
+        res.send(docs);
+      } else {
+        console.log(
+          "Error in Soltion IdIntervention:" + JSON.stringify(err, undefined, 2)
+        );
+      }
     }
-  }], (err, docs) => {
-    if (!err) {
-      console.log(docs);
-      res.send(docs);
-    } else {
-      console.log(
-        "Error in Soltion IdIntervention:" + JSON.stringify(err, undefined, 2)
-      );
-    }
-  });
+  );
 };
 module.exports.solutionbyIntervention = (req, res) => {
-  console.log("update")
+  console.log("update");
   Solution.find((err, docs) => {
     if (!err) {
       res.send(docs);
@@ -68,14 +69,12 @@ module.exports.solutionbyIntervention = (req, res) => {
   }).sort({ field: "asc", _id: -1 });
 };
 
-
 function sauvegarde(data, res, next) {
   var solution = new Solution();
   solution = data;
-  console.log(solution)
+  console.log(solution);
   solution.save((err, doc) => {
     if (!err) {
-
       return doc;
     } else {
       console.log(err);
@@ -84,6 +83,3 @@ function sauvegarde(data, res, next) {
     }
   });
 }
-
-
-

@@ -7,7 +7,7 @@ import { Maintenance } from '../Class/Maintenance';
   providedIn: 'root'
 })
 export class MaintenanceService {
-  uri = 'http://localhost:3000/api/maintenance';
+  uri = '/api/maintenance';
   constructor(private http: HttpClient) { }
 
   //getAll Maintenance

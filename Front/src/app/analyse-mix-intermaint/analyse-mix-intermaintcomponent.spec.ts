@@ -1,16 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AnalyseMixIntermaintComponent } from './analyse-mix-inter-maint.component';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { AnalyseMixIntermaintComponent } from "./analyse-mix-inter-maint.component";
 
-
-describe('HistoricInterventionComponent', () => {
+describe("HistoricInterventionComponent", () => {
   let component: AnalyseMixIntermaintComponent;
   let fixture: ComponentFixture<AnalyseMixIntermaintComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AnalyseMixIntermaintComponent ]
-    })
-    .compileComponents();
+      declarations: [AnalyseMixIntermaintComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +17,7 @@ describe('HistoricInterventionComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

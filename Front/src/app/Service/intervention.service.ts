@@ -8,7 +8,7 @@ import Intervention from '../Class/Intervention';
 export class InterventionService {
 
 
-    uri = 'http://localhost:3000/api/intervention';
+    uri = '/api/intervention';
 
     selectedIntervention: Intervention = {
       departement: '',

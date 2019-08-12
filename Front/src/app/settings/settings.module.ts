@@ -30,13 +30,15 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 //import { AssetModule } from './asset/asset.module';
 import { HistoriqueAssetComponent } from './asset/historique-asset/historique-asset.component';
+import { FormHopitalComponent } from './form-hopital/form-hopital.component';
 
-
+ 
 @NgModule({
   declarations: [SettingsComponent,
     MaintenanceComponent,
     AssetComponent,
-  HistoriqueAssetComponent],
+  HistoriqueAssetComponent,
+  FormHopitalComponent],
   imports: [CheckBoxModule, UploaderModule, DialogModule, FormsModule, CommonModule, ReactiveFormsModule,
     MultiSelectAllModule,
     PapaParseModule,
