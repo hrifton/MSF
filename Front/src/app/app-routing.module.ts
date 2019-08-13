@@ -9,7 +9,7 @@ import { InterventionsComponent } from './interventions/interventions.component'
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
 import { SettingsComponent } from './settings/settings.component';
-import { HistoricComponent } from './historic/historic.component';
+//import { HistoricComponent } from './historic/historic.component';
 
 
 
@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'interventions', component: InterventionsComponent, canActivate: [AuthGuard] },
   { path: 'maintenances', component: MaintenancesComponent, canActivate: [AuthGuard] },
-  { path: 'historic', component: HistoricComponent, canActivate: [AuthGuard]},
+  //{ path: 'historic', component: HistoricComponent, canActivate: [AuthGuard]},
   //{ path: 'setTec', component: TechnicienComponent, canActivate: [AuthGuard] },
   //{ path: 'setMet', component: CorpsDeMetierComponent, canActivate: [AuthGuard] },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },

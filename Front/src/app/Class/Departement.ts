@@ -1,11 +1,9 @@
 export default class Departement {
-    id: string;
-    departement: string;
+  id: string;
+  departement: string;
 
-    constructor(data) {
-        this.id = data.id;
-        this.departement = data.departement;
-
-    }
-
+  constructor(data) {
+    this.id = data.id;
+    this.departement = data.departement;
+  }
 }

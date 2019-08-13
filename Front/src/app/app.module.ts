@@ -16,7 +16,7 @@ import { GridAllModule } from '@syncfusion/ej2-angular-grids';
 import { AccordionModule } from '@syncfusion/ej2-angular-navigations';
 import { SplitButtonModule, ProgressButtonModule } from '@syncfusion/ej2-angular-splitbuttons';
 import { DialogModule } from '@syncfusion/ej2-angular-popups';
-
+import { ToastModule } from "@syncfusion/ej2-angular-notifications";
 ////
 import { NgModule } from '@angular/core';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
@@ -58,7 +58,6 @@ import { HistoricComponent } from './historic/historic.component';
 
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,6 +75,7 @@ import { HistoricComponent } from './historic/historic.component';
     DialogModule,
     CheckBoxModule,
     HttpModule,
+    ToastModule,
     FormsModule,
     FlexLayoutModule,
     JsonpModule,
@@ -107,7 +107,7 @@ import { HistoricComponent } from './historic/historic.component';
     StoragesModule,
     UsersModule,
     SettingsModule,
-    HistoricModule,
+    HistoricModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

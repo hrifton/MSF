@@ -17,7 +17,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div *ngIf="userDetails.status==''" class="row">
           <div *ngFor="let dom of compte" class="e-card col-xs-4 col-sm-4 col-lg-2 col-md-2  mt-3 " id="basic_card">
             <div class="e-card-header">
               <div class="e-card-header-caption">
@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="e-card-content center_focus_strong">
-              <h5 class="text-center">{{dom.nb}}</h5> 
+              <h5 class="text-center">{{dom.nb}}</h5>
             </div>
           </div>
         </div>
@@ -61,7 +61,7 @@
                 </div>
               </div>
               <div class="e-card-content">
-                <app-list-intervention [interventions]='interventions' [maintenance]='maintenance' [domaine]='domaine'[techs]='techs'
+                <app-list-intervention *ngIf="interventions.length > 0" [interventions]='interventions' [maintenance]='maintenance' [domaine]='domaine'[techs]='techs'
                   [user]="userDetails" (messageEvent)="check($event)">
                 </app-list-intervention>
               </div>

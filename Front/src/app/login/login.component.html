@@ -22,6 +22,20 @@
 
     </mat-card-actions>
 </form>
-<div class="alert"*ngIf="serverErrorMessages">{{serverErrorMessages}}</div>
+
+<!--TOASTE SUCCESS-->
+<div class="col-lg-12 control-section toast-default-section">
+  <div class="e-sample-resize-container">
+    <ejs-toast #defaulttoast id='defaulttoast' [position]="position" icon="e-meeting" cssClass='e-toast-danger'
+      icon='e-success toast-icons'>
+      <ng-template #content>
+        <div> </div>
+      </ng-template>
+      <ng-template #title>
+        <div>{{serverErrorMessages}}</div>
+      </ng-template>
+    </ejs-toast>
+  </div>
+</div>
 </mat-card>
 

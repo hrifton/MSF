@@ -39,7 +39,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
   private status = { open: 0, close: 0, canceled: 0, waiting: 0 };
   // tslint:disable-next-line: ban-types
   private piedata: Object[];
-  private legendSettings: Object;
+  legendSettings: Object;
   private map: Object = 'fill';
   private datalabel: Object;
   private open: number;

@@ -46,9 +46,16 @@ userSchema.pre("save", function(next) {
 userSchema.methods.verifyPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
+/**
+ * composition de notre token id, fullname, email et status
+ */
 userSchema.methods.generateJwt = function() {
-  return jwt.sign({ _id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXP
-  });
+  return jwt.sign(
+    { _id: this._id, fullName: this.fullName, email: this.email, status:this.status },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_EXP
+    }
+  );
 };
 mongoose.model("User", userSchema);

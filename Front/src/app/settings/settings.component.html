@@ -1,51 +1,52 @@
 <div class="col-lg-12 control-section card-control-section basic_card_layout">
   <div class="e-sample-resize-container e-card-resize-container">
     <div class='row'>
-        <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 mt-3 mb-3">
-            <div class="e-card" id="basic_card">
-              <div class="e-card-header">
-                <div class="e-card-header-caption">
-                  <div class="e-card-header-title">
-                    <h3>Settings</h3>
-                  </div>
-                </div>
-              </div>
-              <div class="e-card-content center_focus_strong mt-3">
-                  <div class="control-section e-tab-section">
-                      <div class="e-sample-resize-container">
-                        <!-- Render the Tab Component -->
-                        <ejs-tab id="tab_default">
-                          <e-tabitems>
-                            <e-tabitem [header]='headerText[0]'>
-                              <ng-template #content>
-                                <div class="row-span-2 mt-3">
-                                
-                                  <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
-                                    <app-maintenance></app-maintenance>
-                                  </div>
-                                   
-                                </div>
-                               
-                               
-                              </ng-template>
-                            </e-tabitem>
-                            <e-tabitem [header]='headerText[1]'>
-                              <ng-template #content>
-                               <app-asset></app-asset>
-                              </ng-template>
-                            </e-tabitem>
-                            <e-tabitem [header]='headerText[2]'>
-                              <ng-template #content>
-                               <app-form-hopital></app-form-hopital>
-                              </ng-template>
-                            </e-tabitem>
-                          </e-tabitems>
-                        </ejs-tab>
-                      </div>
-                    </div>
+      <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 mt-3 mb-3">
+        <div class="e-card" id="basic_card">
+          <div class="e-card-header">
+            <div class="e-card-header-caption">
+              <div class="e-card-header-title">
+                <h3>Settings</h3>
               </div>
             </div>
           </div>
+          <div class="e-card-content center_focus_strong mt-3">
+            <div class="control-section e-tab-section">
+              <div class="e-sample-resize-container">
+                <!-- Render the Tab Component -->
+                <ejs-tab id="tab_default">
+                  <e-tabitems>
+                    <e-tabitem [header]='headerText[0]'>
+                      <ng-template #content>
+                        <app-project></app-project>
+                      </ng-template>
+                    </e-tabitem>
+                    <e-tabitem [header]='headerText[1]'>
+                      <ng-template #content>
+                        <div class="e-card-content">
+                         <app-hospital></app-hospital>
+                        </div>
+                      </ng-template>
+                    </e-tabitem>
+                    <e-tabitem [header]='headerText[2]'>
+                      <ng-template #content>
+                        <div class="e-card-content">
+                          <app-maintenance></app-maintenance>
+                        </div>
+                      </ng-template>
+                    </e-tabitem>
+                    <e-tabitem [header]='headerText[3]'>
+                      <ng-template #content>
+                        <app-asset></app-asset>
+                      </ng-template>
+                    </e-tabitem>
+                  </e-tabitems>
+                </ejs-tab>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

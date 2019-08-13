@@ -82,7 +82,6 @@ export class ListInterventionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.domaine)
     this.filterSettings = {
       type: 'Menu'
     };

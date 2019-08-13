@@ -7,5 +7,5 @@ export default class Intervention {
   status: String;
   user: String;
   type: String;
-  tech:String;
+  tech: String;
 }

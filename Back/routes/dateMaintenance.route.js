@@ -13,7 +13,7 @@ dateMaintenanceRoutes.route("/:datemaintenance").delete((req,res)=>{
   console.log("occu delete")
 ctrlDateMaintenance.delete(req,res);
 });
- 
+//Delete Serie Interventions
 dateMaintenanceRoutes.route("/delete/:idMaintenance/:codeBarre").delete((req,res)=>{
   ctrlDateMaintenance.deleteSerie(req,res);
 })

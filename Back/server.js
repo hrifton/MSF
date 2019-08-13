@@ -76,12 +76,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 //index Route
-app
-  .use("/intervention", interventionRoute)
-  .use("/departement", departementRoute)
-  .use("/user", userRoute)
-  .use("/interventions", interventionController)
-  .use("/metier", metierRoute);
+//app
+  //.use("/intervention", interventionRoute)
+  //.use("/departement", departementRoute)
+  //.use("/user", userRoute)
+  //.use("/interventions", interventionController)
+  //.use("/metier", metierRoute);
 
 const port = process.env.PORT || 4000;
 

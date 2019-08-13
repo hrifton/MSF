@@ -4,7 +4,7 @@ import { AnalyseMixIntermaintComponent } from '../analyse-mix-intermaint/analyse
 
 import { InterventionService } from './../Service/intervention.service';
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { User } from '../Class/user.model';
+import { User } from '../Class/user';
 //import { Ng6OdooRPCService } from 'angular6-odoo-jsonrpc';
 import { ListInterventionComponent } from './list-intervention/list-intervention.component';
 
@@ -58,21 +58,19 @@ export class InterventionsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.us.getUserProfil().subscribe(
-      res => {
-        this.userDetails = res['user'];
-
+   
+        this.userDetails = this.us.getStatus();
         // gestion Du type d'utilisateur
 
-        if (this.userDetails.status === 'user') {
+        if (this.userDetails=== 'user') {
           this.is
-            .getInterventionsByUser(this.userDetails.fullName)
+            .getInterventionsByUser(this.us.getFullName())
             .subscribe((data: Intervention[]) => {
               this.interventions = data;
             });
-        } else if (this.userDetails.status === 'tech') {
+        } else if (this.userDetails=== 'tech') {
           this.is
-            .getInterventionsBytech(this.userDetails.fullName)
+            .getInterventionsBytech(this.us.getFullName())
             .subscribe((data: Intervention[]) => {
               this.interventions = data;
             });
@@ -120,9 +118,7 @@ export class InterventionsComponent implements OnInit {
           });
 
         }
-      },
-      err => { }
-    );
+      
     this.us.getUserTech().subscribe((data: User[]) => {
       this.techs = data;
     });

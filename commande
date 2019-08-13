@@ -1,8 +1,11 @@
 start Compodoc:
-compodoc -s
+npm run serve-docs 
+compodoc -p src/tsconfig.app.json
 
 mise a niveau doc 
+npm run compodoc -s
 compodoc -p ./tsconfig.json
+compodoc -p src/tsconfig.app.json
 
 start service mongo:
 sudo service mongod start

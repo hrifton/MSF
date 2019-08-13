@@ -1,0 +1,36 @@
+<div *ngIf="data" class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+  <div class="row" style="margin-top: 0px;">
+    <div class="e-card" id="basic_card">
+      <div class="e-card-header">
+        <div class="e-card-header-caption">
+          <div class="e-card-header-title">
+            <h3>HOSPITAL INVENTORY</h3>
+          </div>
+        </div>
+      </div>
+      <div class="e-card-content">
+        <div class="control-section">
+          <div class="col-lg-12">
+            <ejs-grid #normalgrid id='Normalgrid' [dataSource]='data' allowPaging='true' [pageSettings]='pageSettings'
+              [editSettings]='editSettings' [toolbar]='toolbar' (actionBegin)='actionBegin($event)'>
+              <e-columns>
+                <e-column field='_id' headerText='ID' textAlign='Center' isPrimaryKey='true'
+                  [validationRules]='orderidrules'></e-column>
+                <e-column field='slug' headerText='Hospital code' isPrimaryKey='true'
+                  [validationRules]='customeridrules'>
+                </e-column>
+                <e-column field='name' headerText='Name' textAlign='Center' editType='text'
+                  [validationRules]='freightrules'></e-column>
+                <e-column field='country' headerText='Country' editType='dropdownedit' textAlign='Center'></e-column>
+                <e-column field='city' headerText='City' editType='dropdownedit' [edit]='editparams'>
+                  <e-column field='zipCode' headerText='zipCode' textAlign='Center' editType='text' [validationRules]='freightrules'></e-column>
+                  <e-column field='address' headerText='address' textAlign='Center' editType='text' [validationRules]='freightrules'></e-column>
+                </e-column>
+              </e-columns>
+            </ejs-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
