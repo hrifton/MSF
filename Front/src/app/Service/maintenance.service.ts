@@ -10,7 +10,7 @@ export class MaintenanceService {
   uri = '/api/maintenance';
   constructor(private http: HttpClient) { }
 
-  //getAll Maintenance
+  // getAll Maintenance
 
 
   getMaintenance() {
@@ -20,10 +20,10 @@ export class MaintenanceService {
 
     return this.http.post(`${this.uri}/add`, maintenance).subscribe(
       data => {
-        //console.log(data);
+        // console.log(data);
       },
       err => {
-        //console.log('Erro' + err);
+        // console.log('Erro' + err);
       }
     );
   }

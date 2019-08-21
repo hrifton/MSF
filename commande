@@ -8,7 +8,11 @@ compodoc -p ./tsconfig.json
 compodoc -p src/tsconfig.app.json
 
 start service mongo:
+ubuntu
 sudo service mongod start
+
+windows
+"C:\Program Files\MongoDB\Server\4.0\bin\mongod.exe"
 
 initiation projet:
 npm init -y

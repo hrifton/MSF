@@ -12,7 +12,7 @@ const routes: Routes = [
     path: 'maintenance',
     component: MaintenancesComponent,
     children: [
-      { path: '', component: MaintenancesComponent,canActivate:[AuthGuard] },
+      { path: '', component: MaintenancesComponent, canActivate: [AuthGuard] },
       { path: 'formMaintenance', component: FormulaireComponent },
       { path: 'agenda', component: CalendrierComponent }
     ]

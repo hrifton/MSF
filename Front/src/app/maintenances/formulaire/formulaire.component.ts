@@ -467,9 +467,10 @@ export class FormulaireComponent {
    * Traitement sur la durée de la maitenance par occurence
    */
   traitementPlanByDay(maintenance, newMaintenances) {
+    
     maintenance.StartTime = moment(maintenance.StartTime).format('LLLL');
     maintenance.EndTime = this.addTime(moment(maintenance.StartTime, 'LLLL'), maintenance.duration);
-   console.log(maintenance);
+   
     const dayMain: DayMain = {
       codeBarre: maintenance.codeBarre,
       StartTime: maintenance.StartTime,

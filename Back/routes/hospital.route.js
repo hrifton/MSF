@@ -7,6 +7,7 @@ ctrlHospital.getAll(req,res);
 })
 
 hospitalRoutes.route("/add").post(function(req, res, next) {
+  console.log("route Hospital add");
   ctrlHospital.add(req, res, next);
 });
 

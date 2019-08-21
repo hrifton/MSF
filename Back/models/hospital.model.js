@@ -1,16 +1,20 @@
 const mongoose = require("mongoose");
-const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 var hospitalSchema = new mongoose.Schema({
-  _id: { type: Number },
-  name: { type: String, unique: true, required: true },
+  projectCode: { type: 'String', unique: true, sparse: true, required: true },
   country: { type: String, required: true },
-  city: { type: String, required: true },
-  slug: { type: String, required: true },
-  zipCode: { type: String },
-  address: { type: String },
-  number: { type: String }
+  project: { type: 'String', unique:true, required: true },
+  startingDate: { type: String, required: true },
+  closuredate: { type: String },
+  ipdStructure: { type: String },
+  leveOfCare: { type: String }
 });
 
-hospitalSchema.plugin(AutoIncrement);
+hospitalSchema.pre("save", function(next) {
+  console.log("calling next!");
+  // `return next();` will make sure the rest of this function doesn't run
+  /*return*/ next();
+  console.log("after next");
+});
+
 mongoose.model("Hospital", hospitalSchema);

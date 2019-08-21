@@ -90,7 +90,6 @@ export class FormulaireInterventionComponent implements OnInit {
        }*/
 
   addIntervention(data) {
-    console.log(data.value)
     const inter = data.value;
     inter.user = this.user.fullName;
     inter.type = 'JobRequest';

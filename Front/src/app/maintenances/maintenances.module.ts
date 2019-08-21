@@ -35,8 +35,9 @@ import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
     FormulaireComponent,
     CalendrierComponent
   ],
-  imports: [ToastModule,
-    SplitButtonModule, 
+  imports: [
+    ToastModule,
+    SplitButtonModule,
     ProgressButtonModule,
     DropDownButtonModule,
     DialogModule,
@@ -62,8 +63,8 @@ import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
-
+  exports: [MaintenancesComponent]
 })
-export class MaintenancesModule { }
+export class MaintenancesModule {}

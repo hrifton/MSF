@@ -2,11 +2,10 @@ const express = require("express");
 
 const interventionRoutes = express.Router();
 const ctrlIntervention = require("../controllers/intervention.controller");
-
-//GetToutesLesIntervention
-interventionRoutes.route("/").get(function(req, res) {
-  ctrlIntervention.liste(req, res);
-}); 
+ //GetToutesLesIntervention
+   interventionRoutes.route("/").get(function(req, res) {
+     ctrlIntervention.liste(req, res);
+   }); 
 
 //GetToutesLesInterventionByUser
 interventionRoutes.route("/ByUser").get(function(req, res) {

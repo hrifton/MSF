@@ -1,16 +1,17 @@
 import { AuthGuard } from './auth/auth.guard';
-import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-//import { DepartementComponent } from './setting/departement/departement.component';
-//import { TechnicienComponent } from './setting/technicien/technicien.component';
-//import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.component';
+
+
+import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { InterventionsComponent } from './interventions/interventions.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
 import { SettingsComponent } from './settings/settings.component';
 //import { HistoricComponent } from './historic/historic.component';
-
+//import { DepartementComponent } from './setting/departement/departement.component';
+//import { TechnicienComponent } from './setting/technicien/technicien.component';
+//import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.component';
 
 
 

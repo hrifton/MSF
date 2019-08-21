@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const passport = require("passport");
 
+
 const rtsIndex = require("./routes/index.router");
 const rtsIntervention = require("./routes/intervention.route");
 const rtsDepartement = require("./routes/departement.route");
@@ -20,11 +21,12 @@ const rtsHostpital = require('./routes/hospital.route');
 
 
 var app = express();
+//Taille Max Transfert
+ app.use(bodyParser.json({ limit: "5mb" }));
 //middleware
 app.use(bodyParser.json());
 app.use(cors());
 app.use(passport.initialize());
-
 app
   .use("/api", rtsIndex)
   .use("/api/intervention", rtsIntervention)

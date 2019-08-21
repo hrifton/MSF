@@ -5,20 +5,38 @@ require("../models/dateMaintenance.model");
 const DateMaintenance = mongoose.model("DateMaintenance");
 
 module.exports.add = (req, res, next) => {
-  console.log("add Maintenance");
-  var dateMaintenance = new DateMaintenance();
-  dateMaintenance.StartTime = req.body.StartTime;
-  dateMaintenance.EndTime = req.body.EndTime;
-  dateMaintenance.idMaintenance = req.body.idMaintenance;
-  dateMaintenance.codeBarre = req.body.codeBarre;
+  console.log("add DateMaintenance");
+  console.log(req.body.length);
+  var datemaintenances = new Array();
+  for (element in req.body) {
+    var dateMaintenance = new DateMaintenance();
+    
+    dateMaintenance.StartTime = req.body[element].StartTime;
+    dateMaintenance.EndTime = req.body[element].EndTime;
+    console.log(typeof req.body[element].EndTime);
+    dateMaintenance.idMaintenance = req.body[element].idMaintenance;
+    dateMaintenance.codeBarre = req.body[element].codeBarre;
+    datemaintenances.push(dateMaintenance);
+  }
+  console.log(datemaintenances);
 
-  dateMaintenance.save((err, doc) => {
+  DateMaintenance.insertMany(datemaintenances,(err, doc) => {
     if (!err) res.send(doc);
     else {
       if (err.code === 1000) res.status(422).send(["erreur Date Maintenance"]);
       else return next(err);
     }
   });
+
+  /* 
+ 
+dateMaintenance.save((err, doc) => {
+    if (!err) res.send(doc);
+    else {
+      if (err.code === 1000) res.status(422).send(["erreur Date Maintenance"]);
+      else return next(err);
+    }
+  });*/
 };
 
 module.exports.delete = (req, res) => {

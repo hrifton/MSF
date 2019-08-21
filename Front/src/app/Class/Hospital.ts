@@ -1,13 +1,13 @@
 export class Hospital {
-  projectCode: String;
-  country: String;
-  project: String;
-  startingDate: String;
-  closuredate: String;
-  ipdStructure: String;
-  leveOfCare: String;
+  projectCode: string;
+  country: string;
+  project: string;
+  startingDate: Date;
+  closuredate: Date;
+  ipdStructure: string;
+  leveOfCare: string;
 
-  public static fromJson(json: Object): Hospital {
+  public static fromJson(json: object): Hospital {
     return new Hospital(
       json["projectCode"],
       json["country"],
@@ -20,12 +20,12 @@ export class Hospital {
   }
 
   constructor(
-    projectCode: String,
-    country: String,
-    project: String,
-    startingDate: String,
-    closuredate: String,
-    ipdStructure: String,
-    leveOfCare: String
+    projectCode: string,
+    country: string,
+    project: string,
+    startingDate: string,
+    closuredate: string,
+    ipdStructure: string,
+    leveOfCare: string
   ) {}
 }

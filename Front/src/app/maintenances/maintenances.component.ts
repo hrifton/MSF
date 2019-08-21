@@ -1,4 +1,3 @@
-
 //#region Import
 import { DateMaintenanceService } from './../Service/dateMaintenance.service';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
@@ -8,14 +7,12 @@ import { DateMaintenance } from '../Class/DateMaintenance';
 import { CalendrierComponent } from './calendrier/calendrier.component';
 //#endregion
 
-
 @Component({
   selector: 'app-maintenances',
   templateUrl: './maintenances.component.html'
   // styleUrls: ['./maintenances.component.css']
 })
 export class MaintenancesComponent implements OnInit {
-  
   maintenance: any;
   datemaitenance: DateMaintenance[];
   public lrepeat: { [key: string]: Object }[] = [
@@ -23,22 +20,21 @@ export class MaintenancesComponent implements OnInit {
     { repeat: 'Daily' },
     { repeat: 'Weekly' },
     { repeat: 'Monthly' },
-    { repeat: 'Yearly' },
-
+    { repeat: 'Yearly' }
   ];
   public lEnd: { [key: string]: Object }[] = [
     { end: 'Never' },
     { end: 'Until' },
-    { end: 'Count' },
-
-
+    { end: 'Count' }
   ];
 
   @ViewChild(CalendrierComponent)
   calendrier: CalendrierComponent;
 
-  constructor(private ms: MaintenanceService,private dms: DateMaintenanceService)
-   {
+  constructor(
+    private ms: MaintenanceService,
+    private dms: DateMaintenanceService
+  ) {
     this.maintenance = [];
     this.datemaitenance = [];
 
@@ -52,21 +48,15 @@ export class MaintenancesComponent implements OnInit {
 
     console.log('compoment parent: Constructor');
   }
-
+  // TODO Hicham multi requet
   saveMaintenance($event) {
-
-    $event.forEach(element => {
-      this.dms.postDateMaintenance(element);
-      element.CategoryColor = '#7fa900',
-        this.datemaitenance.push(element);
-    });
+    this.dms.postDateMaintenance($event);
+    this.datemaitenance.push($event);
     this.calendrier.refreshAgenda();
   }
   // mise ajout de la variable apres modification dans le componenent enfant
   deleteMaintenance($event) {
-  this.datemaitenance = $event;
+    this.datemaitenance = $event;
   }
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 }

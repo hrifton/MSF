@@ -1,0 +1,116 @@
+[
+{
+   
+    "country" : "AF",
+    "project" : "Ahmad Shah Baba ",
+    "startingDate" : "2009-06-01",
+    "closuredate" : "2019-03-31",
+    "ipdStructure" : "Hospital",
+    "leveOfCare" : "Secondary Health Care",
+    "projectCode" : "AF0",
+    "__v" : 0
+},
+{
+    
+    "country" : "CD",
+    "project" : "Bili",
+    "startingDate" : "2015-01-01",
+    "closuredate" : "2019-12-31",
+    "ipdStructure" : "Hospital",
+    "leveOfCare" : "Secondary Health Care",
+    "projectCode" : "CD0",
+    "__v" : 0
+},
+{
+   
+    "country" : "GN",
+    "project" : "Kouroussa Malaria",
+    "startingDate" : "2017-05-01",
+    "closuredate" : "2021-12-31",
+    "ipdStructure" : "Hospital",
+    "leveOfCare" : "Secondary Health Care",
+    "projectCode" : "GN0",
+    "__v" : 0
+},
+{
+   
+    "country" : "CU",
+    "project" : "Castor",
+    "startingDate" : "2014-06-01",
+    "closuredate" : "2023-12-31",
+    "ipdStructure" : "Hospital",
+    "leveOfCare" : "Secondary Health Care",
+    "projectCode" : "CU0",
+    "__v" : 0
+},
+{
+    "country" : "HT",
+    "project" : "Martissant",
+    "startingDate" : "2006-12-01",
+    "closuredate" : "2022-12-31",
+    "ipdStructure" : "Emergency department",
+    "leveOfCare" : "Primary Health Care",
+    "projectCode" : "HT0",
+    "__v" : 0
+},
+{
+    "country" : "MZ",
+    "project" : "Beira",
+    "startingDate" : "2014-01-01",
+    "closuredate" : "2019-12-31",
+    "ipdStructure" : "Hospital",
+    "leveOfCare" : "Secondary Health Care",
+    "projectCode" : "MZ0",
+    "__v" : 0
+},
+{
+    "country" : "MZ",
+    "project" : "Beira",
+    "startingDate" : "2014-01-01",
+    "closuredate" : "2019-12-31",
+    "ipdStructure" : "Hospital",
+    "leveOfCare" : "Secondary Health Care",
+    "projectCode" : "MZ1",
+    "__v" : 0
+},
+{
+    "country" : "NG",
+    "project" : "Emergency Nutrition Maiduguri",
+    "startingDate" : "2016-10-01",
+    "closuredate" : "2022-12-31",
+    "ipdStructure" : "Nutritional Center",
+    "leveOfCare" : "Secondary Health Care",
+    "projectCode" : "NG0",
+    "__v" : 0
+},
+{
+    "country" : "SS",
+    "project" : "Yei",
+    "startingDate" : "2016-11-01",
+    "closuredate" : "2021-12-31",
+    "ipdStructure" : "Hospital",
+    "leveOfCare" : "Secondary Health Care",
+    "projectCode" : "SS0",
+    "__v" : 0
+},
+{
+    "country" : "HT",
+    "project" : "Port-à-Piment",
+    "startingDate" : "2017-03-01",
+    "closuredate" : "2020-12-31",
+    "ipdStructure" : "Hospital",
+    "leveOfCare" : "Secondary Health Care",
+    "projectCode" : "HT1",
+    "__v" : 0
+},
+{
+    "country" : "HT",
+    "project" : "Port-à-Piment",
+    "startingDate" : "2017-03-01",
+    "closuredate" : "2020-12-31",
+    "ipdStructure" : "Hospital",
+    "leveOfCare" : "Secondary Health Care",
+    "projectCode" : "HT2",
+    "__v" : 0
+}
+]

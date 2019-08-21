@@ -2,12 +2,12 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, SimpleChange
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CheckBoxComponent } from '@syncfusion/ej2-angular-buttons';
 import { MultiSelectComponent } from '@syncfusion/ej2-angular-dropdowns';
-import { RecurrenceEditor } from '@syncfusion/ej2-angular-schedule'
-import { MaintenanceService } from 'src/app/Service/maintenance.service';
+import { RecurrenceEditor } from '@syncfusion/ej2-angular-schedule';
+import { MaintenanceService } from '../../Service/maintenance.service';
 import * as moment from 'moment';
-import { Maintenance } from 'src/app/Class/Maintenance';
+import { Maintenance } from '../../Class/Maintenance';
 import Metier from 'src/app/setting/corpsDeMetier/Metier';
-import { MetierService } from 'src/app/Service/metier.service';
+import { MetierService } from '../../Service/metier.service';
 
 @Component({
   selector: 'app-maintenance',
@@ -16,8 +16,8 @@ import { MetierService } from 'src/app/Service/metier.service';
 })
 export class MaintenanceComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private ms: MaintenanceService,private mes: MetierService) {
-    
+  constructor(private fb: FormBuilder, private ms: MaintenanceService, private mes: MetierService) {
+
   }
   //#region Declaration Variable
   maintenances: Maintenance[];
@@ -109,12 +109,12 @@ export class MaintenanceComponent implements OnInit {
       interval: new FormControl('', [Validators.required]),
     });
   }
-  saveNewMaintenance(maintenance){
-    console.log(maintenance.value)
-   this.ms.PostNewMaintenance(maintenance.value)
+  saveNewMaintenance(maintenance) {
+    console.log(maintenance.value);
+    this.ms.PostNewMaintenance(maintenance.value);
   }
   public onChange(args: SimpleChange): void {
-   console.log(args)
+   console.log(args);
 
   }
 
