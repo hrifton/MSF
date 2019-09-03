@@ -26,8 +26,8 @@ import Intervention from 'src/app/Class/Intervention';
 import { DomaineService } from 'src/app/Service/domaine.service';
 
 @Component({
-  selector: 'app-list-intervention',
-  templateUrl: './list-intervention.component.html',
+  selector: "app-list-intervention",
+  templateUrl: "./list-intervention.component.html",
   //styleUrls: ['./list-intervention.component.scss'],
   providers: [ToolbarService, EditService, PageService]
 })
@@ -39,19 +39,19 @@ export class ListInterventionComponent implements OnInit {
   @Input() user;
   @Output() MessageEvent = new EventEmitter<Intervention>();
 
-  @ViewChild('grid') public grid: GridComponent;
+  @ViewChild("grid") public grid: GridComponent;
 
   // public interventions: Intervention[];
   public priorities: { [key: string]: Object }[] = [
-    { priority: 'High' },
-    { priority: 'Medium' },
-    { priority: 'Low' }
+    { priority: "High" },
+    { priority: "Medium" },
+    { priority: "Low" }
   ];
   public lStatus: { [key: string]: Object }[] = [
-    { status: 'In progress' },
-    { status: 'Waiting' },
-    { status: 'Canceled' },
-    { status: 'Closed' }
+    { status: "In progress" },
+    { status: "Waiting" },
+    { status: "Canceled" },
+    { status: "Closed" }
   ];
   public resolution: any[];
   today = new Date();
@@ -67,7 +67,7 @@ export class ListInterventionComponent implements OnInit {
   public priorityrules: Object;
   public dropData: string[];
   //
-  public text: string = 'Select a Technicien';
+  public text: string = "Select a Technicien";
   public angForm: FormGroup;
   public shipCityDistinctData: Object[];
   public shipCountryDistinctData: Object[];
@@ -79,11 +79,11 @@ export class ListInterventionComponent implements OnInit {
     private ss: SolutionService,
     private is: InterventionService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.filterSettings = {
-      type: 'Menu'
+      type: "Menu"
     };
 
     this.ds.getDepartements().subscribe((data: Departement[]) => {
@@ -94,7 +94,7 @@ export class ListInterventionComponent implements OnInit {
       allowEditing: true,
       allowAdding: true,
       allowDeleting: true,
-      mode: 'Dialog'
+      mode: "Dialog"
     };
 
     this.orderidrules = {
@@ -109,21 +109,19 @@ export class ListInterventionComponent implements OnInit {
     };
     this.editparams = {
       params: {
-        popupHeight: '100px'
+        popupHeight: "100px"
       }
     };
     this.pageSettings = { pageSizes: true, pageSize: 8 };
-    this.dropData = ['Order Placed', 'Processing', 'Delivered'];
+    this.dropData = ["Order Placed", "Processing", "Delivered"];
   }
   sendLink(data) {
-
-    this.router.navigate(['historic/'], { queryParams: { asset: data } });
+    this.router.navigate(["historic/"], { queryParams: { asset: data } });
   }
-
 
   createFormGroup(data: IOrderModel): FormGroup {
     data = this.replace_idByid(data);
-    console.log(data)
+    console.log(data);
     return new FormGroup({
       id: new FormControl(data.id, Validators.required),
       departement: new FormControl(data.departement, Validators.required),
@@ -137,9 +135,18 @@ export class ListInterventionComponent implements OnInit {
       asset: new FormControl(data.asset),
       slug: new FormControl(data.slug),
       domaine: new FormControl(data.domaine),
-      solution: new FormControl('')
+      solution: new FormControl("")
     });
   }
+  public sortComparer = (reference: string, comparer: string) => {
+    if (reference < comparer) {
+      return -1;
+    }
+    if (reference > comparer) {
+      return 1;
+    }
+    return 0;
+  };
 
   dateValidator() {
     return (control: FormControl): null | Object => {
@@ -154,7 +161,7 @@ export class ListInterventionComponent implements OnInit {
   //Action sur le tableau
   actionBegin(args: SaveEventArgs): void {
     //Verification de l'action debut edit ou ajout
-    if (args.requestType === 'beginEdit' || args.requestType === 'add') {
+    if (args.requestType === "beginEdit" || args.requestType === "add") {
       this.submitClicked = false;
       //Creation du formulaire
 
@@ -162,35 +169,33 @@ export class ListInterventionComponent implements OnInit {
       console.log(this.angForm.value.id);
     }
     //Click SAVE
-    if (args.requestType === 'save') {
+    if (args.requestType === "save") {
       this.submitClicked = true;
       //verification si le formulaire est valid
       if (this.angForm.valid) {
         args.data = this.angForm.value;
-        console.log(args.data)
-        if (args.data['solution'] !== "") {
-          console.log("save")
+        console.log(args.data);
+        if (args.data["solution"] !== "") {
+          console.log("save");
           this.ss.postSolution(args.data);
         } else {
-          console.log("update")
+          console.log("update");
           this.is.updateIntervention(args.data);
           this.MessageEvent.emit(this.interventions);
         }
       } else {
-        console.log('Probleme');
+        console.log("Probleme");
         args.cancel = true;
       }
     }
   }
   historique(data) {
     this.ss.getSolutionByIdIntervention(data);
-
-
   }
   actionComplete(args: DialogEditEventArgs): void {
-    if (args.requestType === 'beginEdit' || args.requestType === 'add') {
+    if (args.requestType === "beginEdit" || args.requestType === "add") {
       if (Browser.isDevice) {
-        args.dialog.height = window.innerHeight - 500 + 'px';
+        args.dialog.height = window.innerHeight - 500 + "px";
         (args.dialog as Dialog).dataBind();
       }
     }
@@ -208,7 +213,7 @@ export class ListInterventionComponent implements OnInit {
 
   replace_idByid(data) {
     data = JSON.stringify(data);
-    data = data.replace(/_id/g, 'id');
+    data = data.replace(/_id/g, "id");
     data = JSON.parse(data);
     return data;
   }

@@ -7,7 +7,7 @@
       <e-column field='domaine' headerText='Domaine' textAlign='center' width=auto></e-column>
       <e-column field='type' headerText='Type' textAlign='center' width=auto></e-column>
       <e-column field='user' headerText='User' textAlign='center' width=auto></e-column>
-      <e-column field='day' headerText='Date' textAlign='center' width=auto></e-column>
+      <e-column field='day' headerText='Date' [sortComparer]='sortComparer' textAlign='center' width=auto></e-column>
       <e-column field='priority' headerText='Priotity' textAlign='center' width=auto></e-column>
       <e-column field='departement' headerText='Departement' textAlign='center' width=auto></e-column>
       <e-column field='description' headerText='Desciption' textAlign='center' width=auto></e-column>

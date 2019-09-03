@@ -256,6 +256,7 @@ export class CalendrierComponent implements OnInit {
   }
 
   refreshAgenda() {
+    console.log("ok on est dans calendrier")
     this.eventSettings = {
       dataSource: this.datemaitenance
     };
