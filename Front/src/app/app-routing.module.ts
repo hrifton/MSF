@@ -2,7 +2,9 @@ import { AuthGuard } from './auth/auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-
+/**
+ * importation des component mere de chaque module
+ */
 import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { InterventionsComponent } from './interventions/interventions.component';
 import { LoginComponent } from './login/login.component';
@@ -14,8 +16,12 @@ import { SettingsComponent } from './settings/settings.component';
 //import { CorpsDeMetierComponent } from './setting/corpsDeMetier/corpsDeMetier.component';
 
 
+/**
+ * Routes vers entrée de chaque component
+ * canActivate securisation d'acces a la route selon l'authentification et au niveau de droit
+ */
 
-const routes: Routes = [
+ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'signUp', component: UserComponent },
   { path: 'login', component: LoginComponent },

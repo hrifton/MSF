@@ -5,9 +5,9 @@ import {
   Output,
   EventEmitter,
   ViewChild
-} from '@angular/core';
+} from "@angular/core";
 import { Router } from "@angular/router";
-import { Browser } from '@syncfusion/ej2-base';
+import { Browser } from "@syncfusion/ej2-base";
 import {
   EditService,
   ToolbarService,
@@ -15,15 +15,15 @@ import {
   DialogEditEventArgs,
   SaveEventArgs,
   GridComponent
-} from '@syncfusion/ej2-angular-grids';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Dialog } from '@syncfusion/ej2-angular-popups';
-import { InterventionService } from '../../Service/intervention.service';
-import { DepartementService } from 'src/app/setting/departement/departement.service';
-import Departement from '../../Class/Departement';
-import { SolutionService } from 'src/app/Service/solution.service';
-import Intervention from 'src/app/Class/Intervention';
-import { DomaineService } from 'src/app/Service/domaine.service';
+} from "@syncfusion/ej2-angular-grids";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Dialog } from "@syncfusion/ej2-angular-popups";
+import { InterventionService } from "../../Service/intervention.service";
+import { DepartementService } from "src/app/setting/departement/departement.service";
+import Departement from "../../Class/Departement";
+import { SolutionService } from "src/app/Service/solution.service";
+import Intervention from "src/app/Class/Intervention";
+import { DomaineService } from "src/app/Service/domaine.service";
 
 @Component({
   selector: "app-list-intervention",
