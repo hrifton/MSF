@@ -171,6 +171,7 @@ export class ListInterventionComponent implements OnInit {
     //Click SAVE
     if (args.requestType === "save") {
       this.submitClicked = true;
+      //TODO ajouté le ID sinon sa ne marche pas
       //verification si le formulaire est valid
       if (this.angForm.valid) {
         args.data = this.angForm.value;
@@ -189,9 +190,18 @@ export class ListInterventionComponent implements OnInit {
       }
     }
   }
+  /**
+   * @param data   *
+   * return historique des solution
+   */
   historique(data) {
     this.ss.getSolutionByIdIntervention(data);
   }
+  /**
+   *
+   * @param args
+   * determine l'action executer sur le tableau
+   */
   actionComplete(args: DialogEditEventArgs): void {
     if (args.requestType === "beginEdit" || args.requestType === "add") {
       if (Browser.isDevice) {
@@ -200,7 +210,10 @@ export class ListInterventionComponent implements OnInit {
       }
     }
   }
-
+  /**
+   * @param data
+   * assigne liste des departement
+   */
   getDepartement(data) {
     const departementsList = new Array();
 
@@ -210,7 +223,10 @@ export class ListInterventionComponent implements OnInit {
 
     this.departements = departementsList;
   }
-
+  /**
+   * @param data
+   * Modifie attribut _id en id
+   */
   replace_idByid(data) {
     data = JSON.stringify(data);
     data = data.replace(/_id/g, "id");
@@ -223,7 +239,9 @@ export class ListInterventionComponent implements OnInit {
     //console.log(changes);
     //this.grid.refresh();
   }
-
+  /**
+   * refresh tableau liste intervention
+   */
   refreshInterventionTable() {
     this.grid.refresh();
   }

@@ -1,15 +1,15 @@
+//#region require
+//config serveur (port,environement: prod,dev,DB )
 require("./config/config");
+//Connexion a la DB
 require("./models/db");
 require("./config/passportConfig");
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const passport = require("passport");
-
-//import { swaggerUI } from "swagger-ui-express";
-//import { swaggerDocument } from "./config/swagge.json";
-
+//#endregion
+//#region Routes
 const rtsIndex = require("./routes/index.router");
 const rtsIntervention = require("./routes/intervention.route");
 const rtsDepartement = require("./routes/departement.route");
@@ -20,19 +20,16 @@ const rtsMetier = require("./routes/metier.route");
 const rtsAsset = require("./routes/asset.route");
 const rtsDomaine = require("./routes/domaine.route");
 const rtsHostpital = require("./routes/hospital.route");
-
+//#endregion
+// chargement express
 var app = express();
-//Taille Max Transfert
+//Taille Max Transfert pour enregistrement de maintenance a vérifier
 app.use(bodyParser.json({ limit: "5mb" }));
-//middleware
-app.use(bodyParser.json());
+//cros-origin
 app.use(cors());
-/*app.use(
-  "/api-docs",
-  swaggerUI.save,
-  swaggerUI.setup(swaggerDocument, { explorer: true })
-);*/
+//module passport auth jws
 app.use(passport.initialize());
+//chargement des routes
 app
   .use("/api", rtsIndex)
   .use("/api/intervention", rtsIntervention)
@@ -45,18 +42,7 @@ app
   .use("/api/hospital", rtsHostpital)
   .use("/api/metier", rtsMetier);
 
-//Error handler
-app.use((err, req, res, next) => {
-  if (err.name === "ValidationError") {
-    var valErrors = [];
-    Object.keys(err.errors).forEach(key =>
-      valErrors.push(err.errors[key].message)
-    );
-    res.status(422).send(valErrors);
-  }
-});
-
-//start server
+//Demarrage serveur
 app.listen(process.env.PORT, () =>
   console.log(`server started at port :${process.env.PORT}`)
 );
