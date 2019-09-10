@@ -1,6 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
+Front/node_modules
 Front/dist
 Front/tmp
 Front/out-tsc
@@ -42,8 +43,13 @@ Front/yarn-error.log
 Front/testem.log
 Front/typings
 
+#Doc Front
+
+Front/documentation
+
 # System Files
 Front/.DS_Store
 Front/Thumbs.db
 
-commande
+./commande
+

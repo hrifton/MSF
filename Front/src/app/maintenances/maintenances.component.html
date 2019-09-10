@@ -1,0 +1,47 @@
+<div class="col-lg-12 control-section card-control-section basic_card_layout">
+  <div class="e-sample-resize-container e-card-resize-container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-lg-6 col-md-12">
+        <div tabindex="0" class="e-card" id="basic_card">
+          <div class="e-card-header">
+            <div class="e-card-header-caption">
+              <div class="e-card-header-title">
+                <h3>Planning Maintenance</h3>
+              </div>
+            </div>
+          </div>
+          <div class="e-card-content">
+            <app-calendrier
+              *ngIf="maintenance.length > 0 && datemaitenance.length > 0"
+              (messageEvent)="deleteMaintenance($event)"
+              [maintenance]="maintenance"
+              [datemaitenance]="datemaitenance"
+            >
+            </app-calendrier>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-lg-6 col-md-12">
+        <div tabindex="0" class="e-card" id="basic_card">
+          <div class="e-card-header">
+            <div class="e-card-header-caption">
+              <div class="e-card-header-title">
+                <h3>Programing Maintenance</h3>
+              </div>
+            </div>
+          </div>
+          <div class="e-card-content">
+            <app-formulaire
+              *ngIf="lrepeat.length > 0"
+              (messageEvent)="saveMaintenance($event)"
+              [lrepeat]="lrepeat"
+              [lEnd]="lEnd"
+              [maintenances]="maintenance"
+            ></app-formulaire>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

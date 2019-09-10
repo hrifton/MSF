@@ -1,0 +1,36 @@
+.full-width {
+  width: 100%;
+}
+
+.shipping-card {
+  min-width: 120px;
+  margin: 20px auto;
+  width: 100%;
+}
+
+.mat-radio-button {
+  display: block;
+  margin: 5px 0;
+}
+
+.row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.col {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+/*# sourceMappingURL=departement.component.css.map */

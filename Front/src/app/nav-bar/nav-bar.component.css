@@ -4,17 +4,19 @@
 
 .sidenav {
   width: 150px;
-}
+  }
 
 .sidenav .mat-toolbar {
   background: inherit;
 }
 
 .mat-toolbar.mat-primary {
-  position: sticky;
+  position:relative;
   top: 0;
   z-index: 1;
+
 }
+
 #logo{
   padding-left: 15px;
   width: 100px;
@@ -28,4 +30,10 @@
 
   width: 200px;
 
+}
+.example-icon {
+  padding: 0 14px;
+}
+.example-spacer {
+  flex: 1 1 auto;
 }

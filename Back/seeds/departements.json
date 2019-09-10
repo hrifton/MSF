@@ -1,0 +1,44 @@
+[
+    {
+        "departement": "OPD"
+    }, {
+        "departement": "ER"
+    }, {
+        "departement": "OT"
+    }, {
+        "departement": "ICU"
+    }, {
+        "departement": "Maternity"
+    }, {
+        "departement": "Physiotherapy"
+    }, {
+        "departement": "IPD"
+    }, {
+        "departement": "Isolation"
+    }, {
+        "departement": "Neonatalogy"
+    }, {
+        "departement": "X-Ray"
+    }, {
+        "departement": "Sterilization"
+    }, {
+        "departement": "Laboratory"
+    }, {
+        "departement": "Kitchen"
+    }, {
+        "departement": "Laundry"
+    }, {
+        "departement": "Infection Control"
+    }, {
+        "departement": "Mortuary"
+    }, {
+        "departement": "Outdoor areas"
+    }, {
+        "departement": "Tech zones"
+    }, {
+        "departement": "Offices"
+    }, {
+        "departement": "Expat compound"
+    }
+    
+]

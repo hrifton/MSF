@@ -1,25 +1,41 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {catchError, map} from 'rxjs/operators';
+import {of} from 'rxjs';
 
-@Injectable({ providedIn:'root'})
+@Injectable({providedIn: 'root'})
 
-export class DepartementService{
+export class DepartementService {
 
-  uri= 'http://localhost:4000/departement';
+    uri = 'http://localhost:3000/api/departement';
 
-  constructor(private http : HttpClient){}
+    constructor(private http: HttpClient) {}
 
-  addDeparement(deparement){
+    addDeparement(departement) {
+        const obj = {
+            departement
+        };
 
-    const obj = {
-      departement: deparement
-    };
+        return this
+            .http
+            .post(`${this.uri}/add`, obj)
+            .pipe(map(res => (res)), catchError(err => {
+                console.error(err);
+                return of(null);
+            }));
 
-      console.log(`${this.uri}/add`, obj);
-      this.http.post(`${this.uri}/add`, obj).subscribe(res => console.log(res));
-  }
+    }
 
-  getDepartements(){
-    return this.http.get(`${this.uri}`);
-  }
+    getDepartement(departement) {
+        return this
+            .http
+            .get(`${this.uri}/edit/${departement}`)
+            .subscribe(res => console.log(res));
+
+    }
+    getDepartements() {
+        return this
+            .http
+            .get(`${this.uri}`);
+    }
 }

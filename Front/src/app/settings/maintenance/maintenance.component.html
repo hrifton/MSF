@@ -1,0 +1,142 @@
+<form id="formId" [formGroup]="maintenanceForm" class="form-horizontal" novalidate="">
+
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="e-float-input">
+                    <input id="Maintenance" type="text" formControlName="maintenance" placeholder="New Maintenance">
+                    <span class="e-float-line"></span>
+                    <label for="Maintenance" class="e-float-text">New Maintenance</label>
+                </div>
+            </div>
+
+
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <ejs-dropdownlist id="executor" formControlName="executor" [dataSource]='listeMetier'
+                    (change)='onChange($event)' [fields]="{text:'metier',value:'metier' }" placeholder="executor"
+                    popupHeight='200px' floatLabelType='Always' #metier></ejs-dropdownlist>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <ejs-dropdownlist id="periodicity" formControlName="periodicity" [dataSource]='lrepeat'
+                    (change)='onChange($event)' [fields]="{text:'repeat',value:'repeat' }" placeholder="Repeat"
+                    popupHeight='200px' floatLabelType='Always' [value]="periode" #periodicity></ejs-dropdownlist>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="e-float-input">
+                    <input id="duration" type="text" formControlName="duration" placeholder="on hours or minutes">
+                    <span class="e-float-line"></span>
+                    <label for="duration" class="e-float-text">Duration</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div [ngSwitch]="periodicity.value">
+        <!--Formulaire by Day-->
+        <div *ngSwitchCase="'Daily'">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                        <span class="e-float-line"></span>
+                        <label for="duration" class="e-float-text  ml-2">Repeat every {{interval.value}} Day(s)</label>
+                        <ejs-numerictextbox class="mt-4" formControlName="interval" placeholder="Interval Day"
+                            format='###.##' placeholder="Repeat Every" decimals='0' value="0" min="0" max="100" step="1"
+                            #interval>
+                        </ejs-numerictextbox>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!--Formulaire by Weekly-->
+        <div *ngSwitchCase="'Weekly'">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                        <span class="e-float-line"></span>
+                        <label for="duration" class="e-float-text  ml-2">Repeat every {{interval.value}} Week(s)</label>
+                        <ejs-numerictextbox class="mt-4" formControlName="interval" placeholder="Interval Week"
+                            format='###.##' placeholder="Repeat Every" decimals='0' value="0" min="0" max="100" step="1"
+                            #interval>
+                        </ejs-numerictextbox>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+        <!--Formulaire by Monthly-->
+        <div *ngSwitchCase="'Monthly'">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                        <span class="e-float-line"></span>
+                        <label for="duration" class="e-float-text  ml-2">Repeat every {{interval.value}}
+                            Month(s)</label>
+                        <ejs-numerictextbox class="mt-4" formControlName="interval" placeholder="Interval Month"
+                            format='###.##' placeholder="Repeat Every" decimals='0' value="0" min="0" max="100" step="1"
+                            #interval>
+                        </ejs-numerictextbox>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <!--Formulaire by Yearly-->
+        <div *ngSwitchCase="'Yearly'">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                        <span class="e-float-line"></span>
+                        <label for="duration" class="e-float-text  ml-2">Repeat every {{interval.value}} Year(s)</label>
+                        <ejs-numerictextbox class="mt-4" formControlName="interval" placeholder="Interval Year"
+                            format='###.##' placeholder="Repeat Every" decimals='0' value="0" min="0" max="100" step="1"
+                            #interval>
+                        </ejs-numerictextbox>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+        <div class="e-float-input">
+            <textarea rows="2" id="description" name="description" formControlName="description"></textarea>
+            <span class="e-float-line"></span>
+            <label class="e-float-text" for="description">description</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div style="width: 320px;margin:0px auto;height: 100px;padding-top: 25px;">
+            <div style="display: inline-block;">
+                <button class="samplebtn e-control e-btn" (click)="saveNewMaintenance(maintenanceForm)" color="primary"
+                    data-ripple="true" id="validateSubmit" mat-raised-button="mat-raised-button-left" [disabled]=!maintenanceForm.valid>save</button>
+            </div>
+            <div style="float: right;">
+                <button id="resetbtn" class="samplebtn e-control e-btn" mat-raised-button="mat-raised-button-left"
+                    color="primary" type="reset" data-ripple="true">Clear</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,27 +1,28 @@
-<div class="container">
+
+<div class="e-card col-12">
+  <div class="e-card-header-title">
+    Nouveau departement
+  </div>
+  <div class="e-card-content">
     <form [formGroup]="angForm" novalidate="novalidate">
-        <mat-card class="shipping-card">
-            <mat-card-header>
-                <mat-card-title>Add Département</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-grid-list>
-                        <mat-grid-tile>
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Locality</mat-label>
-                            <input matInput="matInput" placeholder="Locality" formControlName="locality" #locality></mat-form-field>
-                        </mat-grid-tile>
-                </mat-grid-list>
-
-            </mat-card-content>
-                        <mat-card-actions>
-                            <button
-                            (click)="addIntervention(departement.value, locality.value, priority.value, date.value, description.value)"
-
-                            mat-raised-button="mat-raised-button-left"
-                                color="primary"
-                                >Save</button>
-                        </mat-card-actions>
-                    </mat-card>
-                </form>
+            <div class="row">
+              <div class=col-10>
+                <mat-form-field class="full-width">
+                  <mat-label>Departement :</mat-label>
+                  <input matInput="matInput" placeholder="departement" formControlName="departement" #departement></mat-form-field>
               </div>
+            </div>
+
+        <button
+        (click)="addNewDepartement(departement.value)"
+        mat-raised-button="mat-raised-button-left"
+            color="primary"
+            >Save</button>
+          </form>
+  </div>
+
+</div>
+
+
+
+

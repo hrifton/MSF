@@ -1,0 +1,43 @@
+[
+{
+	"fullName" : "admin",
+	"email" : "admin@admin.com",
+	"password" : "$2a$10$vANjGSLcWfr.1qdnqXTTnekTfhkfglS4./.poQ4y0HJDON2JTOZwq",
+	"status" : "",
+	"saltSecret" : "$2a$10$vANjGSLcWfr.1qdnqXTTne"
+
+},
+{
+	"fullName" : "tech1",
+	"email" : "tech@tech.com",
+	"password" : "$2a$10$vANjGSLcWfr.1qdnqXTTnekTfhkfglS4./.poQ4y0HJDON2JTOZwq",
+	"status" : "tech",
+	"saltSecret" : "$2a$10$vANjGSLcWfr.1qdnqXTTne"
+
+},
+{
+	"fullName" : "tech2",
+	"email" : "tech@tech.com",
+	"password" : "$2a$10$vANjGSLcWfr.1qdnqXTTnekTfhkfglS4./.poQ4y0HJDON2JTOZwq",
+	"status" : "tech",
+	"saltSecret" : "$2a$10$vANjGSLcWfr.1qdnqXTTne"
+
+},
+{
+	"fullName" : "tech3",
+	"email" : "tech@tech.com",
+	"password" : "$2a$10$vANjGSLcWfr.1qdnqXTTnekTfhkfglS4./.poQ4y0HJDON2JTOZwq",
+	"status" : "tech",
+	"saltSecret" : "$2a$10$vANjGSLcWfr.1qdnqXTTne"
+
+},
+{
+	"fullName" : "user",
+	"email" : "user@user.com",
+	"password" : "$2a$10$vANjGSLcWfr.1qdnqXTTnekTfhkfglS4./.poQ4y0HJDON2JTOZwq",
+	"status" : "user",
+	"saltSecret" : "$2a$10$vANjGSLcWfr.1qdnqXTTne"
+
+}
+    
+]

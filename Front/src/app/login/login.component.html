@@ -1,0 +1,41 @@
+<mat-card>
+  <form [formGroup]="userForm" novalidate="novalidate" >
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
+    <img  src="../../assets/img/logo.png">
+  </div>
+    <mat-card-content>
+       <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
+         <mat-form-field>
+        <mat-label>fullName</mat-label>
+        <input matInput="matInput" type="text" placeholder="fullName" formControlName="fullName" #fullName required>
+         </mat-form-field>
+       </div>
+       <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
+          <mat-form-field>
+         <mat-label>password</mat-label>
+         <input matInput="matInput" type="password" placeholder="password" formControlName="password" #password required>
+          </mat-form-field>
+        </div>
+    </mat-card-content>
+    <mat-card-actions align="center">
+        <button mat-flat-button color="primary"(click)="onLoginSubmit(userForm)" [disabled]=!userForm.valid>Sign in</button>
+
+    </mat-card-actions>
+</form>
+
+<!--TOASTE SUCCESS-->
+<div class="col-lg-12 control-section toast-default-section">
+  <div class="e-sample-resize-container">
+    <ejs-toast #defaulttoast id='defaulttoast' [position]="position" icon="e-meeting" cssClass='e-toast-danger'
+      icon='e-success toast-icons'>
+      <ng-template #content>
+        <div> </div>
+      </ng-template>
+      <ng-template #title>
+        <div>{{serverErrorMessages}}</div>
+      </ng-template>
+    </ejs-toast>
+  </div>
+</div>
+</mat-card>
+

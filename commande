@@ -1,8 +1,18 @@
 start Compodoc:
-compodoc -s
+npm run serve-docs 
+compodoc -p src/tsconfig.app.json
+
+mise a niveau doc 
+npm run compodoc -s
+compodoc -p ./tsconfig.json
+compodoc -p src/tsconfig.app.json
 
 start service mongo:
+ubuntu
 sudo service mongod start
+
+windows
+"C:\Program Files\MongoDB\Server\4.0\bin\mongod.exe"
 
 initiation projet:
 npm init -y
@@ -16,3 +26,96 @@ npm install nodemon --save-dev
 MockUp Balsamiq
 Name: Flash 
 Serial: eNrzzU/OLi0odswsqnHLSSzOqDGoca7JKCkpsNLXLy8v1ytJTczVLUotKNFLzs8FAJHYETc=
+
+------------Dataseeding-----------
+npm install -g node-mongo-seeds
+installation de maniere generale 
+https://github.com/toymachiner62/node-mongo-seeds
+envoi de SeedData
+depuis backend commande "seed"
+
+
+/////GRID
+https://ej2.syncfusion.com/angular/demos/?utm_source=npm&utm_campaign=grid#/material/grid/column/column-menu
+
+**********************************angular Structure************************************
+create module routing 
+//ng generate module admin + routing + mise a jour du module "app.module doit etre le module// racine du module ou racine projet si module principal
+
+ng g m admin --routing -m app.module
+
+
+//generate component ng g c "nomCoponenet"
+
+ng g c "nomComponent"
+
+//generate dashboard
+ng generate @angular/material:material-dashboard --name material-dashboard
+
+//struture Routing avec enfants
+
+const routes: Routes = [
+{
+  path: 'admin', 
+  component: AdminComponent,
+  children: [
+    { path: '', component: TechnicienComponent },
+    { path: 'departement', component: DepartementComponent },
+  ]
+}
+
+];
+
+
+Ternaire:
+(first > second) ? "That is true : 5>3" : "That is false : 5<3";  
+
+
+Angular correction
+
+ng lint Front --fix
+
+
+/*la synthax relationship
+
+const userSchema = new Schema({
+	firstname:String,
+	lastname:String,
+	email:String,
+	cars:[{
+		type:Schema.Types.ObjectId,
+		ref:'car'
+	}]
+});
+
+*/
+**************************16/04*********************
+verifyJwtToken
+Bearer Interception 
+interception pas actif
+
+app-routing.module.js
+
+
+
+Mongodb
+*****avoir s'il faut crée le dossier" /var/log/mongodb"
+1)chown -Rc mongodb. /var/log/mongodb
+2)chown -Rc mongodb. /var/lib/mongodb
+3)systemctl restart mongod
+4)systemctl status mongod
+
+
+
+
+
+
+<button mat-raised-button color="warn" [routerLink]="['/maintenance']">home</button >
+
+wifi
+msevent078as
+
+
+AZURE
+MSFGMAO\$MSFGMAO
+3M2XsHtl89arkHlp3LjEAunn8FGzmlBcWuJoTr52imvkFjliYPdvaQvFosQF
