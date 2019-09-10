@@ -1,6 +1,5 @@
-const mongoose = require("mongoose");
-
 require("../models/intervention.model");
+const mongoose = require("mongoose");
 const Intervention = mongoose.model("Intervention");
 
 module.exports.liste = (req, res) => {
@@ -54,20 +53,6 @@ module.exports.listeByTech = (req, res) => {
 
 module.exports.add = (req, res, next) => {
   var intervention = new Intervention(req.body);
-  //intervention=req.body
-
-  /*intervention.departement = req.body.departement;  
-  intervention.locality = req.body.locality;
-  intervention.priority = req.body.priority;
-  intervention.day = req.body.day;
-  intervention.description = req.body.description;
-  intervention.status = req.body.status;
-  intervention.type = req.body.type;
-  intervention.user = req.body.user;
-  intervention.tech = req.body.tech;*/
-  console.log(typeof intervention);
-  console.log(intervention);
-
   intervention.save((err, doc) => {
     if (!err) res.send(doc);
     else {
