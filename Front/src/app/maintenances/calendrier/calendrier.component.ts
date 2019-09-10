@@ -6,17 +6,9 @@ import {
   ViewChild,
   Output,
   EventEmitter,
-  SimpleChanges,
-  ElementRef,
-  HostListener
+  ElementRef
 } from "@angular/core";
-import { DatePicker } from "@syncfusion/ej2-calendars";
-import { DropDownList } from "@syncfusion/ej2-dropdowns";
-import { ButtonComponent } from "@syncfusion/ej2-angular-buttons";
-import {
-  ToastComponent,
-  ToastCloseArgs
-} from "@syncfusion/ej2-angular-notifications";
+import { ToastComponent } from "@syncfusion/ej2-angular-notifications";
 import {
   DayService,
   WeekService,
@@ -31,17 +23,13 @@ import {
   EventRenderedArgs,
   ScheduleComponent
 } from "@syncfusion/ej2-angular-schedule";
-import { extend, dataSourceChanged } from "@syncfusion/ej2-grids/src";
+import { extend } from "@syncfusion/ej2-grids/src";
 import {
   FormBuilder,
   Validators,
   FormControl,
   FormGroup
 } from "@angular/forms";
-import { MaintenanceService } from "src/app/Service/maintenance.service";
-import { now } from "moment";
-import { DialogComponent } from "@syncfusion/ej2-angular-popups";
-import { EmitType } from "@syncfusion/ej2-base";
 import { DateMaintenanceService } from "src/app/Service/dateMaintenance.service";
 //#endregion
 
@@ -60,10 +48,16 @@ import { DateMaintenanceService } from "src/app/Service/dateMaintenance.service"
   ]
 })
 export class CalendrierComponent implements OnInit {
+  constructor(private fb: FormBuilder, private ds: DateMaintenanceService) {
+    console.log("maintenance calendier constructor");
+  }
   //#region variable
+  // variable entré depuis component maintenance
   @Input() maintenance;
   @Input() datemaitenance;
+  //Sortie vers component maintenance
   @Output() messageEvent = new EventEmitter<any>();
+  //variable agenda syncfusion
   @ViewChild("agenda") public agenda: ScheduleComponent;
 
   public del: any;
@@ -89,16 +83,26 @@ export class CalendrierComponent implements OnInit {
     { end: "Count" }
   ];
   public maintenanceForm: FormGroup;
-  //#endregion
+  /**
+   * Toast
+   */
 
-  constructor(
-    private fb: FormBuilder,
-    private ms: MaintenanceService,
-    private ds: DateMaintenanceService
-  ) {
-    console.log("maintenance calendier constructor");
+  @ViewChild("defaulttoast")
+  public toastObj: ToastComponent;
+  @ViewChild("toastBtnShow")
+  public btnEleShow: ElementRef;
+  public position: Object = { X: "Center" };
+  ngOnInit() {
+    this.toastObj.hide("All");
+    this.createlisteMaintenance(this.datemaitenance, this.maintenance);
+    console.log("maintenance calendier Init");
+    console.log("Maintenance was initialized with : ", this.maintenance);
+
+    this.data.push(...this.datemaitenance);
+    this.eventSettings = {
+      dataSource: this.data
+    };
   }
-
   /**Creation formulaire avec champs date precomplété
    *
    * @param data
@@ -111,17 +115,16 @@ export class CalendrierComponent implements OnInit {
       EndTime: new FormControl(data.EndTime, [Validators.required])
     });
   }
-  /**fermture popup
-   *
+  /**
+   *fermture popup
    */
   cancel() {
     this.show = false;
   }
   /**async delSerie()
-   *  fonction async pour attendre le retour de la requete
+   * fonction async pour attendre le retour de la requete
    * fermeture du popup
    * affichage d'un toast
-   *
    */
   async delSerie() {
     this.messageDelete = await this.ds.deleteSerieDateMaintenance(this.del);
@@ -140,8 +143,9 @@ export class CalendrierComponent implements OnInit {
    * une fois foreach fini ecrase liste DateMaintenance avec tmp qui contien les dateMaintenance restant
    */
   deleteElements() {
-    var tmp: any = [];
+    let tmp: any = [];
     this.datemaitenance.forEach(element => {
+      console.log(typeof element);
       if (
         element.idMaintenance !== this.del.event.idMaintenance &&
         element.codeBarre !== this.del.event.codeBarre
@@ -149,7 +153,6 @@ export class CalendrierComponent implements OnInit {
         tmp.push(element);
       }
     });
-
     this.datemaitenance = tmp;
     this.removeMaintenance(this.datemaitenance);
     this.refreshAgenda();
@@ -157,17 +160,22 @@ export class CalendrierComponent implements OnInit {
   /**delOccu()
    *  1 supprime element dans la DB
    *  2 supprime element dans le tableau
-   *  3 fermeture voite de dialog
+   *  3 fermeture boite de dialog
+   *  4 affichage toast confirmation suppression
    */
   async delOccu() {
     this.messageDelete = await this.ds.deleteDateMaintenance(this.del);
     this.deleteElement();
     this.cancel();
     this.toastObj.show();
-    this.refreshAgenda();
   }
+  /**
+   * 1 recuperation des maintenances differente de la maintenance a supprimer
+   * 2 tableau temporaire est assigner dans le tableau des date de maintenance
+   * 3 envoi du tableau fonction removeMaintenance
+   */
   deleteElement() {
-    var tmp: any = [];
+    let tmp: any = [];
     this.datemaitenance.forEach(element => {
       if (element._id !== this.del.event._id) {
         tmp.push(element);
@@ -175,7 +183,14 @@ export class CalendrierComponent implements OnInit {
     });
     this.datemaitenance = tmp;
     this.removeMaintenance(this.datemaitenance);
-    this.refreshAgenda();
+  }
+  /**
+   *
+   * @param data -> tableau date d'intervention
+   * sortie du component calendrier via messageEvent
+   */
+  removeMaintenance(data: any) {
+    this.messageEvent.emit(data);
   }
 
   onEventRendered(args: EventRenderedArgs): void {
@@ -217,27 +232,13 @@ export class CalendrierComponent implements OnInit {
       this.removeMaintenance(type[2][[1][0]]);
     }
   }
-  removeMaintenance(data: any) {
-    this.messageEvent.emit(data);
-  }
 
-  ngOnInit() {
-    this.toastObj.hide("All");
-    this.createlisteMaintenance(this.datemaitenance, this.maintenance);
-    console.log("maintenance calendier Init");
-    console.log("Maintenance was initialized with : ", this.maintenance);
-
-    this.data.push(...this.datemaitenance);
-    this.eventSettings = {
-      dataSource: this.data
-    };
-  }
   createlisteMaintenance(datemaintenance: any, maintenance: any) {
     datemaintenance.forEach(datemain => {
       maintenance.forEach(maint => {
         if (maint._id === datemain.idMaintenance) {
           datemain.Subject = maint.maintenance;
-          // TODO Hicham  Switch Color maintenance
+          // TODO Hicham a modifier dans le backend mettre la couleur dans le document domaine NoSQL
           switch (maint.executor) {
             case "Biomed":
               datemain.CategoryColor = "#1ea519";
@@ -256,19 +257,9 @@ export class CalendrierComponent implements OnInit {
   }
 
   refreshAgenda() {
-    console.log("ok on est dans calendrier")
     this.eventSettings = {
       dataSource: this.datemaitenance
     };
     this.agenda.refresh();
   }
-  /**
-   * Toast
-   */
-
-  @ViewChild("defaulttoast")
-  public toastObj: ToastComponent;
-  @ViewChild("toastBtnShow")
-  public btnEleShow: ElementRef;
-  public position: Object = { X: "Center" };
 }
