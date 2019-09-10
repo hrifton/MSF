@@ -1,3 +1,6 @@
+/**
+ * recupere les fichier de configuration
+ */
 require("./config/config");
 require("./models/db");
 require("./config/passportConfig");
@@ -7,22 +10,20 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const passport = require("passport");
 
-
 const rtsIndex = require("./routes/index.router");
 const rtsIntervention = require("./routes/intervention.route");
 const rtsDepartement = require("./routes/departement.route");
 const rtsSolution = require("./routes/solution.route");
 const rtsMaintenance = require("./routes/maintenance.route");
 const rtsDateMaintenance = require("./routes/dateMaintenance.route");
-const rtsMetier=require('./routes/metier.route');
-const rtsAsset = require('./routes/asset.route');
-const rtsDomaine = require('./routes/domaine.route');
-const rtsHostpital = require('./routes/hospital.route');
-
+const rtsMetier = require("./routes/metier.route");
+const rtsAsset = require("./routes/asset.route");
+const rtsDomaine = require("./routes/domaine.route");
+const rtsHostpital = require("./routes/hospital.route");
 
 var app = express();
 //Taille Max Transfert
- app.use(bodyParser.json({ limit: "5mb" }));
+app.use(bodyParser.json({ limit: "5mb" }));
 //middleware
 app.use(bodyParser.json());
 app.use(cors());
