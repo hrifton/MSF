@@ -1,6 +1,6 @@
 <div class="col-lg-12 control-section card-control-section basic_card_layout">
   <div class="e-sample-resize-container e-card-resize-container">
-    <div class='row'>
+    <div class="row">
       <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 mt-3 mb-3">
         <div class="e-card" id="basic_card">
           <div class="e-card-header">
@@ -16,26 +16,26 @@
                 <!-- Render the Tab Component -->
                 <ejs-tab id="tab_default">
                   <e-tabitems>
-                    <e-tabitem [header]='headerText[0]'>
+                    <e-tabitem [header]="headerText[0]">
                       <ng-template #content>
-                        <app-project></app-project>
+                        <app-users></app-users>
                       </ng-template>
                     </e-tabitem>
-                    <e-tabitem [header]='headerText[1]'>
+                    <e-tabitem [header]="headerText[1]">
                       <ng-template #content>
                         <div class="e-card-content">
-                         <app-hospital></app-hospital>
+                          <app-hospital></app-hospital>
                         </div>
                       </ng-template>
                     </e-tabitem>
-                    <e-tabitem [header]='headerText[2]'>
+                    <e-tabitem [header]="headerText[2]">
                       <ng-template #content>
                         <div class="e-card-content">
                           <app-maintenance></app-maintenance>
                         </div>
                       </ng-template>
                     </e-tabitem>
-                    <e-tabitem [header]='headerText[3]'>
+                    <e-tabitem [header]="headerText[3]">
                       <ng-template #content>
                         <app-asset></app-asset>
                       </ng-template>

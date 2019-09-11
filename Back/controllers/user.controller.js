@@ -4,7 +4,9 @@ const passport = require("passport");
 const _ = require("lodash");
 
 module.exports.register = (req, res, next) => {
+  console.log("****************************************");
   var user = new User();
+  console.log(req.body);
   user.fullName = req.body.fullName;
   user.email = req.body.email;
   user.password = req.body.password;

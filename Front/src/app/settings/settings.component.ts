@@ -1,6 +1,6 @@
-import { Component, ViewEncapsulation, Inject, OnInit } from '@angular/core';
-import { MetierService } from '../Service/metier.service';
-import Metier from '../setting/corpsDeMetier/Metier';
+import { Component, ViewEncapsulation, Inject, OnInit } from "@angular/core";
+import { MetierService } from "../Service/metier.service";
+import Metier from "../setting/corpsDeMetier/Metier";
 
 @Component({
   selector: "app-settings",
@@ -11,6 +11,12 @@ export class SettingsComponent implements OnInit {
   constructor(private ms: MetierService) {}
 
   public metier: Metier[];
+  public headerText: Object = [
+    { text: "Users" },
+    { text: "Hospital" },
+    { text: "Maintenance" },
+    { text: "Assets" }
+  ];
 
   ngOnInit() {
     this.metier = [];
@@ -18,12 +24,4 @@ export class SettingsComponent implements OnInit {
       this.metier = data;
     });
   }
-  public headerText: Object = [
-    { text: "Project" },
-    { text: "Hospital" },
-    { text: "Maintenance" },
-    { text: "Assets" },
-    
-   
-  ];
 }
