@@ -58,9 +58,7 @@ export class FormulaireInterventionComponent implements OnInit {
     });
   }
 
-  onResize(event) {
-    this.breakpoint = (event.target.innerWidth <= 1000) ? 1 : 4;
-  }
+
 
 
   showSuccess() {

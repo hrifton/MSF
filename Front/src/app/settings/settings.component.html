@@ -18,7 +18,12 @@
                   <e-tabitems>
                     <e-tabitem [header]="headerText[0]">
                       <ng-template #content>
-                        <app-users></app-users>
+                        <div class="e-card-content">
+                          <app-users
+                            *ngIf="projet != undefinied"
+                            [projet]="projet"
+                          ></app-users>
+                        </div>
                       </ng-template>
                     </e-tabitem>
                     <e-tabitem [header]="headerText[1]">
