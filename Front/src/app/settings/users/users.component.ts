@@ -6,6 +6,8 @@ import {
   Validators
 } from '@angular/forms';
 import { User } from 'src/app/Class/user';
+import { Hospital } from 'src/app/Class/Hospital';
+import { MustMatch } from 'src/app/_helpers/must_match.validator';
 
 @Component({
   selector: 'app-users',
@@ -15,27 +17,29 @@ import { User } from 'src/app/Class/user';
 export class UsersComponent implements OnInit {
   @Input() projet;
   status = ['User', 'Tech', 'Admin'];
-
+  hopital = Hospital;
   data: any[];
   userForm: FormGroup;
   constructor(private fb: FormBuilder) {this.createForm();}
 
   ngOnInit() {
     this.data = this.projet;
-    
   }
   /**
    * creation formulaire
    */
+  //TODO Vérification Confirmation Password
   createForm() {
     this.userForm = this.fb.group({
-      fullName: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.email]),
-      projet: new FormControl('', [Validators.required]),
-      statut: new FormControl('', [Validators.required]),
-      structure: new FormControl(''),
-      level: new FormControl(''),
-      country: new FormControl('')
+      fullName: new FormControl("", [Validators.required]),
+      email: new FormControl("", [Validators.email, Validators.required]),
+      statut: new FormControl("", [Validators.required]),
+      password: new FormControl("", [
+        Validators.required,
+        Validators.minLength(6)
+      ]),
+      confPassword: new FormControl("", [Validators.required]),
+      projet: new FormControl("", [Validators.required])
     });
   }
   /**
@@ -50,12 +54,7 @@ export class UsersComponent implements OnInit {
    * complete formulaire lors du changement de selection de projet
    */
   onSelection(data) {
-    this.userForm = this.fb.group({
-      projet: new FormControl(data.project, [Validators.required]),
-      structure: new FormControl(data.ipdStructure),
-      level: new FormControl(data.leveOfCare),
-      country: new FormControl(data.country)
-    });
+    this.hopital = data;
   }
 
   saveUser(data) {
