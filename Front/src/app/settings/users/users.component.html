@@ -12,105 +12,101 @@
         <form [formGroup]="userForm" novalidate="novalidate">
           <div class="form-group">
             <div class="form-row">
-              <div class="col-xs-3 col-sm-3 col-lg-4 col-md-4">
-                <div class="e-float-input">
-                  <input id="fullName" type="text" formControlName="fullName" />
-                  <span class="e-float-line"></span>
-                  <label for="fullName" class="e-float-text">Full Name</label>
+              <!--selection projet-->
+              <div class="col-xs-12 col-sm-12 col-lg-4 col-md-4">
+                <div *ngIf="projet.length > 0" class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                  <ejs-dropdownlist id="projet" class="e-float-text" formControlName="projet" [dataSource]="data"
+                    (change)="onChange($event)" [fields]="{ text: 'project', value: '_id' }" placeholder="Projet"
+                    popupHeight="200px" floatLabelType="Always" #projet></ejs-dropdownlist>
+                </div>
+                <div *ngIf="hopital.country">
+                  <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <span class="e-float-line"></span>
+                    <label for="country" class="e-float-text">Country</label>
+                    <div class="e-float-input" popupHeight="200px" e-disabled>
+                      {{hopital.country}}
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <span class="e-float-line"></span>
+                    <label for="structure" class="e-float-text">Structure</label>
+                    <div class="e-float-input" popupHeight="200px" e-disabled>
+                      {{hopital.ipdStructure}}
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <span class="e-float-line"></span>
+                    <label for="level" class="e-float-text">Leve of Car</label>
+                    <div class="e-float-input" popupHeight="200px" e-disabled>
+                      {{hopital.leveOfCare}}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="col-xs-3 col-sm-3 col-lg-4 col-md-4">
-                <div class="e-float-input">
-                  <input
-                    id="email"
-                    type="text"
-                    formControlName="email"
-                    placeholder="email"
-                  />
-                  <span class="e-float-line"></span>
-                  <label for="email" class="e-float-text">Email</label>
+              <div class="col-xs-9 col-sm-9 col-md-8 col-lg-8">
+                <div class="form-group">
+                  <div class="form-row">
+                    <!--FullName-->
+                    <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                      <div class="e-float-input">
+                        <input id="fullName" type="text" formControlName="fullName" placeholder="fullName" />
+                        <span class="e-float-line"></span>
+                        <label for="fullName" class="e-float-text">Full Name</label>
+                      </div>
+                    </div>
+                    <!--Email-->
+                    <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                      <div class="e-float-input">
+                        <input id="email" type="text" formControlName="email" placeholder="email@email.com" />
+                        <span class="e-float-line"></span>
+                        <label for="email" class="e-float-text">Email</label>
+                      </div>
+                    </div>
+                    <!--Role-->
+                    <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                      <ejs-dropdownlist class="e-float-text" id="statut" formControlName="statut" [dataSource]="status"
+                        [fields]="{ text: 'statut', value: 'statut' }" placeholder="Statut" popupHeight="200px"
+                        floatLabelType="Always" #statut>
+                      </ejs-dropdownlist>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-row">
+                        <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                      <div class="e-float-input">
+                        <input id="password" type="password" formControlName="password"  />
+                        <span class="e-float-line"></span>
+                        <label for="password" class="e-float-text">Password</label>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                      <div class="e-float-input">
+                        <input id="confPassword" (change)="onChange($event)" type="password" formControlName="confPassword"  />
+                        <span class="e-float-line"></span>
+                        <label for="confPassword" class="e-float-text">Confirme Password</label>
+                      </div>
+                    </div>
+                      </div>
+                      
+                    </div>
+                    
+
+                  </div>
                 </div>
-              </div>
-              <div
-                *ngIf="projet.length > 0"
-                class="col-xs-3 col-sm-3 col-lg-4 col-md-4"
-              >
-                <ejs-dropdownlist
-                  id="statut"
-                  formControlName="statut"
-                  [dataSource]="status"
-                  placeholder="Role"
-                  popupHeight="200px"
-                  floatLabelType="Always"
-                  #statut
-                ></ejs-dropdownlist>
-              </div>
-              <div
-                *ngIf="projet.length > 0"
-                class="col-xs-3 col-sm-3 col-lg-4 col-md-4"
-              >
-                <ejs-dropdownlist
-                  id="projet"
-                  formControlName="projet"
-                  [dataSource]="data"
-                  (change)="onChange($event)"
-                  [fields]="{ text: 'project', value: '_id' }"
-                  placeholder="Projet"
-                  popupHeight="200px"
-                  floatLabelType="Always"
-                  #projet
-                ></ejs-dropdownlist>
-              </div>
-              <div class="col-xs-3 col-sm-3 col-lg-4 col-md-4">
-                <span class="e-float-line"></span>
-                <label for="country" class="e-float-text">Country</label>
-                <div class="e-float-input e-disabled">
-                  <input
-                    id="country"
-                    type="text"
-                    formControlName="country"
-                    placeholder="country"
-                    disabled
-                  />
-                </div>
+
+
+
+
               </div>
 
-              <div class="col-xs-3 col-sm-3 col-lg-4 col-md-4">
-                <span class="e-float-line"></span>
-                <label for="structure" class="e-float-text">Structure</label>
-                <div class="e-float-input e-disabled">
-                  <input
-                    id="structure"
-                    type="text"
-                    formControlName="structure"
-                    placeholder="structure"
-                    disabled
-                  />
-                </div>
-              </div>
-              <div class="col-xs-3 col-sm-3 col-lg-4 col-md-4">
-                <span class="e-float-line"></span>
-                <label for="level" class="e-float-text">Leve of Car</label>
-                <div class="e-float-input e-disabled">
-                  <input
-                    id="level"
-                    type="text"
-                    formControlName="level"
-                    placeholder="level of care"
-                    disabled
-                  />
-                </div>
-              </div>
+
+
             </div>
           </div>
 
           <div class="row">
-            <button
-              (click)="saveUser(userForm.value)"
-              mat-raised-button="mat-raised-button-left"
-              color="primary"
-              
-            >
+            <button (click)="saveUser(userForm.value)" mat-raised-button="mat-raised-button-left" color="primary"
+              [disabled]=!userForm.valid>
               Save
             </button>
           </div>
