@@ -9,7 +9,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const passport = require("passport");
 //#endregion
-//#region Routes
+//ex: const rtsIntervention = require("./routes/intervention.route"); 
+//#region  importation Routes 
 const rtsIndex = require("./routes/index.router");
 const rtsIntervention = require("./routes/intervention.route");
 const rtsDepartement = require("./routes/departement.route");

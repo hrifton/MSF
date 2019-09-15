@@ -1,5 +1,4 @@
 const express = require("express");
-
 const interventionRoutes = express.Router();
 const ctrlIntervention = require("../controllers/intervention.controller");
  //GetToutesLesIntervention

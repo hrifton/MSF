@@ -1,14 +1,14 @@
 {
-    "developement":{
-        "PORT":3000,
-        "MONGODB_URL":"mongodb://localhost:27017/MsfRegie",
-       "JWT_SECRET":"xtiTKEFUiokCivj05CVo0A",
+    "developement": {
+        "PORT": 3000,
+        "MONGODB_URL": "mongodb://localhost:27017/MsfRegie",
+        "JWT_SECRET": "xtiTKEFUiokCivj05CVo0A",
         "JWT_EXP": "60m"
     },
-    "production":{
-        "PORT":80,
-        "MONGODB_URL":"mongodb://xxx/MsfRegie",
-        "JWT_SECRET":"xtiTKEFUiokCivj05CVo0A",
+    "production": {
+        "PORT": 80,
+        "MONGODB_URL": "mongodb://xxx/MsfRegie",
+        "JWT_SECRET": "xtiTKEFUiokCivj05CVo0A",
         "JWT_EXP": "60m"
     }
 }
