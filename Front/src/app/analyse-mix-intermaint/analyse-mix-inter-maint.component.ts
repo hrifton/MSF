@@ -20,10 +20,10 @@ import { AnalyseMaintenanceComponent } from './analyse-maintenance/analyse-maint
   styleUrls: ['./analyse-mix-intermaint.component.scss']
 })
 export class AnalyseMixIntermaintComponent implements OnInit {
-  //public title: string = "Analyse JobRequest";
+  // public title: string = "Analyse JobRequest";
   constructor(private cd: ChangeDetectorRef) {
 
-    //code
+    // code
   }
 
   public maintenance: Object[];
@@ -45,7 +45,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
   private open: number;
   private close: number;
   @ViewChild('element') tabObj: TabComponent;
-  public headerText: Object = [{ 'text': 'Inter./Maint.' }, { 'text': 'Intervention' }, { 'text': 'Maintenance' }];
+  public headerText: Object = [{ text: 'Inter./Maint.' }, { text: 'Intervention' }, { text: 'Maintenance' }];
   @ViewChild('pie') public pie: ChartComponent;
 
   // custom code end
@@ -60,30 +60,33 @@ export class AnalyseMixIntermaintComponent implements OnInit {
   };
 
 /**
- * 
+ *
  * @param e value de l'onglet
- * refesh le chart 
+ * refesh le chart
  */
   public tabSelected(e: SelectEventArgs): void {
     switch (e.selectedItem.innerText) {
-      case "INTER./MAINT.":
+      case 'INTER./MAINT.':
         this.refreshChart();
         break;
 
-        case "MAINTENANCE":
+        case 'MAINTENANCE':
+
           this.AnalyseMaintenance.getNumberOpenClose(this.analyseMaintenance);
-        break;
-    
-        case "INTERVENTION":
+          this.AnalyseMaintenance.refreshChart();
+          break;
+
+        case 'INTERVENTION':
           this.AnalyseIntervention.getNumberOpenClose(this.analyseIntervention);
-        break;
+          this.AnalyseIntervention.refreshChart();
+          break;
     }
-    
+
 }
-  
+
 
   ngOnChanges(ChangeEventArgs: any): void {
-     console.log(ChangeEventArgs)
+     console.log(ChangeEventArgs);
     }
 
   public load(args: IAccLoadedEventArgs): void {
@@ -138,7 +141,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
         default:
           waiting++;
           break;
-      } 
+      }
 
     });
     this.status.open = open;

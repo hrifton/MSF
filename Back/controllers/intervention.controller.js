@@ -68,12 +68,14 @@ module.exports.update = (req, res, next) => {
   Intervention.findByIdAndUpdate(
     req.body.id,
     req.body,
-    { new: true },
     (err, intervention) => {
       // Handle any possible database errors
       if (err) console.log(err);
       //return res.status(500).send(err);
-      else return console.log(intervention); //res.send(intervention);
+      else {
+        
+        return intervention; //res.send(intervention);
     }
+      }
   );
 };
