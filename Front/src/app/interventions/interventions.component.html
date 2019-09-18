@@ -12,12 +12,12 @@
               </div>
             </div>
             <div class="e-card-content">
-              <app-formulaire-intervention (messageEvent)="update($event)" [user]="userDetails">
+              <app-formulaire-intervention (messageEvent)="update($event)" [user]="userDetails" [departements]="departements">
               </app-formulaire-intervention>
             </div>
           </div>
         </div>
-        <div *ngIf="userDetails.status==''" class="row">
+        <div class="row">
           <div *ngFor="let dom of compte" class="e-card col-xs-4 col-sm-4 col-lg-2 col-md-2  mt-3 " id="basic_card">
             <div class="e-card-header">
               <div class="e-card-header-caption">
@@ -62,7 +62,7 @@
               </div>
               <div class="e-card-content">
                 <app-list-intervention *ngIf="interventions.length > 0" [interventions]='interventions' [maintenance]='maintenance' [domaine]='domaine'[techs]='techs'
-                  [user]="userDetails" (messageEvent)="check($event)">
+                  [user]="userDetails" [departements]="departements" (messageEvent)="check($event)">
                 </app-list-intervention>
               </div>
             </div>

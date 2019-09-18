@@ -7,6 +7,7 @@ import { UserService } from "../Service/user.service";
 import { InterventionService } from "./../Service/intervention.service";
 import { DateMaintenanceService } from "../Service/dateMaintenance.service";
 import { DomaineService } from "../Service/domaine.service";
+import { DepartementService } from '../Service/departement.service';
 /**
  * import component
  */
@@ -20,6 +21,8 @@ import { User } from "../Class/user";
 import Intervention from "../Class/Intervention";
 /** import moment outil parsing et modification  */
 import * as moment from "moment";
+import Departement from '../Class/Departement';
+import { $ } from 'protractor';
 
 @Component({
   selector: "app-interventions",
@@ -31,6 +34,8 @@ export class InterventionsComponent implements OnInit {
   public domaine: Object = [];
   public maintenance: any = [];
   public compte: Object = [];
+  public departements: Object = [];
+
   userDetails;
   techs: User[];
 
@@ -50,7 +55,8 @@ export class InterventionsComponent implements OnInit {
     private is: InterventionService,
     private us: UserService,
     private ds: DateMaintenanceService,
-    private doms: DomaineService
+    private doms: DomaineService,
+    private deps: DepartementService
   ) {
     this.interventions = [];
     this.maintenance = [];
@@ -62,8 +68,18 @@ export class InterventionsComponent implements OnInit {
    *  unshift ajoute data de event dans le tableau interventions
    */
   update($event) {
-    this.interventions.unshift($event);
-    this.interentionList.refreshInterventionTable();
+    $event.user = this.us.getFullName();
+    $event.type = 'JobRequest';
+    $event.status = 'In progress';
+    $event.day = moment().format('DD/MM/YYYY');
+
+    this.is.postInter($event).subscribe((data: Intervention) => {
+      this.interventions.unshift(data);
+      this.interentionList.refreshInterventionTable();
+      this.AnalyseMixIntermaint.refreshChart();
+    })
+    
+   
     // this.HistoricIntervention.refreshChart();
   }
   check($event) {
@@ -142,6 +158,9 @@ export class InterventionsComponent implements OnInit {
      */
     this.doms.getAll().subscribe(data => {
       this.domaine = data;
+    });
+    this.deps.getDepartements().subscribe(data => {
+      this.departements = data;
     });
   }
   /**

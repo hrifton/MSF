@@ -33,6 +33,7 @@ import { DomaineService } from "src/app/Service/domaine.service";
 })
 export class ListInterventionComponent implements OnInit {
   @Input() interventions;
+  @Input() departements;
   @Input() domaine;
   @Input() maintenance;
   @Input() techs;
@@ -55,7 +56,6 @@ export class ListInterventionComponent implements OnInit {
   ];
   public resolution: any[];
   today = new Date();
-  public departements: string[];
   public filterSettings: Object;
   public editSettings: Object;
   public toolbar: string[];
@@ -86,9 +86,7 @@ export class ListInterventionComponent implements OnInit {
       type: "Menu"
     };
 
-    this.ds.getDepartements().subscribe((data: Departement[]) => {
-      this.getDepartement(data);
-    });
+    //this.getDepartement(this.departements);
 
     this.editSettings = {
       allowEditing: true,
@@ -171,7 +169,6 @@ export class ListInterventionComponent implements OnInit {
     //Click SAVE
     if (args.requestType === "save") {
       this.submitClicked = true;
-      //TODO ajouté le ID sinon sa ne marche pas
       //verification si le formulaire est valid
       if (this.angForm.valid) {
         args.data = this.angForm.value;
@@ -210,19 +207,7 @@ export class ListInterventionComponent implements OnInit {
       }
     }
   }
-  /**
-   * @param data
-   * assigne liste des departement
-   */
-  getDepartement(data) {
-    const departementsList = new Array();
-
-    data.forEach(element => {
-      departementsList.push(element.departement);
-    });
-
-    this.departements = departementsList;
-  }
+ 
   /**
    * @param data
    * Modifie attribut _id en id

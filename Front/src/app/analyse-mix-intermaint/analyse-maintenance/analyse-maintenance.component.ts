@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { IAccLoadedEventArgs, AccumulationTheme, ChartComponent } from '@syncfusion/ej2-angular-charts';
 import { TabComponent } from '@syncfusion/ej2-angular-navigations';
 
@@ -14,7 +14,7 @@ export class AnalyseMaintenanceComponent implements OnInit {
   
   @Input() analyseMaintenance;
   constructor() { 
-    this.analyseMaintenance=[]
+    this.analyseMaintenance = [];
     
   }
   @ViewChild('chart1') public chart1: ChartComponent;
@@ -33,18 +33,22 @@ export class AnalyseMaintenanceComponent implements OnInit {
   public load(args: IAccLoadedEventArgs): void {
     let selectedTheme: string = location.hash.split('/')[1];
     selectedTheme = selectedTheme ? selectedTheme : 'Material';
-    args.accumulation.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark') as AccumulationTheme;
+    args.accumulation.theme = (selectedTheme.charAt(0).toUpperCase() 
+    + selectedTheme.slice(1)).replace(/-dark/i, 'Dark') as AccumulationTheme;
   }
+  
   ngOnChanges(changes: SimpleChanges): void {
    
    this.getNumberOpenClose(changes.analyseMaintenance.currentValue);
-   this.analyseMaintenance=changes.analyseMaintenance.currentValue
+   this.analyseMaintenance = changes.analyseMaintenance.currentValue;
   }
 
  public refreshChart() {
-   console.log(this.analyseMaintenance)
+   console.log("refresh")
+   //console.log(this.analyseMaintenance);
    // this.getNumberOpenClose(this.analyseMaintenance);
-    //this.chart1.refresh();
+    
+    this.chart1.refresh();
   }
 
   getNumberOpenClose(data) {

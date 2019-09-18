@@ -22,14 +22,7 @@ export class InterventionService {
   constructor(private http: HttpClient) {}
   // add a new Intervention
   postInter(intervention: Intervention) {
-    return this.http.post(`${this.uri}/add`, intervention).subscribe(
-      data => {
-        console.log(data);
-      },
-      err => {
-        console.log("Error" + err);
-      }
-    );
+    return this.http.post(`${this.uri}/add`, intervention);
   }
 
   // Get All Intervention
