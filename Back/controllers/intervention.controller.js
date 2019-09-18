@@ -65,17 +65,13 @@ module.exports.add = (req, res, next) => {
 module.exports.update = (req, res, next) => {
   console.log("ctrlUpdate");
   console.log(req.body);
-  Intervention.findByIdAndUpdate(
-    req.body.id,
-    req.body,
-    (err, intervention) => {
-      // Handle any possible database errors
-      if (err) console.log(err);
-      //return res.status(500).send(err);
-      else {
-        
-        return intervention; //res.send(intervention);
-    }
-      }
-  );
+  Intervention.findByIdAndUpdate(req.body.id, req.body, (err, docs) => {
+    // Handle any possible database errors
+    if (err) console.log(err);
+    //return res.status(500).send(err);
+    else {
+      console.log(docs);
+      res.send(docs);
+    } //res.send(intervention);
+  });
 };

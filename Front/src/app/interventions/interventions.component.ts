@@ -83,6 +83,7 @@ export class InterventionsComponent implements OnInit {
     // this.HistoricIntervention.refreshChart();
   }
   check($event) {
+    console.log("gog")
     console.log("inter closed :", $event);
   }
 

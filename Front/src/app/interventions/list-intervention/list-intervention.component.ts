@@ -5,9 +5,9 @@ import {
   Output,
   EventEmitter,
   ViewChild
-} from "@angular/core";
-import { Router } from "@angular/router";
-import { Browser } from "@syncfusion/ej2-base";
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { Browser } from '@syncfusion/ej2-base';
 import {
   EditService,
   ToolbarService,
@@ -15,20 +15,20 @@ import {
   DialogEditEventArgs,
   SaveEventArgs,
   GridComponent
-} from "@syncfusion/ej2-angular-grids";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { Dialog } from "@syncfusion/ej2-angular-popups";
-import { InterventionService } from "../../Service/intervention.service";
-import { DepartementService } from "src/app/setting/departement/departement.service";
-import Departement from "../../Class/Departement";
-import { SolutionService } from "src/app/Service/solution.service";
-import Intervention from "src/app/Class/Intervention";
-import { DomaineService } from "src/app/Service/domaine.service";
+} from '@syncfusion/ej2-angular-grids';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Dialog } from '@syncfusion/ej2-angular-popups';
+import { InterventionService } from '../../Service/intervention.service';
+import { DepartementService } from 'src/app/setting/departement/departement.service';
+import Departement from '../../Class/Departement';
+import { SolutionService } from 'src/app/Service/solution.service';
+import Intervention from 'src/app/Class/Intervention';
+import { DomaineService } from 'src/app/Service/domaine.service';
 
 @Component({
-  selector: "app-list-intervention",
-  templateUrl: "./list-intervention.component.html",
-  //styleUrls: ['./list-intervention.component.scss'],
+  selector: 'app-list-intervention',
+  templateUrl: './list-intervention.component.html',
+  // styleUrls: ['./list-intervention.component.scss'],
   providers: [ToolbarService, EditService, PageService]
 })
 export class ListInterventionComponent implements OnInit {
@@ -40,19 +40,19 @@ export class ListInterventionComponent implements OnInit {
   @Input() user;
   @Output() MessageEvent = new EventEmitter<Intervention>();
 
-  @ViewChild("grid") public grid: GridComponent;
+  @ViewChild('grid') public grid: GridComponent;
 
   // public interventions: Intervention[];
   public priorities: { [key: string]: Object }[] = [
-    { priority: "High" },
-    { priority: "Medium" },
-    { priority: "Low" }
+    { priority: 'High' },
+    { priority: 'Medium' },
+    { priority: 'Low' }
   ];
   public lStatus: { [key: string]: Object }[] = [
-    { status: "In progress" },
-    { status: "Waiting" },
-    { status: "Canceled" },
-    { status: "Closed" }
+    { status: 'In progress' },
+    { status: 'Waiting' },
+    { status: 'Canceled' },
+    { status: 'Closed' }
   ];
   public resolution: any[];
   today = new Date();
@@ -67,12 +67,12 @@ export class ListInterventionComponent implements OnInit {
   public priorityrules: Object;
   public dropData: string[];
   //
-  public text: string = "Select a Technicien";
+  public text = 'Select a Technicien';
   public angForm: FormGroup;
   public shipCityDistinctData: Object[];
   public shipCountryDistinctData: Object[];
   public submitClicked = false;
-  //router: Router;
+  // router: Router;
 
   constructor(
     private ds: DepartementService,
@@ -83,16 +83,16 @@ export class ListInterventionComponent implements OnInit {
 
   ngOnInit() {
     this.filterSettings = {
-      type: "Menu"
+      type: 'Menu'
     };
 
-    //this.getDepartement(this.departements);
+    // this.getDepartement(this.departements);
 
     this.editSettings = {
       allowEditing: true,
       allowAdding: true,
       allowDeleting: true,
-      mode: "Dialog"
+      mode: 'Dialog'
     };
 
     this.orderidrules = {
@@ -107,14 +107,14 @@ export class ListInterventionComponent implements OnInit {
     };
     this.editparams = {
       params: {
-        popupHeight: "100px"
+        popupHeight: '100px'
       }
     };
     this.pageSettings = { pageSizes: true, pageSize: 8 };
-    this.dropData = ["Order Placed", "Processing", "Delivered"];
+    this.dropData = ['Order Placed', 'Processing', 'Delivered'];
   }
   sendLink(data) {
-    this.router.navigate(["historic/"], { queryParams: { asset: data } });
+    this.router.navigate(['historic/'], { queryParams: { asset: data } });
   }
 
   createFormGroup(data: IOrderModel): FormGroup {
@@ -133,7 +133,7 @@ export class ListInterventionComponent implements OnInit {
       asset: new FormControl(data.asset),
       slug: new FormControl(data.slug),
       domaine: new FormControl(data.domaine),
-      solution: new FormControl("")
+      solution: new FormControl('')
     });
   }
   public sortComparer = (reference: string, comparer: string) => {
@@ -144,7 +144,7 @@ export class ListInterventionComponent implements OnInit {
       return 1;
     }
     return 0;
-  };
+  }
 
   dateValidator() {
     return (control: FormControl): null | Object => {
@@ -156,33 +156,37 @@ export class ListInterventionComponent implements OnInit {
         : { OrderDate: { value: control.value } };
     };
   }
-  //Action sur le tableau
+  // Action sur le tableau
   actionBegin(args: SaveEventArgs): void {
-    //Verification de l'action debut edit ou ajout
-    if (args.requestType === "beginEdit" || args.requestType === "add") {
+    // Verification de l'action debut edit ou ajout
+    if (args.requestType === 'beginEdit' || args.requestType === 'add') {
       this.submitClicked = false;
-      //Creation du formulaire
+      // Creation du formulaire
 
       this.angForm = this.createFormGroup(args.rowData);
       console.log(this.angForm.value.id);
     }
-    //Click SAVE
-    if (args.requestType === "save") {
+    // Click SAVE
+    if (args.requestType === 'save') {
       this.submitClicked = true;
-      //verification si le formulaire est valid
+      // verification si le formulaire est valid
       if (this.angForm.valid) {
         args.data = this.angForm.value;
         console.log(args.data);
-        if (args.data["solution"] !== "") {
-          console.log("save");
+        if (args.data['solution'] !== '') {
+          console.log('save');
           this.ss.postSolution(args.data);
         } else {
-          console.log("update");
-          this.is.updateIntervention(args.data);
-          this.MessageEvent.emit(this.interventions);
+            this.is.updateIntervention(args.data).subscribe((data: Intervention ) => {
+            //TODO Check whie don't works event
+              this.MessageEvent.emit(data);
+            console.log('event')
+          });
+          // console.log(this.interventions)
+          // this.MessageEvent.emit(this.interventions);
         }
       } else {
-        console.log("Probleme");
+        console.log('Probleme');
         args.cancel = true;
       }
     }
@@ -200,29 +204,29 @@ export class ListInterventionComponent implements OnInit {
    * determine l'action executer sur le tableau
    */
   actionComplete(args: DialogEditEventArgs): void {
-    if (args.requestType === "beginEdit" || args.requestType === "add") {
+    if (args.requestType === 'beginEdit' || args.requestType === 'add') {
       if (Browser.isDevice) {
-        args.dialog.height = window.innerHeight - 500 + "px";
+        args.dialog.height = window.innerHeight - 500 + 'px';
         (args.dialog as Dialog).dataBind();
       }
     }
   }
- 
+
   /**
    * @param data
    * Modifie attribut _id en id
    */
   replace_idByid(data) {
     data = JSON.stringify(data);
-    data = data.replace(/_id/g, "id");
+    data = data.replace(/_id/g, 'id');
     data = JSON.parse(data);
     return data;
   }
 
   ngOnChanges(): void {
-    //console.log("ListIntervention changed", this.grid);
-    //console.log(changes);
-    //this.grid.refresh();
+    // console.log("ListIntervention changed", this.grid);
+    // console.log(changes);
+    // this.grid.refresh();
   }
   /**
    * refresh tableau liste intervention

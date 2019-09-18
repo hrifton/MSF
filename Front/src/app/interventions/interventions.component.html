@@ -61,8 +61,8 @@
                 </div>
               </div>
               <div class="e-card-content">
-                <app-list-intervention *ngIf="interventions.length > 0" [interventions]='interventions' [maintenance]='maintenance' [domaine]='domaine'[techs]='techs'
-                  [user]="userDetails" [departements]="departements" (messageEvent)="check($event)">
+                <app-list-intervention *ngIf="interventions.length > 0" (messageEvent)="check($event)" [interventions]='interventions' [maintenance]='maintenance' [domaine]='domaine'[techs]='techs'
+                  [user]="userDetails" [departements]="departements" >
                 </app-list-intervention>
               </div>
             </div>
