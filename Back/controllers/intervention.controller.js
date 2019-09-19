@@ -1,3 +1,6 @@
+const mongoose = require("mongoose");
+mongoose.set("useFindAndModify", false);
+
 require("../models/intervention.model");
 const mongoose = require("mongoose");
 const Intervention = mongoose.model("Intervention");
@@ -63,14 +66,14 @@ module.exports.add = (req, res, next) => {
 };
 
 module.exports.update = (req, res, next) => {
-  console.log("ctrlUpdate");
-  console.log(req.body);
+  console.log("ctrlUpdate",req.body);
+ 
   Intervention.findByIdAndUpdate(req.body.id, req.body, (err, docs) => {
     // Handle any possible database errors
-    if (err) console.log(err);
+    if (err) {
+      console.log(err);}
     //return res.status(500).send(err);
     else {
-      console.log(docs);
       res.send(docs);
     } //res.send(intervention);
   });

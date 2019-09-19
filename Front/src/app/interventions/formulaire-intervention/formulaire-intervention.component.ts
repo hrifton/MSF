@@ -29,7 +29,7 @@ export class FormulaireInterventionComponent implements OnInit {
 
   @Output() messageEvent = new EventEmitter<Intervention>();
 
-  inter = new Intervention();
+
   public lPriority: { [key: string]: Object }[] = [
     { priority: 'High', code: 'High' },
     { priority: 'Medium', code: 'Medium' },
