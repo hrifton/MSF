@@ -18,12 +18,8 @@ import {
 } from "@syncfusion/ej2-angular-grids";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Dialog } from "@syncfusion/ej2-angular-popups";
-import { InterventionService } from "../../Service/intervention.service";
-import { DepartementService } from "src/app/setting/departement/departement.service";
-import Departement from "../../Class/Departement";
 import { SolutionService } from "src/app/Service/solution.service";
 import Intervention from "src/app/Class/Intervention";
-import { DomaineService } from "src/app/Service/domaine.service";
 
 @Component({
   selector: "app-list-intervention",
@@ -74,12 +70,7 @@ export class ListInterventionComponent implements OnInit {
   public submitClicked = false;
   // router: Router;
 
-  constructor(
-    private ds: DepartementService,
-    private ss: SolutionService,
-    private is: InterventionService,
-    private router: Router
-  ) {}
+  constructor(private ss: SolutionService, private router: Router) {}
 
   ngOnInit() {
     this.filterSettings = {
@@ -119,7 +110,7 @@ export class ListInterventionComponent implements OnInit {
 
   createFormGroup(data): FormGroup {
     //data = this.replace_idByid(data);
-    console.log(data);
+
     return new FormGroup({
       _id: new FormControl(data._id, Validators.required),
       departement: new FormControl(data.departement, Validators.required),
@@ -224,5 +215,14 @@ export class ListInterventionComponent implements OnInit {
    */
   refreshInterventionTable() {
     this.grid.refresh();
+  }
+  remplaceIntervention(data) {
+    let nb = this.interventions.length;
+    for (let index = 0; index < nb; index++) {
+      console.log(index);
+      if (this.interventions[index]._id == data._id) {
+        this.interventions[index] = data;
+      }
+    }
   }
 }
