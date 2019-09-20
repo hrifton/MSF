@@ -19,7 +19,7 @@ module.exports.liste = (req, res) => {
 
 module.exports.add = (req, res, next) => {
   var solution = new Solution();
-
+console.log(req.body)
   User.findOne({ fullName: req.body.idTech }, (err, res) => {
     solution.idIntervention = req.body.idIntervention;
     solution.solution = req.body.solution;

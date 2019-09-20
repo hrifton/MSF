@@ -18,26 +18,23 @@ import {
 } from "@syncfusion/ej2-angular-grids";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Dialog } from "@syncfusion/ej2-angular-popups";
-import { InterventionService } from "../../Service/intervention.service";
-import { DepartementService } from "src/app/setting/departement/departement.service";
-import Departement from "../../Class/Departement";
 import { SolutionService } from "src/app/Service/solution.service";
 import Intervention from "src/app/Class/Intervention";
-import { DomaineService } from "src/app/Service/domaine.service";
 
 @Component({
   selector: "app-list-intervention",
   templateUrl: "./list-intervention.component.html",
-  //styleUrls: ['./list-intervention.component.scss'],
+  // styleUrls: ['./list-intervention.component.scss'],
   providers: [ToolbarService, EditService, PageService]
 })
 export class ListInterventionComponent implements OnInit {
   @Input() interventions;
+  @Input() departements;
   @Input() domaine;
   @Input() maintenance;
   @Input() techs;
   @Input() user;
-  @Output() MessageEvent = new EventEmitter<Intervention>();
+  @Output() messageEvent = new EventEmitter<Intervention>();
 
   @ViewChild("grid") public grid: GridComponent;
 
@@ -55,7 +52,6 @@ export class ListInterventionComponent implements OnInit {
   ];
   public resolution: any[];
   today = new Date();
-  public departements: string[];
   public filterSettings: Object;
   public editSettings: Object;
   public toolbar: string[];
@@ -67,28 +63,21 @@ export class ListInterventionComponent implements OnInit {
   public priorityrules: Object;
   public dropData: string[];
   //
-  public text: string = "Select a Technicien";
+  public text = "Select a Technicien";
   public angForm: FormGroup;
   public shipCityDistinctData: Object[];
   public shipCountryDistinctData: Object[];
   public submitClicked = false;
-  //router: Router;
+  // router: Router;
 
-  constructor(
-    private ds: DepartementService,
-    private ss: SolutionService,
-    private is: InterventionService,
-    private router: Router
-  ) {}
+  constructor(private ss: SolutionService, private router: Router) {}
 
   ngOnInit() {
     this.filterSettings = {
       type: "Menu"
     };
 
-    this.ds.getDepartements().subscribe((data: Departement[]) => {
-      this.getDepartement(data);
-    });
+    // this.getDepartement(this.departements);
 
     this.editSettings = {
       allowEditing: true,
@@ -119,17 +108,18 @@ export class ListInterventionComponent implements OnInit {
     this.router.navigate(["historic/"], { queryParams: { asset: data } });
   }
 
-  createFormGroup(data: IOrderModel): FormGroup {
-    data = this.replace_idByid(data);
-    console.log(data);
+  createFormGroup(data): FormGroup {
+    //data = this.replace_idByid(data);
+
     return new FormGroup({
-      id: new FormControl(data.id, Validators.required),
+      _id: new FormControl(data._id, Validators.required),
       departement: new FormControl(data.departement, Validators.required),
       locality: new FormControl(data.locality, Validators.required),
       priority: new FormControl(data.priority),
       description: new FormControl(data.description),
       status: new FormControl(data.status),
       type: new FormControl(data.type),
+      day: new FormControl(data.day),
       tech: new FormControl(data.tech),
       useMat: new FormControl(data.useMat),
       asset: new FormControl(data.asset),
@@ -158,32 +148,25 @@ export class ListInterventionComponent implements OnInit {
         : { OrderDate: { value: control.value } };
     };
   }
-  //Action sur le tableau
+  // Action sur le tableau
   actionBegin(args: SaveEventArgs): void {
-    //Verification de l'action debut edit ou ajout
+    // Verification de l'action debut edit ou ajout
     if (args.requestType === "beginEdit" || args.requestType === "add") {
       this.submitClicked = false;
-      //Creation du formulaire
+      // Creation du formulaire
 
       this.angForm = this.createFormGroup(args.rowData);
-      console.log(this.angForm.value.id);
     }
-    //Click SAVE
+    // Click SAVE
     if (args.requestType === "save") {
       this.submitClicked = true;
-      //TODO ajouté le ID sinon sa ne marche pas
-      //verification si le formulaire est valid
+      // verification si le formulaire est valid
       if (this.angForm.valid) {
-        args.data = this.angForm.value;
-        console.log(args.data);
-        if (args.data["solution"] !== "") {
+        this.messageEvent.emit(this.angForm.value);
+        /*if (args.data["solution"] !== "") {
           console.log("save");
           this.ss.postSolution(args.data);
-        } else {
-          console.log("update");
-          this.is.updateIntervention(args.data);
-          this.MessageEvent.emit(this.interventions);
-        }
+        }*/
       } else {
         console.log("Probleme");
         args.cancel = true;
@@ -210,19 +193,7 @@ export class ListInterventionComponent implements OnInit {
       }
     }
   }
-  /**
-   * @param data
-   * assigne liste des departement
-   */
-  getDepartement(data) {
-    const departementsList = new Array();
 
-    data.forEach(element => {
-      departementsList.push(element.departement);
-    });
-
-    this.departements = departementsList;
-  }
   /**
    * @param data
    * Modifie attribut _id en id
@@ -235,9 +206,9 @@ export class ListInterventionComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-    //console.log("ListIntervention changed", this.grid);
-    //console.log(changes);
-    //this.grid.refresh();
+    // console.log("ListIntervention changed", this.grid);
+    // console.log(changes);
+    // this.grid.refresh();
   }
   /**
    * refresh tableau liste intervention
@@ -245,21 +216,13 @@ export class ListInterventionComponent implements OnInit {
   refreshInterventionTable() {
     this.grid.refresh();
   }
-}
-
-export interface IOrderModel {
-  domaine?: any;
-  slug?: any;
-  id?: number;
-  departement?: string;
-  locality?: string;
-  priority?: string;
-  day?: string;
-  description?: string;
-  status?: string;
-  type?: string;
-  tech?: string;
-  useMat?: string;
-  asset?: string;
-  solution?: string;
+  remplaceIntervention(data) {
+    let nb = this.interventions.length;
+    for (let index = 0; index < nb; index++) {
+      console.log(index);
+      if (this.interventions[index]._id == data._id) {
+        this.interventions[index] = data;
+      }
+    }
+  }
 }
