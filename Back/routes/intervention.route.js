@@ -23,7 +23,8 @@ interventionRoutes.route("/add").post(function(req, res, next) {
 });
 
 //UpdateD'Intervention
-interventionRoutes.route("/:id").put(function(req, res, next) {
+interventionRoutes.route("/:_id").put(function(req, res, next) {
+  console.log("Route",req.body)
   ctrlIntervention.update(req, res, next);
 });
 

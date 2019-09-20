@@ -46,8 +46,7 @@ ng g m admin --routing -m app.module
 
 
 //generate component ng g c "nomCoponenet"
-
-ng g c "nomComponent"
+ng g c "nomComponent" --dry-run
 
 //generate dashboard
 ng generate @angular/material:material-dashboard --name material-dashboard

@@ -7,6 +7,7 @@ import { UserService } from "../Service/user.service";
 import { InterventionService } from "./../Service/intervention.service";
 import { DateMaintenanceService } from "../Service/dateMaintenance.service";
 import { DomaineService } from "../Service/domaine.service";
+import { DepartementService } from "../Service/departement.service";
 /**
  * import component
  */
@@ -20,7 +21,7 @@ import { User } from "../Class/user";
 import Intervention from "../Class/Intervention";
 /** import moment outil parsing et modification  */
 import * as moment from "moment";
-
+import * as _ from "lodash";
 @Component({
   selector: "app-interventions",
   templateUrl: "./interventions.component.html",
@@ -31,6 +32,8 @@ export class InterventionsComponent implements OnInit {
   public domaine: Object = [];
   public maintenance: any = [];
   public compte: Object = [];
+  public departements: Object = [];
+
   userDetails;
   techs: User[];
 
@@ -50,7 +53,8 @@ export class InterventionsComponent implements OnInit {
     private is: InterventionService,
     private us: UserService,
     private ds: DateMaintenanceService,
-    private doms: DomaineService
+    private doms: DomaineService,
+    private deps: DepartementService
   ) {
     this.interventions = [];
     this.maintenance = [];
@@ -62,12 +66,44 @@ export class InterventionsComponent implements OnInit {
    *  unshift ajoute data de event dans le tableau interventions
    */
   update($event) {
-    this.interventions.unshift($event);
-    this.interentionList.refreshInterventionTable();
+    $event.user = this.us.getFullName();
+    $event.type = "JobRequest";
+    $event.status = "In progress";
+    $event.day = moment().format("DD/MM/YYYY");
+    alert("event");
+
+    this.is.postInter($event).subscribe((data: Intervention) => {
+      this.interventions.unshift(data);
+      this.interentionList.refreshInterventionTable();
+      this.AnalyseMixIntermaint.refreshChart();
+    });
+
     // this.HistoricIntervention.refreshChart();
   }
   check($event) {
-    console.log("inter closed :", $event);
+    const inter = new Intervention(
+      $event.departement,
+      $event.locality,
+      $event.priority,
+      $event.day,
+      $event.description,
+      $event.status,
+      $event.user,
+      $event.type,
+      $event.tech,
+      $event._id,
+      $event.useMat,
+      $event.asset,
+      $event.slug,
+      $event.domaine
+    );
+
+    this.is.updateIntervention(inter).subscribe((data: Intervention) => {
+      this.getInterventionByRole();
+    });
+
+    //this.interentionList.refreshInterventionTable();
+    // this.AnalyseMixIntermaint.refreshChart();
   }
 
   ngOnInit() {
@@ -78,6 +114,48 @@ export class InterventionsComponent implements OnInit {
     /**
      * gestion Du type d'utilisateur
      */
+    this.getInterventionByRole();
+    /**
+     * return liste des technicien
+     */
+    this.us.getUserTech().subscribe((data: User[]) => {
+      this.techs = data;
+    });
+    /**
+     * return liste des deparement
+     */
+    this.doms.getAll().subscribe(data => {
+      this.domaine = data;
+    });
+    this.deps.getDepartements().subscribe(data => {
+      this.departements = data;
+    });
+  }
+  /**
+   *
+   * @param domaine
+   * @param intervention
+   * compte le nombre d'intervention par domaine (corp de métier)
+   */
+  compteDomaine(domaine, intervention) {
+    for (let index = 0; index < domaine.length; index++) {
+      const name = domaine[index].domaine;
+      this.compte[index] = { name, nb: 0 };
+    }
+    intervention.forEach(element => {
+      if (element.status !== "Canceled" && element.status !== "Closed") {
+        for (const key in this.compte) {
+          if (this.compte.hasOwnProperty(key)) {
+            if (this.compte[key].name === element.domaine) {
+              this.compte[key].nb++;
+            }
+          }
+        }
+      }
+    });
+  }
+
+  getInterventionByRole() {
     if (this.userDetails === "user") {
       this.is
         .getInterventionsByUser(this.us.getFullName())
@@ -131,41 +209,5 @@ export class InterventionsComponent implements OnInit {
         });
       });
     }
-    /**
-     * return liste des technicien
-     */
-    this.us.getUserTech().subscribe((data: User[]) => {
-      this.techs = data;
-    });
-    /**
-     * return liste des deparement
-     */
-    this.doms.getAll().subscribe(data => {
-      this.domaine = data;
-    });
-  }
-  /**
-   *
-   * @param domaine
-   * @param intervention
-   * compte le nombre d'intervention par domaine (corp de métier)
-   */
-  compteDomaine(domaine, intervention) {
-    console.log(intervention.length);
-    for (let index = 0; index < domaine.length; index++) {
-      const name = domaine[index].domaine;
-      this.compte[index] = { name, nb: 0 };
-    }
-    intervention.forEach(element => {
-      if (element.status !== "Canceled" && element.status !== "Closed") {
-        for (const key in this.compte) {
-          if (this.compte.hasOwnProperty(key)) {
-            if (this.compte[key].name === element.domaine) {
-              this.compte[key].nb++;
-            }
-          }
-        }
-      }
-    });
   }
 }

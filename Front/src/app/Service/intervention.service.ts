@@ -6,7 +6,7 @@ import Intervention from "../Class/Intervention";
 @Injectable({ providedIn: "root" })
 export class InterventionService {
   uri = "/api/intervention";
-
+/*
   selectedIntervention: Intervention = {
     departement: "",
     locality: "",
@@ -18,18 +18,11 @@ export class InterventionService {
     type: "",
     tech: ""
   };
-
+*/
   constructor(private http: HttpClient) {}
   // add a new Intervention
   postInter(intervention: Intervention) {
-    return this.http.post(`${this.uri}/add`, intervention).subscribe(
-      data => {
-        console.log(data);
-      },
-      err => {
-        console.log("Error" + err);
-      }
-    );
+    return this.http.post(`${this.uri}/add`, intervention);
   }
 
   // Get All Intervention
@@ -46,9 +39,6 @@ export class InterventionService {
   }
 
   updateIntervention(form) {
-    console.log("updateIntervention");
-    this.http
-      .put(`${this.uri}/${form.id}`, form)
-      .subscribe(res => console.log("Done"));
+    return this.http.put(`${this.uri}/${form.id}`, form);
   }
 }
