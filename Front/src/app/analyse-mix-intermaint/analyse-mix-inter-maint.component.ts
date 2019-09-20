@@ -39,7 +39,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
   @ViewChild(AnalyseMaintenanceComponent)
   AnalyseMaintenance: AnalyseMaintenanceComponent;
   @ViewChild("chart") public chart: ChartComponent;
-  private status = { open: 0, close: 0, canceled: 0, waiting: 0 };
+  public status = { open: 0, close: 0, canceled: 0, waiting: 0 };
   // tslint:disable-next-line: ban-types
   private piedata: Object[];
   legendSettings: Object;
