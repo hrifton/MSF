@@ -42,6 +42,7 @@ export class AnalyseInterventionComponent implements OnInit {
    
    this.getNumberOpenClose(this.analyseIntervention);
    this.chart.refresh();
+   console.log("refresh internvention")
   }
 
   getNumberOpenClose(data) {

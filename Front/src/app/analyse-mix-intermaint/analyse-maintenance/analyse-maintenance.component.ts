@@ -10,13 +10,13 @@ import { TabComponent } from '@syncfusion/ej2-angular-navigations';
   styleUrls: ['./analyse-maintenance.component.scss']
 })
 export class AnalyseMaintenanceComponent implements OnInit {
- 
-  
-  @Input() analyseMaintenance;
   constructor() { 
     this.analyseMaintenance = [];
     
   }
+ 
+  
+  @Input() analyseMaintenance;
   @ViewChild('chart1') public chart1: ChartComponent;
   public status1 = { open: 0, close: 0, canceled: 0, waiting: 0 };
   // tslint:disable-next-line: ban-types
@@ -26,6 +26,18 @@ export class AnalyseMaintenanceComponent implements OnInit {
   public datalabel1: Object;
   public open1: number;
   public close1: number;
+  @ViewChild('pie1') public pie1: ChartComponent;
+
+  // custom code end
+  public center: Object = { x: '50%', y: '50%' };
+  public startAngle = 0;
+  public endAngle = 360;
+  public explode = true;
+  public enableAnimation = false;
+  public tooltip: Object = {
+    enable: true,
+    format: '${point.x} : <b>${point.y}%</b>'
+  };
   
 
   ngOnInit() {
@@ -123,16 +135,4 @@ export class AnalyseMaintenanceComponent implements OnInit {
     };
 
   }
-  @ViewChild('pie1') public pie1: ChartComponent;
-
-  // custom code end
-  public center: Object = { x: '50%', y: '50%' };
-  public startAngle = 0;
-  public endAngle = 360;
-  public explode = true;
-  public enableAnimation = false;
-  public tooltip: Object = {
-    enable: true,
-    format: '${point.x} : <b>${point.y}%</b>'
-  };
 }
