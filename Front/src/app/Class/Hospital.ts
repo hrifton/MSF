@@ -1,3 +1,9 @@
+/**
+ *
+ *
+ * @export
+ * @class Hospital
+ */
 export class Hospital {
   projectCode: string;
   country: string;
@@ -6,7 +12,14 @@ export class Hospital {
   closuredate: Date;
   ipdStructure: string;
   leveOfCare: string;
-
+  /**
+   *
+   *
+   * @static
+   * @param {object} json
+   * @returns {Hospital}
+   * @memberof Hospital
+   */
   public static fromJson(json: object): Hospital {
     return new Hospital(
       json["projectCode"],
@@ -18,7 +31,17 @@ export class Hospital {
       json["leveOfCare"]
     );
   }
-
+  /**
+   *Creates an instance of Hospital.
+   * @param {string} projectCode
+   * @param {string} country
+   * @param {string} project
+   * @param {string} startingDate
+   * @param {string} closuredate
+   * @param {string} ipdStructure
+   * @param {string} leveOfCare
+   * @memberof Hospital
+   */
   constructor(
     projectCode: string,
     country: string,

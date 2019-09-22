@@ -52,4 +52,14 @@ Front/Thumbs.db
 
 ./commande
 
-Back/node_modules
+Back/node_modules/*
+Back/node_modules/mquery/package.json
+Back/node_modules/async/package.json
+Back/node_modules/kareem/package.json
+Back/node_modules/lodash/package.json
+Back/node_modules/mongodb/package.json
+Back/node_modules/mongoose/package.json
+Back/node_modules/mongoose/node_modules/ms/package.json
+Back/node_modules/regexp-clone/package.json
+Front/package-lock.json
+Back/node_modules/mpath/package.json
