@@ -29,29 +29,53 @@
       <!-- Render the Tab Component -->
       <ejs-tab (selected)="tabSelected($event)">
         <e-tabitems>
-          <e-tabitem [header]='headerText[0]'>
+          <e-tabitem [header]="headerText[0]">
             <ng-template #content>
-              <ejs-accumulationchart #chart id="container" #pie style='display:block;  width: 92%'
-                [legendSettings]="legendSettings" [tooltip]="tooltip" [title]="title" (load)='load($event)'
-                [enableAnimation]='enableAnimation' [center]='center'>
+              <ejs-accumulationchart
+                #chart
+                id="container"
+                #pie
+                style="display:block;  width: 92%"
+                [legendSettings]="legendSettings"
+                [tooltip]="tooltip"
+                [title]="title"
+                (load)="load($event)"
+                [enableAnimation]="enableAnimation"
+                [center]="center"
+              >
                 <e-accumulation-series-collection>
-                  <e-accumulation-series name='Inter/Maint' [pointColorMapping]='map' [dataSource]='piedata' xName='x'
-                    yName='y' [startAngle]="startAngle" [endAngle]="endAngle" innerRadius="0%" radius="60%"
-                    [dataLabel]="dataLabel" [explode]='explode' explodeOffset='10%' [explodeIndex]='0'>
+                  <e-accumulation-series
+                    name="Inter/Maint"
+                    [pointColorMapping]="map"
+                    [dataSource]="piedata"
+                    xName="x"
+                    yName="y"
+                    [startAngle]="startAngle"
+                    [endAngle]="endAngle"
+                    innerRadius="0%"
+                    radius="60%"
+                    [dataLabel]="dataLabel"
+                    [explode]="explode"
+                    explodeOffset="10%"
+                    [explodeIndex]="0"
+                  >
                   </e-accumulation-series>
                 </e-accumulation-series-collection>
               </ejs-accumulationchart>
-
             </ng-template>
           </e-tabitem>
-          <e-tabitem [header]='headerText[1]'>
+          <e-tabitem [header]="headerText[1]">
             <ng-template #content>
-              <app-analyse-intervention [analyseIntervention]="analyseIntervention"></app-analyse-intervention>
+              <app-analyse-intervention
+                [analyseIntervention]="statusInt"
+              ></app-analyse-intervention>
             </ng-template>
           </e-tabitem>
-          <e-tabitem [header]='headerText[2]'>
+          <e-tabitem [header]="headerText[2]">
             <ng-template #content>
-              <app-analyse-maintenance [analyseMaintenance]="analyseMaintenance"></app-analyse-maintenance>
+              <app-analyse-maintenance
+                [analyseMaintenance]="statusMaint"
+              ></app-analyse-maintenance>
             </ng-template>
           </e-tabitem>
         </e-tabitems>
