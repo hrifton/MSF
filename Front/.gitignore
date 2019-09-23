@@ -43,6 +43,7 @@ testem.log
 
 #Documentation
 ./documentation
+/documentation
 
 # System Files
 .DS_Store
