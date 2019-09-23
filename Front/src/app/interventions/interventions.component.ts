@@ -156,7 +156,7 @@ export class InterventionsComponent implements OnInit {
   }
 
   getInterventionByRole() {
-    if (this.userDetails === "user") {
+    if (this.userDetails === "User") {
       this.is
         .getInterventionsByUser(this.us.getFullName())
         .subscribe((data: Intervention[]) => {

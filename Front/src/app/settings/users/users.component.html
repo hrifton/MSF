@@ -20,6 +20,13 @@
                     popupHeight="200px" floatLabelType="Always" #projet></ejs-dropdownlist>
                 </div>
                 <div *ngIf="hopital.country">
+                  <div  class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <span class="e-float-line"></span>
+                    <label for="country" class="e-float-text">Hospital name :</label>
+                    <div class="e-float-input" popupHeight="200px" e-disabled>
+                      {{hopital.project}}
+                    </div>
+                  </div>
                   <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
                     <span class="e-float-line"></span>
                     <label for="country" class="e-float-text">Country</label>

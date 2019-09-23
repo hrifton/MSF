@@ -21,7 +21,9 @@
                         <div class="e-card-content">
                           <app-users
                             *ngIf="projet != undefinied"
+                            (messageEvent)="update($event)"
                             [projet]="projet"
+                            [role]="role"
                           ></app-users>
                         </div>
                       </ng-template>

@@ -41,6 +41,19 @@ module.exports.add = (req, res, next) => {
     });
 };
 
+
+module.exports.findAHospital =(req,res)=>{
+  console.log(req)
+ Hospital.findById(req, (err, doc) => {
+   if (!err) {
+     res.send(doc);
+   } else {
+     console.log(
+       "Error in Retriving Hopital:" + JSON.stringify(err, undefined, 2)
+     );
+   }
+ }); 
+}
 function getNbHospitalByCountry(country) {
   return Hospital.countDocuments({ country: country });
 }

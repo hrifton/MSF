@@ -5,15 +5,19 @@ const _ = require("lodash");
 
 module.exports.register = (req, res, next) => {
   console.log("****************************************");
-  var user = new User();
-  console.log(req.body);
-  user.fullName = req.body.fullName;
-  user.email = req.body.email;
-  user.password = req.body.password;
-  user.status = "user";
+  var user = new User(req.body);
+  user.status = req.body.statut;
+  console.log(req.body,user);
+  console.log(user)
+  //user.fullName = req.body.fullName;
+  //user.email = req.body.email;
+  //user.password = req.body.password;
+  
 
   user.save((err, doc) => {
-    if (!err) res.send(doc);
+    if (!err){
+      res.send(doc.fullName,doc.email,doc.statut);
+    } 
     else {
       console.log(err);
       if (err.code === 11000) res.status(422).send(["Duplicate email."]);
@@ -71,7 +75,7 @@ module.exports.getUserFullName = (req, res, next) => {
           //recuperation des champs via lodash pick
           .json({
             status: true,
-            user: _.pick(user, ["status", "fullName", "_id"])
+            user: _.pick(user, ["status", "fullName", "_id","idHopital"])
           })
       );
     }
@@ -89,3 +93,4 @@ module.exports.getTech = (req, res, next) => {
     }
   });
 };
+
