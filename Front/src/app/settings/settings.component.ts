@@ -20,7 +20,7 @@ export class SettingsComponent implements OnInit {
     { text: 'Users' },
     { text: 'Hospital' },
     { text: 'Maintenance' },
-    { text: 'Métier' },
+    { text: 'Trade/Categories' },
     { text: 'Assets' }
   ];
   public projet: Hospital[];

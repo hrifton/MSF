@@ -8,17 +8,8 @@ metierRoutes.route("/").get(function(req, res) {
   ctrlMetier.all(req, res);
 });
 //route for add a metier
-metierRoutes.route("/add").post(function(req, res) {
-  let metier = new Metier(req.body);
-
-  metier
-    .save()
-    .then(metier => {
-      res.status(200).json({ metier });
-    })
-    .catch(err => {
-      res.status(400).send("erreur DB");
-    });
+metierRoutes.route("/add").post(function(req, res,next) {
+  ctrlMetier.add(req.body, res, next);
 });
 //route for update
 metierRoutes.route("/update/:id").put(function(req, res) {

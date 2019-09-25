@@ -19,6 +19,7 @@ import {
 } from "@syncfusion/ej2-angular-inputs";
 import { GridAllModule } from "@syncfusion/ej2-angular-grids";
 import { AccordionModule } from "@syncfusion/ej2-angular-navigations";
+import { ColorPickerModule } from "@syncfusion/ej2-angular-inputs";
 import {
   SplitButtonModule,
   ProgressButtonModule
@@ -108,6 +109,7 @@ import { SettingsModule } from "./settings/settings.module";
     MatSelectModule,
     MatCardModule,
     ReactiveFormsModule,
+    ColorPickerModule,
     MatGridListModule,
     SlimLoadingBarModule,
     HttpClientModule,

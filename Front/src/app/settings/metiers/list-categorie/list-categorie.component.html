@@ -4,20 +4,19 @@
       <div class="e-card-header">
         <div class="e-card-header-caption">
           <div class="e-card-header-title">
-            <h3>List of trades</h3>
+            <h3>List of categories</h3>
           </div>
         </div>
       </div>
       <div class="e-card-content">
         <div class="control-section">
           <div class="col-12">
-            <ejs-grid #grid [dataSource]='data' [allowPaging]='true' [pageSettings]="pageSettings" [allowFiltering]='true'
-              [filterSettings]="filterSettings" [editSettings]='editOptions'  [allowSorting]='true'
-              (rowSelected)='rowSelected($event)'>
+            <ejs-grid #grid [dataSource]='data' [allowPaging]='true' [pageSettings]="pageSettings"
+              [allowFiltering]='true' [filterSettings]="filterSettings" [editSettings]='editOptions'
+              [allowSorting]='true' (rowSelected)='rowSelected($event)'>
               <e-columns>
-                <e-column field='name' headerText='Metier' width='120' textAlign='Right'
-                  [validationRules]='orderidrules' isPrimaryKey='true'
-                  ></e-column>               
+                <e-column field='metier' headerText='Metier' width='120' textAlign='Right'
+                  [validationRules]='orderidrules' isPrimaryKey='true'></e-column>
               </e-columns>
             </ejs-grid>
           </div>
