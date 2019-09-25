@@ -13,6 +13,7 @@ hospitalRoutes.route("/add").post(function(req, res, next) {
 
 //GetaHospital
 hospitalRoutes.route("/id").get(function(req, res) {
+ 
   ctrlHospital.findAHospital(req.query.id,res);
 });
 

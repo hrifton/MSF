@@ -20,18 +20,19 @@ export class SettingsComponent implements OnInit {
     { text: 'Users' },
     { text: 'Hospital' },
     { text: 'Maintenance' },
+    { text: 'Métier' },
     { text: 'Assets' }
   ];
   public projet: Hospital[];
 
   ngOnInit() {
     this.role = this.us.getStatus();
-    this.checkStatut(this.role);    
+    this.checkStatut(this.role);
   }
   update($event) {
-    this.us.postUser($event).subscribe((user:User)=>{
-      console.log(user)
-    })
+    this.us.postUser($event).subscribe((user: User) => {
+      console.log(user);
+    });
   }
   checkStatut(statut) {
     if (statut !== 'SuperAdmin') {
@@ -39,9 +40,9 @@ export class SettingsComponent implements OnInit {
         .findHopital(this.us.getIdHopital())
         .subscribe((data: Hospital[]) => {
           this.projet = data;
-          console.log(this.projet)
+          console.log(this.projet);
         });
-    }else{
+    } else {
       this.hs.getHospital().subscribe((data: Hospital[]) => {
         this.projet = data;
         console.log(this.projet);

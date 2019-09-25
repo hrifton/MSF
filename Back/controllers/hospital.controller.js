@@ -7,6 +7,7 @@ const Hospital = mongoose.model("Hospital");
 module.exports.getAll = (req, res) => {
   Hospital.find((err, docs) => {
     if (!err) {
+      
       res.send(docs);
     } else {
       console.log("error Hospital:" + JSON.stringify(err, undefined, 2));
@@ -43,8 +44,7 @@ module.exports.add = (req, res, next) => {
 
 
 module.exports.findAHospital =(req,res)=>{
-  console.log(req)
- Hospital.findById(req, (err, doc) => {
+  Hospital.findById(req, (err, doc) => {
    if (!err) {
      res.send(doc);
    } else {

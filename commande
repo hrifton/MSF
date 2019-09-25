@@ -43,7 +43,7 @@ create module routing
 //ng generate module admin + routing + mise a jour du module "app.module doit etre le module// racine du module ou racine projet si module principal
 
 ng g m admin --routing -m app.module
-
+ng g c m " nom module " --routing -m app.module
 
 //generate component ng g c "nomCoponenet"
 ng g c "nomComponent" --dry-run
