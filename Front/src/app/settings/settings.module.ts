@@ -1,11 +1,26 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-
+//RoutingModule
 import { SettingsRoutingModule } from "./settings-routing.module";
+import { HospitalRoutingModule } from "./hospital/hospital-routing.module";
+import { MetiersRoutingModule } from "./metiers/metiers-routing.module";
+
+
+
+//Component
+import { HistoriqueAssetComponent } from "./asset/historique-asset/historique-asset.component";
+import { HospitalComponent } from "./hospital/hospital.component";
 import { SettingsComponent } from "./settings.component";
 import { MaintenanceComponent } from "./maintenance/maintenance.component";
 import { AssetComponent } from "./asset/asset.component";
+import { MetiersComponent } from "./metiers/metiers.component";
 import { PapaParseModule } from "ngx-papaparse";
+//Module
+
+import { HospitalModule } from "./hospital/hospital.module";
+import { UsersComponent } from "./users/users.component";
+import { MetiersModule } from './metiers/metiers.module';
+//Syncfusion
 import {
   ToastComponent,
   ToastCloseArgs
@@ -61,12 +76,10 @@ import {
 } from "@angular/material";
 import { LayoutModule } from "@angular/cdk/layout";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+
 // import { AssetModule } from './asset/asset.module';
-import { HistoriqueAssetComponent } from "./asset/historique-asset/historique-asset.component";
-import { HospitalComponent } from "./hospital/hospital.component";
-import { HospitalRoutingModule } from "./hospital/hospital-routing.module";
-import { HospitalModule } from "./hospital/hospital.module";
-import { UsersComponent } from "./users/users.component";
+
+
 
 @NgModule({
   declarations: [
@@ -74,12 +87,14 @@ import { UsersComponent } from "./users/users.component";
     MaintenanceComponent,
     AssetComponent,
     HistoriqueAssetComponent,
+    //MetiersComponent,
     UsersComponent
     // FormHopitalComponent,
     // ListHospitalComponent,
     // HospitalComponent,
   ],
   imports: [
+    MetiersModule,
     HospitalModule,
     CheckBoxModule,
     UploaderModule,
@@ -120,7 +135,8 @@ import { UsersComponent } from "./users/users.component";
     AutoCompleteAllModule,
     CommonModule,
     SettingsRoutingModule,
-    HospitalRoutingModule
+    HospitalRoutingModule,
+    MetiersRoutingModule
     // AssetModule
   ],
   exports: [SettingsComponent]

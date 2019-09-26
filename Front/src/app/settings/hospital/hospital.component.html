@@ -1,9 +1,14 @@
-<div>
-  <div class="e-card-content">
-    <app-form-hopital (messageEvent)="update($event)"></app-form-hopital>
+<div class="row">
+  <div class="col-4">
+    <div class="e-card-content">
+      <app-form-hopital (messageEvent)="update($event)"></app-form-hopital>
+    </div>
   </div>
-  <div class="e-card-content">
-    <app-list-hospital [addToListHospital]="data"></app-list-hospital>
+  <div class="col-8">
+    <div class="e-card-content">
+      <app-list-hospital [addToListHospital]="data"></app-list-hospital>
+    </div>
   </div>
+
 
 </div>

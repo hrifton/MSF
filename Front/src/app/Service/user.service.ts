@@ -1,17 +1,17 @@
-import { environment } from "./../../environments/environment";
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHandler, HttpHeaders } from "@angular/common/http";
-import * as jwt_decode from "jwt-decode";
-import { User } from "../Class/user";
+import { environment } from './../../environments/environment';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
+import * as jwt_decode from 'jwt-decode';
+import { User } from '../Class/user';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class UserService {
-  uri = "/api";
- 
-  noAuthHeader = { headers: new HttpHeaders({ NoAtuh: "True" }) };
-  selectedUser: { fullName: string; email: string; password: string; };
+  uri = '/api';
+
+  noAuthHeader = { headers: new HttpHeaders({ NoAtuh: 'True' }) };
+  selectedUser: { fullName: string; email: string; password: string };
   constructor(private http: HttpClient) {}
 
   /**
@@ -22,42 +22,43 @@ export class UserService {
    * @memberof UserService
    */
   postUser(user: User) {
-    return this.http.post(this.uri + "/register", user, this.noAuthHeader);
+    console.log(user)
+    return this.http.post(this.uri + '/register', user, this.noAuthHeader);
   }
-
 
   login(authCredentials) {
     return this.http.post(
-      this.uri + "/authenticate",
+      this.uri + '/authenticate',
       authCredentials,
       this.noAuthHeader
     );
   }
   /**
-   * DecodeToken et assigne 
-   * le status fullname email 
+   * DecodeToken et assigne
+   * le status fullname email
    * de l'utilisateur
    * @param {string} token
    * @memberof UserService
    */
   getDecodedAccessToken(token: string): any {
     try {
-      let jwt = jwt_decode(token);
+      const jwt = jwt_decode(token);
+     
       this.setStatus(jwt.status);
       this.setFullName(jwt.fullName);
       this.setEmail(jwt.email);
-     
+      this.setIdHopital(jwt.idHopital);
     } catch (Error) {
-      return(Error);
+      return Error;
     }
   }
-  
+
   /**
-   
+
    * @memberof UserService
    */
   getUserProfil() {
-    return this.http.get(this.uri + "/userProfil");
+    return this.http.get(this.uri + '/userProfil');
   }
   /**
    *
@@ -66,7 +67,7 @@ export class UserService {
    * @memberof UserService
    */
   getUserTech() {
-    return this.http.get(this.uri + "/techs");
+    return this.http.get(this.uri + '/techs');
   }
 
   /**
@@ -76,7 +77,7 @@ export class UserService {
    * @memberof UserService
    */
   setFullName(fullName) {
-    localStorage.setItem("fullName", fullName);
+    localStorage.setItem('fullName', fullName);
   }
   /**
    *
@@ -85,7 +86,7 @@ export class UserService {
    * @memberof UserService
    */
   getFullName() {
-    return localStorage.getItem("fullName");
+    return localStorage.getItem('fullName');
   }
   /**
    *
@@ -94,7 +95,7 @@ export class UserService {
    * @memberof UserService
    */
   deleteFullName(arg0: string) {
-    localStorage.removeItem("fullName");
+    localStorage.removeItem('fullName');
   }
   /**
    *
@@ -103,42 +104,49 @@ export class UserService {
    * @memberof UserService
    */
   setEmail(email) {
-    localStorage.setItem("email", email);
+    localStorage.setItem('email', email);
   }
   getEmail() {
-    return localStorage.getItem("email");
+    return localStorage.getItem('email');
   }
   deleteEmail(arg0: string) {
-    localStorage.removeItem("email");
+    localStorage.removeItem('email');
   }
   setStatus(status) {
-    localStorage.setItem("status", status);
+    localStorage.setItem('status', status);
   }
   getStatus() {
-    return localStorage.getItem("status");
+    return localStorage.getItem('status');
+  }
+
+  setIdHopital(idHopital) {
+    localStorage.setItem('idHopital', idHopital);
+  }
+  getIdHopital() {
+    return localStorage.getItem('idHopital');
   }
   deleteStatus(arg0: string) {
-    localStorage.removeItem("status");
+    localStorage.removeItem('status');
   }
 
   setToken(token: string) {
-    localStorage.setItem("token", token);
+    localStorage.setItem('token', token);
     this.getDecodedAccessToken(localStorage.token);
   }
   getToken() {
-    return localStorage.getItem("token");
+    return localStorage.getItem('token');
   }
   deleteToken() {
-    localStorage.removeItem("token");
-    this.deleteFullName("fullname");
-    this.deleteStatus("status");
-    this.deleteEmail("email");
+    localStorage.removeItem('token');
+    this.deleteFullName('fullname');
+    this.deleteStatus('status');
+    this.deleteEmail('email');
   }
 
   getUserPayload() {
-    var token = this.getToken();
+    let token = this.getToken();
     if (token) {
-      var userPlayoad = atob(token.split(".")[1]);
+      let userPlayoad = atob(token.split('.')[1]);
       return JSON.parse(userPlayoad);
     } else {
       return null;
@@ -146,7 +154,7 @@ export class UserService {
   }
 
   isLoginIn() {
-    var userPlayload = this.getUserPayload();
+    let userPlayload = this.getUserPayload();
     if (userPlayload) {
       return userPlayload.exp > Date.now() / 1000;
     } else {

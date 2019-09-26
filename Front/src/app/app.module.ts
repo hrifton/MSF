@@ -19,6 +19,7 @@ import {
 } from "@syncfusion/ej2-angular-inputs";
 import { GridAllModule } from "@syncfusion/ej2-angular-grids";
 import { AccordionModule } from "@syncfusion/ej2-angular-navigations";
+import { ColorPickerModule } from "@syncfusion/ej2-angular-inputs";
 import {
   SplitButtonModule,
   ProgressButtonModule
@@ -60,15 +61,14 @@ import { NavBarComponent } from "./nav-bar/nav-bar.component";
 
 import { InterventionsModule } from "./interventions/interventions.module";
 import { MaintenancesModule } from "./maintenances/maintenances.module";
-import { StoragesModule } from "./storages/storages.module";
 import { LoginComponent } from "./login/login.component";
 import { UserComponent } from "./user/user.component";
 import { SignUpComponent } from "./user/sign-up/sign-up.component";
 import { UsersModule } from "./users/users.module";
 import { SettingsModule } from "./settings/settings.module";
 
-import { HistoricModule } from "./historic/historic.module";
-import { HistoricComponent } from "./historic/historic.component";
+//import { HistoricModule } from "./historic/historic.module";
+//import { HistoricComponent } from "./historic/historic.component";
 
 @NgModule({
   declarations: [
@@ -77,7 +77,7 @@ import { HistoricComponent } from "./historic/historic.component";
     LoginComponent,
     UserComponent,
     SignUpComponent,
-    HistoricComponent
+    //HistoricComponent
   ],
   imports: [
     SwitchModule,
@@ -109,6 +109,7 @@ import { HistoricComponent } from "./historic/historic.component";
     MatSelectModule,
     MatCardModule,
     ReactiveFormsModule,
+    ColorPickerModule,
     MatGridListModule,
     SlimLoadingBarModule,
     HttpClientModule,
@@ -116,10 +117,9 @@ import { HistoricComponent } from "./historic/historic.component";
     SplitButtonModule,
     InterventionsModule,
     MaintenancesModule,
-    StoragesModule,
     UsersModule,
     SettingsModule,
-    HistoricModule
+   // HistoricModule
   ],
   providers: [
     {

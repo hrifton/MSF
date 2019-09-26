@@ -21,7 +21,9 @@
                         <div class="e-card-content">
                           <app-users
                             *ngIf="projet != undefinied"
+                            (messageEvent)="update($event)"
                             [projet]="projet"
+                            [role]="role"
                           ></app-users>
                         </div>
                       </ng-template>
@@ -42,7 +44,7 @@
                     </e-tabitem>
                     <e-tabitem [header]="headerText[3]">
                       <ng-template #content>
-                        <app-asset></app-asset>
+                        <app-metiers></app-metiers>
                       </ng-template>
                     </e-tabitem>
                   </e-tabitems>

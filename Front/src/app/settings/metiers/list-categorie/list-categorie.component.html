@@ -1,0 +1,27 @@
+<div *ngIf="data" class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+  <div class="row" style="margin-top: 0px;">
+    <div class="e-card" id="basic_card">
+      <div class="e-card-header">
+        <div class="e-card-header-caption">
+          <div class="e-card-header-title">
+            <h3>List of categories</h3>
+          </div>
+        </div>
+      </div>
+      <div class="e-card-content">
+        <div class="control-section">
+          <div class="col-12">
+            <ejs-grid #grid [dataSource]='data' [allowPaging]='true' [pageSettings]="pageSettings"
+              [allowFiltering]='true' [filterSettings]="filterSettings" [editSettings]='editOptions'
+              [allowSorting]='true' (rowSelected)='rowSelected($event)'>
+              <e-columns>
+                <e-column field='metier' headerText='Metier' width='120' textAlign='Right'
+                  [validationRules]='orderidrules' isPrimaryKey='true'></e-column>
+              </e-columns>
+            </ejs-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

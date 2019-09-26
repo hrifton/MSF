@@ -26,6 +26,9 @@ export class HopitalService {
   getHospital() {
     return this.http.get(`${this.uri}`);
   }
+  findHopital(id){
+    return this.http.get(`${this.uri}/id/`, { params: { id } });
+  }
 
   PostNewHospital(hospital: Hospital) {
     const obj = hospital;

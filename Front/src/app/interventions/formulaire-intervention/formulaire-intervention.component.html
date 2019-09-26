@@ -23,7 +23,7 @@
       <div class="form-row">
           <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
               <ejs-dropdownlist id="priority" formControlName="priority" [dataSource]='lPriority'
-                  (change)='onChange($event)' [fields]="{text:'priority',value:'priority' }" placeholder="Priority"
+                  (change)='onChange($event)' [fields]="{text:'priority',value:'priority' }" placeholder="Priority *"
                   popupHeight='200px' floatLabelType='Always' #priority></ejs-dropdownlist>
           </div>
 
@@ -35,7 +35,7 @@
                   <span class="e-float-line"></span>
                   <label for="asset" class="e-float-text"></label>
               </div>
-          </div>
+          </div> 
       </div>
   </div>
 

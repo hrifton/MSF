@@ -10,4 +10,5 @@ var assetSchema=new mongoose.Schema({
     model:{type:String}
 });
 
+
 mongoose.model("Asset", assetSchema);

@@ -73,6 +73,7 @@ export class ListInterventionComponent implements OnInit {
   constructor(private ss: SolutionService, private router: Router) {}
 
   ngOnInit() {
+    console.log(this.user);
     this.filterSettings = {
       type: "Menu"
     };
@@ -109,8 +110,6 @@ export class ListInterventionComponent implements OnInit {
   }
 
   createFormGroup(data): FormGroup {
-    //data = this.replace_idByid(data);
-
     return new FormGroup({
       _id: new FormControl(data._id, Validators.required),
       departement: new FormControl(data.departement, Validators.required),
@@ -152,16 +151,20 @@ export class ListInterventionComponent implements OnInit {
   actionBegin(args: SaveEventArgs): void {
     // Verification de l'action debut edit ou ajout
     if (args.requestType === "beginEdit" || args.requestType === "add") {
-      this.submitClicked = false;
+      //this.submitClicked = false;
+      const row = args.rowData;
       // Creation du formulaire
-
-      this.angForm = this.createFormGroup(args.rowData);
+     
+        this.angForm = this.createFormGroup(args.rowData);
+      
     }
     // Click SAVE
     if (args.requestType === "save") {
       this.submitClicked = true;
+      console.log(this.angForm);
       // verification si le formulaire est valid
       if (this.angForm.valid) {
+        console.log(this.angForm);
         this.messageEvent.emit(this.angForm.value);
         /*if (args.data["solution"] !== "") {
           console.log("save");
@@ -194,17 +197,6 @@ export class ListInterventionComponent implements OnInit {
     }
   }
 
-  /**
-   * @param data
-   * Modifie attribut _id en id
-   */
-  replace_idByid(data) {
-    data = JSON.stringify(data);
-    data = data.replace(/_id/g, "id");
-    data = JSON.parse(data);
-    return data;
-  }
-
   ngOnChanges(): void {
     // console.log("ListIntervention changed", this.grid);
     // console.log(changes);
@@ -216,13 +208,10 @@ export class ListInterventionComponent implements OnInit {
   refreshInterventionTable() {
     this.grid.refresh();
   }
-  remplaceIntervention(data) {
-    let nb = this.interventions.length;
-    for (let index = 0; index < nb; index++) {
-      console.log(index);
-      if (this.interventions[index]._id == data._id) {
-        this.interventions[index] = data;
-      }
+
+  // Couleur par etat de ligne  https://stackblitz.com/edit/angular-9tucrb?file=app.component.ts
+  rowDB(args) {
+    if (args.data.domaine === undefined) {
     }
   }
 }

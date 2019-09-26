@@ -40,6 +40,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
   public analyseIntervention = [];
   public analyseMaintenance = [];
   @Input() interventions;
+  @Input() user;
 
   @ViewChild(AnalyseInterventionComponent)
   AnalyseIntervention: AnalyseInterventionComponent;
@@ -54,11 +55,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
   private open: number;
   private close: number;
   @ViewChild("element") tabObj: TabComponent;
-  public headerText: Object = [
-    { text: "Inter./Maint." },
-    { text: "Intervention" },
-    { text: "Maintenance" }
-  ];
+  public headerText: Object = [];
   @ViewChild("pie") public pie: ChartComponent;
 
   // custom code end
@@ -119,6 +116,17 @@ export class AnalyseMixIntermaintComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(this.user !='User'){
+      this.headerText= [
+    { text: "Inter./Maint." },
+    { text: "Intervention" },
+    { text: "Maintenance" }
+  ];
+    }else{
+ this.headerText = [ 
+   { text: "Intervention" }
+ ];
+    }
     this.checkMaintInter(this.interventions);
     let statusIntMaint;
     let statusInt;

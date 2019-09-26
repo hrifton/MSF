@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  SimpleChanges,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -16,32 +23,41 @@ import { MustMatch } from 'src/app/_helpers/must_match.validator';
 })
 export class UsersComponent implements OnInit {
   @Input() projet;
-  status = ['User', 'Tech', 'Admin'];
-  hopital = Hospital;
+  @Input() role;
+  @Output() messageEvent = new EventEmitter<User>();
+  hopital = new Hospital();
+  status = ['User', 'Tech', 'Operator', 'LocalAdmin', 'SuperAdmin'];
   data: any[];
   userForm: FormGroup;
-  constructor(private fb: FormBuilder) {this.createForm();}
+  constructor(private fb: FormBuilder) {
+    this.createForm();
+  }
 
   ngOnInit() {
     this.data = this.projet;
+    this.hopital = this.projet;
+
   }
+
   /**
-   * creation formulaire
+   * creation formulaire pour super admin
    */
-  //TODO Vérification Confirmation Password
+  // TODO Vérification Confirmation Password
   createForm() {
     this.userForm = this.fb.group({
-      fullName: new FormControl("", [Validators.required]),
-      email: new FormControl("", [Validators.email, Validators.required]),
-      statut: new FormControl("", [Validators.required]),
-      password: new FormControl("", [
+      fullName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.email, Validators.required]),
+      statut: new FormControl('', [Validators.required]),
+      password: new FormControl('', [
         Validators.required,
         Validators.minLength(6)
       ]),
-      confPassword: new FormControl("", [Validators.required]),
-      projet: new FormControl("", [Validators.required])
+      confPassword: new FormControl('', [Validators.required]),
+      projet: new FormControl('')
     });
   }
+
+
   /**
    * detection changement
    */
@@ -54,10 +70,21 @@ export class UsersComponent implements OnInit {
    * complete formulaire lors du changement de selection de projet
    */
   onSelection(data) {
-    this.hopital = data;
+    this.hopital = new Hospital({
+      id: data._id,
+      projectCode: data.projectCode,
+      country: data.country,
+      project: data.project,
+      startingDate: data.startingDate,
+      closuredate: data.closuredate,
+      ipdStructure: data.ipdStructure,
+      leveOfCare: data.leveOfCare
+    });
   }
 
   saveUser(data) {
-    console.log(data);
+    data.idHopital = this.projet._id;
+    this.messageEvent.emit(data);
+    this.userForm.reset();
   }
 }

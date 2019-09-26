@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="e-card-content">
-            <app-analyse-mix-intermaint *ngIf="interventions.length > 0" [interventions]="interventions">
+            <app-analyse-mix-intermaint *ngIf="interventions.length > 0" [interventions]="interventions" [user]="userDetails">
             </app-analyse-mix-intermaint>
           </div>
         </div>
@@ -61,7 +61,7 @@
                 </div>
               </div>
               <div class="e-card-content">
-                <app-list-intervention (messageEvent)="check($event)" *ngIf="interventions.length > 0"  [interventions]='interventions' [maintenance]='maintenance' [domaine]='domaine'[techs]='techs'
+                <app-list-intervention (messageEvent)="check($event)" *ngIf="interventions.length > 0 && userDetails"  [interventions]='interventions' [maintenance]='maintenance' [domaine]='domaine'[techs]='techs'
                   [user]="userDetails" [departements]="departements" >
                 </app-list-intervention>
               </div>

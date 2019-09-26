@@ -15,7 +15,6 @@ import {
   ForeignKeyService
 } from '@syncfusion/ej2-angular-grids';
 import { HopitalService } from 'src/app/Service/hopital.service';
-import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { ChangeEventArgs } from '@syncfusion/ej2-angular-calendars/src';
 import { Hospital } from 'src/app/Class/Hospital';
 
@@ -29,13 +28,12 @@ export class ListHospitalComponent implements OnInit {
   constructor(private hs: HopitalService) {}
   @ViewChild('grid')
   public grid: GridComponent;
-  public dropDown: DropDownListComponent;
   public data: any;
   public pageSettings: Object;
   public filterSettings: Object;
   public toolbarItems: ToolbarItems[];
   public editOptions: EditSettingsModel;
-  public customerData: [{'a', 'e', 'v', 'b', 'd'}];
+ 
   public orderidrules: Object;
 
   show: boolean;
@@ -53,7 +51,7 @@ export class ListHospitalComponent implements OnInit {
     });
     this.pageSettings = { pageCount: 5 };
     this.filterSettings = { type: 'Menu' };
-    this.toolbarItems = ['Add', 'Edit', 'Delete', 'Update', 'Cancel'];
+    this.toolbarItems = ['Edit', 'Delete', 'Update', 'Cancel'];
     this.editOptions = {
       allowEditing: true,
       allowAdding: true,
@@ -63,7 +61,9 @@ export class ListHospitalComponent implements OnInit {
     this.orderidrules = { required: true };
   }
 
-  actionBegin(args: any): void {}
+  actionBegin(args: any): void {
+    console.log(args)
+  }
   ngOnChanges(changes: SimpleChanges) {
     if (changes.addToListHospital) {
       console.log(changes.addToListHospital);
