@@ -24,6 +24,7 @@ export class FormulaireMetierComponent implements OnInit {
     });
   }
   saveMetier(data) {
-   this.messageEvent.emit(data.value)
+   this.messageEvent.emit(data.value);
+   this.metierForm.reset();
   }
 }

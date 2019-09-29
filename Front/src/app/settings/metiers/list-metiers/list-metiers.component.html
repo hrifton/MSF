@@ -12,14 +12,15 @@
         <div class="control-section">
           <div class="col-12">
             <ejs-grid #grid [dataSource]='data' [allowPaging]='true' [pageSettings]="pageSettings" [allowFiltering]='true'
-              [filterSettings]="filterSettings" [editSettings]='editOptions'  [allowSorting]='true'
-              (rowSelected)='rowSelected($event)'>
+              [filterSettings]="filterSettings" [editSettings]='editOptions' [toolbar]='toolbar' [allowSorting]='true'
+              (rowSelected)='rowSelected($event)' (toolbarClick)='clickHandler($event)' >
               <e-columns>
                 <e-column field='name' headerText='Metier' width='120' textAlign='Right'
-                  [validationRules]='orderidrules' isPrimaryKey='true'
+                  [validationRules]='orderidrules'
                   ></e-column>               
               </e-columns>
             </ejs-grid>
+            <button (click)="refresh()"> refresh </button>
           </div>
         </div>
       </div>

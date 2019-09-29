@@ -9,6 +9,9 @@ export class User {
          email: string;
          password: string;
          idHopital: string;
+
+         avatar: string;
+         displayName: string;
          /**
           *Creates an instance of User.
           * @param {string} fullName
@@ -16,7 +19,7 @@ export class User {
           * @param {string} password
           * @param {string} idHopital
           * @memberof User
-          */
+          
          constructor(
            fullName: string,
            email: string,
@@ -27,5 +30,5 @@ export class User {
            this.email = email;
            this.password = password;
            this.idHopital = idHopital;
-         }
+         }*/
        }

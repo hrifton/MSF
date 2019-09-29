@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import {Metier} from 'src/app/class/Metier';
+import { ClickEventArgs } from '@syncfusion/ej2-navigations';
 import {
   GridComponent,
   ToolbarItems,
@@ -15,6 +16,8 @@ import {
 export class ListMetiersComponent implements OnInit {
   @Input() metiers: Metier[];
   @Output() messageEvent = new EventEmitter<Metier>();
+  @Output() deleteMetier = new EventEmitter<Metier>();
+  selection: any;
   constructor() {
     console.log('ici Metier');
   }
@@ -23,7 +26,7 @@ export class ListMetiersComponent implements OnInit {
   public data: any;
   public pageSettings: Object;
   public filterSettings: Object;
-  public toolbarItems: ToolbarItems[];
+  public toolbar: ToolbarItems[] | object;
   public editOptions: EditSettingsModel;
   public selectionOptions: SelectionSettingsModel;
 
@@ -35,7 +38,14 @@ export class ListMetiersComponent implements OnInit {
     this.data = this.metiers;
     this.pageSettings = { pageCount: 5 };
     this.filterSettings = { type: 'Menu' };
-    this.toolbarItems = ['Edit', 'Delete', 'Update', 'Cancel'];
+    this.toolbar = [
+      {
+        text: 'delete',
+        tooltipText: 'delete',
+        prefixIcon: 'e-expand',
+        id: 'delete'
+      }
+    ];
     this.editOptions = {
       allowEditing: true,
       allowDeleting: true,
@@ -46,7 +56,15 @@ export class ListMetiersComponent implements OnInit {
   }
 
   rowSelected($event) {
-    console.log($event.data);
+    this.selection = $event.data;
     this.messageEvent.emit($event.data);
+  }
+  clickHandler(args: ClickEventArgs): void {
+    if (args.item.id === 'delete') {
+      this.deleteMetier.emit(this.selection);
+    }
+  }
+  refresh() {
+    this.grid.refresh();
   }
 }

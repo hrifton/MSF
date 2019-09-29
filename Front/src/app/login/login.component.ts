@@ -11,6 +11,12 @@ import {
   ToastComponent,
   ToastCloseArgs
 } from "@syncfusion/ej2-angular-notifications";
+import { AuthService } from '../Service/auth.service';
+
+
+
+
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
@@ -30,13 +36,16 @@ export class LoginComponent implements OnInit {
   password: String;
 
   constructor(
+    private authService: AuthService,
     private fb: FormBuilder,
     private us: UserService,
     private router: Router
   ) {
     this.createForm();
   }
-
+  async signIn(): Promise<void> {
+    await this.authService.signIn();
+  }
   ngOnInit() {}
   /**
    * Tentative login
@@ -59,9 +68,9 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-  @ViewChild('defaulttoast')
+  @ViewChild("defaulttoast")
   public toastObj: ToastComponent;
-  @ViewChild('toastBtnShow')
+  @ViewChild("toastBtnShow")
   public btnEleShow: ElementRef;
-  public position: Object = { X: 'Center' };
+  public position: Object = { X: "Center" };
 }

@@ -14,12 +14,12 @@ module.exports.all=(req, res)=>{
 module.exports.add=(req,res,next)=>{
 var metier = new Metier(req.metier);
 metier.save((err,doc)=>{
-    if(!err){
-        return doc
-    }else{
-        if(err.code ===11000) res.status(422).send(['error.']);
-        else return next(err)
-    }
-})
+                         if (!err) res.send(doc);
+                         else {
+                           if (err.code === 11000)
+                             res.status(422).send(["erreur Intervention"]);
+                           else return next(err);
+                         }
+                       })
    
 }
