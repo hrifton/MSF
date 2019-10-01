@@ -11,6 +11,13 @@ export class AssetService {
   constructor(private http: HttpClient) {}
   // Post a new datemaintenance
 
+  /**
+   *
+   *
+   * @param {*} file
+   * @returns
+   * @memberof AssetService
+   */
   sendFile(file: any) {
     console.log(file);
     return this.http.post(`${this.uri}/add`, file).subscribe(

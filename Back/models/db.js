@@ -9,6 +9,7 @@ mongoose.connect(
   process.env.MONGODB_URL,
   { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
   err => {
+    console.log(process.env.MONGODB_URL)
     if (!err) {
       console.log("MongoDB Connection ok!!!");
     } else {

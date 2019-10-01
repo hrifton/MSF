@@ -18,16 +18,21 @@ var userSchema = new mongoose.Schema({
   idHopital: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "hopital",
-    required: true
+    required: false
   },
-  password: {
+  idDepartement: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "departement",
+    required: false
+  }
+ /* password: {
     type: String,
     required: "password can't be empty",
     minlength: [6, "Password must be atleast 6 character long"]
   },
   saltSecret: {
     type: String
-  }
+  }*/
 });
 
 // Regle structure email Via Regex
@@ -36,7 +41,7 @@ userSchema.path("email").validate(val => {
   return emailRegex.test(val);
 }, "Invalid e-mail.");
 
-//fonction exectuer avant le save hashage du password
+/*fonction exectuer avant le save hashage du password
 userSchema.pre("save", function(next) {
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(this.password, salt, (err, hash) => {
@@ -53,7 +58,7 @@ userSchema.methods.verifyPassword = function(password) {
 };
 /**
  * composition de notre token id, fullname, email et status
- */
+ 
 userSchema.methods.generateJwt = function() {
   return jwt.sign(
     {
@@ -68,5 +73,30 @@ userSchema.methods.generateJwt = function() {
       expiresIn: process.env.JWT_EXP
     }
   );
-};
+};*/
+
+userSchema.pre("save", function(next) {
+  // Middlware to verify if action already existe
+  var self = this; 
+  console.log('avant le check : ',self);
+  User.find(
+    {
+      fullName: self.fullName
+    },
+    function(err, user) {
+      console.log("ERR : ", err, "USER : ",user.length)
+      if (!err) {
+        console.log("USER exists: ", self);
+        next(new Error("USER exists!"));
+        
+      } else {
+        console.log('Existe pas : ',err);
+        next();
+      }
+    }
+  );
+});
+
+
+User = mongoose.model("User", userSchema);
 mongoose.model("User", userSchema);

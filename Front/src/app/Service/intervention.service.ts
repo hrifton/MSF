@@ -6,19 +6,7 @@ import Intervention from "../Class/Intervention";
 @Injectable({ providedIn: "root" })
 export class InterventionService {
   uri = "/api/intervention";
-/*
-  selectedIntervention: Intervention = {
-    departement: "",
-    locality: "",
-    priority: "",
-    day: "",
-    description: "",
-    status: "en_cours",
-    user: "",
-    type: "",
-    tech: ""
-  };
-*/
+
   constructor(private http: HttpClient) {}
   // add a new Intervention
   postInter(intervention: Intervention) {

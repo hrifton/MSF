@@ -5,12 +5,11 @@
  * @class User
  */
 export class User {
-         fullName: string;
          email: string;
          password: string;
          idHopital: string;
-
-         avatar: string;
+         idDepartement: string;
+         msfId: any;
          displayName: string;
          /**
           *Creates an instance of User.

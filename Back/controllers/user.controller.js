@@ -5,21 +5,17 @@ const _ = require("lodash");
 
 module.exports.register = (req, res, next) => {
   console.log("****************************************");
-  var user = new User(req.body);
-  user.status = req.body.statut;
-  console.log(req.body,user);
-  console.log(user)
-  //user.fullName = req.body.fullName;
-  //user.email = req.body.email;
-  //user.password = req.body.password;
-  
+    var user = new User(req.body);
+ 
 
   user.save((err, doc) => {
+    
     if (!err){
+      console.log("ok for save")
       res.send(doc.fullName,doc.email,doc.statut);
     } 
     else {
-      console.log(err);
+      console.log("Nok for save",err);
       if (err.code === 11000) res.status(422).send(["Duplicate email."]);
       else return next(err);
     }
@@ -94,3 +90,26 @@ module.exports.getTech = (req, res, next) => {
   });
 };
 
+
+module.exports.check=(req,res,next)=>{
+  console.log(req.body.msfID)
+  User.exists({ msfID: req.body.msfID },(err, userMSF) => {
+    console.log(userMSF)
+    if (!err) {
+      return res.send(userMSF);
+    } else {
+      return res
+        .status(404)
+        .json({ status: false, message: "User record not found." });
+    }
+  });
+}
+module.exports.all=(req,res)=>{
+  User.find((err, user) => {
+    if (!err) res.send(user);
+    else
+      console.log("Error In Retrivings: " + JSON.stringify(err, undefined, 2));
+  });
+}
+
+ 
