@@ -1,22 +1,26 @@
-import { UserService } from "./../Service/user.service";
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { UserService } from './../Service/user.service';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   Validators,
   FormGroup
-} from "@angular/forms";
-import { Router } from "@angular/router";
+} from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   ToastComponent,
   ToastCloseArgs
-} from "@syncfusion/ej2-angular-notifications";
-import { AuthService } from "../Service/auth.service";
+} from '@syncfusion/ej2-angular-notifications';
+import { AuthService } from '../Service/auth.service';
+
+
+
+
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   constructor(
@@ -32,19 +36,21 @@ export class LoginComponent implements OnInit {
 
   username: String;
   password: String;
-  @ViewChild("defaulttoast")
+  @ViewChild('defaulttoast')
   public toastObj: ToastComponent;
-  @ViewChild("toastBtnShow")
+  @ViewChild('toastBtnShow')
   public btnEleShow: ElementRef;
-  public position: Object = { X: "Center" };
+  public position: Object = { X: 'Center' };
   createForm() {
     this.userForm = this.fb.group({
-      fullName: new FormControl("", [Validators.required]),
-      password: new FormControl("", [Validators.required])
+      fullName: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
   /**
    * Tentative login
    * si action ok setToken contien
@@ -57,8 +63,8 @@ export class LoginComponent implements OnInit {
   onLoginSubmit(form: FormGroup) {
     this.us.login(form.value).subscribe(
       res => {
-        this.us.setToken(res["token"]);
-        this.router.navigateByUrl("/interventions");
+        this.us.setToken(res.token);
+        this.router.navigateByUrl('/interventions');
       },
       err => {
         this.toastObj.show();
@@ -66,12 +72,12 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-  /*
   async signIn(): Promise<void> {
     if (await this.authService.signIn()) {
-      if (this.authService.user.displayName) {
-        this.router.navigateByUrl("/interventions");
-      }
+     if (this.authService.user.displayName) {
+       this.router.navigateByUrl('/interventions');
+     }
+
     }
-  }*/
+  }
 }
