@@ -2,7 +2,7 @@
   <ejs-grid
     #grid
     [dataSource]="interventions"
-    (rowDataBound)='rowDB($event)'
+    (rowDataBound)="rowDB($event)"
     allowPaging="true"
     allowSorting="true"
     allowFiltering="true"
@@ -14,25 +14,27 @@
   >
     <e-columns>
       <e-column
-        field="_id"
+        field="slug"
         headerText="ID"
         textAlign="center"
         width="70"
       ></e-column>
-      <e-column *ngIf="user != 'User'"
+      <e-column
+        *ngIf="user != 'User'"
         field="domaine"
         headerText="Domaine"
         textAlign="center"
         width="auto"
       ></e-column>
-      <e-column *ngIf="user != 'User'"
+      <e-column
+        *ngIf="user != 'User'"
         field="type"
         headerText="Type"
         textAlign="center"
         width="auto"
       ></e-column>
-      <e-column *ngIf="user != 'User'"
-        field="user"
+      <e-column
+        field="user.0.fullName"
         headerText="User"
         textAlign="center"
         width="auto"
@@ -40,6 +42,7 @@
       <e-column
         field="day"
         headerText="Date"
+        [format]="formatOptions"
         [sortComparer]="sortComparer"
         textAlign="center"
         width="auto"
@@ -51,7 +54,7 @@
         width="auto"
       ></e-column>
       <e-column
-        field="departement"
+        field="departements.0.departement"
         headerText="Departement"
         textAlign="center"
         width="auto"
@@ -68,7 +71,12 @@
         textAlign="center"
         width="120"
       ></e-column>
-      <e-column *ngIf="user != 'User'" field="tech" headerText="tech" textAlign="center"></e-column>
+      <e-column
+        *ngIf="user != 'User'"
+        field="tech"
+        headerText="tech"
+        textAlign="center"
+      ></e-column>
       <e-column
         field="status"
         headerText="Status"
@@ -146,7 +154,7 @@
               </div>
             </div>
           </div>
-          <div  class="form-row">
+          <div class="form-row">
             <div *ngIf="user != 'User'" class="form-group col-md-6">
               <div class="e-float-input e-control-wrapper">
                 <ejs-dropdownlist

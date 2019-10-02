@@ -1,19 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MetierService } from '../../Service/metier.service';
-import { Metier } from 'src/app/Class/Metier';
-import { Categorie } from 'src/app/Class/Categorie';
-import { CategorieService } from 'src/app/Service/categorie.service';
-import { ListMetiersComponent } from './list-metiers/list-metiers.component';
-
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { MetierService } from "../../Service/metier.service";
+import { Metier } from "src/app/Class/Metier";
+import { Categorie } from "src/app/Class/Categorie";
+import { CategorieService } from "src/app/Service/categorie.service";
+import { ListMetiersComponent } from "./list-metiers/list-metiers.component";
 
 @Component({
-  selector: 'app-metiers',
-  templateUrl: './metiers.component.html',
-  styleUrls: ['./metiers.component.scss']
+  selector: "app-metiers",
+  templateUrl: "./metiers.component.html",
+  styleUrls: ["./metiers.component.scss"]
 })
 export class MetiersComponent implements OnInit {
   public metiers: Metier[];
-  public selectcategorie: any;
+  public selectcategorie: Categorie[];
+  public metierSelect: Metier;
   private flag: boolean;
 
   @ViewChild(ListMetiersComponent)
@@ -38,14 +38,18 @@ export class MetiersComponent implements OnInit {
   saveMetier(data: Metier) {
     this.ms.addMetier(data).subscribe((metier: Metier) => {
       this.metiers.unshift(metier);
-      console.log(this.metiers.length);
+      console.log(this.metiers);
       this.listMetiersComponent.refresh();
     });
   }
-
-  deleteMetier(data: Metier) {
-    console.log('data to MetierService for delete : ', data);
+  saveCategorie(data: Categorie) {
+    console.log("Componenet metier save cate :", data);
   }
 
-
+  deleteMetier(data: Metier) {
+    console.log("data to MetierService for delete : ", data);
+  }
+  selectMetier(data: Metier) {
+    this.metierSelect = data;
+  }
 }

@@ -5,8 +5,6 @@ import { SettingsRoutingModule } from "./settings-routing.module";
 import { HospitalRoutingModule } from "./hospital/hospital-routing.module";
 import { MetiersRoutingModule } from "./metiers/metiers-routing.module";
 
-
-
 //Component
 import { HistoriqueAssetComponent } from "./asset/historique-asset/historique-asset.component";
 import { HospitalComponent } from "./hospital/hospital.component";
@@ -19,7 +17,7 @@ import { PapaParseModule } from "ngx-papaparse";
 
 import { HospitalModule } from "./hospital/hospital.module";
 import { UsersComponent } from "./users/users.component";
-import { MetiersModule } from './metiers/metiers.module';
+import { MetiersModule } from "./metiers/metiers.module";
 //Syncfusion
 import {
   ToastComponent,
@@ -79,8 +77,6 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 // import { AssetModule } from './asset/asset.module';
 
-
-
 @NgModule({
   declarations: [
     SettingsComponent,
@@ -96,12 +92,9 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
   imports: [
     MetiersModule,
     HospitalModule,
-    CheckBoxModule,
     UploaderModule,
     DialogModule,
     FormsModule,
-    CommonModule,
-    ReactiveFormsModule,
     MultiSelectAllModule,
     PapaParseModule,
     CheckBoxModule,
@@ -114,14 +107,13 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
     ScheduleModule,
     DateTimePickerModule,
     DashboardLayoutModule,
-    CommonModule,
     // MaintenancesRoutingModule,
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    LayoutModule,
+    //LayoutModule,
     MatInputModule,
     MatSelectModule,
     MatRadioModule,

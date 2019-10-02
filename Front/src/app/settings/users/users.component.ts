@@ -5,28 +5,28 @@ import {
   SimpleChanges,
   Output,
   EventEmitter
-} from '@angular/core';
+} from "@angular/core";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators
-} from '@angular/forms';
-import { User } from 'src/app/Class/user';
-import { Hospital } from 'src/app/Class/Hospital';
-import { MustMatch } from 'src/app/_helpers/must_match.validator';
+} from "@angular/forms";
+import { User } from "src/app/Class/user";
+import { Hospital } from "src/app/Class/Hospital";
+import { MustMatch } from "src/app/_helpers/must_match.validator";
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: "app-users",
+  templateUrl: "./users.component.html",
+  styleUrls: ["./users.component.scss"]
 })
 export class UsersComponent implements OnInit {
   @Input() projet;
   @Input() role;
   @Output() messageEvent = new EventEmitter<User>();
   hopital = new Hospital();
-  status = ['User', 'Tech', 'Operator', 'LocalAdmin', 'SuperAdmin'];
+  status = ["User", "Tech", "Operator", "LocalAdmin", "SuperAdmin"];
   data: any[];
   userForm: FormGroup;
   constructor(private fb: FormBuilder) {
@@ -36,7 +36,6 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     this.data = this.projet;
     this.hopital = this.projet;
-
   }
 
   /**
@@ -45,27 +44,26 @@ export class UsersComponent implements OnInit {
   // TODO Vérification Confirmation Password
   createForm() {
     this.userForm = this.fb.group({
-      fullName: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.email, Validators.required]),
-      statut: new FormControl('', [Validators.required]),
-      password: new FormControl('', [
+      fullName: new FormControl("", [Validators.required]),
+      email: new FormControl("", [Validators.email, Validators.required]),
+      statut: new FormControl("", [Validators.required]),
+      password: new FormControl("", [
         Validators.required,
         Validators.minLength(6)
       ]),
-      confPassword: new FormControl('', [Validators.required]),
-      projet: new FormControl('')
+      confPassword: new FormControl("", [Validators.required]),
+      projet: new FormControl("")
     });
   }
 
-
   /**
    * detection changement
-   */
+   
   onChange(changes: SimpleChanges): void {
     if (changes.itemData !== undefined) {
       this.onSelection(changes.itemData);
     }
-  }
+  }*/
   /**
    * complete formulaire lors du changement de selection de projet
    */

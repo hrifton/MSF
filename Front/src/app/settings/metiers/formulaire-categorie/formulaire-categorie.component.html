@@ -11,8 +11,38 @@
       <div class="e-card-content">
         <div class="control-section">
           <div class="col-12">
+            <form
+              id="categorieForm"
+              [formGroup]="categorieForm"
+              class="form-horizontal"
+              novalidate=""
+            >
+              <div class="form-group">
+                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                  <div class="e-float-input">
+                    <input
+                      id="categorie"
+                      type="text"
+                      formControlName="categorie"
+                    />
+                    <span class="e-float-line"></span>
+                    <label for="categorie" class="e-float-text">Trade</label>
+                    <h5>{{ categorieForm.categorie }}</h5>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
+          <button
+            (click)="saveCat(categorieForm)"
+            mat-raised-button="mat-raised-button-left"
+            color="primary"
+            [disabled]="!categorieForm.valid"
+          >
+            Save
+          </button>
         </div>
       </div>
     </div>
   </div>
+</div>

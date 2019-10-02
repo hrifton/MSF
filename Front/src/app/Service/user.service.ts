@@ -1,16 +1,16 @@
-import { environment } from './../../environments/environment';
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
-import * as jwt_decode from 'jwt-decode';
-import { User } from '../Class/user';
+import { environment } from "./../../environments/environment";
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHandler, HttpHeaders } from "@angular/common/http";
+import * as jwt_decode from "jwt-decode";
+import { User } from "../Class/user";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UserService {
-  uri = '/api';
+  uri = "/api";
 
-  noAuthHeader = { headers: new HttpHeaders({ NoAtuh: 'True' }) };
+  noAuthHeader = { headers: new HttpHeaders({ NoAtuh: "True" }) };
   selectedUser: { fullName: string; email: string; password: string };
   constructor(private http: HttpClient) {}
 
@@ -22,13 +22,13 @@ export class UserService {
    * @memberof UserService
    */
   postUser(user: User) {
-    console.log(user)
-    return this.http.post(this.uri + '/register', user, this.noAuthHeader);
+    console.log(user);
+    return this.http.post(this.uri + "/register", user, this.noAuthHeader);
   }
 
   login(authCredentials) {
     return this.http.post(
-      this.uri + '/authenticate',
+      this.uri + "/authenticate",
       authCredentials,
       this.noAuthHeader
     );
@@ -43,14 +43,26 @@ export class UserService {
   getDecodedAccessToken(token: string): any {
     try {
       const jwt = jwt_decode(token);
-     
+
+      this.setId(jwt._id);
       this.setStatus(jwt.status);
       this.setFullName(jwt.fullName);
       this.setEmail(jwt.email);
       this.setIdHopital(jwt.idHopital);
+      this.setIdDepartement(jwt.idDepartement);
     } catch (Error) {
       return Error;
     }
+  }
+  // tslint:disable-next-line: variable-name
+  setId(_id) {
+    localStorage.setItem("_id", _id);
+  }
+  getId() {
+    return localStorage.getItem("_id");
+  }
+  deleteId(arg0: string) {
+    localStorage.removeItem("_id");
   }
 
   /**
@@ -58,7 +70,7 @@ export class UserService {
    * @memberof UserService
    */
   getUserProfil() {
-    return this.http.get(this.uri + '/userProfil');
+    return this.http.get(this.uri + "/userProfil");
   }
   /**
    *
@@ -67,7 +79,7 @@ export class UserService {
    * @memberof UserService
    */
   getUserTech() {
-    return this.http.get(this.uri + '/techs');
+    return this.http.get(this.uri + "/techs");
   }
 
   /**
@@ -77,7 +89,7 @@ export class UserService {
    * @memberof UserService
    */
   setFullName(fullName) {
-    localStorage.setItem('fullName', fullName);
+    localStorage.setItem("fullName", fullName);
   }
   /**
    *
@@ -86,7 +98,7 @@ export class UserService {
    * @memberof UserService
    */
   getFullName() {
-    return localStorage.getItem('fullName');
+    return localStorage.getItem("fullName");
   }
   /**
    *
@@ -95,7 +107,7 @@ export class UserService {
    * @memberof UserService
    */
   deleteFullName(arg0: string) {
-    localStorage.removeItem('fullName');
+    localStorage.removeItem("fullName");
   }
   /**
    *
@@ -104,49 +116,65 @@ export class UserService {
    * @memberof UserService
    */
   setEmail(email) {
-    localStorage.setItem('email', email);
+    localStorage.setItem("email", email);
   }
   getEmail() {
-    return localStorage.getItem('email');
+    return localStorage.getItem("email");
   }
   deleteEmail(arg0: string) {
-    localStorage.removeItem('email');
+    localStorage.removeItem("email");
+  }
+  deleteIdHopital(arg0: string) {
+    localStorage.removeItem("idHopital");
   }
   setStatus(status) {
-    localStorage.setItem('status', status);
+    localStorage.setItem("status", status);
   }
   getStatus() {
-    return localStorage.getItem('status');
+    return localStorage.getItem("status");
   }
 
   setIdHopital(idHopital) {
-    localStorage.setItem('idHopital', idHopital);
+    localStorage.setItem("idHopital", idHopital);
   }
   getIdHopital() {
-    return localStorage.getItem('idHopital');
+    return localStorage.getItem("idHopital");
   }
   deleteStatus(arg0: string) {
-    localStorage.removeItem('status');
+    localStorage.removeItem("status");
+  }
+
+  setIdDepartement(IdDepartement) {
+    localStorage.setItem("IdDepartement", IdDepartement);
+  }
+  getIdDepartement() {
+    return localStorage.getItem("IdDepartement");
+  }
+  deleteIdDepartement(arg0: string) {
+    localStorage.removeItem("IdDepartement");
   }
 
   setToken(token: string) {
-    localStorage.setItem('token', token);
+    localStorage.setItem("token", token);
     this.getDecodedAccessToken(localStorage.token);
   }
   getToken() {
-    return localStorage.getItem('token');
+    return localStorage.getItem("token");
   }
   deleteToken() {
-    localStorage.removeItem('token');
-    this.deleteFullName('fullname');
-    this.deleteStatus('status');
-    this.deleteEmail('email');
+    localStorage.removeItem("token");
+    this.deleteId("_id");
+    this.deleteFullName("fullname");
+    this.deleteStatus("status");
+    this.deleteEmail("email");
+    this.deleteIdHopital("idHopital");
+    this.deleteIdDepartement("IdDepartement");
   }
 
   getUserPayload() {
-    let token = this.getToken();
+    const token = this.getToken();
     if (token) {
-      let userPlayoad = atob(token.split('.')[1]);
+      const userPlayoad = atob(token.split(".")[1]);
       return JSON.parse(userPlayoad);
     } else {
       return null;
@@ -154,7 +182,7 @@ export class UserService {
   }
 
   isLoginIn() {
-    let userPlayload = this.getUserPayload();
+    const userPlayload = this.getUserPayload();
     if (userPlayload) {
       return userPlayload.exp > Date.now() / 1000;
     } else {

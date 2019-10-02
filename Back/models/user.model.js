@@ -18,7 +18,12 @@ var userSchema = new mongoose.Schema({
   idHopital: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "hopital",
-    required: true
+    required: false
+  },
+  idDepartement: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "departement",
+    required: false
   },
   password: {
     type: String,
@@ -61,7 +66,8 @@ userSchema.methods.generateJwt = function() {
       fullName: this.fullName,
       email: this.email,
       status: this.status,
-      idHopital:this.idHopital,
+      idHopital: this.idHopital,
+      idDepartement: this.idDepartement
     },
     process.env.JWT_SECRET,
     {

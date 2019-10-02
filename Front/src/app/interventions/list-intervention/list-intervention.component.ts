@@ -154,9 +154,8 @@ export class ListInterventionComponent implements OnInit {
       //this.submitClicked = false;
       const row = args.rowData;
       // Creation du formulaire
-     
-        this.angForm = this.createFormGroup(args.rowData);
-      
+
+      this.angForm = this.createFormGroup(args.rowData);
     }
     // Click SAVE
     if (args.requestType === "save") {

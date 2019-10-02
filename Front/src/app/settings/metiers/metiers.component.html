@@ -2,20 +2,32 @@
   <div class="col-4">
     <div class="row">
       <div class="col-12">
-        <app-formulaire-metier (messageEvent)="saveMetier($event)" ></app-formulaire-metier>
-      </div>      
+        <app-formulaire-metier
+          (messageEvent)="saveMetier($event)"
+        ></app-formulaire-metier>
+      </div>
     </div>
     <div class="row">
       <div class="col-12">
-        <app-formulaire-categorie></app-formulaire-categorie>
-      </div>      
+        <app-formulaire-categorie
+          [metierSelect]="metierSelect"
+        ></app-formulaire-categorie>
+      </div>
     </div>
   </div>
   <div class="col-4">
-    <app-list-metiers *ngIf="metiers" [metiers]="metiers" (deleteMetier)="deleteMetier($event)"></app-list-metiers>
+    <app-list-metiers
+      *ngIf="metiers"
+      [metiers]="metiers"
+      (deleteMetier)="deleteMetier($event)"
+      (messageEvent)="selectMetier($event)"
+    ></app-list-metiers>
   </div>
   <div class="col-4">
-    <app-list-categorie *ngIf="selectcategorie" [selectcategorie]="selectcategorie"></app-list-categorie>
+    <app-list-categorie
+      *ngIf="selectcategorie && metierSelect"
+      [selectcategorie]="selectcategorie"
+      (messageEvent)="saveCategorie($event)"
+    ></app-list-categorie>
   </div>
 </div>
-

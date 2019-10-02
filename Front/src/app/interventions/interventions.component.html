@@ -1,6 +1,6 @@
 <div class="col-lg-12 control-section card-control-section basic_card_layout">
   <div class="e-sample-resize-container e-card-resize-container">
-    <div class='row'>
+    <div class="row">
       <div class="col-xs-8 col-sm-8 col-lg-8 col-md-8">
         <div class="row" style="margin-top: 0px;">
           <div class="e-card" id="basic_card">
@@ -12,22 +12,31 @@
               </div>
             </div>
             <div class="e-card-content">
-              <app-formulaire-intervention (messageEvent)="update($event)" [user]="userDetails" [departements]="departements">
+              <app-formulaire-intervention
+                *ngIf="departements"
+                (messageEvent)="update($event)"
+                [user]="userDetails"
+                [departements]="departements"
+              >
               </app-formulaire-intervention>
             </div>
           </div>
         </div>
         <div class="row">
-          <div *ngFor="let dom of compte" class="e-card col-xs-4 col-sm-4 col-lg-2 col-md-2  mt-3 " id="basic_card">
+          <div
+            *ngFor="let dom of compte"
+            class="e-card col-xs-4 col-sm-4 col-lg-2 col-md-2  mt-3 "
+            id="basic_card"
+          >
             <div class="e-card-header">
               <div class="e-card-header-caption">
                 <div class="e-card-header-title">
-                 <h6 class="text-center">{{dom.name}}</h6> 
+                  <h6 class="text-center">{{ dom.name }}</h6>
                 </div>
               </div>
             </div>
             <div class="e-card-content center_focus_strong">
-              <h5 class="text-center">{{dom.nb}}</h5>
+              <h5 class="text-center">{{ dom.nb }}</h5>
             </div>
           </div>
         </div>
@@ -42,15 +51,21 @@
             </div>
           </div>
           <div class="e-card-content">
-            <app-analyse-mix-intermaint *ngIf="interventions.length > 0" [interventions]="interventions" [user]="userDetails">
+            <app-analyse-mix-intermaint
+              *ngIf="interventions.length > 0"
+              [interventions]="interventions"
+              [user]="userDetails"
+            >
             </app-analyse-mix-intermaint>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-lg-12 control-section card-control-section basic_card_layout">
+    <div
+      class="col-lg-12 control-section card-control-section basic_card_layout"
+    >
       <div class="e-sample-resize-container e-card-resize-container">
-        <div class='row'>
+        <div class="row">
           <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 ">
             <div class="e-card" id="basic_card">
               <div class="e-card-header">
@@ -61,8 +76,16 @@
                 </div>
               </div>
               <div class="e-card-content">
-                <app-list-intervention (messageEvent)="check($event)" *ngIf="interventions.length > 0 && userDetails"  [interventions]='interventions' [maintenance]='maintenance' [domaine]='domaine'[techs]='techs'
-                  [user]="userDetails" [departements]="departements" >
+                <app-list-intervention
+                  (messageEvent)="check($event)"
+                  *ngIf="interventions.length > 0 && userDetails"
+                  [interventions]="interventions"
+                  [maintenance]="maintenance"
+                  [domaine]="domaine"
+                  [techs]="techs"
+                  [user]="userDetails"
+                  [departements]="departements"
+                >
                 </app-list-intervention>
               </div>
             </div>
@@ -70,3 +93,5 @@
         </div>
       </div>
     </div>
+  </div>
+</div>

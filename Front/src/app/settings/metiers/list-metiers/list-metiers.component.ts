@@ -1,17 +1,24 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import {Metier} from 'src/app/class/Metier';
-import { ClickEventArgs } from '@syncfusion/ej2-navigations';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter
+} from "@angular/core";
+import { Metier } from "src/app/Class/Metier";
+import { ClickEventArgs } from "@syncfusion/ej2-navigations";
 import {
   GridComponent,
   ToolbarItems,
   EditSettingsModel,
   SelectionSettingsModel
-} from '@syncfusion/ej2-angular-grids';
+} from "@syncfusion/ej2-angular-grids";
 
 @Component({
-  selector: 'app-list-metiers',
-  templateUrl: './list-metiers.component.html',
-  styleUrls: ['./list-metiers.component.scss']
+  selector: "app-list-metiers",
+  templateUrl: "./list-metiers.component.html",
+  styleUrls: ["./list-metiers.component.scss"]
 })
 export class ListMetiersComponent implements OnInit {
   @Input() metiers: Metier[];
@@ -19,9 +26,9 @@ export class ListMetiersComponent implements OnInit {
   @Output() deleteMetier = new EventEmitter<Metier>();
   selection: any;
   constructor() {
-    console.log('ici Metier');
+    console.log("ici Metier");
   }
-  @ViewChild('grid')
+  @ViewChild("grid")
   public grid: GridComponent;
   public data: any;
   public pageSettings: Object;
@@ -37,21 +44,21 @@ export class ListMetiersComponent implements OnInit {
   ngOnInit() {
     this.data = this.metiers;
     this.pageSettings = { pageCount: 5 };
-    this.filterSettings = { type: 'Menu' };
+    this.filterSettings = { type: "Menu" };
     this.toolbar = [
       {
-        text: 'delete',
-        tooltipText: 'delete',
-        prefixIcon: 'e-expand',
-        id: 'delete'
+        text: "delete",
+        tooltipText: "delete",
+        prefixIcon: "e-expand",
+        id: "delete"
       }
     ];
     this.editOptions = {
       allowEditing: true,
       allowDeleting: true,
-      mode: 'Normal'
+      mode: "Normal"
     };
-    this.selectionOptions = { type: 'Multiple' };
+    this.selectionOptions = { type: "Multiple" };
     // this.orderidrules = { required: true };
   }
 
@@ -60,7 +67,7 @@ export class ListMetiersComponent implements OnInit {
     this.messageEvent.emit($event.data);
   }
   clickHandler(args: ClickEventArgs): void {
-    if (args.item.id === 'delete') {
+    if (args.item.id === "delete") {
       this.deleteMetier.emit(this.selection);
     }
   }

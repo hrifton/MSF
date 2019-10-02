@@ -1,30 +1,30 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from "@angular/core";
 
 /**
  * Import service
  */
-import { UserService } from '../Service/user.service';
-import { InterventionService } from './../Service/intervention.service';
-import { DateMaintenanceService } from '../Service/dateMaintenance.service';
-import { DomaineService } from '../Service/domaine.service';
-import { DepartementService } from '../Service/departement.service';
+import { UserService } from "../Service/user.service";
+import { InterventionService } from "./../Service/intervention.service";
+import { DateMaintenanceService } from "../Service/dateMaintenance.service";
+import { DomaineService } from "../Service/domaine.service";
+import { DepartementService } from "../Service/departement.service";
 /**
  * import component
  */
-import { AnalyseMixIntermaintComponent } from '../analyse-mix-intermaint/analyse-mix-inter-maint.component';
-import { ListInterventionComponent } from './list-intervention/list-intervention.component';
+import { AnalyseMixIntermaintComponent } from "../analyse-mix-intermaint/analyse-mix-inter-maint.component";
+import { ListInterventionComponent } from "./list-intervention/list-intervention.component";
 
 /**
  * import class
  */
-import { User } from '../Class/user';
-import Intervention from '../Class/Intervention';
+import { User } from "../Class/user";
+import Intervention from "../Class/Intervention";
 /** import moment outil parsing et modification  */
-import * as moment from 'moment';
-import * as _ from 'lodash';
+import * as moment from "moment";
+import * as _ from "lodash";
 @Component({
-  selector: 'app-interventions',
-  templateUrl: './interventions.component.html',
+  selector: "app-interventions",
+  templateUrl: "./interventions.component.html",
   encapsulation: ViewEncapsulation.None
 })
 export class InterventionsComponent implements OnInit {
@@ -66,10 +66,11 @@ export class InterventionsComponent implements OnInit {
    *  unshift ajoute data de event dans le tableau interventions
    */
   update($event) {
-    $event.user = this.us.getFullName();
-    $event.type = 'JobRequest';
-    $event.status = 'In progress';
-    $event.day = moment().format('DD/MM/YYYY');
+    $event.idUser = this.us.getId();
+    $event.type = "JobRequest";
+    $event.status = "In progress";
+    $event.day = moment().format("DD/MM/YYYY");
+    $event.idHopital = this.us.getIdHopital();
 
     this.is.postInter($event).subscribe((data: Intervention) => {
       this.interventions.unshift(data);
@@ -82,6 +83,7 @@ export class InterventionsComponent implements OnInit {
   check($event) {
     const inter = new Intervention(
       $event.departement,
+      $event.hopital,
       $event.locality,
       $event.priority,
       $event.day,
@@ -142,7 +144,7 @@ export class InterventionsComponent implements OnInit {
       this.compte[index] = { name, nb: 0 };
     }
     intervention.forEach(element => {
-      if (element.status !== 'Canceled' && element.status !== 'Closed') {
+      if (element.status !== "Canceled" && element.status !== "Closed") {
         for (const key in this.compte) {
           if (this.compte.hasOwnProperty(key)) {
             if (this.compte[key].name === element.domaine) {
@@ -155,48 +157,59 @@ export class InterventionsComponent implements OnInit {
   }
 
   getInterventionByRole() {
-    if (this.userDetails === 'User') {
-      this.is
-        .getInterventionsByUser(this.us.getFullName())
-        .subscribe((data: Intervention[]) => {
-          this.interventions = data;
-        });
-    } else if (this.userDetails === 'tech') {
+    if (
+      this.us.getIdHopital() === "undefined" ||
+      this.us.getIdDepartement() === "undefined"
+    ) {
+      //TODO REdirection si manque idHopital ou idDepartement
+      console.log("redirection:", this.us.getIdDepartement());
+    } else {
+      alert("Profil ok");
+    }
+
+    console.log("res =: ", this.userDetails);
+    if (this.userDetails === "User") {
+      alert(this.userDetails);
+      this.is.getInterventionsByUser().subscribe((data: Intervention[]) => {
+        this.interventions = data;
+      });
+    } else if (this.userDetails === "tech") {
       this.is
         .getInterventionsBytech(this.us.getFullName())
         .subscribe((data: Intervention[]) => {
           this.interventions = data;
         });
     } else {
+      alert("superieur");
       this.is.getInterventions().subscribe((data: any[]) => {
         this.ds.getMaintenanceAndIntervention().subscribe((maindata: any[]) => {
           maindata.forEach(element => {
             if (element.resultat.length <= 0) {
               const inter = {
                 _id: element.idMaintenance,
-                day: moment(element.StartTime).format('DD/MM/YYYY'),
-                departement: '',
-                description: '',
-                locality: '',
-                priority: 'Medium',
-                status: 'In process',
-                tech: '',
-                type: 'Maintenance',
-                user: ''
+                day: moment(element.StartTime).format("DD/MM/YYYY"),
+                departement: "",
+                description: "",
+                locality: "",
+                priority: "Medium",
+                status: "In process",
+                tech: "",
+                type: "Maintenance",
+                user: ""
               };
               data.push(inter);
             } else {
               const inter = {
                 _id: element.idMaintenance,
-                day: moment(element.StartTime).format('DD/MM/YYYY'),
+                day: moment(element.StartTime).format("DD/MM/YYYY"),
                 departement: element.resultat[0].executor,
                 description: element.resultat[0].description,
-                locality: '',
-                priority: 'Medium',
-                status: 'In process',
-                tech: '',
-                type: 'Maintenance',
-                user: ''
+                locality: "",
+                priority: "Medium",
+                status: "In process",
+                tech: "",
+                type: "Maintenance",
+                user: ""
               };
               data.push(inter);
             }

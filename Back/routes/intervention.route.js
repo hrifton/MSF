@@ -9,7 +9,7 @@ interventionRoutes.route("/").get(function(req, res) {
 
 //GetToutesLesInterventionByUser
 interventionRoutes.route("/ByUser").get(function(req, res) {
-  ctrlIntervention.listeByUser(req.query.fullName, res);
+  ctrlIntervention.listeByUser(req.query, res);
 });
 
 //GetToutesLesInterventionByUser
@@ -24,7 +24,7 @@ interventionRoutes.route("/add").post(function(req, res, next) {
 
 //UpdateD'Intervention
 interventionRoutes.route("/:_id").put(function(req, res, next) {
-  console.log("Route",req.body)
+  console.log("Route", req.body);
   ctrlIntervention.update(req, res, next);
 });
 

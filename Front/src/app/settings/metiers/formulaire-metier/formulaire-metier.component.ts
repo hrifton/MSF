@@ -1,6 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Metier } from 'src/app/Class/Metier';
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import {
+  FormGroup,
+  FormBuilder,
+  FormControl,
+  Validators
+} from "@angular/forms";
+import { Metier } from "src/app/Class/Metier";
 
 @Component({
   selector: "app-formulaire-metier",
@@ -9,7 +14,9 @@ import { Metier } from 'src/app/Class/Metier';
 })
 export class FormulaireMetierComponent implements OnInit {
   public metierForm: FormGroup;
+
   @Output() messageEvent = new EventEmitter<Metier>();
+
   constructor(private fb: FormBuilder) {
     this.createFormMetier();
   }
@@ -24,7 +31,8 @@ export class FormulaireMetierComponent implements OnInit {
     });
   }
   saveMetier(data) {
-   this.messageEvent.emit(data.value);
-   this.metierForm.reset();
+    console.log(this.messageEvent);
+    this.messageEvent.emit(data.value);
+    this.metierForm.reset();
   }
 }

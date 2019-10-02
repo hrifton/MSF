@@ -1,19 +1,32 @@
 const mongoose = require("mongoose");
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 var interventionScheam = new mongoose.Schema({
-  departement: { type: String },
-  domaine:{ type: String },
+  domaine: { type: String },
   locality: { type: String },
   priority: { type: String },
   day: { type: String },
   description: { type: String },
   status: { type: String },
   type: { type: String },
-  user: { type: String },
+  idUser: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: true
+  },
   tech: { type: String },
   metier: { type: String },
-  asset:{type: String}
+  idHopital: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "hopital",
+    required: true
+  },
+  idDepartement: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "departement",
+    required: true
+  },
+  asset: { type: String }
 });
-interventionScheam.plugin(AutoIncrement,{inc_field: 'slug'});
+interventionScheam.plugin(AutoIncrement, { inc_field: "slug" });
 mongoose.model("Intervention", interventionScheam);
