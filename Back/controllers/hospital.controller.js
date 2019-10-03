@@ -44,6 +44,7 @@ module.exports.add = (req, res, next) => {
 
 
 module.exports.findAHospital =(req,res)=>{
+  console.log(req)
   Hospital.findById(req, (err, doc) => {
    if (!err) {
      res.send(doc);

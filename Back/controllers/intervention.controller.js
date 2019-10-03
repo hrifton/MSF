@@ -54,7 +54,8 @@ module.exports.listeByUser = (req, res) => {
     ],
     (err, lisByUs) => {
       if (!err) {
-        list = lisByUs;
+        if(lisByUs.length >0){
+          list = lisByUs;
         Intervention.aggregate(
           [
             {
@@ -87,11 +88,80 @@ module.exports.listeByUser = (req, res) => {
             }
           }
         );
+        }else{
+           Intervention.aggregate(
+             [
+               {
+                 $match: {
+                   idHopital: ObjectId(req.idHopital),
+                   idDepartement: ObjectId(req.idDepartement),
+                   idUser: { $ne: ObjectId(req.idUser) }
+                 }
+               },
+               {
+                 $lookup: {
+                   from: "users",
+                   localField: "idUser",
+                   foreignField: "_id",
+                   as: "user"
+                 }
+               },
+               {
+                 $lookup: {
+                   from: "departements",
+                   localField: "idDepartement",
+                   foreignField: "_id",
+                   as: "departements"
+                 }
+               }
+             ],
+             (err, docs) => {
+               if (!err) {
+                 res.send(docs);
+               }
+             }
+           );
+        }
+        
         //res.send(lisByUs);
       } else {
-        console.log(
-          "Error in Retriving Interventions:" +
-            JSON.stringify(err, undefined, 2)
+        console.log( "if listByUs Empty")
+        Intervention.aggregate(
+          [
+            {
+              $match: {
+                idHopital: ObjectId(req.idHopital),
+                idDepartement: ObjectId(req.idDepartement),
+                idUser: { $ne: ObjectId(req.idUser) }
+              }
+            },
+            {
+              $lookup: {
+                from: "users",
+                localField: "idUser",
+                foreignField: "_id",
+                as: "user"
+              }
+            },
+            {
+              $lookup: {
+                from: "departements",
+                localField: "idDepartement",
+                foreignField: "_id",
+                as: "departements"
+              }
+            }
+          ],
+          (err, docs) => {
+            if (!err) {
+              res.send(docs);
+            } else {
+              console.log(
+                "Error in Retriving Interventions:" +
+                  JSON.stringify(err, undefined, 2)
+              );
+            }
+          }
         );
       }
     }

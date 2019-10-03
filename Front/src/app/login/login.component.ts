@@ -20,7 +20,7 @@ import { AuthService } from "../Service/auth.service";
 })
 export class LoginComponent implements OnInit {
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private fb: FormBuilder,
     private us: UserService,
     private router: Router

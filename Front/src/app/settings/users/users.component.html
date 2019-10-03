@@ -23,7 +23,6 @@
                     class="e-float-text"
                     formControlName="projet"
                     [dataSource]="data"
-                    (change)="onChange($event)"
                     [fields]="{ text: 'project', value: '_id' }"
                     placeholder="Projet"
                     popupHeight="200px"
@@ -132,7 +131,6 @@
                           <div class="e-float-input">
                             <input
                               id="confPassword"
-                              (change)="onChange($event)"
                               type="password"
                               formControlName="confPassword"
                             />

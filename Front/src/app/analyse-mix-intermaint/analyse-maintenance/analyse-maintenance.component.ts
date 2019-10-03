@@ -25,8 +25,9 @@ export class AnalyseMaintenanceComponent implements OnInit {
   @Input() analyseMaintenance;
   @ViewChild("chart") public chart: ChartComponent;
   public status = { open: 0, close: 0, canceled: 0, waiting: 0 };
+  public title:string;
   // tslint:disable-next-line: ban-types
-  private piedata: Object[];
+  public piedata: Object[];
   public legendSettings: Object;
   public map: Object = "fill";
   public datalabel: Object;

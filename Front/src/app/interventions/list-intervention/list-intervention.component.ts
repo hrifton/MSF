@@ -62,6 +62,7 @@ export class ListInterventionComponent implements OnInit {
   public editparams: Object;
   public priorityrules: Object;
   public dropData: string[];
+  public formatOptions;
   //
   public text = "Select a Technicien";
   public angForm: FormGroup;

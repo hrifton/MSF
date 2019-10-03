@@ -6,7 +6,7 @@ import { HospitalRoutingModule } from "./hospital/hospital-routing.module";
 import { MetiersRoutingModule } from "./metiers/metiers-routing.module";
 
 //Component
-import { HistoriqueAssetComponent } from "./asset/historique-asset/historique-asset.component";
+//import { HistoriqueAssetComponent } from "./asset/historique-asset/historique-asset.component";
 import { HospitalComponent } from "./hospital/hospital.component";
 import { SettingsComponent } from "./settings.component";
 import { MaintenanceComponent } from "./maintenance/maintenance.component";
@@ -74,15 +74,16 @@ import {
 } from "@angular/material";
 import { LayoutModule } from "@angular/cdk/layout";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { AssetModule } from './asset/asset.module';
+import { AssetRoutingModule } from './asset/asset-routing.module';
 
-// import { AssetModule } from './asset/asset.module';
 
 @NgModule({
   declarations: [
     SettingsComponent,
     MaintenanceComponent,
     AssetComponent,
-    HistoriqueAssetComponent,
+    //HistoriqueAssetComponent,
     //MetiersComponent,
     UsersComponent
     // FormHopitalComponent,
@@ -128,8 +129,9 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
     CommonModule,
     SettingsRoutingModule,
     HospitalRoutingModule,
-    MetiersRoutingModule
-    // AssetModule
+    MetiersRoutingModule,
+    AssetRoutingModule,
+    AssetModule
   ],
   exports: [SettingsComponent]
 })

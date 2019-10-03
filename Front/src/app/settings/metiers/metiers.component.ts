@@ -14,7 +14,7 @@ export class MetiersComponent implements OnInit {
   public metiers: Metier[];
   public selectcategorie: Categorie[];
   public metierSelect: Metier;
-  private flag: boolean;
+  public flag: boolean;
 
   @ViewChild(ListMetiersComponent)
   listMetiersComponent: ListMetiersComponent;
