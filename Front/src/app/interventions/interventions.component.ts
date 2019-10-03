@@ -164,12 +164,12 @@ export class InterventionsComponent implements OnInit {
       //TODO REdirection si manque idHopital ou idDepartement
       console.log("redirection:", this.us.getIdDepartement());
     } else {
-      alert("Profil ok");
+      
     }
 
     console.log("res =: ", this.userDetails);
     if (this.userDetails === "User") {
-      alert(this.userDetails);
+      console.log(this.userDetails);
       this.is.getInterventionsByUser().subscribe((data: Intervention[]) => {
         this.interventions = data;
       });

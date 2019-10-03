@@ -40,7 +40,7 @@ export class SettingsComponent implements OnInit {
         .findHopital(this.us.getIdHopital())
         .subscribe((data: Hospital[]) => {
           this.projet = data;
-          console.log(this.projet);
+          console.log( "hopital : ",this.projet);
         });
     } else {
       this.hs.getHospital().subscribe((data: Hospital[]) => {

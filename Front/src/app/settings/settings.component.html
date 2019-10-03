@@ -19,7 +19,7 @@
                     <e-tabitem [header]="headerText[0]">
                       <ng-template #content>
                         <div class="e-card-content">
-                          <app-users
+                          <app-users *ngIf="projet"
                             (messageEvent)="update($event)"
                             [projet]="projet"
                             [role]="role"
