@@ -66,11 +66,11 @@ export class InterventionsComponent implements OnInit {
    *  unshift ajoute data de event dans le tableau interventions
    */
   update($event) {
-    $event.user = this.us.getFullName();
+    $event.idUser = this.us.getId();
     $event.type = "JobRequest";
     $event.status = "In progress";
     $event.day = moment().format("DD/MM/YYYY");
-    alert("event");
+    $event.idHopital = this.us.getIdHopital();
 
     this.is.postInter($event).subscribe((data: Intervention) => {
       this.interventions.unshift(data);
@@ -83,6 +83,7 @@ export class InterventionsComponent implements OnInit {
   check($event) {
     const inter = new Intervention(
       $event.departement,
+      $event.hopital,
       $event.locality,
       $event.priority,
       $event.day,
@@ -102,7 +103,7 @@ export class InterventionsComponent implements OnInit {
       this.getInterventionByRole();
     });
 
-    //this.interentionList.refreshInterventionTable();
+    // this.interentionList.refreshInterventionTable();
     // this.AnalyseMixIntermaint.refreshChart();
   }
 
@@ -156,12 +157,22 @@ export class InterventionsComponent implements OnInit {
   }
 
   getInterventionByRole() {
-    if (this.userDetails === "user") {
-      this.is
-        .getInterventionsByUser(this.us.getFullName())
-        .subscribe((data: Intervention[]) => {
-          this.interventions = data;
-        });
+    if (
+      this.us.getIdHopital() === "undefined" ||
+      this.us.getIdDepartement() === "undefined"
+    ) {
+      //TODO REdirection si manque idHopital ou idDepartement
+      console.log("redirection:", this.us.getIdDepartement());
+    } else {
+      alert("Profil ok");
+    }
+
+    console.log("res =: ", this.userDetails);
+    if (this.userDetails === "User") {
+      alert(this.userDetails);
+      this.is.getInterventionsByUser().subscribe((data: Intervention[]) => {
+        this.interventions = data;
+      });
     } else if (this.userDetails === "tech") {
       this.is
         .getInterventionsBytech(this.us.getFullName())
@@ -169,6 +180,7 @@ export class InterventionsComponent implements OnInit {
           this.interventions = data;
         });
     } else {
+      alert("superieur");
       this.is.getInterventions().subscribe((data: any[]) => {
         this.ds.getMaintenanceAndIntervention().subscribe((maindata: any[]) => {
           maindata.forEach(element => {

@@ -1,41 +1,73 @@
 [
-    { "metier": "Building/structure",
-        "descriptif":"All the structural elements: walls, floors, ceilings, doors, windows…"
-    },
-    { "metier": "Indoor fitting/ equipment",
-        "descriptif":"All the furniture inside the hospital as well as laundry machines or other appliances."
-    },
-    { "metier": "Electricity",
-        "descriptif":"Energy sources, the energy distribution, the backup means (UPS, inverters…) and the lighting equipment, Solar Panels, Solar Fridge Sources"
-    },
-    { "metier": "Ventilation/ AC/ heating (HVAC)",
-        "descriptif":"Ventilation, heating and air conditioning systems, such as fans, extractors, air conditioners and all heating elements."
-    },
-    { "metier": "Plumber/ Watsan",
-        "descriptif":"Plumber and watsan jobs"
-    },
-    { "metier": "Biomed",
-        "descriptif":"Biomedical equipment"
-    },
-    { "metier": "Outdoor fitting/Exteriors",
-        "descriptif":"Gardening work, road or access works…"
-    },
-    { "metier": "Mechanic",
-        "descriptif":"Mostly concern cars or specific generator issues."
-    },
-    { "metier": "ICT/Telecom",
-        "descriptif":"All telecommunication equipments and ICT equipment, such as laptops, printers, internal communication systems…"
-    },
-    { "metier": "Cold Chain",
-        "descriptif":"Refrigerators, freezer, cold room, Solar Fridge "
-    },
-    { "metier": "Fire  and security systems",
-        "descriptif":"Fire alarm and detection and fire fighting systems, "
-    },
-    { "metier": "Other",
-        "descriptif":""
-    }
-    
-]
-
-
+{
+  "_id": {"$oid":"5d95a16beb3d811f548f1d72"},
+  "name": "Building/structure",
+  "descriptif": "All the structural elements: walls, floors, ceilings, doors, windows…",
+  "color": "#b99f52"
+},
+{
+  "_id": {"$oid":"5d95a16beb3d811f548f1d73"},
+  "name": "Indoor fitting/ equipment",
+  "descriptif": "All the furniture inside the hospital as well as laundry machines or other appliances.",
+  "color": "#602a5d"
+},
+{
+  "_id": {"$oid":"5d95a16beb3d811f548f1d74"},
+  "name": "Electricity",
+  "descriptif": "Energy sources, the energy distribution, the backup means (UPS, inverters…} and the lighting equipment, Solar Panels, Solar Fridge Sources",
+  "color": "#62aef3"
+},
+{
+  "_id": {"$oid":"5d95a16beb3d811f548f1d75"},
+  "name": "Ventilation/ AC/ heating (HVAC}",
+  "descriptif": "Ventilation, heating and air conditioning systems, such as fans, extractors, air conditioners and all heating elements.",
+  "color": "#138083"
+},
+{
+  "_id": {"$oid":"5d95a16beb3d811f548f1d76"},
+  "name": "Plumber/ Watsan",
+  "descriptif": "Plumber and watsan jobs",
+  "color": "#781ff4"
+},
+{
+  "_id": {"$oid":"5d95a16beb3d811f548f1d77"},
+  "name": "Biomed",
+  "descriptif": "Biomedical equipment",
+  "color": "#4efa62"
+},
+{
+  "_id": {"$oid":"5d95a16beb3d811f548f1d78"},
+  "name": "Outdoor fitting/Exteriors",
+  "descriptif": "Gardening work, road or access works…",
+  "color": "#d49a8f"
+},
+{
+  "_id": {"$oid":"5d95a16beb3d811f548f1d79"},
+  "name": "Mechanic",
+  "descriptif": "Mostly concern cars or specific generator issues.",
+  "color": "#27f572"
+},
+{
+  "_id": {"$oid":"5d95a16beb3d811f548f1d7a"},
+  "name": "ICT/Telecom",
+  "descriptif": "All telecommunication equipments and ICT equipment, such as laptops, printers, internal communication systems…",
+  "color": "#194724"
+},
+{
+  "_id": {"$oid":"5d95a16beb3d811f548f1d7b"},
+  "name": "Cold Chain",
+  "descriptif": "Refrigerators, freezer, cold room, Solar Fridge ",
+  "color": "#138083"
+},
+{
+  "_id": {"$oid":"5d95a16beb3d811f548f1d7c"},
+  "name": "Fire  and security systems",
+  "descriptif": "Fire alarm and detection and fire fighting systems, ",
+  "color": "#c00f40"
+},
+{
+  "_id": {"$oid":"5d95a16beb3d811f548f1d7d"},
+  "name": "Other",
+  "descriptif": "",
+  "color": "#6a82c0"
+}]

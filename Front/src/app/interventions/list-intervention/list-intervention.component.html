@@ -2,6 +2,7 @@
   <ejs-grid
     #grid
     [dataSource]="interventions"
+    (rowDataBound)="rowDB($event)"
     allowPaging="true"
     allowSorting="true"
     allowFiltering="true"
@@ -19,19 +20,21 @@
         width="70"
       ></e-column>
       <e-column
+        *ngIf="user != 'User'"
         field="domaine"
         headerText="Domaine"
         textAlign="center"
         width="auto"
       ></e-column>
       <e-column
+        *ngIf="user != 'User'"
         field="type"
         headerText="Type"
         textAlign="center"
         width="auto"
       ></e-column>
       <e-column
-        field="user"
+        field="user.0.fullName"
         headerText="User"
         textAlign="center"
         width="auto"
@@ -39,6 +42,7 @@
       <e-column
         field="day"
         headerText="Date"
+        [format]="formatOptions"
         [sortComparer]="sortComparer"
         textAlign="center"
         width="auto"
@@ -50,7 +54,7 @@
         width="auto"
       ></e-column>
       <e-column
-        field="departement"
+        field="departements.0.departement"
         headerText="Departement"
         textAlign="center"
         width="auto"
@@ -67,7 +71,12 @@
         textAlign="center"
         width="120"
       ></e-column>
-      <e-column field="tech" headerText="tech" textAlign="center"></e-column>
+      <e-column
+        *ngIf="user != 'User'"
+        field="tech"
+        headerText="tech"
+        textAlign="center"
+      ></e-column>
       <e-column
         field="status"
         headerText="Status"
@@ -76,17 +85,17 @@
       ></e-column>
     </e-columns>
     <ng-template #editSettingsTemplate let-data>
-      <div *ngIf="user.status != 'user'">
+      <div>
         <div class="row">
           <div class="col-md-6">
-            {{ angForm.value.slug }}
+            {{ angForm.value.slug || angForm.value._id }}
           </div>
           <div class="col-md-6">
             {{ today | date: "dd/MM/yyyy" }} {{ angForm.value.type }}
           </div>
         </div>
         <form [formGroup]="angForm">
-          <div class="form-row">
+          <div *ngIf="user != 'User'" class="form-row">
             <div *ngIf="domaine" class="form-group col-md-6">
               <div class="e-float-input e-control-wrapper">
                 <ejs-dropdownlist
@@ -146,7 +155,7 @@
             </div>
           </div>
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div *ngIf="user != 'User'" class="form-group col-md-6">
               <div class="e-float-input e-control-wrapper">
                 <ejs-dropdownlist
                   id="tech"
@@ -161,6 +170,7 @@
               </div>
             </div>
             <div class="form-group col-md-6">
+              <mat-label>Locality</mat-label>
               <div class="e-float-input e-control-wrapper">
                 <input
                   matInput="matInput"
@@ -183,7 +193,7 @@
               ></textarea>
             </mat-form-field>
           </div>
-          <div class="form-row">
+          <div *ngIf="user != 'User'" class="form-row">
             <div class="form-group col-md-6">
               <div class="e-float-input e-control-wrapper">
                 <input
@@ -205,7 +215,7 @@
               </div>
             </div>
           </div>
-          <div class="form-row">
+          <div *ngIf="user != 'User'" class="form-row">
             <mat-form-field class="form-group col-md-12">
               <mat-label>Description Solution</mat-label>
               <textarea
@@ -217,7 +227,7 @@
               ></textarea>
             </mat-form-field>
           </div>
-          <div class="form-row">
+          <div *ngIf="user != 'User'" class="form-row">
             <input
               matInput="matInput"
               value="{{ today | date: 'dd/MM/yyyy' }}"
@@ -234,51 +244,6 @@
               >
                 historic asset {{ angForm.value.asset }}
               </button>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div *ngIf="user.status == 'user'">
-        <form [formGroup]="angForm">
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <div class="e-float-input e-control-wrapper">
-                <ejs-dropdownlist
-                  id="Departement"
-                  formControlName="departement"
-                  [dataSource]="departements"
-                  [fields]="{ text: 'departement', value: 'departement' }"
-                  placeholder="Departement"
-                  popupHeight="200px"
-                  floatLabelType="Always"
-                ></ejs-dropdownlist>
-              </div>
-            </div>
-            <div class="form-group col-md-6">
-              <div class="e-float-input e-control-wrapper">
-                <ejs-dropdownlist
-                  id="priority"
-                  formControlName="priority"
-                  [dataSource]="priorities"
-                  [fields]="{ text: 'priority', value: 'priority' }"
-                  placeholder="priority"
-                  popupHeight="200px"
-                  floatLabelType="Always"
-                  #priority
-                ></ejs-dropdownlist>
-              </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <div class="e-float-input e-control-wrapper">
-                <input
-                  matInput="matInput"
-                  placeholder="Locality"
-                  formControlName="locality"
-                  #locality
-                />
-              </div>
             </div>
           </div>
         </form>

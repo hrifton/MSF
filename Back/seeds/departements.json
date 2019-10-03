@@ -1,44 +1,81 @@
 [
-    {
-        "departement": "OPD"
-    }, {
-        "departement": "ER"
-    }, {
-        "departement": "OT"
-    }, {
-        "departement": "ICU"
-    }, {
-        "departement": "Maternity"
-    }, {
-        "departement": "Physiotherapy"
-    }, {
-        "departement": "IPD"
-    }, {
-        "departement": "Isolation"
-    }, {
-        "departement": "Neonatalogy"
-    }, {
-        "departement": "X-Ray"
-    }, {
-        "departement": "Sterilization"
-    }, {
-        "departement": "Laboratory"
-    }, {
-        "departement": "Kitchen"
-    }, {
-        "departement": "Laundry"
-    }, {
-        "departement": "Infection Control"
-    }, {
-        "departement": "Mortuary"
-    }, {
-        "departement": "Outdoor areas"
-    }, {
-        "departement": "Tech zones"
-    }, {
-        "departement": "Offices"
-    }, {
-        "departement": "Expat compound"
-    }
-    
-]
+{
+    "_id":{"$oid": "5d959e9ba0bb5d211c114acf"},
+    "departement": "OPD"
+},
+{ 
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114ad0"},
+    "departement": "ER"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114ad1"},
+    "departement": "OT"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114ad2"},
+    "departement": "ICU"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114ad3"},
+    "departement": "Maternity"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114ad4"},
+    "departement": "Physiotherapy"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114ad5"},
+    "departement": "IPD"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114ad6"},
+    "departement": "Isolation"
+},
+{
+    "_id":{"$oid": "5d959e9ba0bb5d211c114ad7"},
+    "departement": "Neonatalogy"
+},
+{
+    "_id":{"$oid": "5d959e9ba0bb5d211c114ad8"},
+    "departement": "X-Ray"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114ad9"},
+    "departement": "Sterilization"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114ada"},
+    "departement": "Laboratory"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114adb"},
+    "departement": "Kitchen"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114adc"},
+    "departement": "Laundry"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114add"},
+    "departement": "Infection Control"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114ade"},
+    "departement": "Mortuary"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114adf"},
+    "departement": "Outdoor areas"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114ae0"},
+    "departement": "Tech zones"
+},
+{
+    "_id":{"$oid":  "5d959e9ba0bb5d211c114ae1"},
+    "departement": "Offices"
+},
+{
+    "id":{"$oid":  "5d959e9ba0bb5d211c114ae2"},
+    "departement": "Expat compound"
+}]

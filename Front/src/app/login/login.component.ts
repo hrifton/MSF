@@ -11,30 +11,37 @@ import {
   ToastComponent,
   ToastCloseArgs
 } from "@syncfusion/ej2-angular-notifications";
+import { AuthService } from "../Service/auth.service";
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"]
 })
 export class LoginComponent implements OnInit {
-  userForm: FormGroup;
-  serverErrorMessages: string;
-  createForm() {
-    this.userForm = this.fb.group({
-      fullName: new FormControl("", [Validators.required]),
-      password: new FormControl("", [Validators.required])
-    });
-  }
-
-  username: String;
-  password: String;
-
   constructor(
+    public authService: AuthService,
     private fb: FormBuilder,
     private us: UserService,
     private router: Router
   ) {
     this.createForm();
+  }
+  userForm: FormGroup;
+  serverErrorMessages: string;
+
+  username: String;
+  password: String;
+  @ViewChild("defaulttoast")
+  public toastObj: ToastComponent;
+  @ViewChild("toastBtnShow")
+  public btnEleShow: ElementRef;
+  public position: Object = { X: "Center" };
+  createForm() {
+    this.userForm = this.fb.group({
+      fullName: new FormControl("", [Validators.required]),
+      password: new FormControl("", [Validators.required])
+    });
   }
 
   ngOnInit() {}
@@ -59,9 +66,11 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-  @ViewChild('defaulttoast')
-  public toastObj: ToastComponent;
-  @ViewChild('toastBtnShow')
-  public btnEleShow: ElementRef;
-  public position: Object = { X: 'Center' };
+  async signIn(): Promise<void> {
+    if (await this.authService.signIn()) {
+      if (this.authService.user.displayName) {
+        this.router.navigateByUrl("/interventions");
+      }
+    }
+  }
 }

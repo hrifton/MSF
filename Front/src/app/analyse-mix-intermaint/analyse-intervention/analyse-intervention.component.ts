@@ -22,7 +22,9 @@ export class AnalyseInterventionComponent implements OnInit {
   @ViewChild("chart") public chart: ChartComponent;
   public status = { open: 0, close: 0, canceled: 0, waiting: 0 };
   // tslint:disable-next-line: ban-types
-  private piedata: Object[];
+  public piedata: Object[];
+  public title: string;
+
   public legendSettings: Object;
   public map: Object = "fill";
   public datalabel: Object;

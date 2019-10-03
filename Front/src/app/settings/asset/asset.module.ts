@@ -6,9 +6,6 @@ import { HistoriqueAssetComponent } from './historique-asset/historique-asset.co
 
 @NgModule({
   declarations: [HistoriqueAssetComponent],
-  imports: [
-    CommonModule,
-    AssetRoutingModule
-  ]
+  imports: [CommonModule, AssetRoutingModule]
 })
-export class AssetModule { }
+export class AssetModule {}

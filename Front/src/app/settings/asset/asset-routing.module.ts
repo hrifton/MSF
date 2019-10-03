@@ -3,9 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HistoriqueAssetComponent } from './historique-asset/historique-asset.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'asset', pathMatch: 'full' },
-  { path: 'historique', component: HistoriqueAssetComponent }
- 
+  { path: "", redirectTo: "asset", pathMatch: "full" },
+  { path: "historique", component: HistoriqueAssetComponent }
 ];
 
 @NgModule({

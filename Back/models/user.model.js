@@ -15,6 +15,16 @@ var userSchema = new mongoose.Schema({
   status: {
     type: String
   },
+  idHopital: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "hopital",
+    required: false
+  },
+  idDepartement: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "departement",
+    required: false
+  },
   password: {
     type: String,
     required: "password can't be empty",
@@ -51,7 +61,14 @@ userSchema.methods.verifyPassword = function(password) {
  */
 userSchema.methods.generateJwt = function() {
   return jwt.sign(
-    { _id: this._id, fullName: this.fullName, email: this.email, status:this.status },
+    {
+      _id: this._id,
+      fullName: this.fullName,
+      email: this.email,
+      status: this.status,
+      idHopital: this.idHopital,
+      idDepartement: this.idDepartement
+    },
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_EXP

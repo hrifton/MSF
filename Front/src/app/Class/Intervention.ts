@@ -1,13 +1,14 @@
 export default class Intervention {
   //ajout variable x pour palié au _id de mongoose (interventions.components.ts)
   [x: string]: any;
-  departement: String;
+  idDepartement: String;
+  idHopital: String;
   locality: String;
   priority: String;
   day: String;
   description: String;
   status: String;
-  user: String;
+  idUser: String;
   type: String;
   tech: String;
   id: Object;
@@ -17,13 +18,14 @@ export default class Intervention {
   domaine: String;
 
   constructor(
-    departement: string,
+    idDepartement: string,
+    idHopital: string,
     locality: string,
     priority: string,
     day: string,
     description: string,
     status: string,
-    user: string,
+    idUser: string,
     type: string,
     tech: string,
     id: string,
@@ -32,13 +34,14 @@ export default class Intervention {
     slug: number,
     domaine: string
   ) {
-    this.departement = departement;
+    this.idDepartement = idDepartement;
+    this.idHopital = idHopital;
     this.locality = locality;
     this.priority = priority;
     this.day = day;
     this.description = description;
     this.status = status;
-    this.user = user;
+    this.idUser = idUser;
     this.type = type;
     this.tech = tech;
     this.id = id;

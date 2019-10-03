@@ -6,8 +6,8 @@ import { RecurrenceEditor } from '@syncfusion/ej2-angular-schedule';
 import { MaintenanceService } from '../../Service/maintenance.service';
 import * as moment from 'moment';
 import { Maintenance } from '../../Class/Maintenance';
-import Metier from 'src/app/setting/corpsDeMetier/Metier';
 import { MetierService } from '../../Service/metier.service';
+import { Metier } from 'src/app/Class/Metier';
 
 @Component({
   selector: 'app-maintenance',
@@ -25,7 +25,7 @@ export class MaintenanceComponent implements OnInit {
   // date = new Date();
 
   periode: any;
-  private listeMetier: any[];
+  public listeMetier: any[];
 
   @Output() messageEvent = new EventEmitter<any>();
 

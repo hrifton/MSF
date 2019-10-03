@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
-
+const { ObjectId } = require("mongodb");
 require("../models/intervention.model");
 const Intervention = mongoose.model("Intervention");
 
@@ -30,15 +30,142 @@ module.exports.liste = (req, res) => {
 };
 
 module.exports.listeByUser = (req, res) => {
-  Intervention.find({ user: req }, (err, docs) => {
-    if (!err) {
-      res.send(docs);
-    } else {
-      console.log(
-        "Error in Retriving Interventions:" + JSON.stringify(err, undefined, 2)
-      );
+  var list = Array();
+
+  Intervention.aggregate(
+    [
+      { $match: { idUser: ObjectId(req.idUser) } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "idUser",
+          foreignField: "_id",
+          as: "user"
+        }
+      },
+      {
+        $lookup: {
+          from: "departements",
+          localField: "idDepartement",
+          foreignField: "_id",
+          as: "departements"
+        }
+      }
+    ],
+    (err, lisByUs) => {
+      if (!err) {
+        if(lisByUs.length >0){
+          list = lisByUs;
+        Intervention.aggregate(
+          [
+            {
+              $match: {
+                idHopital: ObjectId(req.idHopital),
+                idDepartement: ObjectId(req.idDepartement),
+                idUser: { $ne: ObjectId(req.idUser) }
+              }
+            },
+            {
+              $lookup: {
+                from: "users",
+                localField: "idUser",
+                foreignField: "_id",
+                as: "user"
+              }
+            },
+            {
+              $lookup: {
+                from: "departements",
+                localField: "idDepartement",
+                foreignField: "_id",
+                as: "departements"
+              }
+            }
+          ],
+          (err, docs) => {
+            if (!err) {
+              res.send(list.concat(docs));
+            }
+          }
+        );
+        }else{
+           Intervention.aggregate(
+             [
+               {
+                 $match: {
+                   idHopital: ObjectId(req.idHopital),
+                   idDepartement: ObjectId(req.idDepartement),
+                   idUser: { $ne: ObjectId(req.idUser) }
+                 }
+               },
+               {
+                 $lookup: {
+                   from: "users",
+                   localField: "idUser",
+                   foreignField: "_id",
+                   as: "user"
+                 }
+               },
+               {
+                 $lookup: {
+                   from: "departements",
+                   localField: "idDepartement",
+                   foreignField: "_id",
+                   as: "departements"
+                 }
+               }
+             ],
+             (err, docs) => {
+               if (!err) {
+                 res.send(docs);
+               }
+             }
+           );
+        }
+        
+        //res.send(lisByUs);
+      } else {
+        console.log( "if listByUs Empty")
+        Intervention.aggregate(
+          [
+            {
+              $match: {
+                idHopital: ObjectId(req.idHopital),
+                idDepartement: ObjectId(req.idDepartement),
+                idUser: { $ne: ObjectId(req.idUser) }
+              }
+            },
+            {
+              $lookup: {
+                from: "users",
+                localField: "idUser",
+                foreignField: "_id",
+                as: "user"
+              }
+            },
+            {
+              $lookup: {
+                from: "departements",
+                localField: "idDepartement",
+                foreignField: "_id",
+                as: "departements"
+              }
+            }
+          ],
+          (err, docs) => {
+            if (!err) {
+              res.send(docs);
+            } else {
+              console.log(
+                "Error in Retriving Interventions:" +
+                  JSON.stringify(err, undefined, 2)
+              );
+            }
+          }
+        );
+      }
     }
-  }).sort({ field: "asc", _id: -1 });
+  );
 };
 
 module.exports.listeByTech = (req, res) => {

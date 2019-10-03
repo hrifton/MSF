@@ -1,57 +1,77 @@
-
-    <form [formGroup]="angForm" novalidate="novalidate" >
-      <div class="form-group">
-        <div class="form-row">
-            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                <ejs-dropdownlist id="departement" formControlName="departement" [dataSource]='departements'
-                    (change)='onChange($event)' [fields]="{text:'departement',value:'departement' }" placeholder="Departement"
-                    popupHeight='200px' floatLabelType='Always' #departement></ejs-dropdownlist>
-            </div>
-
-
-            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                <div class="e-float-input">
-                    <input id="locality" type="text" formControlName="locality">
-                    <span class="e-float-line"></span>
-                    <label for="locality" class="e-float-text">Locality</label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-      <div class="form-row">
-          <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-              <ejs-dropdownlist id="priority" formControlName="priority" [dataSource]='lPriority'
-                  (change)='onChange($event)' [fields]="{text:'priority',value:'priority' }" placeholder="Priority"
-                  popupHeight='200px' floatLabelType='Always' #priority></ejs-dropdownlist>
-          </div>
-
-          <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-              <div class="e-float-input">
-                  <input id="asset" type="text" formControlName="asset">
-                  <span class="e-float-line"></span>
-                  <label for="asset" class="e-float-text">Code Barre</label>
-                  <span class="e-float-line"></span>
-                  <label for="asset" class="e-float-text"></label>
-              </div>
-          </div>
+<form [formGroup]="angForm" novalidate="novalidate">
+  <div class="form-group">
+    <div class="form-row">
+      <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+        <ejs-dropdownlist
+          id="idDepartement"
+          formControlName="idDepartement"
+          [dataSource]="departements"
+          [fields]="{ text: 'departement', value: '_id' }"
+          placeholder="Departement"
+          popupHeight="200px"
+          floatLabelType="Always"
+          #departement
+        ></ejs-dropdownlist>
       </div>
+
+      <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+        <div class="e-float-input">
+          <input id="locality" type="text" formControlName="locality" />
+          <span class="e-float-line"></span>
+          <label for="locality" class="e-float-text">Locality</label>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <div class="form-group">
+    <div class="form-row">
+      <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+        <ejs-dropdownlist
+          id="priority"
+          formControlName="priority"
+          [dataSource]="lPriority"
+          [fields]="{ text: 'priority', value: 'priority' }"
+          placeholder="Priority *"
+          popupHeight="200px"
+          floatLabelType="Always"
+          #priority
+        ></ejs-dropdownlist>
+      </div>
+
+      <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+        <div class="e-float-input">
+          <input id="asset" type="text" formControlName="asset" />
+          <span class="e-float-line"></span>
+          <label for="asset" class="e-float-text">Code Barre</label>
+          <span class="e-float-line"></span>
+          <label for="asset" class="e-float-text"></label>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="form-row">
-      <mat-form-field class="form-group col-md-12">
-        <mat-label>Description intervention</mat-label>
-        <textarea matInput formControlName="description" placeholder="Description" rows="brightness_4"
-          #description></textarea>
-      </mat-form-field>
-    </div>
+    <mat-form-field class="form-group col-md-12">
+      <mat-label>Description intervention</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Description"
+        rows="brightness_4"
+        #description
+      ></textarea>
+    </mat-form-field>
+  </div>
 
-    <div>
-        <button  (click)="addIntervention(angForm)"
-          mat-raised-button="mat-raised-button-left"
-              color="primary" [disabled]=!angForm.valid>Save</button>
-        </div>
-
+  <div>
+    <button
+      (click)="addIntervention(angForm)"
+      mat-raised-button="mat-raised-button-left"
+      color="primary"
+      [disabled]="!angForm.valid"
+    >
+      Save
+    </button>
+  </div>
 </form>
