@@ -21,7 +21,7 @@
       ></e-column>
       <e-column
         *ngIf="user != 'User'"
-        field="metier"
+        field="metier.0.name"
         headerText="Domaine"
         textAlign="center"
         width="auto"
@@ -163,7 +163,7 @@
                   formControlName="tech"
                   [dataSource]="techs"
                   [fields]="{ text: 'fullName', value: 'fullName' }"
-                  placeholder="Departement"
+                  placeholder="Technicien"
                   [popupHeight]="height"
                 >
                 </ejs-dropdownlist>

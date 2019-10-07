@@ -5,9 +5,9 @@ import {
   Output,
   EventEmitter,
   ViewChild
-} from '@angular/core';
-import { Router } from '@angular/router';
-import { Browser } from '@syncfusion/ej2-base';
+} from "@angular/core";
+import { Router } from "@angular/router";
+import { Browser } from "@syncfusion/ej2-base";
 import {
   EditService,
   ToolbarService,
@@ -15,11 +15,11 @@ import {
   DialogEditEventArgs,
   SaveEventArgs,
   GridComponent
-} from '@syncfusion/ej2-angular-grids';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Dialog } from '@syncfusion/ej2-angular-popups';
-import { SolutionService } from 'src/app/Service/solution.service';
-import Intervention from 'src/app/Class/Intervention';
+} from "@syncfusion/ej2-angular-grids";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Dialog } from "@syncfusion/ej2-angular-popups";
+import { SolutionService } from "src/app/Service/solution.service";
+import Intervention from "src/app/Class/Intervention";
 
 @Component({
   selector: "app-list-intervention",
@@ -107,28 +107,54 @@ export class ListInterventionComponent implements OnInit {
   sendLink(data) {
     this.router.navigate(["historic/"], { queryParams: { asset: data } });
   }
-
+  /**
+   * create formulaire en fonction des data present
+   * @param data
+   */
   createFormGroup(data): FormGroup {
-    console.log(data);
-    return new FormGroup({
-      _id: new FormControl(data._id, Validators.required),
-      departement: new FormControl(
-        data.departements[0]._id,
-        Validators.required
-      ),
-      locality: new FormControl(data.locality),
-      priority: new FormControl(data.priority),
-      description: new FormControl(data.description),
-      status: new FormControl(data.status),
-      type: new FormControl(data.type),
-      day: new FormControl(data.day),
-      tech: new FormControl(data.tech),
-      useMat: new FormControl(data.useMat),
-      asset: new FormControl(data.asset),
-      slug: new FormControl(data.slug),
-      metier: new FormControl(data.metier),
-      solution: new FormControl("")
-    });
+    if (data.metier.length == 0) {
+      console.log(data.metier.length);
+      return new FormGroup({
+        _id: new FormControl(data._id, Validators.required),
+        departement: new FormControl(
+          data.departements[0]._id,
+          Validators.required
+        ),
+        locality: new FormControl(data.locality),
+        priority: new FormControl(data.priority),
+        description: new FormControl(data.description),
+        status: new FormControl(data.status),
+        type: new FormControl(data.type),
+        day: new FormControl(data.day),
+        tech: new FormControl(data.tech),
+        useMat: new FormControl(data.useMat),
+        asset: new FormControl(data.asset),
+        slug: new FormControl(data.slug),
+        metier: new FormControl(""),
+        solution: new FormControl("")
+      });
+    } else {
+      console.log("create form : ", data);
+      return new FormGroup({
+        _id: new FormControl(data._id, Validators.required),
+        departement: new FormControl(
+          data.departements[0]._id,
+          Validators.required
+        ),
+        locality: new FormControl(data.locality),
+        priority: new FormControl(data.priority),
+        description: new FormControl(data.description),
+        status: new FormControl(data.status),
+        type: new FormControl(data.type),
+        day: new FormControl(data.day),
+        tech: new FormControl(data.tech),
+        useMat: new FormControl(data.useMat),
+        asset: new FormControl(data.asset),
+        slug: new FormControl(data.slug),
+        metier: new FormControl(data.metier[0]._id),
+        solution: new FormControl("")
+      });
+    }
   }
   public sortComparer = (reference: string, comparer: string) => {
     if (reference < comparer) {
@@ -166,6 +192,7 @@ export class ListInterventionComponent implements OnInit {
 
       // verification si le formulaire est valid
       if (this.angForm.valid) {
+        console.log(this.angForm.value);
         this.messageEvent.emit(this.angForm.value);
         /*if (args.data["solution"] !== "") {
           console.log("save");

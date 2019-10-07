@@ -55,9 +55,7 @@ export class InterventionService {
     });
   }
 
-
-
   updateIntervention(form) {
-    return this.http.put(`${this.uri}/${form.id}`, form);
+    return this.http.put(`${this.uri}/${form._id}`, form);
   }
 }

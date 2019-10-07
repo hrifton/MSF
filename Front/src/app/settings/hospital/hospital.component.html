@@ -1,20 +1,21 @@
-<div class="row">
+<div class="row" *ngIf="role === 'SuperAdmin'" style="margin-top: 0px;">
   <div class="col-4">
     <div class="e-card-content">
-      <app-form-hopital *ngIf="role==='SuperAdmin'" (messageEvent)="update($event)"></app-form-hopital>
+      <app-form-hopital (messageEvent)="update($event)"></app-form-hopital>
     </div>
   </div>
   <div class="col-8">
     <div class="e-card-content">
-      <app-list-hospital *ngIf="role==='SuperAdmin'" [addToListHospital]="data"></app-list-hospital>
+      <app-list-hospital [addToListHospital]="data"></app-list-hospital>
     </div>
   </div>
-  <div class="col-8">
-    <div class="e-card-content">
-      //TODO a mettre en place les Metier pour chaque Hopitaux
-      <app-metier-hopital></app-metier-hopital>
-    </div>
+</div>
+<div class="row" style="margin-top: 0px;">
+  <div class="col-12">
+    <app-metier-hopital
+      *ngIf="metiers"
+      [metiers]="metiers"
+      [projet]="projet"
+    ></app-metier-hopital>
   </div>
-
-
 </div>

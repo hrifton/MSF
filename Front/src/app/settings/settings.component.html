@@ -19,7 +19,8 @@
                     <e-tabitem [header]="headerText[0]">
                       <ng-template #content>
                         <div class="e-card-content">
-                          <app-users *ngIf="projet"
+                          <app-users
+                            *ngIf="projet"
                             (messageEvent)="update($event)"
                             [projet]="projet"
                             [role]="role"
@@ -30,10 +31,14 @@
                     <e-tabitem [header]="headerText[1]">
                       <ng-template #content>
                         <div class="e-card-content">
-                          <app-hospital [role]="role"></app-hospital>
+                          <app-hospital
+                            [role]="role"
+                            [projet]="projet"
+                          ></app-hospital>
                         </div>
                       </ng-template>
                     </e-tabitem>
+
                     <e-tabitem [header]="headerText[2]">
                       <ng-template #content>
                         <div class="e-card-content">
@@ -41,9 +46,12 @@
                         </div>
                       </ng-template>
                     </e-tabitem>
+
                     <e-tabitem [header]="headerText[3]">
                       <ng-template #content>
-                        <app-metiers></app-metiers>
+                        <div class="e-card-content">
+                          <app-metiers [projet]="projet"></app-metiers>
+                        </div>
                       </ng-template>
                     </e-tabitem>
                   </e-tabitems>

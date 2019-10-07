@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, Input } from "@angular/core";
 import { MetierService } from "../../Service/metier.service";
 import { Metier } from "src/app/Class/Metier";
 import { Categorie } from "src/app/Class/Categorie";
@@ -11,6 +11,7 @@ import { ListMetiersComponent } from "./list-metiers/list-metiers.component";
   styleUrls: ["./metiers.component.scss"]
 })
 export class MetiersComponent implements OnInit {
+  @Input() projet;
   public metiers: Metier[];
   public selectcategorie: Categorie[];
   public metierSelect: Metier;

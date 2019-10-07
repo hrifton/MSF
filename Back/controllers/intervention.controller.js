@@ -5,7 +5,7 @@ require("../models/intervention.model");
 const Intervention = mongoose.model("Intervention");
 
 module.exports.liste = (req, res) => {
-  console.log(req.idHopital)
+  console.log(req.idHopital);
   Intervention.aggregate(
     [
       { $match: { idHopital: ObjectId(req.idHopital) } },
@@ -23,6 +23,14 @@ module.exports.liste = (req, res) => {
           localField: "idDepartement",
           foreignField: "_id",
           as: "departements"
+        }
+      },
+      {
+        $lookup: {
+          from: "metiers",
+          localField: "metier",
+          foreignField: "_id",
+          as: "metier"
         }
       },
       {
@@ -216,13 +224,14 @@ module.exports.add = (req, res, next) => {
 module.exports.update = (req, res, next) => {
   console.log("ctrlUpdate", req.body);
 
-  Intervention.findByIdAndUpdate(req.body.id, req.body, (err, docs) => {
+  Intervention.findByIdAndUpdate(req.body._id, req.body, (err, docs) => {
     // Handle any possible database errors
     if (err) {
       console.log(err);
     }
     //return res.status(500).send(err);
     else {
+      console.log("update ok ");
       res.send(docs);
     } //res.send(intervention);
   });

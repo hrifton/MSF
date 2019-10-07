@@ -14,9 +14,8 @@ export class AuthService {
   public user: User;
 
   constructor(
-    private msalService: MsalService
-  ) // private alertsService: AlertsService
-  {
+    private msalService: MsalService // private alertsService: AlertsService
+  ) {
     this.authenticated = this.msalService.getUser() != null;
     this.getUser().then(user => {
       this.user = user;
