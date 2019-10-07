@@ -10,13 +10,15 @@ import { FormHopitalComponent } from "./form-hopital/form-hopital.component";
 
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DropDownListAllModule } from "@syncfusion/ej2-angular-dropdowns";
+import { MetierHopitalComponent } from './metier-hopital/metier-hopital.component';
 
 
 @NgModule({
   declarations: [
    HospitalComponent,
     ListHospitalComponent,
-    FormHopitalComponent
+    FormHopitalComponent,
+    MetierHopitalComponent
   ],
   imports: [
     CommonModule,

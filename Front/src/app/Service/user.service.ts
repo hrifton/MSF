@@ -1,4 +1,3 @@
-import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
 import * as jwt_decode from 'jwt-decode';

@@ -28,17 +28,23 @@ export class InterventionService {
   }
 
   // Get All Intervention
-  //TODO il faut ajouter par Hopital au minimum
+  // TODO il faut ajouter par Hopital au minimum
+  // TODO GET INTERVENTION 5 type SUPER ADMIN, Local ADMIN OPERATOR, TECH,USER
 
-  //TODO GET INTERVENTION 5 type SUPER ADMIN, Local ADMIN OPERATOR, TECH,USER
+  // TODO SUPER ADMIN
 
-  //TODO SUPER ADMIN
+  // TODO Local ADMIN OPERATOR
+  getInterventions() {
+    const idHopital = this.us.getIdHopital();
 
-  //TODO Local ADMIN OPERATOR
-
-  //TODO TECH
-
-  //TODO USER
+    return this.http.get(`${this.uri}`, { params: { idHopital } });
+  }
+  // TODO TECH
+  // Get Interventions byUser
+  getInterventionsBytech(fullName: any) {
+    return this.http.get(`${this.uri}/ByTech/`, { params: { fullName } });
+  }
+  // TODO USER
   // Get Interventions byUser
   getInterventionsByUser() {
     const idDepartement = this.us.getIdDepartement();
@@ -49,14 +55,7 @@ export class InterventionService {
     });
   }
 
-  getInterventions() {
-    return this.http.get(`${this.uri}`);
-  }
 
-  // Get Interventions byUser
-  getInterventionsBytech(fullName: any) {
-    return this.http.get(`${this.uri}/ByTech/`, { params: { fullName } });
-  }
 
   updateIntervention(form) {
     return this.http.put(`${this.uri}/${form.id}`, form);

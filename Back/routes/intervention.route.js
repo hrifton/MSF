@@ -4,7 +4,7 @@ const ctrlIntervention = require("../controllers/intervention.controller");
 
 //GetToutesLesIntervention
 interventionRoutes.route("/").get(function(req, res) {
-  ctrlIntervention.liste(req, res);
+  ctrlIntervention.liste(req.query, res);
 });
 
 //GetToutesLesInterventionByUser

@@ -78,10 +78,10 @@
               <div class="e-card-content">
                 <app-list-intervention
                   (messageEvent)="check($event)"
-                  *ngIf="interventions.length > 0 && userDetails"
+                  *ngIf="interventions.length > 0"
                   [interventions]="interventions"
                   [maintenance]="maintenance"
-                  [domaine]="domaine"
+                  [metier]="metier"
                   [techs]="techs"
                   [user]="userDetails"
                   [departements]="departements"

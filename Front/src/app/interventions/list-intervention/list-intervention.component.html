@@ -21,7 +21,7 @@
       ></e-column>
       <e-column
         *ngIf="user != 'User'"
-        field="domaine"
+        field="metier"
         headerText="Domaine"
         textAlign="center"
         width="auto"
@@ -96,14 +96,14 @@
         </div>
         <form [formGroup]="angForm">
           <div *ngIf="user != 'User'" class="form-row">
-            <div *ngIf="domaine" class="form-group col-md-6">
+            <div *ngIf="metier" class="form-group col-md-6">
               <div class="e-float-input e-control-wrapper">
                 <ejs-dropdownlist
-                  id="Domaine"
-                  formControlName="domaine"
-                  [dataSource]="domaine"
-                  [fields]="{ text: 'domaine', value: 'domaine' }"
-                  placeholder="Domaine"
+                  id="metier"
+                  formControlName="metier"
+                  [dataSource]="metier"
+                  [fields]="{ text: 'name', value: '_id' }"
+                  placeholder="Metier"
                   popupHeight="200px"
                   floatLabelType="Always"
                 ></ejs-dropdownlist>
@@ -132,7 +132,7 @@
                   id="Departement"
                   formControlName="departement"
                   [dataSource]="departements"
-                  [fields]="{ text: 'departement', value: 'departement' }"
+                  [fields]="{ text: 'departement', value: '_id' }"
                   placeholder="Departement"
                   popupHeight="200px"
                   floatLabelType="Always"
@@ -146,7 +146,7 @@
                   formControlName="priority"
                   [dataSource]="priorities"
                   [fields]="{ text: 'priority', value: 'priority' }"
-                  placeholder="priority"
+                  placeholder="Priority"
                   popupHeight="200px"
                   floatLabelType="Always"
                   #priority
@@ -163,7 +163,7 @@
                   formControlName="tech"
                   [dataSource]="techs"
                   [fields]="{ text: 'fullName', value: 'fullName' }"
-                  [placeholder]="text"
+                  placeholder="Departement"
                   [popupHeight]="height"
                 >
                 </ejs-dropdownlist>

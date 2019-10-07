@@ -5,14 +5,30 @@ require("../models/intervention.model");
 const Intervention = mongoose.model("Intervention");
 
 module.exports.liste = (req, res) => {
+  console.log(req.idHopital)
   Intervention.aggregate(
     [
+      { $match: { idHopital: ObjectId(req.idHopital) } },
       {
         $lookup: {
-          from: "solutions",
-          localField: "_id",
-          foreignField: "idIntervention",
-          as: "solution"
+          from: "users",
+          localField: "idUser",
+          foreignField: "_id",
+          as: "user"
+        }
+      },
+      {
+        $lookup: {
+          from: "departements",
+          localField: "idDepartement",
+          foreignField: "_id",
+          as: "departements"
+        }
+      },
+      {
+        $project: {
+          "user.password": 0,
+          "user.saltSecret": 0
         }
       }
     ],
@@ -50,82 +66,88 @@ module.exports.listeByUser = (req, res) => {
           foreignField: "_id",
           as: "departements"
         }
+      },
+      {
+        $project: {
+          "user.password": 0,
+          "user.saltSecret": 0
+        }
       }
     ],
     (err, lisByUs) => {
       if (!err) {
-        if(lisByUs.length >0){
+        if (lisByUs.length > 0) {
           list = lisByUs;
-        Intervention.aggregate(
-          [
-            {
-              $match: {
-                idHopital: ObjectId(req.idHopital),
-                idDepartement: ObjectId(req.idDepartement),
-                idUser: { $ne: ObjectId(req.idUser) }
+          Intervention.aggregate(
+            [
+              {
+                $match: {
+                  idHopital: ObjectId(req.idHopital),
+                  idDepartement: ObjectId(req.idDepartement),
+                  idUser: { $ne: ObjectId(req.idUser) }
+                }
+              },
+              {
+                $lookup: {
+                  from: "users",
+                  localField: "idUser",
+                  foreignField: "_id",
+                  as: "user"
+                }
+              },
+              {
+                $lookup: {
+                  from: "departements",
+                  localField: "idDepartement",
+                  foreignField: "_id",
+                  as: "departements"
+                }
               }
-            },
-            {
-              $lookup: {
-                from: "users",
-                localField: "idUser",
-                foreignField: "_id",
-                as: "user"
-              }
-            },
-            {
-              $lookup: {
-                from: "departements",
-                localField: "idDepartement",
-                foreignField: "_id",
-                as: "departements"
+            ],
+            (err, docs) => {
+              if (!err) {
+                res.send(list.concat(docs));
               }
             }
-          ],
-          (err, docs) => {
-            if (!err) {
-              res.send(list.concat(docs));
+          );
+        } else {
+          Intervention.aggregate(
+            [
+              {
+                $match: {
+                  idHopital: ObjectId(req.idHopital),
+                  idDepartement: ObjectId(req.idDepartement),
+                  idUser: { $ne: ObjectId(req.idUser) }
+                }
+              },
+              {
+                $lookup: {
+                  from: "users",
+                  localField: "idUser",
+                  foreignField: "_id",
+                  as: "user"
+                }
+              },
+              {
+                $lookup: {
+                  from: "departements",
+                  localField: "idDepartement",
+                  foreignField: "_id",
+                  as: "departements"
+                }
+              }
+            ],
+            (err, docs) => {
+              if (!err) {
+                res.send(docs);
+              }
             }
-          }
-        );
-        }else{
-           Intervention.aggregate(
-             [
-               {
-                 $match: {
-                   idHopital: ObjectId(req.idHopital),
-                   idDepartement: ObjectId(req.idDepartement),
-                   idUser: { $ne: ObjectId(req.idUser) }
-                 }
-               },
-               {
-                 $lookup: {
-                   from: "users",
-                   localField: "idUser",
-                   foreignField: "_id",
-                   as: "user"
-                 }
-               },
-               {
-                 $lookup: {
-                   from: "departements",
-                   localField: "idDepartement",
-                   foreignField: "_id",
-                   as: "departements"
-                 }
-               }
-             ],
-             (err, docs) => {
-               if (!err) {
-                 res.send(docs);
-               }
-             }
-           );
+          );
         }
-        
+
         //res.send(lisByUs);
       } else {
-        console.log( "if listByUs Empty")
+        console.log("if listByUs Empty");
         Intervention.aggregate(
           [
             {
