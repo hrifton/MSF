@@ -15,7 +15,11 @@ var interventionScheam = new mongoose.Schema({
     required: true
   },
   tech: { type: String },
-  metier: { type: String },
+  metier: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "metier",
+    required: false
+  },
   idHopital: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "hopital",

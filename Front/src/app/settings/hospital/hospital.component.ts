@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from "@angular/core";
-import { Hospital } from 'src/app/Class/Hospital';
+import { Hospital } from "src/app/Class/Hospital";
+import { MetierService } from "src/app/Service/metier.service";
+import { Metier } from "src/app/Class/Metier";
 
 @Component({
   selector: "app-hospital",
@@ -7,11 +9,17 @@ import { Hospital } from 'src/app/Class/Hospital';
   styleUrls: ["./hospital.component.scss"]
 })
 export class HospitalComponent implements OnInit {
-  constructor() {}
+  metiers = new Array<Metier>();
+  constructor(private metierService: MetierService) {}
 
   data: Hospital;
   @Input() role;
-  ngOnInit() {}
+  @Input() projet;
+  ngOnInit() {
+    this.metierService.getMetiers().subscribe((data: Metier[]) => {
+      this.metiers = data;
+    });
+  }
 
   update($event) {
     this.data = $event;

@@ -35,10 +35,10 @@
               <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
                 <ejs-dropdownlist
                   id="executor"
-                  formControlName="executor"
+                  formControlName="Trade"
                   [dataSource]="listeMetier"
                   (change)="onChange($event)"
-                  [fields]="{ text: 'metier', value: 'metier' }"
+                  [fields]="{ text: 'name', value: '_id' }"
                   placeholder="executor"
                   popupHeight="200px"
                   floatLabelType="Always"
