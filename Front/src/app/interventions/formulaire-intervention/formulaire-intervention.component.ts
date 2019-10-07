@@ -39,14 +39,15 @@ export class FormulaireInterventionComponent implements OnInit {
 
   createForm() {
     this.angForm = this.fb.group({
-      idDepartement: new FormControl(this.us.getIdDepartement(), [
+      idDepartement: new FormControl("", [
         Validators.required
       ]),
-      locality: new FormControl("", [Validators.required]),
+      locality: new FormControl(""),
       priority: new FormControl("", [Validators.required]),
       description: new FormControl("", [Validators.required]),
       asset: new FormControl("")
     });
+    console.log(this.angForm)
   }
 
   ngOnInit() {

@@ -5,9 +5,9 @@ import {
   Output,
   EventEmitter,
   ViewChild
-} from "@angular/core";
-import { Router } from "@angular/router";
-import { Browser } from "@syncfusion/ej2-base";
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { Browser } from '@syncfusion/ej2-base';
 import {
   EditService,
   ToolbarService,
@@ -15,11 +15,11 @@ import {
   DialogEditEventArgs,
   SaveEventArgs,
   GridComponent
-} from "@syncfusion/ej2-angular-grids";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { Dialog } from "@syncfusion/ej2-angular-popups";
-import { SolutionService } from "src/app/Service/solution.service";
-import Intervention from "src/app/Class/Intervention";
+} from '@syncfusion/ej2-angular-grids';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Dialog } from '@syncfusion/ej2-angular-popups';
+import { SolutionService } from 'src/app/Service/solution.service';
+import Intervention from 'src/app/Class/Intervention';
 
 @Component({
   selector: "app-list-intervention",
@@ -30,7 +30,7 @@ import Intervention from "src/app/Class/Intervention";
 export class ListInterventionComponent implements OnInit {
   @Input() interventions;
   @Input() departements;
-  @Input() domaine;
+  @Input() metier;
   @Input() maintenance;
   @Input() techs;
   @Input() user;
@@ -79,8 +79,6 @@ export class ListInterventionComponent implements OnInit {
       type: "Menu"
     };
 
-    // this.getDepartement(this.departements);
-
     this.editSettings = {
       allowEditing: true,
       allowAdding: true,
@@ -111,10 +109,14 @@ export class ListInterventionComponent implements OnInit {
   }
 
   createFormGroup(data): FormGroup {
+    console.log(data);
     return new FormGroup({
       _id: new FormControl(data._id, Validators.required),
-      departement: new FormControl(data.departement, Validators.required),
-      locality: new FormControl(data.locality, Validators.required),
+      departement: new FormControl(
+        data.departements[0]._id,
+        Validators.required
+      ),
+      locality: new FormControl(data.locality),
       priority: new FormControl(data.priority),
       description: new FormControl(data.description),
       status: new FormControl(data.status),
@@ -124,7 +126,7 @@ export class ListInterventionComponent implements OnInit {
       useMat: new FormControl(data.useMat),
       asset: new FormControl(data.asset),
       slug: new FormControl(data.slug),
-      domaine: new FormControl(data.domaine),
+      metier: new FormControl(data.metier),
       solution: new FormControl("")
     });
   }
@@ -152,19 +154,18 @@ export class ListInterventionComponent implements OnInit {
   actionBegin(args: SaveEventArgs): void {
     // Verification de l'action debut edit ou ajout
     if (args.requestType === "beginEdit" || args.requestType === "add") {
-      //this.submitClicked = false;
+      // this.submitClicked = false;
       const row = args.rowData;
       // Creation du formulaire
-
+      console.log("click ::", row);
       this.angForm = this.createFormGroup(args.rowData);
     }
     // Click SAVE
     if (args.requestType === "save") {
       this.submitClicked = true;
-      console.log(this.angForm);
+
       // verification si le formulaire est valid
       if (this.angForm.valid) {
-        console.log(this.angForm);
         this.messageEvent.emit(this.angForm.value);
         /*if (args.data["solution"] !== "") {
           console.log("save");
@@ -211,7 +212,7 @@ export class ListInterventionComponent implements OnInit {
 
   // Couleur par etat de ligne  https://stackblitz.com/edit/angular-9tucrb?file=app.component.ts
   rowDB(args) {
-    if (args.data.domaine === undefined) {
+    if (args.data.metier === undefined) {
     }
   }
 }

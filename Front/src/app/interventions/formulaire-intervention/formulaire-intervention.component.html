@@ -7,7 +7,7 @@
           formControlName="idDepartement"
           [dataSource]="departements"
           [fields]="{ text: 'departement', value: '_id' }"
-          placeholder="Departement"
+          placeholder="Departement *"
           popupHeight="200px"
           floatLabelType="Always"
           #departement
@@ -53,7 +53,7 @@
 
   <div class="form-row">
     <mat-form-field class="form-group col-md-12">
-      <mat-label>Description intervention</mat-label>
+      <mat-label>Description intervention *</mat-label>
       <textarea
         matInput
         formControlName="description"
