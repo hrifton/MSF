@@ -8,12 +8,16 @@ import { Categorie } from "../Class/Categorie";
 export class CategorieService {
   uri = "/api/categorie";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getCategorieByMetier(categorie: any) {
     console.log(categorie);
     //const id = categorie._id;
     //console.log(id)
     //return this.http.get(`${this.uri}/metiercategorie/${categorie._id}`)
+  }
+  AddCategorie(categorie: Categorie) {
+    console.log(' service categorie : ', categorie)
+    return this.http.post(`${this.uri}/add`, categorie);
   }
 }

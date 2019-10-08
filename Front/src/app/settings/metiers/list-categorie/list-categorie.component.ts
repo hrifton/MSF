@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from "@angular/core";
 import {
   FilterService,
   GridComponent,
@@ -9,20 +9,22 @@ import {
   EditSettingsModel,
   ForeignKeyService,
   SelectionSettingsModel
-} from '@syncfusion/ej2-angular-grids';
-import { Metier } from 'src/app/Class/Metier';
+} from "@syncfusion/ej2-angular-grids";
+import { Metier } from "src/app/Class/Metier";
+import { Categorie } from 'src/app/Class/Categorie';
 @Component({
   selector: "app-list-categorie",
   templateUrl: "./list-categorie.component.html",
   styleUrls: ["./list-categorie.component.scss"]
 })
 export class ListCategorieComponent implements OnInit {
-  @Input() selectcategorie: any[];
-  constructor() {}
+  @Input() metierSelect: Metier;
+  @Input() listCat: Categorie[];
+  constructor() { }
 
   @ViewChild("grid")
   public grid: GridComponent;
-  public data: any;
+  public data = this.listCat;
   public pageSettings: Object;
   public filterSettings: Object;
   public toolbarItems: ToolbarItems[];
@@ -34,7 +36,6 @@ export class ListCategorieComponent implements OnInit {
   show: boolean;
 
   ngOnInit() {
-    this.data = this.selectcategorie;
     this.pageSettings = { pageCount: 5 };
     this.filterSettings = { type: "Menu" };
     this.toolbarItems = ["Edit", "Delete", "Update", "Cancel"];

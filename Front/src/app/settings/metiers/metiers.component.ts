@@ -16,11 +16,12 @@ export class MetiersComponent implements OnInit {
   public selectcategorie: Categorie[];
   public metierSelect: Metier;
   public flag: boolean;
-
+  public listCat: Categorie[];
   @ViewChild(ListMetiersComponent)
   listMetiersComponent: ListMetiersComponent;
 
-  constructor(private ms: MetierService, private cs: CategorieService) {}
+
+  constructor(private ms: MetierService, private cs: CategorieService) { }
 
   ngOnInit() {
     this.flag = false;
@@ -39,11 +40,14 @@ export class MetiersComponent implements OnInit {
   saveMetier(data: Metier) {
     this.ms.addMetier(data).subscribe((metier: Metier) => {
       this.metiers.unshift(metier);
-      console.log(this.metiers);
+
       this.listMetiersComponent.refresh();
     });
   }
   saveCategorie(data: Categorie) {
+    this.cs.AddCategorie(data).subscribe((categorie: Categorie) => {
+      console.log('resultat :', categorie);
+    })
     console.log("Componenet metier save cate :", data);
   }
 
@@ -52,5 +56,9 @@ export class MetiersComponent implements OnInit {
   }
   selectMetier(data: Metier) {
     this.metierSelect = data;
+    this.ms.getMetier(data).subscribe((categorie: Categorie) => {
+      this.listCat.push(categorie)
+    });
+
   }
 }

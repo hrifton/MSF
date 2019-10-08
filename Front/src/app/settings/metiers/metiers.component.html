@@ -10,7 +10,9 @@
     <div class="row">
       <div class="col-12">
         <app-formulaire-categorie
+          *ngIf="metierSelect"
           [metierSelect]="metierSelect"
+          (messageEvent)="saveCategorie($event)"
         ></app-formulaire-categorie>
       </div>
     </div>
@@ -25,8 +27,9 @@
   </div>
   <div class="col-4">
     <app-list-categorie
-      *ngIf="selectcategorie && metierSelect"
-      [selectcategorie]="selectcategorie"
+      *ngIf="metierSelect && listCat"
+      [metierSelect]="metierSelect"
+      [listCat]="listCat"
       (messageEvent)="saveCategorie($event)"
     ></app-list-categorie>
   </div>

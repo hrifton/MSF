@@ -25,9 +25,7 @@ export class ListMetiersComponent implements OnInit {
   @Output() messageEvent = new EventEmitter<Metier>();
   @Output() deleteMetier = new EventEmitter<Metier>();
   selection: any;
-  constructor() {
-    console.log("ici Metier");
-  }
+  constructor() { }
   @ViewChild("grid")
   public grid: GridComponent;
   public data: any;

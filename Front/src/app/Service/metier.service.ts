@@ -6,7 +6,7 @@ import { of } from "rxjs";
 export class MetierService {
   uri = "/api/metier";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   // Insert a new metier
   addMetier(metier) {
     const obj = {
@@ -28,7 +28,9 @@ export class MetierService {
   }
 
   // return a metier
-  getMetier(metier) {}
+  getMetier(metier) {
+    return this.http.get(`${this.uri}/${metier._id}`)
+  }
 
   // Update a metier
   updateMetier(metier, id) {
