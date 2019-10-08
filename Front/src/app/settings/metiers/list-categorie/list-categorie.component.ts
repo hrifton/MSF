@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from "@angular/core";
+import { Component, OnInit, ViewChild, Input, SimpleChanges } from "@angular/core";
 import {
   FilterService,
   GridComponent,
@@ -11,7 +11,6 @@ import {
   SelectionSettingsModel
 } from "@syncfusion/ej2-angular-grids";
 import { Metier } from "src/app/Class/Metier";
-import { Categorie } from 'src/app/Class/Categorie';
 @Component({
   selector: "app-list-categorie",
   templateUrl: "./list-categorie.component.html",
@@ -19,12 +18,11 @@ import { Categorie } from 'src/app/Class/Categorie';
 })
 export class ListCategorieComponent implements OnInit {
   @Input() metierSelect: Metier;
-  @Input() listCat: Categorie[];
   constructor() { }
 
   @ViewChild("grid")
   public grid: GridComponent;
-  public data = this.listCat;
+  public data: Object[];
   public pageSettings: Object;
   public filterSettings: Object;
   public toolbarItems: ToolbarItems[];
@@ -36,6 +34,8 @@ export class ListCategorieComponent implements OnInit {
   show: boolean;
 
   ngOnInit() {
+    this.data = this.metierSelect.idCategorie;
+    console.log("data : ", this.data)
     this.pageSettings = { pageCount: 5 };
     this.filterSettings = { type: "Menu" };
     this.toolbarItems = ["Edit", "Delete", "Update", "Cancel"];
@@ -46,5 +46,12 @@ export class ListCategorieComponent implements OnInit {
     };
     this.selectionOptions = { type: "Multiple" };
     // this.orderidrules = { required: true };
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
+    if (changes.metierSelect.firstChange === false) {
+      this.data = changes.metierSelect.currentValue.idCategorie;
+    }
+
   }
 }

@@ -4,6 +4,7 @@ import { Metier } from "src/app/Class/Metier";
 import { Categorie } from "src/app/Class/Categorie";
 import { CategorieService } from "src/app/Service/categorie.service";
 import { ListMetiersComponent } from "./list-metiers/list-metiers.component";
+import { ListCategorieComponent } from './list-categorie/list-categorie.component';
 
 @Component({
   selector: "app-metiers",
@@ -19,6 +20,8 @@ export class MetiersComponent implements OnInit {
   public listCat: Categorie[];
   @ViewChild(ListMetiersComponent)
   listMetiersComponent: ListMetiersComponent;
+  @ViewChild(ListCategorieComponent)
+  ListCategorieComponent: ListCategorieComponent;
 
 
   constructor(private ms: MetierService, private cs: CategorieService) { }
@@ -26,8 +29,7 @@ export class MetiersComponent implements OnInit {
   ngOnInit() {
     this.flag = false;
     this.ms.getMetiers().subscribe((data: Metier[]) => {
-      this.metiers = data;
-      this.cs.getCategorieByMetier(data[0]);
+      this.metiers = data
       this.flag = true;
     });
   }
@@ -45,20 +47,19 @@ export class MetiersComponent implements OnInit {
     });
   }
   saveCategorie(data: Categorie) {
-    this.cs.AddCategorie(data).subscribe((categorie: Categorie) => {
-      console.log('resultat :', categorie);
-    })
-    console.log("Componenet metier save cate :", data);
+    this.cs.AddCategorie(data).subscribe((categorie: any) => {
+      console.log("cate a rejouter : ", categorie)
+      this.metierSelect.idCategorie.push(categorie);
+      this.ListCategorieComponent.grid.refresh()
+    });
   }
 
   deleteMetier(data: Metier) {
     console.log("data to MetierService for delete : ", data);
   }
   selectMetier(data: Metier) {
+    this.metierSelect = null
     this.metierSelect = data;
-    this.ms.getMetier(data).subscribe((categorie: Categorie) => {
-      this.listCat.push(categorie)
-    });
 
   }
 }

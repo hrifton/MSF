@@ -7,7 +7,7 @@ import { of } from "rxjs";
 export class DepartementService {
   uri = "/api/departement";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   addDeparement(departement) {
     const obj = {

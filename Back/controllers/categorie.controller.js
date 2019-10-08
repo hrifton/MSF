@@ -11,14 +11,12 @@ module.exports.add = (req, res, next) => {
   cat.color = req.color;
   cat.save((err, doc) => {
     if (!err) {
-      console.log(req.idMetier, "**********0000doc: //////////", doc._id);
       Metier.findOneAndUpdate(
-        req.idMetier,
+        { _id: req.idMetier },
         { $push: { idCategorie: doc } },
         (err, metier) => {
           if (!err) {
-            metier.idCategorie.push(doc);
-            res.send(metier);
+            res.send(doc);
           } else {
             console.log(err);
           }

@@ -27,9 +27,8 @@
   </div>
   <div class="col-4">
     <app-list-categorie
-      *ngIf="metierSelect && listCat"
+      *ngIf="metierSelect"
       [metierSelect]="metierSelect"
-      [listCat]="listCat"
       (messageEvent)="saveCategorie($event)"
     ></app-list-categorie>
   </div>
