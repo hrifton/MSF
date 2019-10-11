@@ -69,7 +69,8 @@ export class UserService {
    * @memberof UserService
    */
   getUserProfil() {
-    return this.http.get(this.uri + '/userProfil');
+    
+    return this.http.get(this.uri + '/:id',{params:{_id:this.getId()}});
   }
   /**
    *

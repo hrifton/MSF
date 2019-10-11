@@ -60,7 +60,7 @@ module.exports.userProfile = (req, res, next) => {
   });
 };
 
-module.exports.getUserFullName = (req, res, next) => {
+module.exports.getUser= (req, res, next) => {
   User.findOne({ fullName: req.fullName }, (err, user) => {
     if (!user) {
       //console.log(user);

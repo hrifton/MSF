@@ -15,8 +15,10 @@
               <app-formulaire-intervention
                 *ngIf="departements"
                 (messageEvent)="update($event)"
+                (statusRequest)="modifieStatus($event)"
                 [user]="userDetails"
                 [departements]="departements"
+                [statusInsertIntervention]="statusInsertIntervention"
               >
               </app-formulaire-intervention>
             </div>

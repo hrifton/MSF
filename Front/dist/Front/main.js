@@ -1346,7 +1346,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var AnalyseInterventionComponent = /** @class */ (function () {
     function AnalyseInterventionComponent() {
-        this.status = { open: 0, close: 0, canceled: 0, waiting: 0 };
+        this.status = { open: 0, done: 0, canceled: 0, waiting: 0 };
         this.map = "fill";
         // custom code end
         this.center = { x: "50%", y: "50%" };
@@ -1371,30 +1371,30 @@ var AnalyseInterventionComponent = /** @class */ (function () {
         this.piedata = [
             // tslint:disable-next-line:max-line-length
             {
-                x: "Closed : " + data.close,
-                y: Math.round((data.close * 100) /
-                    (data.open + data.close + data.waiting + data.canceled)),
+                x: "Closed : " + data.done,
+                y: Math.round((data.done * 100) /
+                    (data.open + data.done + data.waiting + data.canceled)),
                 text: "closed",
                 fill: "#d9480f"
             },
             {
                 x: "Open :" + data.open,
                 y: Math.round((data.open * 100) /
-                    (data.open + data.close + data.waiting + data.canceled)),
+                    (data.open + data.done + data.waiting + data.canceled)),
                 text: "open :" + data.open,
                 fill: "#51cf66"
             },
             {
                 x: "Waiting :" + data.waiting,
                 y: Math.round((data.waiting * 100) /
-                    (data.open + data.close + data.waiting + data.canceled)),
+                    (data.open + data.done + data.waiting + data.canceled)),
                 text: "waiting :" + data.waiting,
                 fill: "#fab005"
             },
             {
                 x: "Canceled :" + data.canceled,
                 y: Math.round((data.canceled * 100) /
-                    (data.open + data.close + data.waiting + data.canceled)),
+                    (data.open + data.done + data.waiting + data.canceled)),
                 text: "canceled :" + data.canceled,
                 fill: "#ffd8a8"
             }
@@ -1472,7 +1472,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var AnalyseMaintenanceComponent = /** @class */ (function () {
     function AnalyseMaintenanceComponent() {
-        this.status = { open: 0, close: 0, canceled: 0, waiting: 0 };
+        this.status = { open: 0, done: 0, canceled: 0, waiting: 0 };
         this.map = "fill";
         // custom code end
         this.center = { x: "50%", y: "50%" };
@@ -1498,30 +1498,30 @@ var AnalyseMaintenanceComponent = /** @class */ (function () {
         this.piedata = [
             // tslint:disable-next-line:max-line-length
             {
-                x: "Closed : " + data.close,
-                y: Math.round((data.close * 100) /
-                    (data.open + data.close + data.waiting + data.canceled)),
+                x: "Closed : " + data.done,
+                y: Math.round((data.done * 100) /
+                    (data.open + data.done + data.waiting + data.canceled)),
                 text: "closed",
                 fill: "#d9480f"
             },
             {
                 x: "Open :" + data.open,
                 y: Math.round((data.open * 100) /
-                    (data.open + data.close + data.waiting + data.canceled)),
+                    (data.open + data.done + data.waiting + data.canceled)),
                 text: "open :" + data.open,
                 fill: "#51cf66"
             },
             {
                 x: "Waiting :" + data.waiting,
                 y: Math.round((data.waiting * 100) /
-                    (data.open + data.close + data.waiting + data.canceled)),
+                    (data.open + data.done + data.waiting + data.canceled)),
                 text: "waiting :" + data.waiting,
                 fill: "#fab005"
             },
             {
                 x: "Canceled :" + data.canceled,
                 y: Math.round((data.canceled * 100) /
-                    (data.open + data.close + data.waiting + data.canceled)),
+                    (data.open + data.done + data.waiting + data.canceled)),
                 text: "canceled :" + data.canceled,
                 fill: "#ffd8a8"
             }
@@ -1681,7 +1681,7 @@ var AnalyseMixIntermaintComponent = /** @class */ (function () {
         var obj = {
             open: 0,
             canceled: 0,
-            close: 0,
+            done: 0,
             waiting: 0
         };
         data.forEach(function (element) {
@@ -1690,7 +1690,7 @@ var AnalyseMixIntermaintComponent = /** @class */ (function () {
                     obj.open++;
                     break;
                 case "Closed":
-                    obj.close++;
+                    obj.done++;
                     break;
                 case "Canceled":
                     obj.canceled++;
@@ -1709,30 +1709,30 @@ var AnalyseMixIntermaintComponent = /** @class */ (function () {
         this.piedata = [
             // tslint:disable-next-line:max-line-length
             {
-                x: "Closed : " + data.close,
-                y: Math.round((data.close * 100) /
-                    (data.open + data.close + data.waiting + data.canceled)),
+                x: "Closed : " + data.done,
+                y: Math.round((data.done * 100) /
+                    (data.open + data.done + data.waiting + data.canceled)),
                 text: "closed",
                 fill: "#d9480f"
             },
             {
                 x: "Open :" + data.open,
                 y: Math.round((data.open * 100) /
-                    (data.open + data.close + data.waiting + data.canceled)),
+                    (data.open + data.done + data.waiting + data.canceled)),
                 text: "open :" + data.open,
                 fill: "#51cf66"
             },
             {
                 x: "Waiting :" + data.waiting,
                 y: Math.round((data.waiting * 100) /
-                    (data.open + data.close + data.waiting + data.canceled)),
+                    (data.open + data.done + data.waiting + data.canceled)),
                 text: "waiting :" + data.waiting,
                 fill: "#fab005"
             },
             {
                 x: "Canceled :" + data.canceled,
                 y: Math.round((data.canceled * 100) /
-                    (data.open + data.close + data.waiting + data.canceled)),
+                    (data.open + data.done + data.waiting + data.canceled)),
                 text: "canceled :" + data.canceled,
                 fill: "#ffd8a8"
             }

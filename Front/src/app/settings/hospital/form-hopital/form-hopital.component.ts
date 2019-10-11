@@ -27,7 +27,8 @@ import {
 })
 export class FormHopitalComponent implements OnInit {
   @Output() messageEvent = new EventEmitter<any>();
-  constructor(private fb: FormBuilder, private hs: HopitalService) {}
+  type: string;
+  constructor(private fb: FormBuilder, private hs: HopitalService) { }
   hopitalForm: FormGroup;
   lcountry: any[];
   @ViewChild('defaulttoast')
@@ -35,24 +36,46 @@ export class FormHopitalComponent implements OnInit {
   /**
    * element validation form for new Hospital
    */
-  createForm() {
-    this.hopitalForm = this.fb.group({
-      project: new FormControl('', [Validators.required]),
-      country: new FormControl('', [Validators.required]),
-      startingDate: new FormControl('', [Validators.required]),
-      closuredate: new FormControl('', [Validators.required]),
-      ipdStructure: new FormControl(),
-      leveOfCare: new FormControl()
-    });
+  public createForm(data?) {
+    if (data) {
+      this.hopitalForm = this.fb.group({
+        project: new FormControl(data.project ? data.project : '', [Validators.required]),
+        country: new FormControl(data.country ? data.country : '', [Validators.required]),
+        startingDate: new FormControl(data.startingDate ? data.startingDate : '', [Validators.required]),
+        closuredate: new FormControl(data.closuredate ? data.closuredate : '', [Validators.required]),
+        ipdStructure: new FormControl(data.ipdStructure ? data.ipdStructure : ''),
+        leveOfCare: new FormControl(data.leveOfCare ? data.leveOfCare : '')
+      });
+      this.type = "Update"
+    } else {
+      this.hopitalForm = this.fb.group({
+        project: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
+        startingDate: new FormControl('', [Validators.required]),
+        closuredate: new FormControl('', [Validators.required]),
+        ipdStructure: new FormControl(''),
+        leveOfCare: new FormControl('')
+      });
+      this.type = "Save"
+    }
+
   }
+
   /**
    * possible verification processing before sending
    * create CodeProject whit codeCountry and nameOfProject
    */
   saveNewHospital(hospital: Hospital) {
-    this.hs.PostNewHospital(hospital).subscribe(data => 
-       this.messageEvent.emit(data)
-       );
+    this.hs.PostNewHospital(hospital).subscribe(data =>
+      this.messageEvent.emit(data)
+    );
+  }
+
+  updateHospital(hospital: Hospital) {
+    console.log(hospital);
+  }
+  clearForm() {
+    this.type = "Save"
   }
 
   public onChange(args: SimpleChange): void {

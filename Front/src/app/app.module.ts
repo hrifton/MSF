@@ -19,11 +19,10 @@ import { DatePickerAllModule } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
 import {
   NumericTextBoxAllModule,
-  UploaderModule
+  UploaderModule,ColorPickerModule
 } from '@syncfusion/ej2-angular-inputs';
 import { GridAllModule } from '@syncfusion/ej2-angular-grids';
 import { AccordionModule } from '@syncfusion/ej2-angular-navigations';
-import { ColorPickerModule } from '@syncfusion/ej2-angular-inputs';
 import {
   SplitButtonModule,
   ProgressButtonModule

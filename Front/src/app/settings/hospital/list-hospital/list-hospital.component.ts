@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 /*import {
   ContextMenuItem,
   EditSettingsModel,
@@ -25,15 +25,17 @@ import { Hospital } from 'src/app/Class/Hospital';
 })
 export class ListHospitalComponent implements OnInit {
   @Input() addToListHospital: Hospital;
-  constructor(private hs: HopitalService) {}
+  constructor(private hs: HopitalService) { }
   @ViewChild('grid')
+  selection: any;
   public grid: GridComponent;
   public data: any;
   public pageSettings: Object;
   public filterSettings: Object;
   public toolbarItems: ToolbarItems[];
   public editOptions: EditSettingsModel;
- 
+  @Output() messageEvent = new EventEmitter<Hospital>();
+
   public orderidrules: Object;
 
   show: boolean;
@@ -71,5 +73,11 @@ export class ListHospitalComponent implements OnInit {
       this.grid.refresh();
     }
     // You can also use yourInput.previousValue and
+  }
+
+
+  rowSelected($event) {
+    this.selection = $event.data;
+    this.messageEvent.emit($event.data);
   }
 }

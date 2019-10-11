@@ -24,15 +24,15 @@ export class AnalyseMaintenanceComponent implements OnInit {
 
   @Input() analyseMaintenance;
   @ViewChild("chart") public chart: ChartComponent;
-  public status = { open: 0, close: 0, canceled: 0, waiting: 0 };
-  public title:string;
+  public status = { open: 0, done: 0, canceled: 0, waiting: 0 };
+  public title: string;
   // tslint:disable-next-line: ban-types
   public piedata: Object[];
   public legendSettings: Object;
   public map: Object = "fill";
   public datalabel: Object;
   public open: number;
-  public close: number;
+  public done: number;
   @ViewChild("pie") public pie: ChartComponent;
 
   // custom code end
@@ -61,37 +61,37 @@ export class AnalyseMaintenanceComponent implements OnInit {
     this.piedata = [
       // tslint:disable-next-line:max-line-length
       {
-        x: "Closed : " + data.close,
+        x: "Done : " + data.done,
         y: Math.round(
-          (data.close * 100) /
-            (data.open + data.close + data.waiting + data.canceled)
+          (data.done * 100) /
+          (data.open + data.done + data.waiting + data.canceled)
         ),
-        text: "closed",
-        fill: "#d9480f"
+        text: "Done",
+        fill: "#3da11e69"
       },
       {
         x: "Open :" + data.open,
         y: Math.round(
           (data.open * 100) /
-            (data.open + data.close + data.waiting + data.canceled)
+          (data.open + data.done + data.waiting + data.canceled)
         ),
         text: "open :" + data.open,
-        fill: "#51cf66"
+        fill: "#fd242463"
       },
       {
         x: "Waiting :" + data.waiting,
         y: Math.round(
           (data.waiting * 100) /
-            (data.open + data.close + data.waiting + data.canceled)
+          (data.open + data.done + data.waiting + data.canceled)
         ),
         text: "waiting :" + data.waiting,
-        fill: "#fab005"
+        fill: "#af941c69"
       },
       {
         x: "Canceled :" + data.canceled,
         y: Math.round(
           (data.canceled * 100) /
-            (data.open + data.close + data.waiting + data.canceled)
+          (data.open + data.done + data.waiting + data.canceled)
         ),
         text: "canceled :" + data.canceled,
         fill: "#ffd8a8"

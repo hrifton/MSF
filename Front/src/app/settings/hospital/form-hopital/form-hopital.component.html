@@ -1,84 +1,157 @@
 <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-    <div class="row" style="margin-top: 0px;">
-        <div class="e-card" id="basic_card">
-            <div class="e-card-header">
-                <div class="e-card-header-caption">
-                    <div class="e-card-header-title">
-                        <h3>New Hospital</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="e-card-content">
-                <form id="hopitalForm" [formGroup]="hopitalForm" class="form-horizontal" novalidate="">
-
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                                <div class="e-float-input">
-                                    <input id="project" type="text" formControlName="project">
-                                    <span class="e-float-line"></span>
-                                    <label for="project" class="e-float-text">Name Hospital (Project)</label>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                                <ejs-dropdownlist id="country" formControlName="country" [dataSource]='lcountry'
-                                    (change)='onChange($event)' [fields]="{text:'name',value:'alpha2Code' }"
-                                    placeholder="Country" popupHeight='200px' floatLabelType='Always' #country>
-                                </ejs-dropdownlist>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                                <div class="e-float-input">
-                                    <input id="startingDate" type="date" formControlName="startingDate">
-                                    <span class="e-float-line"></span>
-                                    <label for="startingDate" class="e-float-text">Starting Date</label>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                                <div class="e-float-input">
-                                    <input id="closuredate" type="date" formControlName="closuredate">
-                                    <span class="e-float-line"></span>
-                                    <label for="closuredate" class="e-float-text">Closure Date</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                                <div class="e-float-input">
-                                    <input id="ipdStructure" type="text" formControlName="ipdStructure">
-                                    <span class="e-float-line"></span>
-                                    <label for="ipdStructure" class="e-float-text">Ipd Structure</label>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                                <div class="e-float-input">
-                                    <input id="leveOfCare" type="text" formControlName="leveOfCare">
-                                    <span class="e-float-line"></span>
-                                    <label for="leveOfCare" class="e-float-text">{{hopitalForm.valid}} Leve Of Care</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div style="width: 320px;margin:0px auto;height: 100px;padding-top: 25px;">
-                            <div style="display: inline-block;">
-                                <button class="samplebtn e-control e-btn" (click)="saveNewHospital(hopitalForm.value)" color="primary"
-                                    data-ripple="true" id="validateSubmit" mat-raised-button="mat-raised-button-left"
-                                    [disabled]=!hopitalForm.valid>save</button>
-                            </div>
-                            <div style="float: right;">
-                                <button id="resetbtn" class="samplebtn e-control e-btn" mat-raised-button="mat-raised-button-left"
-                                    color="primary" type="reset" data-ripple="true">Clear</button>
-                            </div>
-                        </div>
-                    </div>                   
-                </form>
-            </div>
+  <div class="row" style="margin-top: 0px;">
+    <div class="e-card" id="basic_card">
+      <div class="e-card-header">
+        <div class="e-card-header-caption">
+          <div class="e-card-header-title">
+            <h3>New Hospital</h3>
+          </div>
         </div>
+      </div>
+      <div class="e-card-content">
+        <form
+          id="hopitalForm"
+          [formGroup]="hopitalForm"
+          class="form-horizontal"
+          novalidate=""
+        >
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="e-float-input">
+                  <input id="project" type="text" formControlName="project" />
+                  <span class="e-float-line"></span>
+                  <label for="project" class="e-float-text"
+                    >Name Hospital (Project)</label
+                  >
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <ejs-dropdownlist
+                  id="country"
+                  formControlName="country"
+                  [dataSource]="lcountry"
+                  (change)="onChange($event)"
+                  [fields]="{ text: 'name', value: 'alpha2Code' }"
+                  placeholder="Country"
+                  popupHeight="200px"
+                  floatLabelType="Always"
+                  #country
+                >
+                </ejs-dropdownlist>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="e-float-input">
+                  <input
+                    id="startingDate"
+                    type="date"
+                    formControlName="startingDate"
+                  />
+                  <span class="e-float-line"></span>
+                  <label for="startingDate" class="e-float-text"
+                    >Starting Date</label
+                  >
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="e-float-input">
+                  <input
+                    id="closuredate"
+                    type="date"
+                    formControlName="closuredate"
+                  />
+                  <span class="e-float-line"></span>
+                  <label for="closuredate" class="e-float-text"
+                    >Closure Date</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="e-float-input">
+                  <input
+                    id="ipdStructure"
+                    type="text"
+                    formControlName="ipdStructure"
+                  />
+                  <span class="e-float-line"></span>
+                  <label for="ipdStructure" class="e-float-text"
+                    >Ipd Structure</label
+                  >
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="e-float-input">
+                  <input
+                    id="leveOfCare"
+                    type="text"
+                    formControlName="leveOfCare"
+                  />
+                  <span class="e-float-line"></span>
+                  <label for="leveOfCare" class="e-float-text"
+                    >{{ hopitalForm.valid }} Leve Of Care</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div
+              style="width: 320px;margin:0px auto;height: 100px;padding-top: 25px;"
+            >
+              <div *ngIf="this.type === 'Save'" style="display: inline-block;">
+                <button
+                  class="samplebtn e-control e-btn"
+                  (click)="saveNewHospital(hopitalForm.value)"
+                  color="primary"
+                  data-ripple="true"
+                  id="validateSubmit"
+                  mat-raised-button="mat-raised-button-left"
+                  [disabled]="!hopitalForm.valid"
+                >
+                  Save
+                </button>
+              </div>
+              <div
+                *ngIf="this.type === 'Update'"
+                style="display: inline-block;"
+              >
+                <button
+                  class="samplebtn e-control e-btn"
+                  (click)="updateHospital(hopitalForm.value)"
+                  color="primary"
+                  data-ripple="true"
+                  id="validateSubmit"
+                  mat-raised-button="mat-raised-button-left"
+                  [disabled]="!hopitalForm.valid"
+                >
+                  Update
+                </button>
+              </div>
+              <div style="float: right;">
+                <button
+                  id="resetbtn"
+                  class="samplebtn e-control e-btn"
+                  mat-raised-button="mat-raised-button-left"
+                  color="primary"
+                  type="reset"
+                  data-ripple="true"
+                  (click)="clearForm()"
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>

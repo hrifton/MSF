@@ -599,7 +599,7 @@ module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
     var HASNT_CHAINING = instance[ADDER](IS_WEAK ? {} : -0, 1) != instance;
     // V8 ~  Chromium 40- weak-collections throws on primitives, but should return false
     var THROWS_ON_PRIMITIVES = fails(function () { instance.has(1); });
-    // most early implementations doesn't supports iterables, most modern - not close it correctly
+    // most early implementations doesn't supports iterables, most modern - not done it correctly
     var ACCEPT_ITERABLES = $iterDetect(function (iter) { new C(iter); }); // eslint-disable-line no-new
     // for early implementations -0 and +0 not the same
     var BUGGY_ZERO = !IS_WEAK && fails(function () {
@@ -1437,7 +1437,7 @@ var createDict = function () {
   iframeDocument = iframe.contentWindow.document;
   iframeDocument.open();
   iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
-  iframeDocument.close();
+  iframeDocument.done();
   createDict = iframeDocument.F;
   while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
   return createDict();
@@ -4875,7 +4875,7 @@ function apply(api, _global) {
             // but proxySocket not, so we will keep socket as prototype and pass it to
             // patchOnProperties method
             proxySocketProto = socket;
-            [ADD_EVENT_LISTENER_STR, REMOVE_EVENT_LISTENER_STR, 'send', 'close'].forEach(function (propName) {
+            [ADD_EVENT_LISTENER_STR, REMOVE_EVENT_LISTENER_STR, 'send', 'done'].forEach(function (propName) {
                 proxySocket[propName] = function () {
                     var args = ArraySlice.call(arguments);
                     if (propName === ADD_EVENT_LISTENER_STR || propName === REMOVE_EVENT_LISTENER_STR) {
@@ -4893,7 +4893,7 @@ function apply(api, _global) {
             // we can patch the real socket
             proxySocket = socket;
         }
-        patchOnProperties(proxySocket, ['close', 'error', 'message', 'open'], proxySocketProto);
+        patchOnProperties(proxySocket, ['done', 'error', 'message', 'open'], proxySocketProto);
         return proxySocket;
     };
     var globalWebSocket = _global['WebSocket'];
@@ -4930,7 +4930,7 @@ var globalEventHandlersEventNames = [
     'compositionend',
     'cuechange',
     'click',
-    'close',
+    'done',
     'contextmenu',
     'curechange',
     'dblclick',
@@ -5122,8 +5122,8 @@ var XMLHttpRequestEventNames = [
     'loadstart', 'progress', 'abort', 'error', 'load', 'progress', 'timeout', 'loadend',
     'readystatechange'
 ];
-var IDBIndexEventNames = ['upgradeneeded', 'complete', 'abort', 'success', 'error', 'blocked', 'versionchange', 'close'];
-var websocketEventNames = ['close', 'error', 'open', 'message'];
+var IDBIndexEventNames = ['upgradeneeded', 'complete', 'abort', 'success', 'error', 'blocked', 'versionchange', 'done'];
+var websocketEventNames = ['done', 'error', 'open', 'message'];
 var workerEventNames = ['error', 'message'];
 var eventNames = globalEventHandlersEventNames.concat(webglEventNames, formEventNames, detailEventNames, documentEventNames, windowEventNames, htmlElementEventNames, ieElementEventNames);
 function filterProperties(target, onProperties, ignoreProperties) {

@@ -6,7 +6,10 @@
   </div>
   <div class="col-8">
     <div class="e-card-content">
-      <app-list-hospital [addToListHospital]="data"></app-list-hospital>
+      <app-list-hospital
+        [addToListHospital]="data"
+        (messageEvent)="selectHopital($event)"
+      ></app-list-hospital>
     </div>
   </div>
 </div>

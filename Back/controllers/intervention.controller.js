@@ -3,9 +3,9 @@ mongoose.set("useFindAndModify", false);
 const { ObjectId } = require("mongodb");
 require("../models/intervention.model");
 const Intervention = mongoose.model("Intervention");
+const User = mongoose.model("User");
 
 module.exports.liste = (req, res) => {
-  console.log(req.idHopital);
   Intervention.aggregate(
     [
       { $match: { idHopital: ObjectId(req.idHopital) } },
@@ -213,8 +213,9 @@ module.exports.listeByTech = (req, res) => {
 module.exports.add = (req, res, next) => {
   var intervention = new Intervention(req.body);
   intervention.save((err, doc) => {
-    if (!err) res.send(doc);
-    else {
+    if (!err) {    
+         res.status(200).send(doc);      
+    } else {
       if (err.code === 11000) res.status(422).send(["erreur Intervention"]);
       else return next(err);
     }

@@ -1,6 +1,6 @@
 const express = require("express");
 const userRoutes = express.Router();
-const router = express.Router();
+const ctrlUser = require("../controllers/user.controller");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
@@ -24,6 +24,15 @@ userRoutes.route("/add").post(function(req, res) {
     }
   });
 });
+userRoutes.route("/:id").get(function(req,res){
+console.log(req)
+  ctrlUser.getUser(req,res);
+})
+
+
+
+
+
 
 module.exports = userRoutes;
 function newFunction() {

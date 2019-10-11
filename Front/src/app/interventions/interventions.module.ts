@@ -5,6 +5,7 @@ import { BrowserModule } from "@angular/platform-browser";
 
 import { GridAllModule } from "@syncfusion/ej2-angular-grids";
 import { MatInputModule } from "@angular/material";
+import { ToastModule } from '@syncfusion/ej2-angular-notifications';
 
 // Chart
 import {
@@ -44,6 +45,7 @@ import {
   ToolbarService,
   PageService
 } from "@syncfusion/ej2-angular-grids";
+import { ButtonModule, CheckBoxModule , RadioButtonModule } from '@syncfusion/ej2-angular-buttons';
 import {
   MatGridListModule,
   MatCardModule,
@@ -62,6 +64,8 @@ import {
     ResolutionInterventionComponent
   ],
   imports: [
+    ButtonModule,
+    ToastModule,
     MatGridListModule,
     MatCardModule,
     MatMenuModule,

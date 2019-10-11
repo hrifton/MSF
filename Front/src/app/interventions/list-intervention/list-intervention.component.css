@@ -1,11 +1,26 @@
-/* No CSS *//*# sourceMappingURL=list-intervention.component.css.map */
-   .bgcolor tr{
-      background-color: skyblue;
-    }
-     .disablegrid {
-        pointer-events: none;
-        opacity: 0.4;
-    }
-     .wrapper {
-        cursor: not-allowed;
-    }
+/* No CSS */ /*# sourceMappingURL=list-intervention.component.css.map */
+.bgcolor tr {
+  background-color: skyblue;
+}
+.disablegrid {
+  pointer-events: none;
+  opacity: 0.4;
+}
+.wrapper {
+  cursor: not-allowed;
+}
+
+.Open {
+  background-color: #fd242463;
+}
+.Done {
+  background-color: #3da11e69;
+}
+
+.Waiting {
+  background-color: #af941c69;
+}
+
+.attribution {
+  background-color: #ff0202a4;
+}

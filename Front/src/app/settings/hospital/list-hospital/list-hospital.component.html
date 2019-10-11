@@ -11,19 +11,59 @@
       <div class="e-card-content">
         <div class="control-section">
           <div class="col-lg-12">
-              <ejs-grid #grid [dataSource]='data' [allowPaging]='true' [pageSettings]="pageSettings" [allowFiltering]='true'
-                [filterSettings]="filterSettings" [editSettings]='editOptions' [toolbar]='toolbarItems' [allowSorting]='true' (actionBegin)="actionBegin($event)">
-                <e-columns>
-                  <e-column field='projectCode' headerText='Project Code' width='120' textAlign='Right' [validationRules]='orderidrules'
-                    isPrimaryKey='true'></e-column>
-                  <e-column field='project' headerText='Project Name' width='150' foreignKeyValue='project'
-                    foreignKeyField='project' editType='dropdownedit' [dataSource]='customerData' [validationRules]='orderidrules'></e-column>
-                  <e-column field='country' headerText='country' width='100' textAlign='Right' editType='string'>
-                  </e-column>
-                  <e-column field='startingDate' headerText='startingDate' width='170'></e-column>
-                  <e-column field='closuredate' headerText='closuredate' width='150' editType='date'></e-column>
-                </e-columns>
-              </ejs-grid>
+            <ejs-grid
+              #grid
+              [dataSource]="data"
+              [allowPaging]="true"
+              [pageSettings]="pageSettings"
+              [allowFiltering]="true"
+              [filterSettings]="filterSettings"
+              [editSettings]="editOptions"
+              [toolbar]="toolbarItems"
+              [allowSorting]="true"
+              (actionBegin)="actionBegin($event)"
+              (rowSelected)="rowSelected($event)"
+            >
+              <e-columns>
+                <e-column
+                  field="projectCode"
+                  headerText="Project Code"
+                  width="120"
+                  textAlign="Right"
+                  [validationRules]="orderidrules"
+                  isPrimaryKey="true"
+                ></e-column>
+                <e-column
+                  field="project"
+                  headerText="Project Name"
+                  width="150"
+                  foreignKeyValue="project"
+                  foreignKeyField="project"
+                  editType="dropdownedit"
+                  [dataSource]="customerData"
+                  [validationRules]="orderidrules"
+                ></e-column>
+                <e-column
+                  field="country"
+                  headerText="country"
+                  width="100"
+                  textAlign="Right"
+                  editType="string"
+                >
+                </e-column>
+                <e-column
+                  field="startingDate"
+                  headerText="startingDate"
+                  width="170"
+                ></e-column>
+                <e-column
+                  field="closuredate"
+                  headerText="closuredate"
+                  width="150"
+                  editType="date"
+                ></e-column>
+              </e-columns>
+            </ejs-grid>
           </div>
         </div>
       </div>
