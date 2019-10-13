@@ -127,24 +127,29 @@ export class ListInterventionComponent implements OnInit {
         slug: new FormControl(data.slug)
       });
     } else if (this.user === 'Admin') {
+      console.log(data)
       return new FormGroup({
         _id: new FormControl(data._id, Validators.required),
         departement: new FormControl(
-          data.departements[0]._id,
+          data.departements[0]._id
+            ? data.departements[0]._id
+            : data.idDepartement,
           Validators.required
         ),
-        locality: new FormControl(data.locality ? data.locality : ''),
+        locality: new FormControl(data.locality ? data.locality : ""),
         priority: new FormControl(data.priority),
         description: new FormControl(data.description),
         status: new FormControl(data.status),
-        type: new FormControl(data.type ? data.type : ''),
+        type: new FormControl(data.type ? data.type : ""),
         day: new FormControl(data.day),
-        tech: new FormControl(data.tech ? data.tech : ''),
-        useMat: new FormControl(data.useMat ? data.useMat : ''),
-        asset: new FormControl(data.asset ? data.asset : ''),
+        tech: new FormControl(data.tech ? data.tech : ""),
+        useMat: new FormControl(data.useMat ? data.useMat : ""),
+        asset: new FormControl(data.asset ? data.asset : ""),
         slug: new FormControl(data.slug),
-        metier: new FormControl(data.metier.length > 0 ? data.metier[0]._id : ''),
-        solution: new FormControl(data.solution ? data.solution : '')
+        metier: new FormControl(
+          data.metier.length > 0 ? data.metier[0]._id : ""
+        ),
+        solution: new FormControl(data.solution ? data.solution : "")
       });
     } else {
       return new FormGroup({
@@ -247,21 +252,22 @@ export class ListInterventionComponent implements OnInit {
   // Couleur par etat de ligne  https://stackblitz.com/edit/angular-9tucrb?file=app.component.ts
   rowDataBound(args: RowDataBoundEventArgs) {
 
-    if (args.data['status'] === "Done") {
+    let data = args.data
+    let metier= data['metier']
+      metier=metier[0].name===undefined?'':metier[0].name;
+    if (data['status'] === "Done") {
       args.row.classList.add('Done');
-    } else if (args.data['status'] === "Waiting") {
+    } else if (data['status'] === "Waiting") {
       args.row.classList.add('Waiting');
-    } else if (args.data['status'] === "Open") {
-      if (args.data['tech'] === undefined && args.data['metier.0.name'] === undefined) {
+    } else if (data['status'] === "Open") {
+      console.log("Hors condiftion :",data["tech"], metier);
+      if (data['tech'] === "" || metier === "") {
+        console.log("dedans :",data['tech'],metier)
         args.row.classList.add('attribution');
-      } else {
+      } else { 
         args.row.classList.add('Open');
       }
 
     }
-
-
-
-
   }
 }

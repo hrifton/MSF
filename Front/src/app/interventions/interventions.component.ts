@@ -67,7 +67,7 @@ export class InterventionsComponent implements OnInit {
    * @param $event
    * est appellé depuis le component Liste Intervention pour mise a jour de la liste intervention
    *  unshift ajoute data de event dans le tableau interventions
-   * 
+   *
    * Modification de la variable @statusInsertIntervention envoyé a formulaire intervention pour affichage TOAST
    */
   update($event) {
@@ -78,8 +78,12 @@ export class InterventionsComponent implements OnInit {
     $event.idHopital = this.us.getIdHopital();
     this.is.postInter($event).subscribe((data: Intervention) => {
       if (typeof data.slug === 'number') {
-        data.user[0].fullName = this.us.getFullName()
-
+        data.user = [];
+        const u = new User();
+        u.fullName = this.us.getFullName();
+        data.user.push(u);
+        data.tech = '';
+        console.log(data);
         this.interventions.unshift(data);
         this.interentionList.refreshInterventionTable();
         this.AnalyseMixIntermaint.refreshChart();
@@ -87,10 +91,7 @@ export class InterventionsComponent implements OnInit {
       } else {
         this.statusInsertIntervention = false;
       }
-
-
     });
-
   }
   check($event) {
     const inter = new Intervention(
@@ -156,13 +157,13 @@ export class InterventionsComponent implements OnInit {
       this.compte[index] = { name, nb: 0 };
     }
     intervention.forEach(element => {
-      console.log(element)
-      console.log(this.compte.length)
       if (element.status !== 'Canceled' && element.status !== 'Done') {
         for (let index = 0; index < this.compte.length; index++) {
-          if (this.compte[index].name === element.metier[0].name) {
-            this.compte[index].nb += 1
-            break;
+          if (element.metier.length > 0) {
+            if (this.compte[index].name === element.metier[0].name) {
+              this.compte[index].nb += 1;
+              break;
+            }
           }
         }
       }

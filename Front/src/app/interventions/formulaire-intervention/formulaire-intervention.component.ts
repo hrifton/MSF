@@ -63,11 +63,14 @@ export class FormulaireInterventionComponent implements OnInit {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.statusInsertIntervention.currentValue === true) {
-      this.showToast();
-      this.statusRequest.emit(null);
+   if (changes.statusInsertIntervention.currentValue === undefined) {
 
-    }
+    console.log("indefenid")}else{
+     if (changes.statusInsertIntervention.currentValue === true) {
+       this.showToast();
+       this.statusRequest.emit(null);
+     }
+   }
   }
 
   addIntervention(data) {

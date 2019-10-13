@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input } from "@angular/core";
 import { Hospital } from "src/app/Class/Hospital";
 import { MetierService } from "src/app/Service/metier.service";
 import { Metier } from "src/app/Class/Metier";
-import { FormHopitalComponent } from './form-hopital/form-hopital.component';
+import { FormHopitalComponent } from "./form-hopital/form-hopital.component";
 
 @Component({
   selector: "app-hospital",
@@ -10,8 +10,8 @@ import { FormHopitalComponent } from './form-hopital/form-hopital.component';
   styleUrls: ["./hospital.component.scss"]
 })
 export class HospitalComponent implements OnInit {
-  metiers = new Array<Metier>();
-  constructor(private metierService: MetierService) { }
+  // metiers = new Array<Metier>();
+  constructor(private metierService: MetierService) {}
 
   @ViewChild(FormHopitalComponent)
   FormHopitalComponent: FormHopitalComponent;
@@ -19,17 +19,15 @@ export class HospitalComponent implements OnInit {
   data: Hospital;
   @Input() role;
   @Input() projet;
-  ngOnInit() {
-    this.metierService.getMetiers().subscribe((data: Metier[]) => {
-      this.metiers = data;
-    });
-  }
+  @Input() metiers;
+  
+  ngOnInit() {}
 
   update($event) {
     this.data = $event;
   }
   selectHopital($event) {
     this.FormHopitalComponent.createForm($event);
-    this.projet = $event
+    this.projet = $event;
   }
 }

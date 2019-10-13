@@ -13,6 +13,9 @@ export class Hospital {
          closuredate: Date;
          ipdStructure: string;
          leveOfCare: string;
+         metier: [{ any,
+                    categorie: [{ any }] 
+        }];
 
          /**
           *Creates an instance of Hospital.
@@ -46,13 +49,13 @@ export class Hospital {
          } = {}) {}
 
          delete() {
-           this.id = '';
-           this.projectCode = '';
-           this.country = '';
-           this.project = '';
+           this.id = "";
+           this.projectCode = "";
+           this.country = "";
+           this.project = "";
            this.startingDate = null;
            this.closuredate = null;
-           this.ipdStructure = '';
-           this.leveOfCare = '';
+           this.ipdStructure = "";
+           this.leveOfCare = "";
          }
        }

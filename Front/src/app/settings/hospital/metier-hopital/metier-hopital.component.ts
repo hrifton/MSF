@@ -10,9 +10,11 @@ export class MetierHopitalComponent implements OnInit {
   @Input() projet;
   constructor() {
     console.log("constructor : ", this.projet);
+    
   }
 
   ngOnInit() {
     console.log("ngOnInit: ", this.projet);
+    console.log(this.metiers);
   }
 }

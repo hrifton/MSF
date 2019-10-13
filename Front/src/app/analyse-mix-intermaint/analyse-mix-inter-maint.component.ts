@@ -153,10 +153,10 @@ export class AnalyseMixIntermaintComponent implements OnInit {
     this.analyseIntervention = [];
     data.forEach(element => {
       if (element.type === 'Maintenance') {
-        console.log(element.type);
+    
         this.analyseMaintenance.push(element);
       } else {
-        console.log(element.type);
+       
         this.analyseIntervention.push(element);
       }
     });
@@ -168,7 +168,6 @@ export class AnalyseMixIntermaintComponent implements OnInit {
       done: 0,
       waiting: 0
     };
-
     data.forEach(element => {
       switch (element.status) {
         case 'Open':
@@ -181,7 +180,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
           obj.canceled++;
           break;
         case 'Waiting':
-          obj.open++;
+          obj.waiting++;
           break;
       }
     });

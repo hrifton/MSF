@@ -1,3 +1,5 @@
+import { User } from './user';
+
 export default class Intervention {
   //ajout variable x pour palié au _id de mongoose (interventions.components.ts)
   [x: string]: any;
@@ -16,6 +18,7 @@ export default class Intervention {
   asset: String;
   slug: Number;
   metier: String;
+  user:Array<User>;
 
   constructor(
     idDepartement: string,
