@@ -19,6 +19,7 @@
       *ngIf="metiers"
       [metiers]="metiers"
       [projet]="projet"
+      (messageEvent)="addMetier($event)"
     ></app-metier-hopital>
   </div>
 </div>

@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, Input } from "@angular/core";
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from "@angular/core";
 import { Hospital } from "src/app/Class/Hospital";
-import { MetierService } from "src/app/Service/metier.service";
 import { Metier } from "src/app/Class/Metier";
 import { FormHopitalComponent } from "./form-hopital/form-hopital.component";
 
@@ -11,7 +10,7 @@ import { FormHopitalComponent } from "./form-hopital/form-hopital.component";
 })
 export class HospitalComponent implements OnInit {
   // metiers = new Array<Metier>();
-  constructor(private metierService: MetierService) {}
+  constructor() { }
 
   @ViewChild(FormHopitalComponent)
   FormHopitalComponent: FormHopitalComponent;
@@ -20,8 +19,9 @@ export class HospitalComponent implements OnInit {
   @Input() role;
   @Input() projet;
   @Input() metiers;
-  
-  ngOnInit() {}
+  @Output() messageEvent = new EventEmitter<Metier>();
+
+  ngOnInit() { }
 
   update($event) {
     this.data = $event;
@@ -29,5 +29,9 @@ export class HospitalComponent implements OnInit {
   selectHopital($event) {
     this.FormHopitalComponent.createForm($event);
     this.projet = $event;
+  }
+  addMetier($event) {
+    $event.idHopital = this.projet._id
+    this.messageEvent.emit($event)
   }
 }

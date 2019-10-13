@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
-
+var uniqueValidator = require("mongoose-unique-validator");
+mongoose.plugin(Schema => {
+  Schema.pre("findByIdAndUpdate", setRunValidators);
+});
 var hospitalSchema = new mongoose.Schema({
   projectCode: { type: "String", unique: true, sparse: true, required: true },
   country: { type: String, required: true },
@@ -11,11 +14,14 @@ var hospitalSchema = new mongoose.Schema({
   metier: [
     {
       type: mongoose.Schema.Types.ObjectId,
+      unique: true,
       ref: "Metiers",
       required: false,
+
       categorie: [
         {
           type: mongoose.Schema.Types.ObjectId,
+          unique: true,
           ref: "catégorie",
           required: false
         }
@@ -30,5 +36,8 @@ hospitalSchema.pre("save", function(next) {
   /*return*/ next();
   console.log("after next");
 });
-
+function setRunValidators() {
+  this.setOptions({ runValidators: true });
+}
 mongoose.model("Hospital", hospitalSchema);
+hospitalSchema.plugin(uniqueValidator);

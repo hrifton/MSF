@@ -7,7 +7,6 @@ const Hospital = mongoose.model("Hospital");
 module.exports.getAll = (req, res) => {
   Hospital.find((err, docs) => {
     if (!err) {
-      
       res.send(docs);
     } else {
       console.log("error Hospital:" + JSON.stringify(err, undefined, 2));
@@ -28,11 +27,10 @@ module.exports.add = (req, res, next) => {
     .then(function(response) {
       hospital.projectCode = hospital.country + response;
       hospital.save((err, doc) => {
-        if (!err){        
+        if (!err) {
           return res.send(doc);
-        } 
-        else {
-          if (err.code === 11000) res.status(422).send(["Duplicate",err]);
+        } else {
+          if (err.code === 11000) res.status(422).send(["Duplicate", err]);
           else return next(err);
         }
       });
@@ -42,19 +40,33 @@ module.exports.add = (req, res, next) => {
     });
 };
 
-
-module.exports.findAHospital =(req,res)=>{
-  console.log(req)
+module.exports.findAHospital = (req, res) => {
+  console.log(req);
   Hospital.findById(req, (err, doc) => {
-   if (!err) {
-     res.send(doc);
-   } else {
-     console.log(
-       "Error in Retriving Hopital:" + JSON.stringify(err, undefined, 2)
-     );
-   }
- }); 
-}
+    if (!err) {
+      res.send(doc);
+    } else {
+      console.log(
+        "Error in Retriving Hopital:" + JSON.stringify(err, undefined, 2)
+      );
+    }
+  });
+};
+
+module.exports.addMetier = (req, res, next) => {
+  Hospital.findByIdAndUpdate(
+    req.idHopital,
+    { $push: { metier: req.idMetier } },
+    { runValidators: true, context: "query" },
+    (err, doc) => {
+      if (!err) {
+        console.log(doc);
+      } else {
+        console.log(err);
+      }
+    }
+  );
+};
 function getNbHospitalByCountry(country) {
   return Hospital.countDocuments({ country: country });
 }

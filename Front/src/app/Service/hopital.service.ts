@@ -14,7 +14,7 @@ export class HopitalService {
   uri = "/api/hospital";
 
   // tslint:disable-next-line: deprecation
-  constructor(private http: HttpClient, private httpApi: Http) {}
+  constructor(private http: HttpClient, private httpApi: Http) { }
   private apiurl = "https://restcountries.eu/rest/v2/all";
   /**
    * return all country in API RestCountries.eu
@@ -33,5 +33,14 @@ export class HopitalService {
   PostNewHospital(hospital: Hospital) {
     const obj = hospital;
     return this.http.post(`${this.uri}/add`, obj);
+  }
+
+  addMetier(data: any) {
+    console.log(data)
+    const obj = {
+      idHopital: data.idHopital,
+      idMetier: data[0]._id
+    }
+    return this.http.post(`${this.uri}/addmetier`, obj);
   }
 }

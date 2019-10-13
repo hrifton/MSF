@@ -19,7 +19,7 @@ export class SettingsComponent implements OnInit {
   hoptial: Hospital;
   metiers: Metier[];
 
-  constructor(private ms: MetierService, private us: UserService, private hs: HopitalService) {}
+  constructor(private ms: MetierService, private us: UserService, private hs: HopitalService) { }
   public headerText: Object = [
     { text: 'Users' },
     { text: 'Hospital' },
@@ -33,8 +33,8 @@ export class SettingsComponent implements OnInit {
     this.role = this.us.getStatus();
     this.checkStatut(this.role);
     this.ms.getMetiers().subscribe((data: Metier[]) => {
-       this.metiers = data;
-     });
+      this.metiers = data;
+    });
   }
   update($event) {
     this.us.postUser($event).subscribe((user: User) => {
@@ -47,7 +47,7 @@ export class SettingsComponent implements OnInit {
         .findHopital(this.us.getIdHopital())
         .subscribe((data: Hospital[]) => {
           this.projet = data;
-          console.log( 'hopital : ', this.projet);
+          console.log('hopital : ', this.projet);
         });
     } else {
       this.hs.getHospital().subscribe((data: Hospital[]) => {
@@ -55,5 +55,11 @@ export class SettingsComponent implements OnInit {
         console.log(this.projet);
       });
     }
+  }
+  addMetier($event) {
+    console.log($event)
+    this.hs.addMetier($event).subscribe((data: Hospital) => {
+      console.log(data)
+    });
   }
 }

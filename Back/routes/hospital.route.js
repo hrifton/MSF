@@ -13,8 +13,11 @@ hospitalRoutes.route("/add").post(function(req, res, next) {
 
 //GetaHospital
 hospitalRoutes.route("/id").get(function(req, res) {
- 
-  ctrlHospital.findAHospital(req.query.id,res);
+  ctrlHospital.findAHospital(req.query.id, res);
+});
+hospitalRoutes.route("/addmetier").post(function(req, res, next) {
+  console.log(req.body);
+  ctrlHospital.addMetier(req.body, res, next);
 });
 
 module.exports = hospitalRoutes;
