@@ -14,7 +14,6 @@ var hospitalSchema = new mongoose.Schema({
   metier: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      unique: true,
       ref: "Metiers",
       required: false,
 
@@ -24,7 +23,8 @@ var hospitalSchema = new mongoose.Schema({
           unique: true,
           ref: "catégorie",
           required: false
-        }
+        },
+        { unique: true }
       ]
     }
   ]

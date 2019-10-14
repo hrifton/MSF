@@ -31,7 +31,8 @@ export class HospitalComponent implements OnInit {
     this.projet = $event;
   }
   addMetier($event) {
-    $event.idHopital = this.projet._id
+
+    $event.idHopital = this.projet[0]._id
     this.messageEvent.emit($event)
   }
 }

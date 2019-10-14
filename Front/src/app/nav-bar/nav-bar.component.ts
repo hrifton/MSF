@@ -1,6 +1,6 @@
 import { Router } from "@angular/router";
 //import { UsersComponent } from './../users/users.component';
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, SimpleChanges } from "@angular/core";
 //import { NgModule } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Observable } from "rxjs";
@@ -32,6 +32,11 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
     console.log(localStorage);
     this.storage = localStorage;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
+
   }
 
   LogOut() {

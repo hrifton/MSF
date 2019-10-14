@@ -34,13 +34,13 @@ const routes: Routes = [
   {
     path: "interventions",
     component: InterventionsComponent,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
     //canActivate: [MsalGuard]
   },
   {
     path: "maintenances",
     component: MaintenancesComponent,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
     //canActivate: [MsalGuard]
   },
   // { path: 'historic', component: HistoricComponent, canActivate: [AuthGuard]},
@@ -49,7 +49,7 @@ const routes: Routes = [
   {
     path: "settings",
     component: SettingsComponent,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
     //canActivate: [MsalGuard],
   }
 ];
@@ -58,4 +58,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

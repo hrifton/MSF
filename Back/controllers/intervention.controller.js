@@ -55,7 +55,7 @@ module.exports.liste = (req, res) => {
 
 module.exports.listeByUser = (req, res) => {
   var list = Array();
-
+  console.log(typeof req);
   Intervention.aggregate(
     [
       { $match: { idUser: ObjectId(req.idUser) } },
@@ -213,8 +213,8 @@ module.exports.listeByTech = (req, res) => {
 module.exports.add = (req, res, next) => {
   var intervention = new Intervention(req.body);
   intervention.save((err, doc) => {
-    if (!err) {    
-         res.status(200).send(doc);      
+    if (!err) {
+      res.status(200).send(doc);
     } else {
       if (err.code === 11000) res.status(422).send(["erreur Intervention"]);
       else return next(err);

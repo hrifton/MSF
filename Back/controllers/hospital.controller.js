@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 require("../models/hospital.model");
+const { ObjectId } = require("mongodb");
 mongoose.Promise - global.Promise;
 const Hospital = mongoose.model("Hospital");
 
@@ -42,7 +43,31 @@ module.exports.add = (req, res, next) => {
 
 module.exports.findAHospital = (req, res) => {
   console.log(req);
-  Hospital.findById(req, (err, doc) => {
+
+  Hospital.aggregate(
+    [
+      { $match: { _id: ObjectId(req) } },
+      {
+        $lookup: {
+          from: "metiers",
+          localField: "metier",
+          foreignField: "_id",
+          as: "metiers"
+        }
+      }
+    ],
+    (err, doc) => {
+      if (!err) {
+        res.send(doc);
+      } else {
+        console.log(
+          "Error in Retriving Hopital:" + JSON.stringify(err, undefined, 2)
+        );
+      }
+    }
+  );
+
+  /*Hospital.findById(req, (err, doc) => {
     if (!err) {
       res.send(doc);
     } else {
@@ -51,6 +76,9 @@ module.exports.findAHospital = (req, res) => {
       );
     }
   });
+  
+  
+ */
 };
 
 module.exports.addMetier = (req, res, next) => {
