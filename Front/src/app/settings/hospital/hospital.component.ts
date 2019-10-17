@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from "@angu
 import { Hospital } from "src/app/Class/Hospital";
 import { Metier } from "src/app/Class/Metier";
 import { FormHopitalComponent } from "./form-hopital/form-hopital.component";
+import { Categorie } from 'src/app/Class/Categorie';
 
 @Component({
   selector: "app-hospital",
@@ -16,10 +17,14 @@ export class HospitalComponent implements OnInit {
   FormHopitalComponent: FormHopitalComponent;
 
   data: Hospital;
+  public metierSelect: Metier;
   @Input() role;
   @Input() projet;
   @Input() metiers;
   @Output() messageEvent = new EventEmitter<Metier>();
+  @Output() rmMetierEvent = new EventEmitter<Metier>();
+  @Output() addSubToHopital = new EventEmitter<Categorie>();
+  @Output() rmSubToHopital = new EventEmitter<Categorie>();
 
   ngOnInit() { }
 
@@ -31,8 +36,28 @@ export class HospitalComponent implements OnInit {
     this.projet = $event;
   }
   addMetier($event) {
-
     $event.idHopital = this.projet[0]._id
     this.messageEvent.emit($event)
+  }
+
+  rmMetier($event) {
+    $event.idHopital = this.projet[0]._id
+    this.rmMetierEvent.emit($event)
+  }
+
+  selectMetier($event) {
+    this.metierSelect = $event
+
+  }
+
+  rmSubCat($event) {
+    $event.idHopital = this.projet[0]._id
+    this.rmSubToHopital.emit($event)
+  }
+
+  addSubCat($event) {
+    console.log($event)
+    $event.idHopital = this.projet[0]._id
+    this.addSubToHopital.emit($event)
   }
 }

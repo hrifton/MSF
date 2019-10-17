@@ -18,13 +18,14 @@ export class SettingsComponent implements OnInit {
   role: string;
   hoptial: Hospital;
   metiers: Metier[];
+  flagAddListMetier: boolean = false;
 
   constructor(private ms: MetierService, private us: UserService, private hs: HopitalService) { }
   public headerText: Object = [
     { text: 'Users' },
     { text: 'Hospital' },
     { text: 'Maintenance' },
-    { text: 'Trade/Categories' },
+    { text: 'Categories/Sub-Categories' },
     { text: 'Assets' }
   ];
   public projet: Hospital[];
@@ -57,9 +58,30 @@ export class SettingsComponent implements OnInit {
     }
   }
   addMetier($event) {
-    console.log($event)
+    console.log($event);
     this.hs.addMetier($event).subscribe((data: Hospital) => {
+
+      console.log(data);
+    });
+  }
+
+  rmMetier($event) {
+    console.log($event);
+    this.hs.rmMetier($event).subscribe((data: Hospital) => {
+      console.log(data);
+    });
+  }
+  rmSubCat($event) {
+    console.log($event)
+    /*this.hs.rmSub($event).subscribe((data: Hopital) => {
+      console.log(data)
+    })*/
+  }
+  addSubToHopital($event) {
+    this.hs.addSubCatToHop($event).subscribe((data: Hospital) => {
       console.log(data)
     });
   }
+
+
 }

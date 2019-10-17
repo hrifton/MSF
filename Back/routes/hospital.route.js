@@ -16,8 +16,16 @@ hospitalRoutes.route("/id").get(function(req, res) {
   ctrlHospital.findAHospital(req.query.id, res);
 });
 hospitalRoutes.route("/addmetier").post(function(req, res, next) {
-  console.log(req.body);
   ctrlHospital.addMetier(req.body, res, next);
+});
+hospitalRoutes
+  .route("/delete/:idHopital/:idMetier")
+  .delete(function(req, res, next) {
+    ctrlHospital.rmMetier(req.params, res, next);
+  });
+
+hospitalRoutes.route("/addSubCat").post(function(req, res, next) {
+  ctrlHospital.addSubCat(req.body, res, next);
 });
 
 module.exports = hospitalRoutes;

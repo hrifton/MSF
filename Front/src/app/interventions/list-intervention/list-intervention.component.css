@@ -10,15 +10,15 @@
   cursor: not-allowed;
 }
 
-.Open {
-  background-color: #fd242463;
+.high {
+  background-color: hsla(0, 66%, 64%, 0.835);
 }
-.Done {
-  background-color: #3da11e69;
+.medium {
+  background-color: hsla(37, 86%, 66%, 0.835);
 }
 
-.Waiting {
-  background-color: #af941c69;
+.low {
+  background-color: hsla(55, 94%, 55%, 0.835);
 }
 
 .attribution {

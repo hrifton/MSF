@@ -82,10 +82,40 @@ module.exports.findAHospital = (req, res) => {
 };
 
 module.exports.addMetier = (req, res, next) => {
+  console.log(req);
+  Hospital.findByIdAndUpdate(
+    req[0].idHopital,
+    { $addToSet: { metier: req } },
+    { runValidators: true, context: "query" },
+    (err, doc) => {
+      if (!err) {
+        res.status("200").send(doc);
+      } else {
+        res.status("400").send(err);
+      }
+    }
+  );
+};
+
+module.exports.rmMetier = (req, res, next) => {
   Hospital.findByIdAndUpdate(
     req.idHopital,
-    { $push: { metier: req.idMetier } },
+    { $pull: { metier: req.idMetier } },
     { runValidators: true, context: "query" },
+    (err, doc) => {
+      if (!err) {
+        res.status("200").send(doc);
+      } else {
+        res.status("400").send(err);
+      }
+    }
+  );
+};
+
+module.exports.addSubCat = (req, res, next) => {
+  Hospital.findById(
+    req.idHopital,
+    { metier: { $eq: req.idMetier } },
     (err, doc) => {
       if (!err) {
         console.log(doc);

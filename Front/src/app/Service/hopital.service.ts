@@ -37,10 +37,25 @@ export class HopitalService {
 
   addMetier(data: any) {
     console.log(data)
+    data[0].idHopital = data.idHopital
+
+    return this.http.post(`${this.uri}/addmetier`, data);
+  }
+
+  rmMetier(data: any) {
     const obj = {
       idHopital: data.idHopital,
       idMetier: data[0]._id
     }
-    return this.http.post(`${this.uri}/addmetier`, obj);
+    return this.http.delete(`${this.uri}/delete/${obj.idHopital}/${obj.idMetier}`);
+  }
+
+  rmSub(data: any) {
+    console.log(data)
+  }
+
+
+  addSubCatToHop(data: any) {
+    return this.http.post(`${this.uri}/addSubCat`, data);
   }
 }

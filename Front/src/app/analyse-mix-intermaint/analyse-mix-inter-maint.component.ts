@@ -153,10 +153,10 @@ export class AnalyseMixIntermaintComponent implements OnInit {
     this.analyseIntervention = [];
     data.forEach(element => {
       if (element.type === 'Maintenance') {
-    
+
         this.analyseMaintenance.push(element);
       } else {
-       
+
         this.analyseIntervention.push(element);
       }
     });
@@ -198,7 +198,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
           (data.open + data.done + data.waiting + data.canceled)
         ),
         text: 'Done',
-        fill: '#3da11e69'
+        fill: '#5c940d'
       },
       {
         x: 'Open :' + data.open,
@@ -207,7 +207,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
           (data.open + data.done + data.waiting + data.canceled)
         ),
         text: 'open :' + data.open,
-        fill: '#fd242463'
+        fill: '#c0eb75'
       },
       {
         x: 'Waiting :' + data.waiting,
@@ -216,7 +216,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
           (data.open + data.done + data.waiting + data.canceled)
         ),
         text: 'waiting :' + data.waiting,
-        fill: '#af941c69'
+        fill: '#94d82d'
       },
       {
         x: 'Canceled :' + data.canceled,
@@ -225,7 +225,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
           (data.open + data.done + data.waiting + data.canceled)
         ),
         text: 'canceled :' + data.canceled,
-        fill: '#ffd8a8'
+        fill: '#fa5252'
       }
     ];
 

@@ -4,7 +4,7 @@
       <div class="e-card-header">
         <div class="e-card-header-caption">
           <div class="e-card-header-title">
-            <h3>Form of trade</h3>
+            <h3>Form of Categorie</h3>
           </div>
         </div>
       </div>
@@ -15,37 +15,56 @@
               <div class="form-group">
                 <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
                   <div class="e-float-input">
-                    <input id="name" type="text" formControlName="name">
+                    <input id="name" type="text" formControlName="name" />
                     <span class="e-float-line"></span>
-                    <label for="name" class="e-float-text">Trade</label>
+                    <label for="name" class="e-float-text">Categorie</label>
                   </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
                   <div class="e-float-input">
-                    <textarea matInput formControlName="description" placeholder="Description" rows="brightness_4"
-                      #description></textarea>
+                    <textarea
+                      matInput
+                      formControlName="description"
+                      placeholder="Description"
+                      rows="brightness_4"
+                      #description
+                    ></textarea>
                     <span class="e-float-line"></span>
-                    <label for="description" class="e-float-text">Description</label>
+                    <label for="description" class="e-float-text"
+                      >Description</label
+                    >
                   </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
                   <div class="e-float-input">
-                  <div id="default-control">
-                    
-                      <input ejs-colorpicker id='color-picker' type='color' formControlName="color" />
-                      <label for="description" class="e-float-text">Choose a color</label>
-                  </div>
+                    <div id="default-control">
+                      <input
+                        ejs-colorpicker
+                        id="color-picker"
+                        type="color"
+                        formControlName="color"
+                      />
+                      <label for="description" class="e-float-text"
+                        >Choose a color</label
+                      >
+                    </div>
                   </div>
                 </div>
-                
               </div>
             </form>
             <div>
-              <button (click)="saveMetier(metierForm)" mat-raised-button="mat-raised-button-left" color="primary"
-                [disabled]=!metierForm.valid>Save</button>
+              <button
+                (click)="saveMetier(metierForm)"
+                mat-raised-button="mat-raised-button-left"
+                color="primary"
+                [disabled]="!metierForm.valid"
+              >
+                Save
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>

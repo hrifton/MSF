@@ -253,21 +253,14 @@ export class ListInterventionComponent implements OnInit {
   rowDataBound(args: RowDataBoundEventArgs) {
 
     let data = args.data
-    let metier= data['metier']
-      metier=metier[0].name===undefined?'':metier[0].name;
-    if (data['status'] === "Done") {
-      args.row.classList.add('Done');
-    } else if (data['status'] === "Waiting") {
-      args.row.classList.add('Waiting');
-    } else if (data['status'] === "Open") {
-      console.log("Hors condiftion :",data["tech"], metier);
-      if (data['tech'] === "" || metier === "") {
-        console.log("dedans :",data['tech'],metier)
-        args.row.classList.add('attribution');
-      } else { 
-        args.row.classList.add('Open');
-      }
-
+    let metier = data['metier']
+    metier = metier[0].name === undefined ? '' : metier[0].name;
+    if (data['priority'] === "High") {
+      args.row.classList.add('high');
+    } else if (data['priority'] === "Medium") {
+      args.row.classList.add('medium');
+    } else if (data['priority'] === "Low") {
+      args.row.classList.add('low');
     }
   }
 }
