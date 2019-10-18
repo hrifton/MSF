@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 require("../models/hospital.model");
+require("../models/metier.model");
 const { ObjectId } = require("mongodb");
 mongoose.Promise - global.Promise;
 const Hospital = mongoose.model("Hospital");
@@ -42,30 +43,15 @@ module.exports.add = (req, res, next) => {
 };
 
 module.exports.findAHospital = (req, res) => {
-  console.log(req);
-
-  Hospital.aggregate(
-    [
-      { $match: { _id: ObjectId(req) } },
-      {
-        $lookup: {
-          from: "metiers",
-          localField: "metier",
-          foreignField: "_id",
-          as: "metiers"
-        }
-      }
-    ],
-    (err, doc) => {
-      if (!err) {
-        res.send(doc);
-      } else {
-        console.log(
-          "Error in Retriving Hopital:" + JSON.stringify(err, undefined, 2)
-        );
-      }
+  Hospital.find({ _id: ObjectId(req) }, (err, doc) => {
+    if (!err) {
+      res.send(doc);
+    } else {
+      console.log(
+        "Error in Retriving Hopital:" + JSON.stringify(err, undefined, 2)
+      );
     }
-  );
+  });
 
   /*Hospital.findById(req, (err, doc) => {
     if (!err) {
@@ -82,16 +68,23 @@ module.exports.findAHospital = (req, res) => {
 };
 
 module.exports.addMetier = (req, res, next) => {
-  console.log(req);
   Hospital.findByIdAndUpdate(
     req[0].idHopital,
-    { $addToSet: { metier: req } },
-    { runValidators: true, context: "query" },
+    {
+      $push: {
+        metier: {
+          _id: req[0]._id,
+          name: req[0].name,
+          descriptif: req[0].descriptif,
+          color: req[0].color
+        }
+      }
+    },
     (err, doc) => {
       if (!err) {
-        res.status("200").send(doc);
+        console.log(doc);
       } else {
-        res.status("400").send(err);
+        console.log(err);
       }
     }
   );
@@ -113,9 +106,18 @@ module.exports.rmMetier = (req, res, next) => {
 };
 
 module.exports.addSubCat = (req, res, next) => {
-  Hospital.findById(
-    req.idHopital,
-    { metier: { $eq: req.idMetier } },
+ console.log(typeof req[0].idMetier)
+ Hospital.updateOne(
+    {'_id':ObjectId(req[0].idHopital),"metier._id": req[0].idMetier},
+    {
+      $push: {
+        'metier.$.categorie': {
+          _id: req[0]._id,
+          name: req[0].name,
+          color: req[0].color
+        }
+      }
+    },
     (err, doc) => {
       if (!err) {
         console.log(doc);

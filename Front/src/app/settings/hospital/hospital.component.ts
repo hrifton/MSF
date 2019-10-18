@@ -57,7 +57,8 @@ export class HospitalComponent implements OnInit {
 
   addSubCat($event) {
     console.log($event)
-    $event.idHopital = this.projet[0]._id
+    $event[0].idHopital = this.projet[0]._id
+    $event[0].idMetier = $event.idMetier
     this.addSubToHopital.emit($event)
   }
 }

@@ -40,8 +40,9 @@ export class MetierHopitalComponent implements OnInit {
   //#endregion
   constructor(private fb: FormBuilder) { }
   public categorieForm: FormGroup;
+  private lMetier=this.metiers
   ngOnInit() {
-    this.metierToHospital = this.projet[0].metiers;
+    this.metierToHospital = this.projet[0].metier;
     this.filtreTableMetier()
 
     this.selectionOptions = { type: 'Multiple' };
@@ -86,6 +87,7 @@ export class MetierHopitalComponent implements OnInit {
     for (let j = 0; j < this.metiers.length; j++) {
       for (let i = 0; i < this.metierToHospital.length; i++) {
         if (this.metierToHospital[i]._id == this.metiers[j]._id) {
+          this.metierToHospital[i]=this.metiers[j]
           this.metiers.splice(j, 1);
         }
 
