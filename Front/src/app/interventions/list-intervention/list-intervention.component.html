@@ -12,7 +12,7 @@
     (actionBegin)="actionBegin($event)"
     (actionComplete)="actionComplete($event)"
   >
-    <e-columns>
+    <e-columns *ngIf="status == 'Cancel'">
       <e-column
         field="slug"
         headerText="ID"

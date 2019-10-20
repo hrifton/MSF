@@ -19,6 +19,7 @@ export class SettingsComponent implements OnInit {
   hoptial: Hospital;
   metiers: Metier[];
   flagAddListMetier: boolean = false;
+  lastMetier: Hospital;
 
   constructor(private ms: MetierService, private us: UserService, private hs: HopitalService) { }
   public headerText: Object = [
@@ -48,20 +49,17 @@ export class SettingsComponent implements OnInit {
         .findHopital(this.us.getIdHopital())
         .subscribe((data: Hospital[]) => {
           this.projet = data;
-          console.log('hopital : ', this.projet);
         });
     } else {
       this.hs.getHospital().subscribe((data: Hospital[]) => {
         this.projet = data;
-        console.log(this.projet);
       });
     }
   }
   addMetier($event) {
     console.log($event);
     this.hs.addMetier($event).subscribe((data: Hospital) => {
-
-      console.log(data);
+      this.lastMetier=data
     });
   }
 
