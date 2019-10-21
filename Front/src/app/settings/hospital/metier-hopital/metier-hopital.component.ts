@@ -90,11 +90,10 @@ export class MetierHopitalComponent implements OnInit {
   filtreTableMetier() {
     const cloneConstMetier = this.constMetiers
     let tmpArrayMetier = []
-
     this.constMetiers.forEach(elementConstMetier => {
       var found = this.metierToHospital.find(function (element) {
 
-        return element._id == elementConstMetier._id
+        return element._id == elementConstMetier.id
       })
       if (!found) {
         tmpArrayMetier.push(elementConstMetier)
@@ -112,11 +111,12 @@ export class MetierHopitalComponent implements OnInit {
   rowSelected($event) {
     this.subCat = $event.data
     var found = this.SubCatSelect.find(function (element) {
-      return element._id == $event.data._id
+      return element._id == $event.data.id
     })
     let tmpArraySubCat = []
+    console.log(found)
     var idCategorie = found.categorie;
-
+      this.subCat=found
     idCategorie.forEach(element1 => {
       var foundsubCat = $event.data.categorie.find(function (element) {
         return element._id == element1._id
@@ -159,8 +159,8 @@ export class MetierHopitalComponent implements OnInit {
 
   subRowDrop(args: any) {
     this.idx = args.fromIndex;
-    this.subCat = args.data;
-    this.subCat.idMetier = this.metierSelect._id;
+    //this.subCat = args.data;
+   // this.subCat.idMetier = this.metierSelect.id;
     console.log(this.subCat);
 
     if (this.flagAddSubCat) {

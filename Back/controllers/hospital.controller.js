@@ -73,7 +73,7 @@ module.exports.addMetier = (req, res, next) => {
     {
       $push: {
         metier: {
-          _id: req[0]._id,
+          id: req[0]._id,
           name: req[0].name,
           descriptif: req[0].descriptif,
           color: req[0].color
@@ -105,6 +105,7 @@ module.exports.rmMetier = (req, res, next) => {
 };
 
 module.exports.addSubCat = (req, res, next) => {
+  console.log(req)
   Hospital.updateOne(
     { _id: ObjectId(req[0].idHopital), "metier.id": req[0].idMetier },
     {

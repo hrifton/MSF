@@ -128,7 +128,7 @@
                           #grid
                           (rowDragStart)="rowDragStart($event)"
                           (rowDrop)="rowDrop($event)"
-                          [dataSource]="constMetiers"
+                          [dataSource]="metiers"
                           [allowSelection]="true"
                           [allowRowDragAndDrop]="true"
                           [selectionSettings]="selectionOptions"
@@ -182,7 +182,7 @@
                 <div class="e-card-header">
                   <div class="e-card-header-caption">
                     <div class="e-card-header-title">
-                      <h5>List Sub-categories of {{ subCat.name }}</h5>
+                      <h5>List Sub-categories of {{ subCat.name }} </h5>
                     </div>
                   </div>
                 </div>
@@ -215,7 +215,7 @@
                       <div class="col-6">
                         <ejs-grid
                           id="DestGrid"
-                          [dataSource]="subCat.categorie"
+                          [dataSource]="idCategorie"
                           (rowDragStart)="subRowDragStart($event)"
                           (rowDrop)="subRmRowDrag($event)"
                           [allowSelection]="true"
