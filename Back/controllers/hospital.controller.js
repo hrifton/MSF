@@ -82,37 +82,35 @@ module.exports.addMetier = (req, res, next) => {
     },
     (err, doc) => {
       if (!err) {
-        console.log(doc);
+        res.status("200").send(doc);
       } else {
-        console.log(err);
+        "Error in Retriving Hopital:" + JSON.stringify(err, undefined, 2);
       }
     }
   );
 };
 
 module.exports.rmMetier = (req, res, next) => {
-  Hospital.findByIdAndUpdate(
-    req.idHopital,
-    { $pull: { metier: req.idMetier } },
-    { runValidators: true, context: "query" },
+  Hospital.updateOne(
+    { _id: ObjectId(req.idHopital), "metier.id": req.idMetier },
     (err, doc) => {
       if (!err) {
         res.status("200").send(doc);
       } else {
-        res.status("400").send(err);
+        //res.status("400").send(err);
+        console.log(err);
       }
     }
   );
 };
 
 module.exports.addSubCat = (req, res, next) => {
- console.log(typeof req[0].idMetier)
- Hospital.updateOne(
-    {'_id':ObjectId(req[0].idHopital),"metier._id": req[0].idMetier},
+  Hospital.find(
+    { _id: ObjectId(req[0].idHopital), "metier._id": req[0].idMetier },
     {
       $push: {
-        'metier.$.categorie': {
-          _id: req[0]._id,
+        "metier.$.categorie": {
+          id: req[0]._id,
           name: req[0].name,
           color: req[0].color
         }

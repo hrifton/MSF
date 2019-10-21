@@ -13,7 +13,6 @@ export class MetierHopitalComponent implements OnInit {
   //#region
   @Input() metiers;
   @Input() projet;
-  @Input() lastMetier;
   @Output() messageEvent = new EventEmitter<Metier>();
   @Output() rmMetier = new EventEmitter<Metier>();
   @Output() addSubCat = new EventEmitter<Categorie>();
@@ -38,7 +37,7 @@ export class MetierHopitalComponent implements OnInit {
   private flagRmSubCat: boolean;
   private SubCatSelect: any[];
   private constMetiers: any[];
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
   public categorieForm: FormGroup;
   private myClonedArray: any[];
   //#endregion
@@ -69,14 +68,16 @@ export class MetierHopitalComponent implements OnInit {
       this.rmMetier.emit(this.dta);
       this.rmFlag = false;
     } else if (this.flag) {
+      if (this.metierToHospital.length <= 0) {
+        // this.metierToHospital = this.dta
+      }
+
       this.messageEvent.emit(this.dta);
       this.flag = false;
     }
   }
   // si deplacement element du tableau de gauche vers tableau de droit  flag passe a true pour ajouter element des catégorie de l'hopital
   rowDragStart(args: any) {
-    this.sizeMetiers = this.metiers.length;
-
     this.flag = true;
   }
   // si deplacement element du tableau de droite vers tableau de gauche  flag passe a true pour retire element des catégorie de l'hopital
@@ -87,29 +88,21 @@ export class MetierHopitalComponent implements OnInit {
   }
   // compare les deux tableaux pour ne pas avoir de doublon
   filtreTableMetier() {
-  /* for (let j = 0; j < this.constMetiers.length; j++) {
-      for (let i = 0; i < this.metierToHospital.length; i++) {
-        if (this.metierToHospital[i]._id === this.constMetiers[j]._id) {
-          this.SubCatSelect.push(this.constMetiers[j]);
-          this.constMetiers.splice(j, 1);
-        }
+    const cloneConstMetier = this.constMetiers
+    let tmpArrayMetier = []
+
+    this.constMetiers.forEach(elementConstMetier => {
+      var found = this.metierToHospital.find(function (element) {
+
+        return element._id == elementConstMetier._id
+      })
+      if (!found) {
+        tmpArrayMetier.push(elementConstMetier)
+      } else {
+        this.SubCatSelect.push(elementConstMetier);
       }
-    }*/
-
-this.constMetiers.forEach(elementConstMetier => {
-
-  this.metierToHospital.forEach(elementMetierToHopital => {
-
-    if (elementConstMetier._id === elementMetierToHopital._id) {
-      this.SubCatSelect.push(elementConstMetier);
-    }
-  });
-});
-console.log(this.SubCatSelect);
-
-  }
-  testListe() {
-    console.log(this.metiers);
+    });
+    this.constMetiers = tmpArrayMetier
   }
   /**
    *
@@ -117,33 +110,36 @@ console.log(this.SubCatSelect);
    * Metier selectionner transfere vers list sub-Categorie
    */
   rowSelected($event) {
-    this.metierSelect = $event.data;
-    this.SubCatSelect.forEach(element => {
-  if (element._id === this.metierSelect._id) {
-    this.subCat = element;
-  }
-});
-const sizeSUBcatIdCat=this.subCat.idCategorie.length
-    for (let i = 0; i <= sizeSUBcatIdCat; i++) {
-      const element = this.subCat.idCategorie[i];
-      console.log(element)
-      for (let j = 0; j < this.metierSelect.categorie.length; j++) {
-        const element2 = this.metierSelect.categorie[j];
-        console.log(sizeSUBcatIdCat);
-        if (element._id == element2._id) {
-          this.subCat.idCategorie.splice(i, 1);
-        }
+    this.subCat = $event.data
+    var found = this.SubCatSelect.find(function (element) {
+      return element._id == $event.data._id
+    })
+    let tmpArraySubCat = []
+    var idCategorie = found.categorie;
+
+    idCategorie.forEach(element1 => {
+      var foundsubCat = $event.data.categorie.find(function (element) {
+        return element._id == element1._id
+      })
+      if (!foundsubCat) {
+        tmpArraySubCat.push(element1)
       }
-    }
-    this.createFormCat(this.metierSelect);
+    });
+
+    this.metierSelect = tmpArraySubCat
+    this.subCat.idCategorie = $event.data.categorie
+    console.log(this.metierSelect, this.subCat)
+
+    this.createFormCat(this.subCat);
   }
 
   //#endregion
   //#region SubCategorie
   createFormCat(data) {
+    console.log(data)
     this.categorieForm = this.fb.group({
       categorie: new FormControl('', [Validators.required]),
-      idMetier: new FormControl(data.id, [Validators.required]),
+      idMetier: new FormControl(data._id, [Validators.required]),
       color: new FormControl('', [Validators.required])
     });
   }

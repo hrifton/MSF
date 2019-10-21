@@ -13,7 +13,7 @@ module.exports.add = (req, res, next) => {
     if (!err) {
       Metier.findOneAndUpdate(
         { _id: req.idMetier },
-        { $push: { idCategorie: doc } },
+        { $push: { categorie: doc } },
         (err, metier) => {
           if (!err) {
             res.send(doc);

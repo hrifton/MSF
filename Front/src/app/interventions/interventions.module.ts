@@ -45,7 +45,7 @@ import {
   ToolbarService,
   PageService
 } from "@syncfusion/ej2-angular-grids";
-import { ButtonModule, CheckBoxModule , RadioButtonModule } from '@syncfusion/ej2-angular-buttons';
+import { ButtonModule, CheckBoxModule, RadioButtonModule } from '@syncfusion/ej2-angular-buttons';
 import {
   MatGridListModule,
   MatCardModule,
@@ -55,6 +55,7 @@ import {
   MatSelectModule,
   MatRadioModule
 } from "@angular/material";
+import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,9 @@ import {
     ReactiveFormsModule,
     MatInputModule,
     InterventionsRoutingModule,
-    BrowserModule
+    BrowserModule,
+    ScheduleModule,
+
   ],
   providers: [
     EditService,
@@ -104,4 +107,4 @@ import {
   ],
   exports: [MatDatepickerModule, MatNativeDateModule]
 })
-export class InterventionsModule {}
+export class InterventionsModule { }

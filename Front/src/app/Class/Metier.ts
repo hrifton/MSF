@@ -1,13 +1,13 @@
 export class Metier {
   id: string;
   metier: string;
-  idCategorie: Object[];
+  categorie: Object[];
   color: string;
 
   constructor(data) {
     this.id = data.id;
     this.metier = data.metier;
-    this.idCategorie = data.idCategorie;
+    this.categorie = data.categorie;
     this.color = data.color;
   }
 }

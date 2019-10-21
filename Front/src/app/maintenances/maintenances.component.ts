@@ -53,6 +53,7 @@ export class MaintenancesComponent implements OnInit {
   }
   // TODO Hicham multi requet
   saveMaintenance($event) {
+    console.log($event)
     this.dms.postDateMaintenance($event);
     this.datemaitenance.push($event);
     this.calendrier.refreshAgenda();
@@ -64,5 +65,5 @@ export class MaintenancesComponent implements OnInit {
     // fonction du component enfant pour refresh le calendrier
     this.calendrier.refreshAgenda();
   }
-  ngOnInit() {}
+  ngOnInit() { }
 }

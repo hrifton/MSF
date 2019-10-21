@@ -57,9 +57,9 @@ export class SettingsComponent implements OnInit {
     }
   }
   addMetier($event) {
-    console.log($event);
+    console.log(this.projet);
     this.hs.addMetier($event).subscribe((data: Hospital) => {
-      this.lastMetier=data
+      this.lastMetier = data
     });
   }
 

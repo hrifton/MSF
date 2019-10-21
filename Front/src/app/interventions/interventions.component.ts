@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Internationalization } from '@syncfusion/ej2-base';
+import { EventSettingsModel, DayService, WeekService, AgendaService, TimelineViewsService, TimelineMonthService } from '@syncfusion/ej2-angular-schedule';
 
 /**
  * Import service
@@ -35,6 +37,8 @@ export class InterventionsComponent implements OnInit {
   public compte = [];
   public departements: Object = [];
 
+  public eventSettings: EventSettingsModel = {};
+
   userDetails;
   techs: User[];
 
@@ -61,6 +65,7 @@ export class InterventionsComponent implements OnInit {
     this.interventions = [];
     this.maintenance = [];
     this.statusInsertIntervention = null;
+    this.eventSettings.dataSource = []
   }
 
   /**
@@ -187,7 +192,10 @@ export class InterventionsComponent implements OnInit {
       this.is
         .getInterventionsBytech(this.us.getFullName())
         .subscribe((data: Intervention[]) => {
-          this.interventions = data;
+
+          this.interventions = this.dateToAgenda(data)
+          this.eventSettings.dataSource = this.dateToAgenda(data)
+          console.log(data)
         });
     } else if (this.userDetails === 'Admin') {
       // alert("superieur");
@@ -233,6 +241,20 @@ export class InterventionsComponent implements OnInit {
     } else {
       console.log('super Admin  *******************');
     }
+  }
+  dateToAgenda(data: Intervention[]) {
+    for (let i in data) {
+      const dateString = data[i].day;
+      const year = dateString.substr(6, 10);
+      const month = dateString.substr(3, 5);
+      const day = dateString.substr(0, 2);
+      console.log(year, month, day)
+      console.log(data[i].day[1])
+      data[i].StartTime = new Date(Date.parse(data[i].day));
+      console.log(data[i].StartTime)
+      //data[i].EndTime = new Date(Date.parse(Date(data[i].day)));
+    }
+    return data
   }
   /**
    *

@@ -23,7 +23,7 @@ module.exports.add = (req, res, next) => {
 module.exports.getById = (req, res) => {
   console.log(req);
   Metier.findById({ _id: req._id }, (err, doc) => {
-    if (!err) res.send(doc.idCategorie);
+    if (!err) res.send(doc.categorie);
     else console.log(err);
   });
 };

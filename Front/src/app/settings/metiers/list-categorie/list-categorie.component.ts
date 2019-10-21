@@ -34,7 +34,7 @@ export class ListCategorieComponent implements OnInit {
   show: boolean;
 
   ngOnInit() {
-    this.data = this.metierSelect.idCategorie;
+    this.data = this.metierSelect.categorie;
     console.log("data : ", this.data)
     this.pageSettings = { pageCount: 5 };
     this.filterSettings = { type: "Menu" };
@@ -50,7 +50,7 @@ export class ListCategorieComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes)
     if (changes.metierSelect.firstChange === false) {
-      this.data = changes.metierSelect.currentValue.idCategorie;
+      this.data = changes.metierSelect.currentValue.categorie;
     }
 
   }

@@ -11,7 +11,7 @@ import { Categorie } from 'src/app/Class/Categorie';
 })
 export class HospitalComponent implements OnInit {
   // metiers = new Array<Metier>();
-  constructor() {}
+  constructor() { }
 
   @ViewChild(FormHopitalComponent)
   FormHopitalComponent: FormHopitalComponent;
@@ -21,13 +21,12 @@ export class HospitalComponent implements OnInit {
   @Input() role;
   @Input() projet;
   @Input() metiers;
-  @Input()  lastMetier;
   @Output() messageEvent = new EventEmitter<Metier>();
   @Output() rmMetierEvent = new EventEmitter<Metier>();
   @Output() addSubToHopital = new EventEmitter<Categorie>();
   @Output() rmSubToHopital = new EventEmitter<Categorie>();
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   update($event) {
     this.data = $event;

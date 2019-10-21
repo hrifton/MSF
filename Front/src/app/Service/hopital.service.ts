@@ -36,13 +36,13 @@ export class HopitalService {
   }
 
   addMetier(data: any) {
-    console.log(data)
     data[0].idHopital = data.idHopital
 
     return this.http.post(`${this.uri}/addmetier`, data);
   }
 
   rmMetier(data: any) {
+    console.log('delete metier to liste Hopistal')
     const obj = {
       idHopital: data.idHopital,
       idMetier: data[0]._id
