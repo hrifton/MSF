@@ -105,8 +105,8 @@ module.exports.rmMetier = (req, res, next) => {
 };
 
 module.exports.addSubCat = (req, res, next) => {
-  Hospital.find(
-    { _id: ObjectId(req[0].idHopital), "metier._id": req[0].idMetier },
+  Hospital.updateOne(
+    { _id: ObjectId(req[0].idHopital), "metier.id": req[0].idMetier },
     {
       $push: {
         "metier.$.categorie": {

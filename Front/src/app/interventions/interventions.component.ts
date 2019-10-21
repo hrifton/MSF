@@ -250,7 +250,7 @@ export class InterventionsComponent implements OnInit {
       const day = dateString.substr(0, 2);
       console.log(year, month, day)
       console.log(data[i].day[1])
-      data[i].StartTime = new Date(Date.parse(data[i].day));
+      //data[i].StartTime = new Date(Date.parse(data[i].day));
       console.log(data[i].StartTime)
       //data[i].EndTime = new Date(Date.parse(Date(data[i].day)));
     }
