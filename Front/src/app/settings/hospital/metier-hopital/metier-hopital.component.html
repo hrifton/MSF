@@ -128,7 +128,7 @@
                           #grid
                           (rowDragStart)="rowDragStart($event)"
                           (rowDrop)="rowDrop($event)"
-                          [dataSource]="metiers"
+                          [dataSource]="constMetiers"
                           [allowSelection]="true"
                           [allowRowDragAndDrop]="true"
                           [selectionSettings]="selectionOptions"
@@ -193,7 +193,7 @@
                       <div class="col-6">
                         <ejs-grid
                           id="Grid"
-                          [dataSource]="metierSelect"
+                          [dataSource]="subCat.categorie"
                           (rowDragStart)="subRowDragStart($event)"
                           (rowDrop)="subRowDrop($event)"
                           [allowSelection]="true"
@@ -215,7 +215,7 @@
                       <div class="col-6">
                         <ejs-grid
                           id="DestGrid"
-                          [dataSource]="idCategorie"
+                          [dataSource]="subCatToHospital.categorie"
                           (rowDragStart)="subRowDragStart($event)"
                           (rowDrop)="subRmRowDrag($event)"
                           [allowSelection]="true"

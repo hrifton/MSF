@@ -13,7 +13,7 @@ var hospitalSchema = new mongoose.Schema({
   leveOfCare: { type: String },
   metier: [
     {
-      _id: { type: String },
+      _id:{type:Object},
       name: { type: String },
       descriptif: { type: String },
       color: { type: String },

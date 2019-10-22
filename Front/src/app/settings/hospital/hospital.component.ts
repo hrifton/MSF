@@ -55,15 +55,6 @@ export class HospitalComponent implements OnInit {
   }
 
   addSubCat($event) {
-    
-    let data :{idHopital:string,
-                categorie:{},
-              idMetier:string}
-    console.log($event);
-    data.idHopital = this.projet[0]._id;
-    data.idMetier = $event.idMetier;
-    data.categorie=$event
-    console.log($event)
     this.addSubToHopital.emit($event);
   }
 }

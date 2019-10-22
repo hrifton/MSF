@@ -71,9 +71,9 @@ module.exports.addMetier = (req, res, next) => {
   Hospital.findByIdAndUpdate(
     req[0].idHopital,
     {
-      $push: {
+      $addToSet: {
         metier: {
-          id: req[0]._id,
+          _id: req[0]._id,
           name: req[0].name,
           descriptif: req[0].descriptif,
           color: req[0].color
@@ -97,31 +97,32 @@ module.exports.rmMetier = (req, res, next) => {
       if (!err) {
         res.status("200").send(doc);
       } else {
-        //res.status("400").send(err);
-        console.log(err);
+       res.status("400").send(err);
       }
     }
   );
 };
 
 module.exports.addSubCat = (req, res, next) => {
-  console.log(req)
+  console.log(typeof ObjectId(req.idMetier))
   Hospital.updateOne(
-    { _id: ObjectId(req[0].idHopital), "metier.id": req[0].idMetier },
+    { _id: ObjectId(req.idHopital)
+      , "metier._id": req.idMetier
+     },
     {
-      $push: {
+      $addToSet: {
         "metier.$.categorie": {
-          id: req[0]._id,
-          name: req[0].name,
-          color: req[0].color
+          id: req._id,
+          name: req.name,
+          color: req.color
         }
       }
     },
     (err, doc) => {
       if (!err) {
-        console.log(doc);
+        res.status("200").send(doc);
       } else {
-        console.log(err);
+        res.status("400").send(err);
       }
     }
   );

@@ -3,6 +3,7 @@ import { RowDDService, SelectionService } from '@syncfusion/ej2-angular-grids';
 import { Metier } from 'src/app/Class/Metier';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { Categorie } from 'src/app/Class/Categorie';
+import * as _ from 'lodash';
 @Component({
   selector: 'app-metier-hopital',
   templateUrl: './metier-hopital.component.html',
@@ -37,6 +38,7 @@ export class MetierHopitalComponent implements OnInit {
   private flagRmSubCat: boolean;
   private SubCatSelect: any[];
   private constMetiers: any[];
+  subCatToHospital: any;
   constructor(private fb: FormBuilder) { }
   public categorieForm: FormGroup;
   private myClonedArray: any[];
@@ -88,20 +90,27 @@ export class MetierHopitalComponent implements OnInit {
   }
   // compare les deux tableaux pour ne pas avoir de doublon
   filtreTableMetier() {
-    const cloneConstMetier = this.constMetiers
-    let tmpArrayMetier = []
-    this.constMetiers.forEach(elementConstMetier => {
-      var found = this.metierToHospital.find(function (element) {
+    const tmpArrayMetier = [];
 
-        return element._id == elementConstMetier.id
-      })
+    this.constMetiers.forEach(elementConstMetier => {
+      /**
+       * check dans le tableau metierToHospital si element_id existe returne true ou false
+       */
+      let found = this.metierToHospital.find(function (element) {
+        return element._id == elementConstMetier._id;
+      });
+
+      // si return false le metier n'est pas assigne a l'hopital alors stocke
+      // sinon il est stock dans la liste des metier assigné a l'hopital
       if (!found) {
-        tmpArrayMetier.push(elementConstMetier)
+        tmpArrayMetier.push(elementConstMetier);
       } else {
         this.SubCatSelect.push(elementConstMetier);
       }
     });
-    this.constMetiers = tmpArrayMetier
+    // reinitialisation des metier non assigne a l'hopital
+    this.constMetiers = tmpArrayMetier;
+
   }
   /**
    *
@@ -109,34 +118,40 @@ export class MetierHopitalComponent implements OnInit {
    * Metier selectionner transfere vers list sub-Categorie
    */
   rowSelected($event) {
-    this.subCat = $event.data
-    var found = this.SubCatSelect.find(function (element) {
-      return element._id == $event.data.id
-    })
-    let tmpArraySubCat = []
-    console.log(found)
-    var idCategorie = found.categorie;
-      this.subCat=found
-    idCategorie.forEach(element1 => {
-      var foundsubCat = $event.data.categorie.find(function (element) {
-        return element._id == element1._id
-      })
-      if (!foundsubCat) {
-        tmpArraySubCat.push(element1)
-      }
-    });
 
-    this.metierSelect = tmpArraySubCat
-    this.subCat.idCategorie = $event.data.categorie
-    console.log(this.metierSelect, this.subCat)
+    this.subCat = $event.data;
+    this.subCatToHospital = this.metierToHospital;
 
+    const name = this.subCat.name;
+    const index = _.findIndex(this.metiers, function (o) { return o.name === name; });
+
+    this.subCat = this.metiers[index];
+    console.log(this.subCat, this.subCatToHospital)
+    // si le tableau des subCat n'est pas vide
+    if (this.subCatToHospital.categorie != undefined) {
+      const tmp = [];
+      // this.subCatToHospital = $event.data;
+      this.subCat.categorie.forEach(element1 => {
+        let found = this.subCatToHospital.categorie.find(function (element) {
+
+          return element.id == element1._id;
+        });
+
+        if (!found) {
+          tmp.push(element1);
+        }
+
+      });
+      this.subCat.categorie = tmp;
+    }
+
+    // TODO faire le trie pour ne plus avoir de doublon
     this.createFormCat(this.subCat);
   }
 
   //#endregion
   //#region SubCategorie
   createFormCat(data) {
-    console.log(data)
     this.categorieForm = this.fb.group({
       categorie: new FormControl('', [Validators.required]),
       idMetier: new FormControl(data._id, [Validators.required]),
@@ -159,12 +174,14 @@ export class MetierHopitalComponent implements OnInit {
 
   subRowDrop(args: any) {
     this.idx = args.fromIndex;
-    //this.subCat = args.data;
-   // this.subCat.idMetier = this.metierSelect.id;
-    console.log(this.subCat);
+    // this.subCat = args.data;
+    // this.subCat.idMetier = this.metierSelect.id;
+    const addSubCat = args.data[0];
+    addSubCat.idHopital = this.projet[0]._id;
+    addSubCat.idMetier = this.subCat._id;
 
     if (this.flagAddSubCat) {
-      this.addSubCat.emit(this.subCat);
+      this.addSubCat.emit(addSubCat);
       this.flagAddSubCat = false;
     } else if (this.flagRmSubCat) {
       this.rmSubCat.emit(this.dta);
