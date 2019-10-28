@@ -37,10 +37,13 @@
                             [role]="role"
                             [projet]="projet"
                             [metiers]="metiers"
+                            [departements]="departements"
                             (messageEvent)="addMetier($event)"
                             (rmMetierEvent)="rmMetier($event)"
                             (rmSubCat)="rmSubCat($event)"
                             (addSubToHopital)="addSubToHopital($event)"
+                            (rmDepToHopital)="rmDepToHopital($event)"
+                            (addDepToHopital)="addDepToHopital($event)"
                           ></app-hospital>
                         </div>
                       </ng-template>
@@ -59,7 +62,7 @@
                       <ng-template #content>
                         <div class="e-card-content">
                           <!-- App-Metier -->
-                          <app-metiers [projet]="projet"></app-metiers>
+                          <app-metiers [projet]="projet" ></app-metiers>
                         </div>
                       </ng-template>
                     </e-tabitem>

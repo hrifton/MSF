@@ -43,7 +43,6 @@ export class FormulaireCategorieComponent implements OnInit {
   }
 
   saveCat(data) {
-    console.log(data)
     this.messageEvent.emit(data.value);
   }
 }

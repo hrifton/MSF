@@ -26,6 +26,6 @@ import { FormulaireCategorieComponent } from './formulaire-categorie/formulaire-
     GridAllModule,
     ReactiveFormsModule
   ],
-  exports: [MetiersComponent]
+  exports: [MetiersComponent] 
 })
 export class MetiersModule {}

@@ -94,3 +94,12 @@ module.exports.getTech = (req, res, next) => {
   });
 };
 
+module.exports.FindUserByHospital = (req, res) => {
+  User.find({idHopital:req.idHopital},{fullName:1,_id:1,status:1},(err,users)=>{
+    if(!err){
+      res.send(users)
+    }else{
+      res.send(err)
+    }
+  })
+};

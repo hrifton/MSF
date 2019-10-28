@@ -1,27 +1,20 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
+  <mat-sidenav 
     #drawer
     class="sidenav"
     fixedInViewport="true"
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [attr.role]="(isHandset$ | async) ? 'navigation' : 'dialog'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="!(isHandset$ | async)"
   >
     <mat-toolbar
       ><img id="logo" src="../../assets/img/logo.png" alt="LogoMSF" srcset=""
     /></mat-toolbar>
+<div *ngIf="user.status"> <button  mat-button routerLink="interventions">Intervention</button>
+    <button *ngIf="show" mat-button routerLink="maintenances">Maintenance</button>
+    <button *ngIf="show"mat-button routerLink="settings">Settings</button></div>
+   
 
-    <button mat-button routerLink="interventions">Intervention</button>
-    <button mat-button routerLink="maintenances">Maintenance</button>
-
-    <button mat-button [matMenuTriggerFor]="Setting">Setting</button>
-
-    <mat-menu #Setting="matMenu">
-      <a mat-button routerLink="settings">settings</a>
-      <a mat-button routerLink="setDep">Setting Departement</a>
-      <a mat-button routerLink="setTec">Setting Technicien</a><br />
-      <a mat-button routerLink="setMet">Setting Métier</a>
-    </mat-menu>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -38,12 +31,12 @@
 
       <span>MSFGMAO {{ user.fullName }}</span>
       <span class="example-spacer"></span>
-      <a routerLink="login"
+      <a *ngIf="user.status" routerLink="login"
         ><img
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGCSURBVFhH7ZU5SgRBFEBHBRMxc7mDegeX3BXBI6iJGggiRmKk4jk0c7uGuIYuYK6iIqLg9l4xDQbTM/ZYDQr94EFX9f+/ZmrrUkHBf6QdV/AQn8r6bF8b5so4PuJnivc4hrng4B/oQNvYhy1lfbbPd8aMYlQ6MPnn83aksIDGPGDU5XB9LbwTWtXZQ2OXQysSx2hRp7oW/WjsUWhFIpl+17sWrWisOdFwd2f9AXehFQnPuUWd3lokS3AQWpFYQotm2YSLoRWJTrxFC3vU0nBQY27QoxsVb7g3dIBddKpdbx3AffSdMcOYC96G7+hAlfRdblfxEF5ipYG/e4GDGI0GXMdkgBOcwS5MvgXdOIunaIzfg1U099dsoEVfcAobMQ3fTaOx5qzhrxhBC71irx0/xA1qjrkuXV004zVaZNKOjDgT5l6htTIzgRZwXatNexpNeIbW8PRkZgtNdsPVyxxaYzO0MuLUmexur5cetMZ5aGXkGU32pquX5MtorYKCv0ip9AV+CXgbANEBdwAAAABJRU5ErkJggg=="
       /></a>
 
-      <a (click)="LogOut()"
+      <a *ngIf="user.status" (click)="LogOut()"
         ><img
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGUSURBVFhH7Za7SjQxGEBXGwWxsfN+QdSHkd9GRH0DUbwjvoRYi3YWv5dWUXwDX0Cxt7TwBipezxk2sCg6O5mFbebAYUl2kkky+ZKvVFCQkS6cwxO8xEd8wuty3Rr2Yc3pwB18xc8U3/A/9mBN+IcPaOcvaOeTOIwt2IS9OI5H6AB89h59LhcL+I52eID9mIYzP8WwIssYhTP35c5oyYoMNOAifpSdwEx0okvoDLK+vJJ1vMGxpJQBN1xY9ry0lX+rphtd9mes5pv/hi+OWj3j3NnvJaU4GvEc7WfTiiwcow3zhpBhGc6NTIO4QhsNJaV8RA0i7P7WpPQT/4t1A1Op+wDq/gnCJpxKSvFEb8JZtNF+UoojVxh6EDlyb74BKyKJPohkGx19XY5iMQG5RQcRfZ1C9GUkXsfeCbpiRQa8jlcx+joOzGNISA5xENMwITlD2/hyk5pcjOId2qEb030xjSNoStaM3pqGrSFcmZJFz/w77biFIa7/0md20Qy65pgpzaDJ5wU6y8q03L1iGBcUVEmp9AX7x56kRn5v+QAAAABJRU5ErkJggg=="
       /></a>

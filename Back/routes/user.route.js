@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 
-const User = require("../models/User");
+const User = require("../models/user.model");
 
 //Register
 userRoutes.route("/add").post(function(req, res) {
@@ -25,11 +25,12 @@ userRoutes.route("/add").post(function(req, res) {
   });
 });
 userRoutes.route("/:id").get(function(req,res){
-console.log(req)
+console.log("route id",req)
   ctrlUser.getUser(req,res);
 })
-
-
+userRoutes.route("/userbyhospital").get(function(req, res) {
+  console.log(req);
+});
 
 
 

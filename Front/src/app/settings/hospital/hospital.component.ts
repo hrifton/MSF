@@ -3,6 +3,7 @@ import { Hospital } from "src/app/Class/Hospital";
 import { Metier } from "src/app/Class/Metier";
 import { FormHopitalComponent } from "./form-hopital/form-hopital.component";
 import { Categorie } from 'src/app/Class/Categorie';
+import Departement from 'src/app/Class/Departement';
 
 @Component({
   selector: "app-hospital",
@@ -11,7 +12,7 @@ import { Categorie } from 'src/app/Class/Categorie';
 })
 export class HospitalComponent implements OnInit {
   // metiers = new Array<Metier>();
-  constructor() { }
+  constructor() {}
 
   @ViewChild(FormHopitalComponent)
   FormHopitalComponent: FormHopitalComponent;
@@ -21,12 +22,15 @@ export class HospitalComponent implements OnInit {
   @Input() role;
   @Input() projet;
   @Input() metiers;
+  @Input() departements;
   @Output() messageEvent = new EventEmitter<Metier>();
   @Output() rmMetierEvent = new EventEmitter<Metier>();
   @Output() addSubToHopital = new EventEmitter<Categorie>();
   @Output() rmSubToHopital = new EventEmitter<Categorie>();
+  @Output() addDepToHopital = new EventEmitter<Departement>();
+  @Output() rmDepToHopital = new EventEmitter<Departement>();
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   update($event) {
     this.data = $event;
@@ -55,6 +59,16 @@ export class HospitalComponent implements OnInit {
   }
 
   addSubCat($event) {
+    $event.idHopital = this.projet[0]._id;
     this.addSubToHopital.emit($event);
+  }
+
+  addDepartement($event) {
+    $event.idHopital = this.projet[0]._id;
+    this.addDepToHopital.emit($event);
+  }
+  delDepartement($event) {
+    $event.idHopital = this.projet[0]._id;
+     this.rmDepToHopital.emit($event);
   }
 }

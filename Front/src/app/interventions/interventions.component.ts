@@ -10,6 +10,9 @@ import { InterventionService } from './../Service/intervention.service';
 import { DateMaintenanceService } from '../Service/dateMaintenance.service';
 import { DepartementService } from '../Service/departement.service';
 import { MetierService } from '../Service/metier.service';
+
+
+
 /**
  * import component
  */
@@ -21,9 +24,12 @@ import { ListInterventionComponent } from './list-intervention/list-intervention
  */
 import { User } from '../Class/user';
 import Intervention from '../Class/Intervention';
+import { Hospital } from '../Class/Hospital';
 /** import moment outil parsing et modification  */
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { HopitalService } from '../Service/hopital.service';
+
 
 @Component({
   selector: 'app-interventions',
@@ -35,7 +41,7 @@ export class InterventionsComponent implements OnInit {
   public metier: Object = [];
   public maintenance: any = [];
   public compte = [];
-  public departements: Object = [];
+  public departements: any = [];
 
   public eventSettings: EventSettingsModel = {};
 
@@ -48,6 +54,8 @@ export class InterventionsComponent implements OnInit {
   @ViewChild(AnalyseMixIntermaintComponent)
   AnalyseMixIntermaint: AnalyseMixIntermaintComponent;
   public statusInsertIntervention: boolean;
+  projet: Hospital;
+  hopital: any;
   /**
    *
    * @param is service intervention
@@ -60,12 +68,14 @@ export class InterventionsComponent implements OnInit {
     private us: UserService,
     private ds: DateMaintenanceService,
     private metierS: MetierService,
-    private deps: DepartementService
+    private deps: DepartementService,
+    private hs:HopitalService
   ) {
     this.interventions = [];
     this.maintenance = [];
     this.statusInsertIntervention = null;
-    this.eventSettings.dataSource = []
+    this.eventSettings.dataSource = [];
+    this.hopital=null;
   }
 
   /**
@@ -88,8 +98,10 @@ export class InterventionsComponent implements OnInit {
         u.fullName = this.us.getFullName();
         data.user.push(u);
         data.tech = '';
-        console.log(data);
+        data.departements = [];
+        data.departements.push(this.returnDepartement(data));
         this.interventions.unshift(data);
+ 
         this.interentionList.refreshInterventionTable();
         this.AnalyseMixIntermaint.refreshChart();
         this.statusInsertIntervention = true;
@@ -97,6 +109,16 @@ export class InterventionsComponent implements OnInit {
         this.statusInsertIntervention = false;
       }
     });
+    this.interentionList.refreshInterventionTable();
+  }
+  returnDepartement(data: Intervention): any {
+   const found = this.departements.find(function(element) {
+       if (element._id === data.idDepartement) {
+          return element
+       }
+        });
+   return found;
+
   }
   check($event) {
     const inter = new Intervention(
@@ -145,8 +167,9 @@ export class InterventionsComponent implements OnInit {
     this.metierS.getMetiers().subscribe(data => {
       this.metier = data;
     });
-    this.deps.getDepartements().subscribe(data => {
-      this.departements = data;
+    this.hs.findHopital(this.us.getIdHopital()).subscribe(data => {
+      console.log(data)
+      this.departements = data[0].departements;
     });
   }
   /**
@@ -193,12 +216,12 @@ export class InterventionsComponent implements OnInit {
         .getInterventionsBytech(this.us.getFullName())
         .subscribe((data: Intervention[]) => {
 
-          this.interventions = this.dateToAgenda(data)
-          this.eventSettings.dataSource = this.dateToAgenda(data)
-          console.log(data)
+          this.interventions = this.dateToAgenda(data);
+          this.eventSettings.dataSource = this.dateToAgenda(data);
+          console.log(data);
         });
     } else if (this.userDetails === 'Admin') {
-      // alert("superieur");
+    
       this.is.getInterventions().subscribe((data: any[]) => {
         this.ds.getMaintenanceAndIntervention().subscribe((maindata: any[]) => {
           maindata.forEach(element => {
@@ -238,23 +261,25 @@ export class InterventionsComponent implements OnInit {
           // this.interventions.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
         });
       });
+             /*this.hs.findHopital(this.us.getIdHopital).subscribe((data: Hospital) => {
+        this.projet = data});*/
     } else {
       console.log('super Admin  *******************');
     }
   }
   dateToAgenda(data: Intervention[]) {
-    for (let i in data) {
+    for (const i in data) {
       const dateString = data[i].day;
       const year = dateString.substr(6, 10);
       const month = dateString.substr(3, 5);
       const day = dateString.substr(0, 2);
-      console.log(year, month, day)
-      console.log(data[i].day[1])
-      //data[i].StartTime = new Date(Date.parse(data[i].day));
-      console.log(data[i].StartTime)
-      //data[i].EndTime = new Date(Date.parse(Date(data[i].day)));
+      console.log(year, month, day);
+      console.log(data[i].day[1]);
+      // data[i].StartTime = new Date(Date.parse(data[i].day));
+      console.log(data[i].StartTime);
+      // data[i].EndTime = new Date(Date.parse(Date(data[i].day)));
     }
-    return data
+    return data;
   }
   /**
    *

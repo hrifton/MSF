@@ -4,6 +4,7 @@ import { CommonModule } from "@angular/common";
 import { SettingsRoutingModule } from "./settings-routing.module";
 import { HospitalRoutingModule } from "./hospital/hospital-routing.module";
 import { MetiersRoutingModule } from "./metiers/metiers-routing.module";
+import { UsersRoutingModule } from "../users/users-routing.module";
 
 //Component
 //import { HistoriqueAssetComponent } from "./asset/historique-asset/historique-asset.component";
@@ -18,6 +19,7 @@ import { PapaParseModule } from "ngx-papaparse";
 import { HospitalModule } from "./hospital/hospital.module";
 import { UsersComponent } from "./users/users.component";
 import { MetiersModule } from "./metiers/metiers.module";
+import { UsersModule } from "../users/users.module";
 //Syncfusion
 import {
   ToastComponent,
@@ -45,7 +47,11 @@ import {
 
 import { DialogAllModule, DialogModule } from "@syncfusion/ej2-angular-popups";
 
-import { GridAllModule } from "@syncfusion/ej2-angular-grids";
+import {
+  GridAllModule,
+  SearchService,
+  ToolbarService
+} from "@syncfusion/ej2-angular-grids";
 
 import { TabAllModule } from "@syncfusion/ej2-angular-navigations";
 import {
@@ -78,6 +84,8 @@ import { AssetModule } from './asset/asset.module';
 import { AssetRoutingModule } from './asset/asset-routing.module';
 
 
+
+
 @NgModule({
   declarations: [
     SettingsComponent,
@@ -91,6 +99,7 @@ import { AssetRoutingModule } from './asset/asset-routing.module';
     // HospitalComponent,
   ],
   imports: [
+    UsersModule,
     MetiersModule,
     HospitalModule,
     UploaderModule,
@@ -122,6 +131,8 @@ import { AssetRoutingModule } from './asset/asset-routing.module';
     NumericTextBoxAllModule,
     TabAllModule,
     GridAllModule,
+    //SearchService, 
+    //ToolbarService,
     DialogAllModule,
     DatePickerAllModule,
     DropDownListModule,
@@ -130,6 +141,7 @@ import { AssetRoutingModule } from './asset/asset-routing.module';
     SettingsRoutingModule,
     HospitalRoutingModule,
     MetiersRoutingModule,
+    UsersRoutingModule,
     AssetRoutingModule,
     AssetModule
   ],

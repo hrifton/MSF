@@ -13,18 +13,18 @@ module.exports.add = (req, res, next) => {
     if (!err) {
       Metier.findOneAndUpdate(
         { _id: req.idMetier },
-        { $push: { categorie: doc } },
+        { $addToSet: { categorie: doc } },
         (err, metier) => {
           if (!err) {
-            res.send(doc);
+            res.send(metier);
           } else {
-            console.log(err);
+           res.send("Error in Retriving Hopital:" + JSON.stringify(err, undefined, 2));
           }
         }
       );
-      console.log(doc, "save dans metier", req.idMetier);
+      res.send(doc);
     } else {
-      console.log(err);
+     res.send("Error in Retriving Hopital:" + JSON.stringify(err, undefined, 2));
     }
   });
 };

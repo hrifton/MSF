@@ -15,7 +15,21 @@ import {
 import { User } from 'src/app/Class/user';
 import { Hospital } from 'src/app/Class/Hospital';
 import { MustMatch } from 'src/app/_helpers/must_match.validator';
-
+import { UserService } from 'src/app/Service/user.service';
+import { HopitalService } from 'src/app/Service/hopital.service';
+/**
+ *
+ *
+ * @export
+ * @class UsersComponent
+ * @implements {OnInit}
+/**
+ *
+ *
+ * @export
+ * @class UsersComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -29,15 +43,17 @@ export class UsersComponent implements OnInit {
   status = ['User', 'Tech', 'Operator', 'LocalAdmin', 'SuperAdmin'];
   data: any[];
   userForm: FormGroup;
-  constructor(private fb: FormBuilder) {
+  data2:any[];
+  constructor(private fb: FormBuilder, private us:UserService,private hs:HopitalService) {
     this.createForm();
   }
 
   ngOnInit() {
     this.data = this.projet;
     this.hopital = this.projet[0];
-    console.log(this.hopital);
-    console.log(this.projet.length);
+    this.hs.getUserByHospital().subscribe((data: any[]) => {
+      this.data2 = data;
+    });
   }
 
   /**
@@ -104,4 +120,13 @@ export class UsersComponent implements OnInit {
     this.messageEvent.emit(data);
     this.userForm.reset();
   }
+
+
+
+/**
+ * Liste User
+ */
+
+
+  
 }

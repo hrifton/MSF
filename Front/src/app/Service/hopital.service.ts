@@ -6,6 +6,7 @@ import { catchError, map } from "rxjs/operators";
 import { of } from "rxjs";
 import { Hospital } from "../Class/Hospital";
 import { response } from "express";
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: "root"
@@ -14,7 +15,11 @@ export class HopitalService {
   uri = "/api/hospital";
 
   // tslint:disable-next-line: deprecation
-  constructor(private http: HttpClient, private httpApi: Http) { }
+  constructor(
+    private http: HttpClient,
+    private httpApi: Http,
+    private us: UserService
+  ) {}
   private apiurl = "https://restcountries.eu/rest/v2/all";
   /**
    * return all country in API RestCountries.eu
@@ -36,26 +41,45 @@ export class HopitalService {
   }
 
   addMetier(data: any) {
-    data[0].idHopital = data.idHopital
+    data[0].idHopital = data.idHopital;
 
     return this.http.post(`${this.uri}/addmetier`, data);
   }
 
   rmMetier(data: any) {
-    console.log('delete metier to liste Hopistal')
+    console.log("delete metier to liste Hopistal");
     const obj = {
       idHopital: data.idHopital,
       idMetier: data[0]._id
-    }
-    return this.http.delete(`${this.uri}/delete/${obj.idHopital}/${obj.idMetier}`);
+    };
+    return this.http.delete(
+      `${this.uri}/delete/${obj.idHopital}/${obj.idMetier}`
+    );
   }
 
   rmSub(data: any) {
-    console.log(data)
+    console.log(data);
   }
 
-
   addSubCatToHop(data: any) {
+    data[0].idHopital = data.idHopital;
     return this.http.post(`${this.uri}/addSubCat`, data);
+  }
+  getUserByHospital() {
+    const idHopital = this.us.getIdHopital();
+    return this.http.get(`${this.uri}/userbyhospital/`, {
+      params: { idHopital }
+    });
+  }
+
+  addDepToHop(data: any) {
+    data[0].idHopital = data.idHopital;
+    return this.http.post(`${this.uri}/addDep`, data);
+  };
+  delDepToHop(data:any){
+ console.log(data)
+    return this.http.delete(
+      `${this.uri}/delDep/${data.idHopital}/${data[0]._id}`
+    );
   }
 }

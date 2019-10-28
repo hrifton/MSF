@@ -20,6 +20,7 @@ const rtsMetier = require("./routes/metier.route");
 const rtsAsset = require("./routes/asset.route");
 const rtsHostpital = require("./routes/hospital.route");
 const rtsCategorie = require("./routes/categorie.route");
+const rtsUser=require('./routes/user.route');
 //#endregion
 // chargement express
 var app = express();
@@ -40,6 +41,7 @@ app
   .use("/api/asset", rtsAsset)
   .use("/api/hospital", rtsHostpital)
   .use("/api/categorie", rtsCategorie)
+  .use("/api/user",rtsUser)
   .use("/api/metier", rtsMetier);
 
 //Demarrage serveur

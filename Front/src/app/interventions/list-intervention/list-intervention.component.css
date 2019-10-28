@@ -24,3 +24,10 @@
 .attribution {
   background-color: #ff0202;
 }
+
+.diffUser{ 
+  background-color: darkgray;
+} 
+.maintenance{
+   background-color: rgba(25, 0, 255, 0.384);
+}

@@ -69,7 +69,7 @@ export class CalendrierComponent implements OnInit {
   public selectedDate: Date = new Date();
   public minDate: Date = new Date();
   public eventSettings: EventSettingsModel = {};
-  public currentView: View = "Week";
+  public currentView: View = "Month";
   public lrepeat: { [key: string]: Object }[] = [
     { repeat: "Never" },
     { repeat: "Daily" },

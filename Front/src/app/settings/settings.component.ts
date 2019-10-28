@@ -1,16 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Hospital } from '../Class/Hospital';
-import { HopitalService } from '../Service/hopital.service';
-import { UserComponent } from '../user/user.component';
-import { UserService } from '../Service/user.service';
-import { User } from '../Class/user';
-import { Metier } from '../Class/Metier';
-import { MetierService } from '../Service/metier.service';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { Hospital } from "../Class/Hospital";
+import { HopitalService } from "../Service/hopital.service";
+import { UserComponent } from "../user/user.component";
+import { UserService } from "../Service/user.service";
+import { User } from "../Class/user";
+import { Metier } from "../Class/Metier";
+import { MetierService } from "../Service/metier.service";
+import { DepartementService } from "../Service/departement.service";
+import Departement from "../Class/Departement";
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  selector: "app-settings",
+  templateUrl: "./settings.component.html",
+  styleUrls: ["./settings.component.css"]
 })
 export class SettingsComponent implements OnInit {
   @ViewChild(UserComponent)
@@ -18,22 +20,32 @@ export class SettingsComponent implements OnInit {
   role: string;
   hoptial: Hospital;
   metiers: Metier[];
+  departements: Departement[];
   flagAddListMetier: boolean = false;
   lastMetier: Hospital;
 
-  constructor(private ms: MetierService, private us: UserService, private hs: HopitalService) { }
+  constructor(
+    private ms: MetierService,
+    private us: UserService,
+    private hs: HopitalService,
+    private ds: DepartementService
+  ) {}
   public headerText: Object = [
-    { text: 'Users' },
-    { text: 'Hospital' },
-    { text: 'Maintenance' },
-    { text: 'Categories/Sub-Categories' },
-    { text: 'Assets' }
+    { text: "Users" },
+    { text: "Hospital" },
+    { text: "Maintenance" },
+    { text: "Categories/Sub-Categories" },
+    { text: "Assets" }
   ];
-  public projet: Hospital[];
+  public projet: any[];
 
   ngOnInit() {
     this.role = this.us.getStatus();
     this.checkStatut(this.role);
+    this.ds.getDepartements().subscribe((data: Departement[]) => {
+      this.departements = data;
+      console.log(this.departements);
+    });
     this.ms.getMetiers().subscribe((data: Metier[]) => {
       this.metiers = data;
     });
@@ -44,7 +56,7 @@ export class SettingsComponent implements OnInit {
     });
   }
   checkStatut(statut) {
-    if (statut !== 'SuperAdmin') {
+    if (statut !== "SuperAdmin") {
       this.hs
         .findHopital(this.us.getIdHopital())
         .subscribe((data: Hospital[]) => {
@@ -57,9 +69,8 @@ export class SettingsComponent implements OnInit {
     }
   }
   addMetier($event) {
-    console.log(this.projet);
     this.hs.addMetier($event).subscribe((data: Hospital) => {
-      this.lastMetier = data
+      this.lastMetier = data;
     });
   }
 
@@ -70,16 +81,26 @@ export class SettingsComponent implements OnInit {
     });
   }
   rmSubCat($event) {
-    console.log($event)
+    console.log($event);
     /*this.hs.rmSub($event).subscribe((data: Hopital) => {
       console.log(data)
     })*/
   }
   addSubToHopital($event) {
+    $event.idHopital = this.projet[0]._id;
     this.hs.addSubCatToHop($event).subscribe((data: Hospital) => {
-      console.log(data)
+      console.log(data);
     });
   }
-
-
+  rmDepToHopital($event){
+console.log("rmdepartement:",$event)
+ this.hs.delDepToHop($event).subscribe((data: Hospital) => {
+   console.log(data);
+ });
+  }
+  addDepToHopital($event){
+ this.hs.addDepToHop($event).subscribe((data: Hospital) => {
+   console.log(data);
+ });
+  }
 }

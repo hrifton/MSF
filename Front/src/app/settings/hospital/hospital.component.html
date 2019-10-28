@@ -1,28 +1,36 @@
-<div class="row" *ngIf="role === 'SuperAdmin'" style="margin-top: 0px;">
-  <div class="col-4">
-    <div class="e-card-content">
-      <app-form-hopital (messageEvent)="update($event)"></app-form-hopital>
+<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+  <div class="row" style="margin-top: 0px;">
+    <div class="e-card" id="basic_card">
+      <div class="e-card-header">
+        <div class="e-card-header-caption">
+          <div class="e-card-header-title">
+            <h3>Setting Hospital</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="role === 'SuperAdmin'" style="margin-top: 0px;">
+        <div class="col-4">
+          <div class="e-card-content">
+            <app-form-hopital (messageEvent)="update($event)"></app-form-hopital>
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="e-card-content">
+            <app-list-hospital [addToListHospital]="data" (messageEvent)="selectHopital($event)"></app-list-hospital>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 0px;">
+        <div class="col-12">
+          <app-metier-hopital *ngIf="metiers" [metiers]="metiers" [projet]="projet" (messageEvent)="addMetier($event)"
+            (rmMetier)="rmMetier($event)" (addSubCat)="addSubCat($event)" (rmSubCat)="rmSubCat($event)">
+          </app-metier-hopital>
+        </div>
+        <div class="col-12">
+          <app-departement-hopital [departements]="departements" (addDep)="addDepartement($event)"
+            (delDep)="delDepartement($event)" [projet]="projet"></app-departement-hopital>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="col-8">
-    <div class="e-card-content">
-      <app-list-hospital
-        [addToListHospital]="data"
-        (messageEvent)="selectHopital($event)"
-      ></app-list-hospital>
-    </div>
-  </div>
-</div>
-<div class="row" style="margin-top: 0px;">
-  <div class="col-12">
-    <app-metier-hopital
-      *ngIf="metiers"
-      [metiers]="metiers"
-      [projet]="projet"
-      (messageEvent)="addMetier($event)"
-      (rmMetier)="rmMetier($event)"
-      (addSubCat)="addSubCat($event)"
-      (rmSubCat)="rmSubCat($event)"
-    ></app-metier-hopital>
   </div>
 </div>

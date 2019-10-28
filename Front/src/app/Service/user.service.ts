@@ -4,12 +4,12 @@ import * as jwt_decode from 'jwt-decode';
 import { User } from '../Class/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UserService {
-  uri = '/api';
+  uri = "/api";
 
-  noAuthHeader = { headers: new HttpHeaders({ NoAtuh: 'True' }) };
+  noAuthHeader = { headers: new HttpHeaders({ NoAtuh: "True" }) };
   selectedUser: { fullName: string; email: string; password: string };
   constructor(private http: HttpClient) {}
 
@@ -22,12 +22,12 @@ export class UserService {
    */
   postUser(user: User) {
     console.log(user);
-    return this.http.post(this.uri + '/register', user, this.noAuthHeader);
+    return this.http.post(this.uri + "/register", user, this.noAuthHeader);
   }
 
   login(authCredentials) {
     return this.http.post(
-      this.uri + '/authenticate',
+      this.uri + "/authenticate",
       authCredentials,
       this.noAuthHeader
     );
@@ -55,13 +55,13 @@ export class UserService {
   }
   // tslint:disable-next-line: variable-name
   setId(_id) {
-    localStorage.setItem('_id', _id);
+    localStorage.setItem("_id", _id);
   }
   getId() {
-    return localStorage.getItem('_id');
+    return localStorage.getItem("_id");
   }
   deleteId(arg0: string) {
-    localStorage.removeItem('_id');
+    localStorage.removeItem("_id");
   }
 
   /**
@@ -69,8 +69,7 @@ export class UserService {
    * @memberof UserService
    */
   getUserProfil() {
-    
-    return this.http.get(this.uri + '/:id',{params:{_id:this.getId()}});
+    return this.http.get(this.uri + "/:id", { params: { _id: this.getId() } });
   }
   /**
    *
@@ -79,7 +78,7 @@ export class UserService {
    * @memberof UserService
    */
   getUserTech() {
-    return this.http.get(this.uri + '/techs');
+    return this.http.get(this.uri + "/techs");
   }
 
   /**
@@ -89,7 +88,7 @@ export class UserService {
    * @memberof UserService
    */
   setFullName(fullName) {
-    localStorage.setItem('fullName', fullName);
+    localStorage.setItem("fullName", fullName);
   }
   /**
    *
@@ -98,7 +97,7 @@ export class UserService {
    * @memberof UserService
    */
   getFullName() {
-    return localStorage.getItem('fullName');
+    return localStorage.getItem("fullName");
   }
   /**
    *
@@ -107,7 +106,7 @@ export class UserService {
    * @memberof UserService
    */
   deleteFullName(arg0: string) {
-    localStorage.removeItem('fullName');
+    localStorage.removeItem("fullName");
   }
   /**
    *
@@ -116,65 +115,65 @@ export class UserService {
    * @memberof UserService
    */
   setEmail(email) {
-    localStorage.setItem('email', email);
+    localStorage.setItem("email", email);
   }
   getEmail() {
-    return localStorage.getItem('email');
+    return localStorage.getItem("email");
   }
   deleteEmail(arg0: string) {
-    localStorage.removeItem('email');
+    localStorage.removeItem("email");
   }
   deleteIdHopital(arg0: string) {
-    localStorage.removeItem('idHopital');
+    localStorage.removeItem("idHopital");
   }
   setStatus(status) {
-    localStorage.setItem('status', status);
+    localStorage.setItem("status", status);
   }
   getStatus() {
-    return localStorage.getItem('status');
+    return localStorage.getItem("status");
   }
 
   setIdHopital(idHopital) {
-    localStorage.setItem('idHopital', idHopital);
+    localStorage.setItem("idHopital", idHopital);
   }
   getIdHopital() {
-    return localStorage.getItem('idHopital');
+    return localStorage.getItem("idHopital");
   }
   deleteStatus(arg0: string) {
-    localStorage.removeItem('status');
+    localStorage.removeItem("status");
   }
 
   setIdDepartement(IdDepartement) {
-    localStorage.setItem('IdDepartement', IdDepartement);
+    localStorage.setItem("IdDepartement", IdDepartement);
   }
   getIdDepartement() {
-    return localStorage.getItem('IdDepartement');
+    return localStorage.getItem("IdDepartement");
   }
   deleteIdDepartement(arg0: string) {
-    localStorage.removeItem('IdDepartement');
+    localStorage.removeItem("IdDepartement");
   }
 
   setToken(token: string) {
-    localStorage.setItem('token', token);
+    localStorage.setItem("token", token);
     this.getDecodedAccessToken(localStorage.token);
   }
   getToken() {
-    return localStorage.getItem('token');
+    return localStorage.getItem("token");
   }
   deleteToken() {
-    localStorage.removeItem('token');
-    this.deleteId('_id');
-    this.deleteFullName('fullname');
-    this.deleteStatus('status');
-    this.deleteEmail('email');
-    this.deleteIdHopital('idHopital');
-    this.deleteIdDepartement('IdDepartement');
+    localStorage.removeItem("token");
+    this.deleteId("_id");
+    this.deleteFullName("fullname");
+    this.deleteStatus("status");
+    this.deleteEmail("email");
+    this.deleteIdHopital("idHopital");
+    this.deleteIdDepartement("IdDepartement");
   }
 
   getUserPayload() {
     const token = this.getToken();
     if (token) {
-      const userPlayoad = atob(token.split('.')[1]);
+      const userPlayoad = atob(token.split(".")[1]);
       return JSON.parse(userPlayoad);
     } else {
       return null;
@@ -189,4 +188,6 @@ export class UserService {
       return false;
     }
   }
+
+
 }

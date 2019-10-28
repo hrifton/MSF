@@ -4,10 +4,11 @@ import {
   Input,
   Output,
   EventEmitter,
-  ViewChild
-} from '@angular/core';
-import { Router } from '@angular/router';
-import { Browser } from '@syncfusion/ej2-base';
+  ViewChild,
+  SimpleChanges
+} from "@angular/core";
+import { Router } from "@angular/router";
+import { Browser } from "@syncfusion/ej2-base";
 import {
   EditService,
   ToolbarService,
@@ -16,16 +17,16 @@ import {
   SaveEventArgs,
   GridComponent,
   RowDataBoundEventArgs
-} from '@syncfusion/ej2-angular-grids';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Dialog } from '@syncfusion/ej2-angular-popups';
-import { SolutionService } from 'src/app/Service/solution.service';
-import Intervention from 'src/app/Class/Intervention';
+} from "@syncfusion/ej2-angular-grids";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Dialog } from "@syncfusion/ej2-angular-popups";
+import { SolutionService } from "src/app/Service/solution.service";
+import Intervention from "src/app/Class/Intervention";
 
 @Component({
-  selector: 'app-list-intervention',
-  templateUrl: './list-intervention.component.html',
-  styleUrls: ['./list-intervention.component.css'],
+  selector: "app-list-intervention",
+  templateUrl: "./list-intervention.component.html",
+  styleUrls: ["./list-intervention.component.css"],
   providers: [ToolbarService, EditService, PageService]
 })
 export class ListInterventionComponent implements OnInit {
@@ -37,19 +38,19 @@ export class ListInterventionComponent implements OnInit {
   @Input() user;
   @Output() messageEvent = new EventEmitter<Intervention>();
 
-  @ViewChild('grid') public grid: GridComponent;
+  @ViewChild("grid") public grid: GridComponent;
 
   // public interventions: Intervention[];
   public priorities: { [key: string]: Object }[] = [
-    { priority: 'High' },
-    { priority: 'Medium' },
-    { priority: 'Low' }
+    { priority: "High" },
+    { priority: "Medium" },
+    { priority: "Low" }
   ];
   public lStatus: { [key: string]: Object }[] = [
-    { status: 'Open' },
-    { status: 'Waiting' },
-    { status: 'Canceled' },
-    { status: 'Done' }
+    { status: "Open" },
+    { status: "Waiting" },
+    { status: "Canceled" },
+    { status: "Done" }
   ];
   public resolution: any[];
   today = new Date();
@@ -65,25 +66,25 @@ export class ListInterventionComponent implements OnInit {
   public dropData: string[];
   public formatOptions;
   //
-  public text = 'Select a Technicien';
+  public text = "Select a Technicien";
   public angForm: FormGroup;
   public shipCityDistinctData: Object[];
   public shipCountryDistinctData: Object[];
   public submitClicked = false;
   // router: Router;
 
-  constructor(private ss: SolutionService, private router: Router) { }
+  constructor(private ss: SolutionService, private router: Router) {}
 
   ngOnInit() {
     this.filterSettings = {
-      type: 'Menu'
+      type: "Menu"
     };
 
     this.editSettings = {
       allowEditing: true,
       allowAdding: true,
       allowDeleting: true,
-      mode: 'Dialog'
+      mode: "Dialog"
     };
 
     this.orderidrules = {
@@ -98,36 +99,43 @@ export class ListInterventionComponent implements OnInit {
     };
     this.editparams = {
       params: {
-        popupHeight: '100px'
+        popupHeight: "100px"
       }
     };
     this.pageSettings = { pageSizes: true, pageSize: 8 };
-    this.dropData = ['Order Placed', 'Processing', 'Delivered'];
+    this.dropData = ["Order Placed", "Processing", "Delivered"];
   }
   sendLink(data) {
-    this.router.navigate(['historic/'], { queryParams: { asset: data } });
+    this.router.navigate(["historic/"], { queryParams: { asset: data } });
   }
   /**
    * create formulaire en fonction des data present
    * @param data
    */
   createFormGroup(data): FormGroup {
-    if (this.user === 'User') {
+    if (this.user === "User") {
       return new FormGroup({
         _id: new FormControl(data._id, Validators.required),
         departement: new FormControl(
           data.departements[0]._id,
           Validators.required
         ),
-        locality: new FormControl(data.locality ? data.locality : ''),
+        locality: new FormControl(data.locality ? data.locality : ""),
         priority: new FormControl(data.priority),
         description: new FormControl(data.description),
         status: new FormControl(data.status),
         day: new FormControl(data.day),
         slug: new FormControl(data.slug)
       });
-    } else if (this.user === 'Admin') {
+    } else if (this.user === "Admin") {
       console.log(data)
+      let metier:any;
+      if(data.metier.length >0 && data.metier !=undefined){
+        metier=data.metier[0]._id
+      }else{
+        metier="";
+      }
+      console.log(metier)
       return new FormGroup({
         _id: new FormControl(data._id, Validators.required),
         departement: new FormControl(
@@ -136,6 +144,7 @@ export class ListInterventionComponent implements OnInit {
             : data.idDepartement,
           Validators.required
         ),
+
         locality: new FormControl(data.locality ? data.locality : ""),
         priority: new FormControl(data.priority),
         description: new FormControl(data.description),
@@ -146,9 +155,7 @@ export class ListInterventionComponent implements OnInit {
         useMat: new FormControl(data.useMat ? data.useMat : ""),
         asset: new FormControl(data.asset ? data.asset : ""),
         slug: new FormControl(data.slug),
-        metier: new FormControl(
-          data.metier.length > 0 ? data.metier[0]._id : ""
-        ),
+        metier: new FormControl(metier),
         solution: new FormControl(data.solution ? data.solution : "")
       });
     } else {
@@ -169,7 +176,7 @@ export class ListInterventionComponent implements OnInit {
         asset: new FormControl(data.asset),
         slug: new FormControl(data.slug),
         metier: new FormControl(data.metier[0]._id),
-        solution: new FormControl('')
+        solution: new FormControl("")
       });
     }
   }
@@ -181,7 +188,7 @@ export class ListInterventionComponent implements OnInit {
       return 1;
     }
     return 0;
-  }
+  };
 
   dateValidator() {
     return (control: FormControl): null | Object => {
@@ -196,22 +203,28 @@ export class ListInterventionComponent implements OnInit {
   // Action sur le tableau
   actionBegin(args: SaveEventArgs): void {
     // Verification de l'action debut edit ou ajout
-    if (args.requestType === 'beginEdit' || args.requestType === 'add') {
+    if (args.requestType === "beginEdit" || args.requestType === "add") {
+      if (this.user == "User") {
+        let data: any = args.rowData;
+        if (data.idUser != localStorage._id) {
+          args.cancel = true;
+        }
+      }
       // this.submitClicked = false;
       // Creation du formulaire
+      console.log(args.rowData, "$$$$$$$$$$$$$");
       this.angForm = this.createFormGroup(args.rowData);
+      console.log(this.angForm.value, "Form");
     }
     // Click SAVE
-    if (args.requestType === 'save') {
+    if (args.requestType === "save") {
       this.submitClicked = true;
 
       // verification si le formulaire est valid
       if (this.angForm.valid) {
-
         this.messageEvent.emit(this.angForm.value);
-
       } else {
-        console.log("error")
+        console.log("error");
         args.cancel = true;
       }
     }
@@ -229,19 +242,17 @@ export class ListInterventionComponent implements OnInit {
    * determine l'action executer sur le tableau
    */
   actionComplete(args: DialogEditEventArgs): void {
-    if (args.requestType === 'beginEdit' || args.requestType === 'add') {
+    if (args.requestType === "beginEdit" || args.requestType === "add") {
+      console.log(args);
+      args.dialog.header = "Details of Intervention";
       if (Browser.isDevice) {
-        args.dialog.height = window.innerHeight - 500 + 'px';
+        console.log(args);
+        args.dialog.height = window.innerHeight - 500 + "px";
         (args.dialog as Dialog).dataBind();
       }
     }
   }
 
-  ngOnChanges(): void {
-    // console.log("ListIntervention changed", this.grid);
-    // console.log(changes);
-    // this.grid.refresh();
-  }
   /**
    * refresh tableau liste intervention
    */
@@ -251,16 +262,29 @@ export class ListInterventionComponent implements OnInit {
 
   // Couleur par etat de ligne  https://stackblitz.com/edit/angular-9tucrb?file=app.component.ts
   rowDataBound(args: RowDataBoundEventArgs) {
+    let data: any = args.data;
+    console.log(data.metier);
+    if (data.type != "Maintenance") {
+      if (
+        data.metier.length > 0 &&
+        data.metier != undefined &&
+        (data.tech != undefined && data.tech.length > 0)
+      ) {
+        if (data["priority"] === "High") {
+          args.row.classList.add("high");
+        } else if (data["priority"] === "Medium") {
+          args.row.classList.add("medium");
+        } else if (data["priority"] === "Low") {
+          args.row.classList.add("low");
+        }
+      }
+    }
+    if (data.type === "Maintenance") {
+      args.row.classList.add("maintenance");
+    }
 
-    let data = args.data
-    let metier = data['metier']
-    metier = metier[0].name === undefined ? '' : metier[0].name;
-    if (data['priority'] === "High") {
-      args.row.classList.add('high');
-    } else if (data['priority'] === "Medium") {
-      args.row.classList.add('medium');
-    } else if (data['priority'] === "Low") {
-      args.row.classList.add('low');
+    if (data.idUser != localStorage._id && this.user === "User") {
+      args.row.classList.add("diffUser");
     }
   }
 }

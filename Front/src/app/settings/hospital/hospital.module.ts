@@ -11,6 +11,7 @@ import { MetierHopitalComponent } from './metier-hopital/metier-hopital.componen
 
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DropDownListAllModule } from "@syncfusion/ej2-angular-dropdowns";
+import { DepartementHopitalComponent } from './departement-hopital/departement-hopital.component';
 
 
 
@@ -19,7 +20,8 @@ import { DropDownListAllModule } from "@syncfusion/ej2-angular-dropdowns";
     HospitalComponent,
     ListHospitalComponent,
     FormHopitalComponent,
-    MetierHopitalComponent
+    MetierHopitalComponent,
+    DepartementHopitalComponent
   ],
   imports: [
     CommonModule,

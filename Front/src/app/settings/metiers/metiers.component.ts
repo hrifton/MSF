@@ -47,8 +47,10 @@ export class MetiersComponent implements OnInit {
     });
   }
   saveCategorie(data: Categorie) {
+    console.log(data)
     this.cs.AddCategorie(data).subscribe((categorie: any) => {
-      console.log("cate a rejouter : ", categorie)
+      
+      console.log(categorie)
       this.metierSelect.categorie.push(categorie);
       this.ListCategorieComponent.grid.refresh()
     });

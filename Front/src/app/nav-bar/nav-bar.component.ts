@@ -16,13 +16,21 @@ import { AuthService } from "../Service/auth.service";
 })
 export class NavBarComponent implements OnInit {
   public user: any;
+  show: boolean;
+
   constructor(
     private router: Router,
     private breakpointObserver: BreakpointObserver,
     private us: UserService,
     private as: AuthService
   ) {
+    this.show=false
     this.user = localStorage;
+    if (this.user.status == "User" || this.user.status == "tech") {
+      this.show = false;
+    }else{
+      this.show = true;
+    }
   }
   storage: any;
   isHandset$: Observable<boolean> = this.breakpointObserver

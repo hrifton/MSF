@@ -5,6 +5,7 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { AssetComponent } from './asset/asset.component';
 import { HospitalComponent } from './hospital/hospital.component';
 import { MetiersComponent } from './metiers/metiers.component';
+import { UsersComponent } from './users/users.component'
 
 const routes: Routes = [
   { path: "", redirectTo: "settings", pathMatch: "full" },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: "maintenance", component: MaintenanceComponent },
   { path: "hospital", component: HospitalComponent },
   { path: "metier", component: MetiersComponent },
+  {path :"users",component:UsersComponent},
   { path: "asset", component: AssetComponent }
 ];
 

@@ -55,7 +55,7 @@ module.exports.liste = (req, res) => {
 
 module.exports.listeByUser = (req, res) => {
   var list = Array();
-  console.log(typeof req);
+ 
   Intervention.aggregate(
     [
       { $match: { idUser: ObjectId(req.idUser) } },
@@ -199,7 +199,39 @@ module.exports.listeByUser = (req, res) => {
 };
 
 module.exports.listeByTech = (req, res) => {
-  Intervention.find({ tech: req }, (err, docs) => {
+
+  
+  Intervention.aggregate([
+    {$match:{tech:req}},{
+
+        $lookup: {
+          from: "metiers",
+          localField: "metier",
+          foreignField: "_id",
+          as: "metier"
+        }
+      },{
+        $lookup: {
+          from: "departements",
+          localField: "idDepartement",
+          foreignField: "_id",
+          as: "departements"
+        }
+      },{
+        $lookup: {
+          from: "users",
+          localField: "idUser",
+          foreignField: "_id",
+          as: "user"
+        }
+      }, {
+        $project: {
+          "user.password": 0,
+          "user.saltSecret": 0
+        }
+      }
+    
+  ], (err, docs) => {
     if (!err) {
       res.send(docs);
     } else {
