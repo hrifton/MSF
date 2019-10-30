@@ -31,29 +31,29 @@ export class MetierHopitalComponent implements OnInit {
   @Output() addSubCat = new EventEmitter<Categorie>();
   @Output() rmSubCat = new EventEmitter<Categorie>();
 
-  private metierSelect: any;
-  private metierToHospital: any[];
-  private categorieToHospital: any[];
-  private srcData: Object[] = [];
-  private pageOptions: Object;
-  private selectionOptions: Object;
-  private srcDropOptions: Object;
-  private destDropOptions: Object;
-  private idx: any;
-  private dta: any;
-  private flag = false;
-  private rmFlag = false;
-  private sizeMetierToHospital = 0;
-  private sizeMetiers = 0;
-  private subCat: any;
-  private flagAddSubCat: boolean;
-  private flagRmSubCat: boolean;
-  private SubCatSelect: any[];
-  private constMetiers: any[];
+  public metierSelect: any;
+  public metierToHospital: any[];
+  public categorieToHospital: any[];
+  public srcData: Object[] = [];
+  public pageOptions: Object;
+  public selectionOptions: Object;
+  public srcDropOptions: Object;
+  public destDropOptions: Object;
+  public idx: any;
+  public dta: any;
+  public flag = false;
+  public rmFlag = false;
+  public sizeMetierToHospital = 0;
+  public sizeMetiers = 0;
+  public subCat: any;
+  public flagAddSubCat: boolean;
+  public flagRmSubCat: boolean;
+  public SubCatSelect: any[];
+  public constMetiers: any[];
   subCatToHospital: any;
-  constructor(private fb: FormBuilder) {}
+  constructor(public fb: FormBuilder) {}
   public categorieForm: FormGroup;
-  private myClonedArray: any[];
+  public myClonedArray: any[];
   //#endregion
 
   ngOnInit() {
@@ -132,14 +132,13 @@ export class MetierHopitalComponent implements OnInit {
   rowSelected($event) {
     this.subCat = $event.data;
     this.subCatToHospital = this.metierToHospital;
-    console.log(this.subCat);
     const name = this.subCat.name;
     const index = _.findIndex(this.metiers, function(o) {
       return o.name === name;
     });
 
     this.subCat = this.metiers[index];
-    console.log(this.subCat);
+    this.subCatToHospital.categorie = $event.data.categorie;
     // si le tableau des subCat n'est pas vide
     if (this.subCatToHospital.categorie) {
       
@@ -157,10 +156,9 @@ export class MetierHopitalComponent implements OnInit {
       });
       this.subCat.categorie = tmp;
     }
-
-    // TODO faire le trie pour ne plus avoir de doublon
+    
     this.createFormCat(this.subCat);
-    this.subCatToHospital.categorie = $event.data.categorie;
+    
   }
 
   //#endregion

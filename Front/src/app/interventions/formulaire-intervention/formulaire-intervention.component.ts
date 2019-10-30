@@ -54,6 +54,7 @@ export class FormulaireInterventionComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.departements)
   }
 
   showSuccess() {

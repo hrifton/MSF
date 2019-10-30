@@ -17,7 +17,7 @@ import { Metier } from "src/app/Class/Metier";
   styleUrls: ["./list-categorie.component.scss"]
 })
 export class ListCategorieComponent implements OnInit {
-  @Input() metierSelect: Metier;
+  @Input() metierSelect: any;
   constructor() { }
 
   @ViewChild("grid")

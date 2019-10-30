@@ -103,4 +103,8 @@ console.log("rmdepartement:",$event)
    console.log(data);
  });
   }
+
+  addDepartementUser($event){
+    console.log($event)
+  }
 }

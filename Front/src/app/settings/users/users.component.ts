@@ -17,6 +17,8 @@ import { Hospital } from 'src/app/Class/Hospital';
 import { MustMatch } from 'src/app/_helpers/must_match.validator';
 import { UserService } from 'src/app/Service/user.service';
 import { HopitalService } from 'src/app/Service/hopital.service';
+import { EventRenderedArgs } from '@syncfusion/ej2-angular-schedule';
+import Departement from 'src/app/Class/Departement';
 /**
  *
  *
@@ -31,26 +33,32 @@ import { HopitalService } from 'src/app/Service/hopital.service';
  * @implements {OnInit}
  */
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: "app-users",
+  templateUrl: "./users.component.html",
+  styleUrls: ["./users.component.scss"]
 })
 export class UsersComponent implements OnInit {
   @Input() projet;
   @Input() role;
   @Output() messageEvent = new EventEmitter<User>();
+  @Output() departementUser = new EventEmitter<Departement>();
   hopital = new Hospital();
-  status = ['User', 'Tech', 'Operator', 'LocalAdmin', 'SuperAdmin'];
+  status = ["User", "Tech", "Operator", "LocalAdmin", "SuperAdmin"];
   data: any[];
   userForm: FormGroup;
-  data2:any[];
-  constructor(private fb: FormBuilder, private us:UserService,private hs:HopitalService) {
+  data2: any[];
+  constructor(
+    private fb: FormBuilder,
+    private us: UserService,
+    private hs: HopitalService
+  ) {
     this.createForm();
   }
 
   ngOnInit() {
     this.data = this.projet;
     this.hopital = this.projet[0];
+    console.log(this.hopital);
     this.hs.getUserByHospital().subscribe((data: any[]) => {
       this.data2 = data;
     });
@@ -62,15 +70,15 @@ export class UsersComponent implements OnInit {
   // TODO Vérification Confirmation Password
   createForm() {
     this.userForm = this.fb.group({
-      fullName: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.email, Validators.required]),
-      statut: new FormControl('', [Validators.required]),
-      password: new FormControl('', [
+      fullName: new FormControl("", [Validators.required]),
+      email: new FormControl("", [Validators.email, Validators.required]),
+      statut: new FormControl("", [Validators.required]),
+      password: new FormControl("", [
         Validators.required,
         Validators.minLength(6)
       ]),
-      confPassword: new FormControl('', [Validators.required]),
-      projet: new FormControl('')
+      confPassword: new FormControl("", [Validators.required]),
+      projet: new FormControl("")
     });
   }
 
@@ -101,16 +109,15 @@ export class UsersComponent implements OnInit {
        leveOfCare: data.leveOfCare
      });*/
 
-
     this.hopital = new Hospital();
-    this.hopital.id = data._id,
-      this.hopital.projectCode = data.projectCode,
-      this.hopital.country = data.country,
-      this.hopital.project = data.project,
-      this.hopital.startingDate = data.startingDate,
-      this.hopital.closuredate = data.closuredate,
-      this.hopital.ipdStructure = data.ipdStructure,
-      this.hopital.leveOfCare = data.leveOfCare;
+    (this.hopital.id = data._id),
+      (this.hopital.projectCode = data.projectCode),
+      (this.hopital.country = data.country),
+      (this.hopital.project = data.project),
+      (this.hopital.startingDate = data.startingDate),
+      (this.hopital.closuredate = data.closuredate),
+      (this.hopital.ipdStructure = data.ipdStructure),
+      (this.hopital.leveOfCare = data.leveOfCare);
 
     console.log(this.hopital);
   }
@@ -121,12 +128,23 @@ export class UsersComponent implements OnInit {
     this.userForm.reset();
   }
 
+  /**
+   * Liste User
+   */
 
+  public fields: Object = { text: "departement", value: "_id" };
+  // map the groupBy field with category column
+  public checkFields: Object = { text: "departement", value: "_id" };
+  // set the placeholder to the MultiSelect input
+  public checkWaterMark: string = "Select departement(s)";
 
-/**
- * Liste User
- */
-
-
-  
+  public actionBegin(args: EventRenderedArgs) {
+    console.log(args);
+  }
+  public select(args: any) {
+    console.log(args.itemData);
+  }
+  public removed(args: any) {
+    console.log(args.itemData);
+  }
 }

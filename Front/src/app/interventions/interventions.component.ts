@@ -261,8 +261,8 @@ export class InterventionsComponent implements OnInit {
           // this.interventions.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
         });
       });
-             /*this.hs.findHopital(this.us.getIdHopital).subscribe((data: Hospital) => {
-        this.projet = data});*/
+             this.hs.findHopital(this.us.getIdHopital()).subscribe((data: Hospital) => {
+        this.projet = data});
     } else {
       console.log('super Admin  *******************');
     }

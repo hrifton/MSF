@@ -5,10 +5,9 @@
         <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
           <ejs-dropdownlist
             id="idDepartement"
-            (filtering)="onFiltering($event)"
             formControlName="idDepartement"
             [dataSource]="departements"
-            [fields]="{ text: 'name', value: '_id' }"
+            [fields]="{ text: 'departement', value: '_id' }"
             placeholder="Departement *"
             popupHeight="200px"
             floatLabelType="Always"
@@ -40,7 +39,6 @@
           <ejs-dropdownlist
             id="priority"
             formControlName="priority"
-            (filtering)="onFiltering($event)"
             [dataSource]="lPriority"
             [fields]="{ text: 'priority', value: 'priority' }"
             placeholder="Priority *"

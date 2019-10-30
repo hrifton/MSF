@@ -31,6 +31,7 @@ import Intervention from "src/app/Class/Intervention";
 })
 export class ListInterventionComponent implements OnInit {
   @Input() interventions;
+  @Input() projet;
   @Input() departements;
   @Input() metier;
   @Input() maintenance;
@@ -79,7 +80,6 @@ export class ListInterventionComponent implements OnInit {
     this.filterSettings = {
       type: "Menu"
     };
-
     this.editSettings = {
       allowEditing: true,
       allowAdding: true,
@@ -113,6 +113,7 @@ export class ListInterventionComponent implements OnInit {
    * @param data
    */
   createFormGroup(data): FormGroup {
+    console.log("Data : ",data)
     if (this.user === "User") {
       return new FormGroup({
         _id: new FormControl(data._id, Validators.required),
@@ -128,14 +129,15 @@ export class ListInterventionComponent implements OnInit {
         slug: new FormControl(data.slug)
       });
     } else if (this.user === "Admin") {
-      console.log(data)
-      let metier:any;
-      if(data.metier.length >0 && data.metier !=undefined){
-        metier=data.metier[0]._id
-      }else{
-        metier="";
-      }
-      console.log(metier)
+      console.log("Data :",data.metier.length)
+      this.metier=this.projet[0].metier
+    
+      /*if (data.metier.length > 0 && data.metier != undefined) {
+        metier = data.metier[0]._id;
+      } else {
+        metier = "";
+      }*/
+      console.log("Metier",this.metier);
       return new FormGroup({
         _id: new FormControl(data._id, Validators.required),
         departement: new FormControl(
@@ -155,7 +157,10 @@ export class ListInterventionComponent implements OnInit {
         useMat: new FormControl(data.useMat ? data.useMat : ""),
         asset: new FormControl(data.asset ? data.asset : ""),
         slug: new FormControl(data.slug),
-        metier: new FormControl(metier),
+        metier: new FormControl(
+          data.metier.length > 0 ? data.metier[0]._id : "",
+          Validators.required
+        ),
         solution: new FormControl(data.solution ? data.solution : "")
       });
     } else {
@@ -207,6 +212,7 @@ export class ListInterventionComponent implements OnInit {
       if (this.user == "User") {
         let data: any = args.rowData;
         if (data.idUser != localStorage._id) {
+          console.log('il peut pas')
           args.cancel = true;
         }
       }

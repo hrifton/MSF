@@ -28,7 +28,8 @@ import {
 import {
   AutoCompleteAllModule,
   MultiSelectAllModule,
-  DropDownListAllModule
+  DropDownListAllModule,
+  MultiSelectModule
 } from "@syncfusion/ej2-angular-dropdowns";
 
 import {
@@ -98,7 +99,7 @@ import { AssetRoutingModule } from './asset/asset-routing.module';
     // ListHospitalComponent,
     // HospitalComponent,
   ],
-  imports: [
+  imports: [MultiSelectModule,
     UsersModule,
     MetiersModule,
     HospitalModule,

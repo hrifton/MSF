@@ -62,7 +62,9 @@ export class HopitalService {
   }
 
   addSubCatToHop(data: any) {
-    data[0].idHopital = data.idHopital;
+   
+    console.log(data)
+    //data[0].idHopital = data.idHopital;
     return this.http.post(`${this.uri}/addSubCat`, data);
   }
   getUserByHospital() {
