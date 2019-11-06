@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
 
 //Register
+
 userRoutes.route("/add").post(function(req, res) {
   let newUser = new User({
     name: req.body.name,
@@ -28,9 +29,7 @@ userRoutes.route("/:id").get(function(req,res){
 console.log("route id",req)
   ctrlUser.getUser(req,res);
 })
-userRoutes.route("/userbyhospital").get(function(req, res) {
-  console.log(req);
-});
+
 
 
 

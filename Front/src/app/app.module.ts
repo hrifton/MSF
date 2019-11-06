@@ -37,7 +37,8 @@ import {
   MatButtonModule,
   MatSidenavModule,
   MatIconModule,
-  MatListModule
+  MatListModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import {
   MatMenuModule,
@@ -69,6 +70,7 @@ import { UserComponent } from './user/user.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { UsersModule } from './users/users.module';
 import { SettingsModule } from './settings/settings.module';
+import { AnalyseModule } from './analyse/analyse.module';
 
 //import { HistoricModule } from "./historic/historic.module";
 //import { HistoricComponent } from "./historic/historic.component";
@@ -107,6 +109,7 @@ import { SettingsModule } from './settings/settings.module';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatProgressSpinnerModule,
     MatMenuModule,
     MatInputModule,
     MatSelectModule,
@@ -124,7 +127,8 @@ import { SettingsModule } from './settings/settings.module';
     SettingsModule,
     MsalModule.forRoot({
       clientID: OAuthSettings.appId
-    })
+    }),
+    AnalyseModule
   ],
   providers: [
     {

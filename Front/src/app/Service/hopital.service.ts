@@ -7,12 +7,13 @@ import { of } from "rxjs";
 import { Hospital } from "../Class/Hospital";
 import { response } from "express";
 import { UserService } from './user.service';
+import { User } from '../Class/user';
 
 @Injectable({
   providedIn: "root"
 })
 export class HopitalService {
-  uri = "/api/hospital";
+  uri = "http://localhost:3000/api/hospital";
 
   // tslint:disable-next-line: deprecation
   constructor(
@@ -31,8 +32,18 @@ export class HopitalService {
   getHospital() {
     return this.http.get(`${this.uri}`);
   }
-  findHopital(id) {
-    return this.http.get(`${this.uri}/id/`, { params: { id } });
+  async findHopital(id) {
+    return await this.http.get<Hospital>(`${this.uri}/id/`, { params: { id } }).toPromise();
+  }
+
+  async getUserByHospital(id?: string) {
+    let idHopital = this.us.getIdHopital();
+    idHopital == "undefined" ? (idHopital = id) : "";
+    console.log(idHopital);
+
+    return await this.http
+      .get<User>(`${this.uri}/userbyhospital`, { params: { id } })
+      .toPromise();
   }
 
   PostNewHospital(hospital: Hospital) {
@@ -62,24 +73,17 @@ export class HopitalService {
   }
 
   addSubCatToHop(data: any) {
-   
-    console.log(data)
+    console.log(data);
     //data[0].idHopital = data.idHopital;
     return this.http.post(`${this.uri}/addSubCat`, data);
-  }
-  getUserByHospital() {
-    const idHopital = this.us.getIdHopital();
-    return this.http.get(`${this.uri}/userbyhospital/`, {
-      params: { idHopital }
-    });
   }
 
   addDepToHop(data: any) {
     data[0].idHopital = data.idHopital;
     return this.http.post(`${this.uri}/addDep`, data);
-  };
-  delDepToHop(data:any){
- console.log(data)
+  }
+  delDepToHop(data: any) {
+    console.log(data);
     return this.http.delete(
       `${this.uri}/delDep/${data.idHopital}/${data[0]._id}`
     );

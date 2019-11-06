@@ -6,9 +6,9 @@ import { Categorie } from "../Class/Categorie";
   providedIn: "root"
 })
 export class CategorieService {
-  uri = "/api/categorie";
+  uri = "http://localhost:3000/api/categorie";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getCategorieByMetier(categorie: any) {
     console.log(categorie);
@@ -17,7 +17,7 @@ export class CategorieService {
     //return this.http.get(`${this.uri}/metiercategorie/${categorie._id}`)
   }
   AddCategorie(categorie: Categorie) {
-    console.log(' service categorie : ', categorie)
+    console.log(" service categorie : ", categorie);
     return this.http.post(`${this.uri}/add`, categorie);
   }
 }

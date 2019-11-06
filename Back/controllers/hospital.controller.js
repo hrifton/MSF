@@ -117,7 +117,7 @@ module.exports.addSubCat = (req, res, next) => {
     },
     (err, doc) => {
       if (!err) {
-      res.status("200").send(doc);
+        res.status("200").send(doc);
       } else {
         res.status("400").send(err);
       }
@@ -125,37 +125,41 @@ module.exports.addSubCat = (req, res, next) => {
   );
 };
 module.exports.addDepToHop = (req, res, next) => {
-  console.log(req)
-   Hospital.updateOne(
-     { _id: req[0].idHopital },
-     {
-       $addToSet: {
-         departements: {
-           _id:req[0]._id,
-           departement: req[0].departement
-         }
-       }
-     },
-     (err, doc) => {
-       if (!err) {
-         res.status("200").send(doc);
-       } else {
-         res.status("400").send(err);
-       }
-     }
-   );
+  console.log(req);
+  Hospital.updateOne(
+    { _id: req[0].idHopital },
+    {
+      $addToSet: {
+        departements: {
+          _id: req[0]._id,
+          departement: req[0].departement
+        }
+      }
+    },
+    (err, doc) => {
+      if (!err) {
+        res.status("200").send(doc);
+      } else {
+        res.status("400").send(err);
+      }
+    }
+  );
 };
 
-module.exports.delDepToHop=(req,res,next)=>{
+module.exports.delDepToHop = (req, res, next) => {
   console.log(req.idDepartement);
-  Hospital.updateOne({_id:req.idHopital},{$pull:{departements:{_id:req.idDepartement}}},(err,doc)=>{
-  if (!err) {
-    res.status("200").send(doc);
-  } else {
-    res.status("400").send(err);
-  }
-  })
-}
+  Hospital.updateOne(
+    { _id: req.idHopital },
+    { $pull: { departements: { _id: req.idDepartement } } },
+    (err, doc) => {
+      if (!err) {
+        res.status("200").send(doc);
+      } else {
+        res.status("400").send(err);
+      }
+    }
+  );
+};
 function getNbHospitalByCountry(country) {
   return Hospital.countDocuments({ country: country });
 }

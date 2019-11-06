@@ -3,12 +3,13 @@ import { HttpClient } from "@angular/common/http";
 
 import Intervention from "../Class/Intervention";
 import { UserService } from "./user.service";
+import Departement from '../Class/Departement';
 
 @Injectable({ providedIn: "root" })
 export class InterventionService {
-  uri = "/api/intervention";
+  uri = "http://localhost:3000/api/intervention";
 
-  constructor(private http: HttpClient, private us: UserService) { }
+  constructor(private http: HttpClient, private us: UserService) {}
   // add a new Intervention
 
   postInter(intervention: Intervention) {
@@ -35,7 +36,8 @@ export class InterventionService {
   // TODO USER
   // Get Interventions byUser
   getInterventionsByUser() {
-    const idDepartement = this.us.getIdDepartement();
+    let idDepartement: any = [];
+    idDepartement = JSON.stringify(this.us.getIdDepartement());
     const idHopital = this.us.getIdHopital();
     const idUser = this.us.getId();
     return this.http.get(`${this.uri}/ByUser/`, {

@@ -58,7 +58,11 @@ export class LoginComponent implements OnInit {
     this.us.login(form.value).subscribe(
       res => {
         this.us.setToken(res["token"]);
-        this.router.navigateByUrl("/interventions");
+        if(this.us.getStatus()==="SuperAdmin"){
+          this.router.navigateByUrl("/analyse")
+        }else{
+          this.router.navigateByUrl("/interventions");
+        }        
       },
       err => {
         this.toastObj.show();
@@ -69,6 +73,7 @@ export class LoginComponent implements OnInit {
   async signIn(): Promise<void> {
     if (await this.authService.signIn()) {
       if (this.authService.user.displayName) {
+        localStorage.user="User";
         this.router.navigateByUrl("/interventions");
       }
     }

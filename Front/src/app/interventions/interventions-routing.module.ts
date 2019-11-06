@@ -9,6 +9,7 @@ import { InterventionsComponent } from "./interventions.component";
 import { ListInterventionComponent } from "./list-intervention/list-intervention.component";
 import { FormulaireInterventionComponent } from "./formulaire-intervention/formulaire-intervention.component";
 import { AnalyseMaintenanceComponent } from "../analyse-mix-intermaint/analyse-maintenance/analyse-maintenance.component";
+import { CalendrierTechComponent } from './calendrier-tech/calendrier-tech.component';
 
 /**
  * Routing
@@ -22,7 +23,8 @@ const routes: Routes = [
       { path: "", component: ListInterventionComponent },
       { path: "formulaires", component: FormulaireInterventionComponent },
       { path: "analyseMaintenance", component: AnalyseMaintenanceComponent },
-      { path: "resolution", component: ResolutionInterventionComponent }
+      { path: "resolution", component: ResolutionInterventionComponent },
+      { path: "calendrier", component: CalendrierTechComponent }
     ]
   }
 ];

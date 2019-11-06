@@ -4,20 +4,18 @@ import { Maintenance } from '../Class/Maintenance';
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class MaintenanceService {
-  uri = '/api/maintenance';
-  constructor(private http: HttpClient) { }
+  uri = "http://localhost:3000/api/maintenance";
+  constructor(private http: HttpClient) {}
 
   // getAll Maintenance
-
 
   getMaintenance() {
     return this.http.get(`${this.uri}`);
   }
   PostNewMaintenance(maintenance: Maintenance) {
-
     return this.http.post(`${this.uri}/add`, maintenance).subscribe(
       data => {
         // console.log(data);
@@ -27,6 +25,4 @@ export class MaintenanceService {
       }
     );
   }
-
-
 }

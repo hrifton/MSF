@@ -1,82 +1,20 @@
 <div class="contenaire">
-   <ejs-grid
-    #grid
-    [dataSource]="interventions"
-    (rowDataBound)="rowDataBound($event)"
-    allowPaging="true"
-    allowSorting="true"
-    allowFiltering="true"
-    [pageSettings]="pageSettings"
-    [editSettings]="editSettings"
-    [filterSettings]="filterSettings"
-    (actionBegin)="actionBegin($event)"
-    (actionComplete)="actionComplete($event)"
-  >
+  <ejs-grid #grid [dataSource]="interventions" (rowDataBound)="rowDataBound($event)" allowPaging="true"
+    allowSorting="true" allowFiltering="true" [pageSettings]="pageSettings" [editSettings]="editSettings"
+    [filterSettings]="filterSettings" (actionBegin)="actionBegin($event)" (actionComplete)="actionComplete($event)">
     <e-columns>
-      <e-column
-        field="slug"
-        headerText="ID"
-        textAlign="center"
-        width="70"
-      ></e-column>
-      <e-column
-        *ngIf="user != 'User'"
-        field="metier.0.name"
-        headerText="Domaine"
-        textAlign="center"
-        width="auto"
-      ></e-column>
-      <e-column
-        *ngIf="user != 'User'"
-        field="type"
-        headerText="Type"
-        textAlign="center"
-        width="auto"
-      ></e-column>
-      <e-column
-        field="user.0.fullName"
-        headerText="User"
-        textAlign="center"
-        width="auto"
-      ></e-column>
-      <e-column
-        field="day"
-        headerText="Date"
-        [format]="formatOptions"
-        [sortComparer]="sortComparer"
-        textAlign="center"
-        width="auto"
-      ></e-column>
-      <e-column
-        field="priority"
-        headerText="Priotity"
-        textAlign="center"
-        width="auto"
-      ></e-column>
-      <e-column
-        field="departements.0.departement"
-        headerText="Departement"
-        textAlign="center"
-        width="auto"
-      ></e-column>
-      <e-column
-        field="description"
-        headerText="Desciption"
-        textAlign="center"
-        width="auto"
-      ></e-column>
-      <e-column
-        *ngIf="user != 'User'"
-        field="tech"
-        headerText="tech"
-        textAlign="center"
-      ></e-column>
-      <e-column
-        field="status"
-        headerText="Status"
-        textAlign="center"
-        width="120"
-      ></e-column>
+      <e-column field="slug" headerText="ID" textAlign="center" width="70"></e-column>
+      <e-column *ngIf="user != 'User'" field="metier.0.name" headerText="Domaine" textAlign="center" width="auto">
+      </e-column>
+      <e-column *ngIf="user != 'User'" field="type" headerText="Type" textAlign="center" width="auto"></e-column>
+      <e-column field="user.0.fullName" headerText="User" textAlign="center" width="auto"></e-column>
+      <e-column field="day" headerText="Date" [format]="formatOptions" [sortComparer]="sortComparer" textAlign="center"
+        width="auto"></e-column>
+      <e-column field="priority" headerText="Priotity" textAlign="center" width="auto"></e-column>
+      <e-column field="departements.0.departement" headerText="Departement" textAlign="center" width="auto"></e-column>
+      <e-column field="description" headerText="Desciption" textAlign="center" width="auto"></e-column>
+      <e-column *ngIf="user != 'User'" field="tech" headerText="tech" textAlign="center"></e-column>
+      <e-column field="status" headerText="Status" textAlign="center" width="120"></e-column>
     </e-columns>
     <ng-template #editSettingsTemplate let-data>
       <div>
@@ -92,163 +30,132 @@
           <div *ngIf="user != 'User'" class="form-row">
             <div *ngIf="metier" class="form-group col-md-6">
               <div class="e-float-input e-control-wrapper">
-                <ejs-dropdownlist
-                  id="metier"
-                  formControlName="metier"
-                  [dataSource]="metier"
-                  [fields]="{ text: 'name', value: '_id' }"
-                  placeholder="Metier 2"
-                  popupHeight="200px"
-                  floatLabelType="Always"
-                ></ejs-dropdownlist>
+                <ejs-dropdownlist id="metier" (change)='onChange($event)' formControlName="metier" [dataSource]="metier"
+                  [fields]="{ text: 'name', value: '_id' }" placeholder="Categorie *" popupHeight="200px"
+                  floatLabelType="Always"></ejs-dropdownlist>
+                <mat-error *ngIf="
+                                angForm.get('metier').hasError('required') &&
+                                angForm.get('metier').touched
+                              ">
+                  <span> Categorie is required </span>
+                </mat-error>
+              </div>
+              <div class="e-float-input e-control-wrapper">
+                <ejs-dropdownlist id="subCat" formControlName="subCat" [dataSource]="subCat"
+                  [fields]="{ text: 'name', value: 'name' }" placeholder="Sub-Categorie *" popupHeight="200px"
+                  floatLabelType="Always">
+                </ejs-dropdownlist>
+                <mat-error *ngIf="angForm.get('subCat').hasError('required') && angForm.get('subCat').touched">
+                  <span> Categorie is required </span>
+                </mat-error>
               </div>
             </div>
 
             <div class="form-group col-md-6">
-              <div   class="e-float-input e-control-wrapper">
-                <ejs-dropdownlist
-                  id="status"
-                  formControlName="status"
-                  [dataSource]="lStatus"
-                  [fields]="{ text: 'status', value: 'status' }"
-                  placeholder="status"
-                  popupHeight="200px"
-                  floatLabelType="Always"
-                  #status
-                ></ejs-dropdownlist>
-                
-              </div>
-              <ng-template #input>
-                Please friend, login.
-              </ng-template>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <div  class="e-float-input e-control-wrapper  disabled">
-                <ejs-dropdownlist
-                  id="Departement"
-                  formControlName="departement"
-                  [dataSource]="departements"
-                  [fields]="{ text: 'departement', value: '_id' }"
-                  placeholder="Departement"
-                  popupHeight="200px"
-                  floatLabelType="Always"
-                  
-                ></ejs-dropdownlist>
-              </div>
-            </div>
-            <div class="form-group col-md-6">
               <div class="e-float-input e-control-wrapper">
-                <ejs-dropdownlist
-                  id="priority"
-                  formControlName="priority"
-                  [dataSource]="priorities"
-                  [fields]="{ text: 'priority', value: 'priority' }"
-                  placeholder="Priority"
-                  popupHeight="200px"
-                  floatLabelType="Always"
-                  #priority
-                ></ejs-dropdownlist>
+                <ejs-dropdownlist id="status" formControlName="status" [dataSource]="lStatus"
+                  [fields]="{ text: 'status', value: 'status' }" placeholder="status" popupHeight="200px"
+                  floatLabelType="Always" #status></ejs-dropdownlist>
+
               </div>
-            </div> 
+            </div>
           </div>
+          <div *ngIf="angForm.value.tech;then contenu_bon else contenu_pas_bon">Le contenu saisi ici sera ignoré.</div>
+          <ng-template #contenu_bon>Ok pour le tech</ng-template>
+          <ng-template #contenu_pas_bon>Nok.
+          </ng-template>
+          <div class="form-row">
+            <ng-template #contenu_bon>
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id="Departement" formControlName="departement" [dataSource]="departements"
+                    [fields]="{ text: 'departement', value: '_id' }" placeholder="Departement" popupHeight="200px"
+                    floatLabelType="Always" disabled='disabled'></ejs-dropdownlist>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #contenu_pas_bon>
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id="Departement" formControlName="departement" [dataSource]="departements"
+                    [fields]="{ text: 'departement', value: '_id' }" placeholder="Departement" popupHeight="200px"
+                    floatLabelType="Always" disabled='disabled'></ejs-dropdownlist>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #contenu_bon>
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id="priority" formControlName="priority" [dataSource]="priorities"
+                    [fields]="{ text: 'priority', value: 'priority' }" placeholder="Priority" popupHeight="200px"
+                    floatLabelType="Always" #priority disabled='disabled'></ejs-dropdownlist>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #contenu_pas_bon>
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id="priority" formControlName="priority" [dataSource]="priorities"
+                    [fields]="{ text: 'priority', value: 'priority' }" placeholder="Priority" popupHeight="200px"
+                    floatLabelType="Always" #priority ></ejs-dropdownlist>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+
           <div class="form-row">
             <div *ngIf="user != 'User'" class="form-group col-md-6">
               <div class="e-float-input e-control-wrapper">
-                <ejs-dropdownlist
-                  id="tech"
-                  #samples
-                  formControlName="tech"
-                  [dataSource]="techs"
-                  [fields]="{ text: 'fullName', value: 'fullName' }"
-                  placeholder="Technicien"
-                  [popupHeight]="height"
-                >
+                <ejs-dropdownlist id="tech" formControlName="tech" [dataSource]="techs"
+                  [fields]="{ text: 'fullName', value: 'fullName' }" placeholder="Technician *" popupHeight="200px"
+                  floatLabelType="Always">
                 </ejs-dropdownlist>
+                <mat-error *ngIf="angForm.get('tech').hasError('required') && angForm.get('tech').touched">
+                  <span> Select technician is required </span>
+                </mat-error>
               </div>
             </div>
             <div class="form-group col-md-6">
               <mat-label>Locality</mat-label>
               <div class="e-float-input e-control-wrapper">
-                <input
-                  matInput="matInput"
-                  placeholder="Locality"
-                  formControlName="locality"
-                  #locality
-                />
+                <input matInput="matInput" placeholder="Locality" formControlName="locality" #locality />
               </div>
             </div>
           </div>
           <div class="form-row">
             <mat-form-field class="form-group col-md-12">
               <mat-label>Description Intervention</mat-label>
-              <textarea
-                matInput
-                formControlName="description"
-                placeholder="Description Intervention"
-                rows="brightness_4"
-                #description
-              ></textarea>
+              <textarea matInput formControlName="description" placeholder="Description Intervention"
+                rows="brightness_4" #description></textarea>
             </mat-form-field>
           </div>
-          <div *ngIf="user != 'User'" class="form-row">
-            <div class="form-group col-md-6">
-              <div class="e-float-input e-control-wrapper">
-                <input
-                  matInput="matInput"
-                  placeholder="Materiel utilisé"
-                  formControlName="useMat"
-                  #useMat
-                />
+          <div *ngIf="(user != 'User')&&(!((tech)||(metier)||(subCat)))">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <input matInput="matInput" placeholder="Materiel utilisé" formControlName="useMat" #useMat />
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <input matInput="matInput" placeholder="Asset" formControlName="asset" #asset />
+                </div>
               </div>
             </div>
-            <div class="form-group col-md-6">
-              <div class="e-float-input e-control-wrapper">
-                <input
-                  matInput="matInput"
-                  placeholder="Asset"
-                  formControlName="asset"
-                  #asset
-                />
-              </div>
+            <div class="form-row">
+              <mat-form-field class="form-group col-md-12">
+                <mat-label>Description Solution</mat-label>
+                <textarea matInput formControlName="solution" placeholder="Description solution" rows="brightness_4"
+                  #solution></textarea>
+              </mat-form-field>
             </div>
-          </div>
-          <div *ngIf="user != 'User'" class="form-row">
-            <mat-form-field class="form-group col-md-12">
-              <mat-label>Description Solution</mat-label>
-              <textarea
-                matInput
-                formControlName="solution"
-                placeholder="Description solution"
-                rows="brightness_4"
-                #solution
-              ></textarea>
-            </mat-form-field>
-          </div>
-          <div *ngIf="user != 'User'" class="form-row">
-            <input
-              matInput="matInput"
-              value="{{ today | date: 'dd/MM/yyyy' }}"
-              [hidden]="true"
-              #date
-            />
-            <div class="form-group col-md-4"></div>
-
-            <div class="form-group col-md-4">
-              <button
-                mat-raised-button
-                color="warn"
-                (click)="sendLink(angForm.value.asset)"
-              >
-                historic asset {{ angForm.value.asset }}
-              </button>
+            <div *ngIf="user != 'User'" class="form-row">
+              <input matInput="matInput" value="{{ today | date: 'dd/MM/yyyy' }}" [hidden]="true" #date />
             </div>
           </div>
         </form>
       </div>
     </ng-template>
   </ejs-grid>
+  <ejs-toast #element> </ejs-toast>
 </div>
-
-<!--<ejs-dropdownlist id="tech" disableRipple="disableRipple" formControlName="tech" [dataSource]='techs' [fields]="{text:'fullName',value:'fullName' }" [placeholder]='text' popupHeight='200px' floatLabelType='Always'></ejs-dropdownlist>-->

@@ -20,7 +20,7 @@
                     <div class="row">
                       <div class="col-6">
                         <ejs-grid id="Grid" #grid  allowPaging='true' (rowDragStart)="rowDragStart($event)" [toolbar]='toolbar'[dataSource]="srcData"  [pageSettings]='initialPage'
-                          [allowSelection]="true" [allowRowDragAndDrop]="true" [selectionSettings]="selectionOptions"
+                          [allowSelection]="true" [allowRowDragAndDrop]="true" [selectionSettings]="selectionOptions" (actionBegin)="actionBegin($event)"
                           [rowDropSettings]="srcDropOptions" width="100%" height=365>
                           <e-columns>
                             <e-column field="departement" headerText="Departements" width="120" textAlign="Right">
@@ -30,7 +30,7 @@
                       </div>
                       <div class="col-6">
                         <ejs-grid id="DestGrid" #grid2  allowPaging='true' [dataSource]="destData" (rowDragStart)="rmRowDragStart($event)"  [pageSettings]='initialPage'
-                          [allowSelection]="true" [allowRowDragAndDrop]="true" [rowDropSettings]="destDropOptions" [toolbar]='toolbar'
+                          [allowSelection]="true" [allowRowDragAndDrop]="true" [rowDropSettings]="destDropOptions" [toolbar]='toolbar' 
                           [selectionSettings]="selectionOptions" width="100%" height=365>
                           <e-columns>
                             <e-column field="departement" headerText="Departements in to Hospital" width="120"

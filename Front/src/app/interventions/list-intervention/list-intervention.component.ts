@@ -38,7 +38,8 @@ export class ListInterventionComponent implements OnInit {
   @Input() techs;
   @Input() user;
   @Output() messageEvent = new EventEmitter<Intervention>();
-
+  //Toast
+  @ViewChild("element") element;
   @ViewChild("grid") public grid: GridComponent;
 
   // public interventions: Intervention[];
@@ -72,6 +73,7 @@ export class ListInterventionComponent implements OnInit {
   public shipCityDistinctData: Object[];
   public shipCountryDistinctData: Object[];
   public submitClicked = false;
+  subCat: any;
   // router: Router;
 
   constructor(private ss: SolutionService, private router: Router) {}
@@ -112,8 +114,8 @@ export class ListInterventionComponent implements OnInit {
    * create formulaire en fonction des data present
    * @param data
    */
-  createFormGroup(data): FormGroup {
-    console.log("Data : ",data)
+  createFormIntervention(data): FormGroup {
+    console.log("Data : ", data);
     if (this.user === "User") {
       return new FormGroup({
         _id: new FormControl(data._id, Validators.required),
@@ -126,18 +128,19 @@ export class ListInterventionComponent implements OnInit {
         description: new FormControl(data.description),
         status: new FormControl(data.status),
         day: new FormControl(data.day),
+        tech: new FormControl(data.tech),
         slug: new FormControl(data.slug)
       });
     } else if (this.user === "Admin") {
-      console.log("Data :",data.metier.length)
-      this.metier=this.projet[0].metier
-    
+      console.log("Admin", data);
+      this.metier = this.projet.metier;
+
       /*if (data.metier.length > 0 && data.metier != undefined) {
         metier = data.metier[0]._id;
       } else {
         metier = "";
       }*/
-      console.log("Metier",this.metier);
+      console.log("Metier", this.metier);
       return new FormGroup({
         _id: new FormControl(data._id, Validators.required),
         departement: new FormControl(
@@ -153,17 +156,25 @@ export class ListInterventionComponent implements OnInit {
         status: new FormControl(data.status),
         type: new FormControl(data.type ? data.type : ""),
         day: new FormControl(data.day),
-        tech: new FormControl(data.tech ? data.tech : ""),
-        useMat: new FormControl(data.useMat ? data.useMat : ""),
-        asset: new FormControl(data.asset ? data.asset : ""),
-        slug: new FormControl(data.slug),
-        metier: new FormControl(
-          data.metier.length > 0 ? data.metier[0]._id : "",
+        tech: new FormControl(
+          data.tech ? data.tech : null,
           Validators.required
         ),
-        solution: new FormControl(data.solution ? data.solution : "")
+        useMat: new FormControl(data.useMat ? data.useMat : null),
+        asset: new FormControl(data.asset ? data.asset : null),
+        slug: new FormControl(data.slug),
+        metier: new FormControl(
+          data.metier.length > 0 ? data.metier[0]._id : null,
+          Validators.required
+        ),
+        subCat: new FormControl(
+          data.subCat ? data.subCat : null,
+          Validators.required
+        ),
+        solution: new FormControl(data.solution ? data.solution : null)
       });
     } else {
+      console.log("else", data);
       return new FormGroup({
         _id: new FormControl(data._id, Validators.required),
         departement: new FormControl(
@@ -181,9 +192,29 @@ export class ListInterventionComponent implements OnInit {
         asset: new FormControl(data.asset),
         slug: new FormControl(data.slug),
         metier: new FormControl(data.metier[0]._id),
+        subCat: new FormControl(
+          data.subCat ? data.subCat : null,
+          Validators.required
+        ),
         solution: new FormControl("")
       });
     }
+  }
+
+  createFormMaintenance(data): FormGroup{
+    console.log('Formulaire Maintenance : ',data)
+    return new FormGroup({
+      _id: new FormControl(data._id, Validators.required),
+      departement: new FormControl(
+        data.departement,
+        Validators.required
+      ),
+      locality: new FormControl(data.locality ? data.locality : ""),
+      priority: new FormControl(data.priority),
+      description: new FormControl(data.description),
+      status: new FormControl(data.status),
+      day: new FormControl(data.day)
+    });
   }
   public sortComparer = (reference: string, comparer: string) => {
     if (reference < comparer) {
@@ -205,6 +236,10 @@ export class ListInterventionComponent implements OnInit {
         : { OrderDate: { value: control.value } };
     };
   }
+
+  public onChange(args: any): void {
+    this.subCat = args.itemData.categorie;
+  }
   // Action sur le tableau
   actionBegin(args: SaveEventArgs): void {
     // Verification de l'action debut edit ou ajout
@@ -212,15 +247,15 @@ export class ListInterventionComponent implements OnInit {
       if (this.user == "User") {
         let data: any = args.rowData;
         if (data.idUser != localStorage._id) {
-          console.log('il peut pas')
           args.cancel = true;
         }
       }
-      // this.submitClicked = false;
-      // Creation du formulaire
-      console.log(args.rowData, "$$$$$$$$$$$$$");
-      this.angForm = this.createFormGroup(args.rowData);
-      console.log(this.angForm.value, "Form");
+      let data: any = args.rowData;
+      if (data.type == "JobRequest") {
+        this.angForm = this.createFormIntervention(data);
+      } else if ((data.type = "Maintenance")) {
+        this.angForm = this.createFormMaintenance(data);
+      }
     }
     // Click SAVE
     if (args.requestType === "save") {
@@ -230,7 +265,8 @@ export class ListInterventionComponent implements OnInit {
       if (this.angForm.valid) {
         this.messageEvent.emit(this.angForm.value);
       } else {
-        console.log("error");
+        //retourn message error manque info
+        this.showToast();
         args.cancel = true;
       }
     }
@@ -248,13 +284,17 @@ export class ListInterventionComponent implements OnInit {
    * determine l'action executer sur le tableau
    */
   actionComplete(args: DialogEditEventArgs): void {
+    let data: any = args.rowData;
+
     if (args.requestType === "beginEdit" || args.requestType === "add") {
-      console.log(args);
-      args.dialog.header = "Details of Intervention";
-      if (Browser.isDevice) {
-        console.log(args);
-        args.dialog.height = window.innerHeight - 500 + "px";
-        (args.dialog as Dialog).dataBind();
+      if (data.type == "JobRequest") {
+        args.dialog.header = "Details of Intervention";
+        if (Browser.isDevice) {
+          args.dialog.height = window.innerHeight - 500 + "px";
+          (args.dialog as Dialog).dataBind();
+        }
+      } else if (data.type == "Maintenance") {
+        alert("actionCOmpelte Maintenance");
       }
     }
   }
@@ -266,13 +306,13 @@ export class ListInterventionComponent implements OnInit {
     this.grid.refresh();
   }
 
+
   // Couleur par etat de ligne  https://stackblitz.com/edit/angular-9tucrb?file=app.component.ts
   rowDataBound(args: RowDataBoundEventArgs) {
     let data: any = args.data;
-    console.log(data.metier);
+
     if (data.type != "Maintenance") {
       if (
-        data.metier.length > 0 &&
         data.metier != undefined &&
         (data.tech != undefined && data.tech.length > 0)
       ) {
@@ -292,5 +332,15 @@ export class ListInterventionComponent implements OnInit {
     if (data.idUser != localStorage._id && this.user === "User") {
       args.row.classList.add("diffUser");
     }
+  }
+
+  showToast() {
+    //this.element.width = "50%";
+    this.element.title = "<center>Error</center>";
+    //this.element.animation.show.effect = "'Fade In";
+    this.element.content =
+      "<div class='e-custom'><center>You have not selected a Technician, category or subcategory</center></div>";
+    this.element.cssClass = "e-toast-danger";
+    this.element.show({ timeOut: 4000 });
   }
 }

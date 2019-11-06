@@ -83,6 +83,7 @@ export class FormHopitalComponent implements OnInit {
   }
   ngOnInit() {
     this.hs.getCountry().subscribe(data => (this.lcountry = data));
+    console.log(this.lcountry)
     this.createForm();
   }
 }

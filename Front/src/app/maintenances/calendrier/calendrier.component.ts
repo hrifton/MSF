@@ -102,6 +102,7 @@ export class CalendrierComponent implements OnInit {
     this.eventSettings = {
       dataSource: this.data
     };
+    console.log(this.eventSettings)
   }
   /**Creation formulaire avec champs date precomplété
    *

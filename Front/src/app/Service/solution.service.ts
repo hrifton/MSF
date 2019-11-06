@@ -4,7 +4,7 @@ import Solution from "../Class/Solution";
 
 @Injectable({ providedIn: "root" })
 export class SolutionService {
-  uri = "/api/solution";
+  uri = "http://localhost:3000/api/solution";
 
   constructor(private http: HttpClient) {}
   list: Solution[];

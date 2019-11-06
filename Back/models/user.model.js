@@ -21,11 +21,11 @@ var userSchema = new mongoose.Schema({
     ref: "hopital",
     required: false
   },
-  idDepartement: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "departement",
-    required: false
-  },
+   departements: [
+    {
+      type: Object
+    }
+  ],
   password: {
     type: String,
     required: "password can't be empty",
@@ -68,7 +68,7 @@ userSchema.methods.generateJwt = function() {
       email: this.email,
       status: this.status,
       idHopital: this.idHopital,
-      idDepartement: this.idDepartement
+      departements: this.departements
     },
     process.env.JWT_SECRET,
     {

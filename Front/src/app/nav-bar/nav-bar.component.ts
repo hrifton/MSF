@@ -38,6 +38,7 @@ export class NavBarComponent implements OnInit {
     .pipe(map(result => result.matches));
 
   ngOnInit(): void {
+    localStorage=null
     console.log(localStorage);
     this.storage = localStorage;
   }

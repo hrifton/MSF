@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
-import * as jwt_decode from 'jwt-decode';
-import { User } from '../Class/user';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHandler, HttpHeaders } from "@angular/common/http";
+import * as jwt_decode from "jwt-decode";
+import { User } from "../Class/user";
 
 @Injectable({
   providedIn: "root"
 })
 export class UserService {
-  uri = "/api";
+  uri = "http://localhost:3000/api";
 
   noAuthHeader = { headers: new HttpHeaders({ NoAtuh: "True" }) };
   selectedUser: { fullName: string; email: string; password: string };
+
   constructor(private http: HttpClient) {}
 
   /**
@@ -32,6 +33,20 @@ export class UserService {
       this.noAuthHeader
     );
   }
+
+  addDepartement($event: any) {
+    console.log("addDepartement User", $event);
+    return this.http.post(
+      this.uri + "/addDepartement",
+      $event,
+      this.noAuthHeader
+    );
+  }
+  remDepartement($event: any) {
+    return this.http.delete(
+      `${this.uri}/rmDepartementUser/${$event.idUser}/${$event._id}`
+    );
+  }
   /**
    * DecodeToken et assigne
    * le status fullname email
@@ -42,19 +57,39 @@ export class UserService {
   getDecodedAccessToken(token: string): any {
     try {
       const jwt = jwt_decode(token);
-
       this.setId(jwt._id);
       this.setStatus(jwt.status);
       this.setFullName(jwt.fullName);
       this.setEmail(jwt.email);
       this.setIdHopital(jwt.idHopital);
-      this.setIdDepartement(jwt.idDepartement);
+      this.setdepartements(jwt.departements);
     } catch (Error) {
       return Error;
     }
   }
-  // tslint:disable-next-line: variable-name
+
+  getToLocalStorage(token): any {
+    console.log(token)
+    try {     
+      this.setId(token.id);
+      //this.setStatus(token.status);
+      this.setFullName(token.surname);
+      this.setEmail(token.mail);
+      //this.setIdHopital(token.idHopital);
+      //this.setdepartements(token.departements);
+    } catch (Error) {
+      return Error;
+    }
+  }
+
+  /**
+   *
+   *
+   * @param {*} _id
+   * @memberof UserService
+   */
   setId(_id) {
+    console.log("id :",_id)
     localStorage.setItem("_id", _id);
   }
   getId() {
@@ -143,14 +178,21 @@ export class UserService {
     localStorage.removeItem("status");
   }
 
-  setIdDepartement(IdDepartement) {
-    localStorage.setItem("IdDepartement", IdDepartement);
+  setdepartements(departement) {
+    localStorage.setItem("departements", JSON.stringify(departement));
   }
+  /**
+   * Parse String TO Array[Object]
+   */
   getIdDepartement() {
-    return localStorage.getItem("IdDepartement");
+    var test = localStorage.getItem("departements");
+    test = test.replace(/([a-zA-Z0-9]+?):/g, '"$1":');
+    test = test.replace(/'/g, '"');
+    test = JSON.parse(test);
+    return test;
   }
   deleteIdDepartement(arg0: string) {
-    localStorage.removeItem("IdDepartement");
+    localStorage.removeItem("departements");
   }
 
   setToken(token: string) {
@@ -189,5 +231,11 @@ export class UserService {
     }
   }
 
-
+  async getUserByHopital(args) {
+    let test: any = [];
+    test = await this.http.get(this.uri + "/userByHopital/:id", {
+      params: { _id: args }
+    });
+    return test;
+  }
 }

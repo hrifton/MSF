@@ -6,6 +6,7 @@ var interventionScheam = new mongoose.Schema({
   locality: { type: String },
   priority: { type: String },
   day: { type: String },
+  dateAssing: { type: String },
   description: { type: String },
   status: { type: String },
   type: { type: String },
@@ -30,7 +31,17 @@ var interventionScheam = new mongoose.Schema({
     ref: "departement",
     required: true
   },
+  subCat: { type: String },
   asset: { type: String }
 });
+
+//converte String to Array[Objet]
+interventionScheam.methods.parsing = function(json) {
+  var newJson = json.replace(/([a-zA-Z0-9]+?):/g, '"$1":');
+  newJson = newJson.replace(/'/g, '"');  
+  return JSON.parse(newJson);
+};
+
+
 interventionScheam.plugin(AutoIncrement, { inc_field: "slug" });
 mongoose.model("Intervention", interventionScheam);

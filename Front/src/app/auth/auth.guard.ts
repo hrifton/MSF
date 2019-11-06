@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate {
     | UrlTree {
     if (!this.userService.isLoginIn()) {
       this.router.navigateByUrl("/login");
-      this.userService.deleteToken();
+      //this.userService.deleteToken();
       return false;
     }
 

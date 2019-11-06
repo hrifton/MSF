@@ -42,11 +42,16 @@ export class UsersComponent implements OnInit {
   @Input() role;
   @Output() messageEvent = new EventEmitter<User>();
   @Output() departementUser = new EventEmitter<Departement>();
+  @Output() deparetmentUserRm = new EventEmitter<Departement>();
+  @Output() idHopital = new EventEmitter<string>();
   hopital = new Hospital();
   status = ["User", "Tech", "Operator", "LocalAdmin", "SuperAdmin"];
   data: any[];
   userForm: FormGroup;
-  data2: any[];
+  data2: any = [];
+  idUser: any;
+  public mode: string;
+  listeDepartement: [];
   constructor(
     private fb: FormBuilder,
     private us: UserService,
@@ -55,13 +60,11 @@ export class UsersComponent implements OnInit {
     this.createForm();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.mode = "CheckBox";
     this.data = this.projet;
     this.hopital = this.projet[0];
-    console.log(this.hopital);
-    this.hs.getUserByHospital().subscribe((data: any[]) => {
-      this.data2 = data;
-    });
+    this.data2 =await this.hs.getUserByHospital(this.hopital._id);
   }
 
   /**
@@ -96,30 +99,11 @@ export class UsersComponent implements OnInit {
    * complete formulaire lors du changement de selection de projet
    */
   //TODO a resoudre probleme constructor
-  onSelection(data) {
-    console.log(data);
-    /* this.hopital = new Hospital({
-       id: data._id,
-       projectCode: data.projectCode,
-       country: data.country,
-       project: data.project,
-       startingDate: data.startingDate,
-       closuredate: data.closuredate,
-       ipdStructure: data.ipdStructure,
-       leveOfCare: data.leveOfCare
-     });*/
-
-    this.hopital = new Hospital();
-    (this.hopital.id = data._id),
-      (this.hopital.projectCode = data.projectCode),
-      (this.hopital.country = data.country),
-      (this.hopital.project = data.project),
-      (this.hopital.startingDate = data.startingDate),
-      (this.hopital.closuredate = data.closuredate),
-      (this.hopital.ipdStructure = data.ipdStructure),
-      (this.hopital.leveOfCare = data.leveOfCare);
-
-    console.log(this.hopital);
+  async onSelection(data) {
+    this.hopital = data;
+    console.log("selectONe : ", data);
+    this.data2 = await this.hs.getUserByHospital(data._id);
+    console.log(this.data2);
   }
 
   saveUser(data) {
@@ -138,13 +122,23 @@ export class UsersComponent implements OnInit {
   // set the placeholder to the MultiSelect input
   public checkWaterMark: string = "Select departement(s)";
 
-  public actionBegin(args: EventRenderedArgs) {
-    console.log(args);
+  public select(args: any, id) {
+    args.itemData.idUser = id._id;
+    this.departementUser.emit(args.itemData);
   }
-  public select(args: any) {
-    console.log(args.itemData);
+  public removed(args: any, data) {
+    args.itemData.idUser = data._id;
+    this.deparetmentUserRm.emit(args.itemData);
   }
-  public removed(args: any) {
-    console.log(args.itemData);
+  /**
+   *check box pre-competé
+   */
+  listeDep(data) {
+    let liste: any = [];
+    data.departements.forEach(element => {
+      liste.push(element._id);
+    });
+    return liste;
   }
 }
+

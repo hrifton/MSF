@@ -5,6 +5,8 @@ import { Client } from "@microsoft/microsoft-graph-client";
 // import { AlertsService } from "./alerts.service";
 import { OAuthSettings } from "../auth/oauth";
 import { User } from "../Class/user";
+import { UserService } from './user.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: "root"
@@ -14,7 +16,9 @@ export class AuthService {
   public user: User;
 
   constructor(
-    private msalService: MsalService // private alertsService: AlertsService
+    private msalService: MsalService,
+    private us: UserService,
+    private router: Router // private alertsService: AlertsService
   ) {
     this.authenticated = this.msalService.getUser() != null;
     this.getUser().then(user => {
@@ -28,12 +32,14 @@ export class AuthService {
     const result = await this.msalService
       .loginPopup(OAuthSettings.scopes)
       .catch(reason => {
+        console.log("error");
         console.log("Login failed", JSON.stringify(reason, null, 2));
       });
-
+    console.log(result);
     if (result) {
       this.authenticated = true;
       this.user = await this.getUser();
+      this.router.navigateByUrl("/interventions");
       return true;
     }
   }
@@ -52,6 +58,7 @@ export class AuthService {
       .catch(reason => {
         console.log("Get token failed", JSON.stringify(reason, null, 2));
       });
+    console.log(result);
 
     return result;
   }
@@ -77,11 +84,13 @@ export class AuthService {
         }
       }
     });
-
+    //TODO travail d'authentification a faire ici Azure
     // Get the user from Graph (GET /me)
     const graphUser = await graphClient.api("/me").get();
     const user = new User();
     user.displayName = graphUser.displayName;
+    console.log(graphUser);
+    this.us.getToLocalStorage(graphUser);
     // Prefer the mail property, but fall back to userPrincipalName
     user.email = graphUser.mail || graphUser.userPrincipalName;
 

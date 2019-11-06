@@ -37,7 +37,7 @@ export class SettingsComponent implements OnInit {
     { text: "Categories/Sub-Categories" },
     { text: "Assets" }
   ];
-  public projet: any[];
+  public projet: any;
 
   ngOnInit() {
     this.role = this.us.getStatus();
@@ -57,15 +57,14 @@ export class SettingsComponent implements OnInit {
   }
   checkStatut(statut) {
     if (statut !== "SuperAdmin") {
-      this.hs
-        .findHopital(this.us.getIdHopital())
-        .subscribe((data: Hospital[]) => {
-          this.projet = data;
-        });
+      console.log(statut)
+      this.projet=this.hs
+        .findHopital(this.us.getIdHopital());
     } else {
       this.hs.getHospital().subscribe((data: Hospital[]) => {
         this.projet = data;
       });
+      console.log('admin : ',this.projet)
     }
   }
   addMetier($event) {
@@ -92,19 +91,26 @@ export class SettingsComponent implements OnInit {
       console.log(data);
     });
   }
-  rmDepToHopital($event){
-console.log("rmdepartement:",$event)
- this.hs.delDepToHop($event).subscribe((data: Hospital) => {
-   console.log(data);
- });
+  rmDepToHopital($event) {
+    console.log("rmdepartement:", $event);
+    this.hs.delDepToHop($event).subscribe((data: Hospital) => {
+      console.log(data);
+    });
   }
-  addDepToHopital($event){
- this.hs.addDepToHop($event).subscribe((data: Hospital) => {
-   console.log(data);
- });
+  addDepToHopital($event) {
+    this.hs.addDepToHop($event).subscribe((data: Hospital) => {
+      console.log(data);
+    });
   }
 
-  addDepartementUser($event){
-    console.log($event)
+  addDepartementUser($event) {
+    this.us.addDepartement($event).subscribe((data: any) => {
+      console.log(data);
+    });
+  }
+  deparetmentUserRm($event) {
+    this.us.remDepartement($event).subscribe((data: any) => {
+      console.log(data);
+    });
   }
 }

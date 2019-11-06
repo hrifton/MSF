@@ -5,7 +5,8 @@
  * @class Hospital
  */
 export class Hospital {
-         id: string;
+  
+         _id: string;
          projectCode: string;
          country: string;
          project: string;
@@ -13,9 +14,7 @@ export class Hospital {
          closuredate: Date;
          ipdStructure: string;
          leveOfCare: string;
-         metier: [{ any,
-                    categorie: [{ any }] 
-        }];
+         metier: [{ any; categorie: [{ any }] }];
 
          /**
           *Creates an instance of Hospital.
@@ -28,8 +27,19 @@ export class Hospital {
           * @param {string} leveOfCare
           * @memberof Hospital
           */
+         constructor();
+         constructor(hopital: {
+           _id?: string;
+           projectCode?: string;
+           country?: string;
+           project?: string;
+           startingDate?: string;
+           closuredate?: string;
+           ipdStructure?: string;
+           leveOfCare?: string;
+         });
          constructor({
-           id,
+           _id,
            projectCode,
            country,
            project,
@@ -38,7 +48,7 @@ export class Hospital {
            ipdStructure,
            leveOfCare
          }: {
-           id?: string;
+           _id?: string;
            projectCode?: string;
            country?: string;
            project?: string;
@@ -49,7 +59,7 @@ export class Hospital {
          } = {}) {}
 
          delete() {
-           this.id = "";
+           this._id = "";
            this.projectCode = "";
            this.country = "";
            this.project = "";

@@ -112,7 +112,7 @@
     </div>
   </div>
 </div>
-<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+<div *ngIf="data2.length > 0" class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
   <div class="row" style="margin-top: 0px;">
     <div class="e-card" id="basic_card">
       <div class="e-card-header">
@@ -123,10 +123,12 @@
         </div>
       </div>
       <div class="e-card-content">
-        <h3>Liste User</h3>
         <div class="control-section">
-          <ejs-grid #grid [dataSource]='data2' id='Grid'>
+          <ejs-grid #grid [dataSource]="data2" [allowPaging]="true" 
+         [pageSettings]='pageOption'>
+          
             <ng-template #detailTemplate let-data>
+              
               <table class="detailtable" width="100%">
                
                 <tbody>
@@ -137,11 +139,11 @@
                     <td>
                       <span>Status: </span> {{data.status}}
                     </td>
-                    <td>
+                    <td *ngIf="data.status=='User'">
                       <span>Departement: </span> 
                       <div class="control-styles">
                     <ejs-multiselect id='multiselectelement' [dataSource]='hopital.departements' [fields]='fields' (filtering)='onFiltering($event)'
-                      [mode]='mode' [placeholder]='placeholder'  (actionBegin)="actionBegin($event)" (select)="select($event)" (removed)="removed($event)" ></ejs-multiselect>
+                      [mode]='mode' [placeholder]='placeholder' (select)="select($event,data)" (removed)="removed($event,data)" [value]="listeDep(data)"></ejs-multiselect>
                       </div>
                     </td>
                   </tr>

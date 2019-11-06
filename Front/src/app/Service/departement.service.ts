@@ -5,9 +5,9 @@ import { of } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class DepartementService {
-  uri = "/api/departement";
+  uri = "http://localhost:3000/api/departement";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   addDeparement(departement) {
     const obj = {

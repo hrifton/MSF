@@ -2,17 +2,19 @@
   "name": "MSF",
   "version": "0.0.0",
   "scripts": {
-    "start-webpack": "webpack-dev-server --config webpack.dev.config.js",
+    "start-webpack": "webpack-dev-serve --config webpack.dev.config.js",
     "ng": "ng",
-    "start": "ng serve --proxy-config proxyconf.json ",
+    "start": "ng serve",
     "build": "node --max-old-space-size=8192 node_modules/@angular/cli/bin/ng build --prod",
+    "build:stats": "ng build --stats-json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "postinstall": "ng build --aot --prod",
     "compodoc": "npx compodoc -p src/tsconfig.app.json",
     "generate-docs": "compodoc -p src/tsconfig.app.json",
-    "docs": "compodoc -s src/tsconfig.app.json"
+    "docs": "compodoc -s src/tsconfig.app.json",
+    "analyze": "webpack-bundle-analyzer dist/AngularBundleAnalyser/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -128,8 +130,8 @@
     "ts-node": "^7.0.1",
     "tslint": "~5.11.0",
     "typescript": "^3.2.4",
-    "webpack": "^4.39.3",
-    "webpack-bundle-analyzer": "^3.4.1",
+    "webpack": "^4.41.2",
+    "webpack-bundle-analyzer": "^3.6.0",
     "webpack-dashboard": "^3.2.0"
   }
 }

@@ -53,10 +53,61 @@ module.exports.liste = (req, res) => {
   ).sort({ field: "asc", _id: -1 });
 };
 
-module.exports.listeByUser = (req, res) => {
-  var list = Array();
- 
+module.exports.listeByUser = async (req, res) => {
+  departement = new Intervention();
+  departement = departement.parsing(req.idDepartement);
+  listIdDep=[]
+  departement.forEach(element => {
+    listIdDep.push(ObjectId(element._id))
+  });
+
   Intervention.aggregate(
+    [
+      {
+        $match: {
+          $and: [
+            {
+              idDepartement: {
+                $in: listIdDep
+              }
+            },
+            { idHopital: ObjectId(req.idHopital) }
+          ]
+        }
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "idUser",
+          foreignField: "_id",
+          as: "user"
+        }
+      },
+      {
+        $lookup: {
+          from: "departements",
+          localField: "idDepartement",
+          foreignField: "_id",
+          as: "departements"
+        }
+      },
+      {
+        $project: {
+          "user.password": 0,
+          "user.saltSecret": 0
+        }
+      }
+    ],
+    (err, doc) => {
+      if (!err) {
+        
+        res.send(doc);
+      } else {
+      }
+    }
+  );
+
+  /* Intervention.aggregate(
     [
       { $match: { idUser: ObjectId(req.idUser) } },
       {
@@ -195,54 +246,59 @@ module.exports.listeByUser = (req, res) => {
         );
       }
     }
-  );
+  );*/
 };
 
 module.exports.listeByTech = (req, res) => {
-
-  
-  Intervention.aggregate([
-    {$match:{tech:req}},{
-
+  Intervention.aggregate(
+    [
+      { $match: { tech: req } },
+      {
         $lookup: {
           from: "metiers",
           localField: "metier",
           foreignField: "_id",
           as: "metier"
         }
-      },{
+      },
+      {
         $lookup: {
           from: "departements",
           localField: "idDepartement",
           foreignField: "_id",
           as: "departements"
         }
-      },{
+      },
+      {
         $lookup: {
           from: "users",
           localField: "idUser",
           foreignField: "_id",
           as: "user"
         }
-      }, {
+      },
+      {
         $project: {
           "user.password": 0,
           "user.saltSecret": 0
         }
       }
-    
-  ], (err, docs) => {
-    if (!err) {
-      res.send(docs);
-    } else {
-      console.log(
-        "Error in Retriving Interventions:" + JSON.stringify(err, undefined, 2)
-      );
+    ],
+    (err, docs) => {
+      if (!err) {
+        res.send(docs);
+      } else {
+        console.log(
+          "Error in Retriving Interventions:" +
+            JSON.stringify(err, undefined, 2)
+        );
+      }
     }
-  }).sort({ field: "asc", _id: -1 });
+  ).sort({ field: "asc", _id: -1 });
 };
 
 module.exports.add = (req, res, next) => {
+  console.log(req.body)
   var intervention = new Intervention(req.body);
   intervention.save((err, doc) => {
     if (!err) {

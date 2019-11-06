@@ -4,7 +4,7 @@ import { BrowserModule } from "@angular/platform-browser";
 // Outils
 
 import { GridAllModule } from "@syncfusion/ej2-angular-grids";
-import { MatInputModule } from "@angular/material";
+import { MatInputModule, MatProgressSpinnerModule } from "@angular/material";
 import { ToastModule } from '@syncfusion/ej2-angular-notifications';
 
 // Chart
@@ -34,6 +34,8 @@ import { InterventionsComponent } from "./interventions.component";
 import { ListInterventionComponent } from "./list-intervention/list-intervention.component";
 import { FormulaireInterventionComponent } from "./formulaire-intervention/formulaire-intervention.component";
 import { ResolutionInterventionComponent } from "./resolution-intervention/resolution-intervention.component";
+import { CalendrierTechComponent } from "./calendrier-tech/calendrier-tech.component";
+
 
 import { MatDatepickerModule, MatNativeDateModule } from "@angular/material";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -57,12 +59,14 @@ import {
 } from "@angular/material";
 import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 
+
 @NgModule({
   declarations: [
     InterventionsComponent,
     ListInterventionComponent,
     FormulaireInterventionComponent,
-    ResolutionInterventionComponent
+    ResolutionInterventionComponent,
+    CalendrierTechComponent
   ],
   imports: [
     ButtonModule,
@@ -85,10 +89,10 @@ import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
     MatNativeDateModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatProgressSpinnerModule,
     InterventionsRoutingModule,
     BrowserModule,
-    ScheduleModule,
-
+    ScheduleModule
   ],
   providers: [
     EditService,

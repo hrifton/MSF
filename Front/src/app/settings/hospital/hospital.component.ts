@@ -64,10 +64,12 @@ export class HospitalComponent implements OnInit {
   }
 
   addDepartement($event) {
+    console.log($event)
     $event.idHopital = this.projet[0]._id;
     this.addDepToHopital.emit($event);
   }
   delDepartement($event) {
+    console.log($event);
     $event.idHopital = this.projet[0]._id;
      this.rmDepToHopital.emit($event);
   }

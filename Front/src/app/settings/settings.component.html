@@ -24,6 +24,8 @@
                             *ngIf="projet"
                             (messageEvent)="update($event)"
                             (departementUser)="addDepartementUser($event)"
+                            (deparetmentUserRm)="deparetmentUserRm($event)"
+                            (idHopital)="listUserHopital($event)"
                             [projet]="projet"
                             [role]="role"
                           ></app-users>
