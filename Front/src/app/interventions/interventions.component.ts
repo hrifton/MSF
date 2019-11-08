@@ -178,14 +178,17 @@ export class InterventionsComponent implements OnInit {
   comptemetier(metier, intervention) {
     for (let index = 0; index < metier.length; index++) {
       const name = metier[index].name;
-      this.compte[index] = { name, nb: 0 };
+      const _id = metier[index]._id
+      this.compte[index] = { _id, name, nb: 0 };
     }
+    console.log("intervention")
     intervention.forEach(element => {
       if (element.status !== "Canceled" && element.status !== "Done") {
         for (let index = 0; index < this.compte.length; index++) {
           console.log(element.metier)
-          if (element.metier.length > 0) {
-            if (this.compte[index].name === element.metier[0].name) {
+          if (element.metier != undefined) {
+            console.log(this.compte[index], element.metier)
+            if (this.compte[index]._id === element.metier) {
               this.compte[index].nb += 1;
               break;
             }
@@ -207,9 +210,10 @@ export class InterventionsComponent implements OnInit {
     if (this.userDetails === "User") {
       this.departements = this.us.getIdDepartement();
       this.interventions.push(await this.is.getInterventionsByUser());
-      console.log(this.interventions)
+      console.log(this.interventions.length, this.interventions)
 
-      if (this.interventions.length <= 0) {
+      if (this.interventions.length == 1) {
+        console.log("dans le if")
         this.show = true
       }
     } else if (this.userDetails === "tech") {
@@ -260,6 +264,7 @@ export class InterventionsComponent implements OnInit {
           this.interventions = data;
 
           if (this.interventions.length > 0) {
+            console.log(this.projet.metier)
             this.comptemetier(this.projet[0].metier, this.interventions);
           }
           this.show = true;

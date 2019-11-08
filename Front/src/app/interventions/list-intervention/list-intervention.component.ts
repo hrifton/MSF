@@ -22,7 +22,8 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Dialog } from "@syncfusion/ej2-angular-popups";
 import { SolutionService } from "src/app/Service/solution.service";
 import Intervention from "src/app/Class/Intervention";
-
+import * as _ from "lodash";
+import { findIndex } from 'rxjs/operators';
 @Component({
   selector: "app-list-intervention",
   templateUrl: "./list-intervention.component.html",
@@ -116,7 +117,8 @@ export class ListInterventionComponent implements OnInit {
    * @param data
    */
   createFormIntervention(data): FormGroup {
-    console.log("Data : ", data);
+    this.findSubCat(data.metier);
+
     if (this.user === "User") {
       return new FormGroup({
         _id: new FormControl(data._id, Validators.required),
@@ -240,8 +242,11 @@ export class ListInterventionComponent implements OnInit {
   }
 
   public onChange(args: any): void {
-    //this.subCat = args.itemData.categorie;
-    console.log(args.itemData.categorie)
+    this.findSubCat(args.itemData._id)
+    /*console.log(this.subCat.categorie)
+    this.subCat.categorie = args.itemData;
+    console.log(args.itemData)
+    console.log(this.subCat.categorie)*/
   }
   // Action sur le tableau
   actionBegin(args: SaveEventArgs): void {
@@ -338,6 +343,16 @@ export class ListInterventionComponent implements OnInit {
     }
   }
 
+
+  findSubCat(data) {
+    console.log(data)
+    let met = this.projet[0].metier
+    console.log(met)
+    let index = _.findIndex(met, function (o) { return o._id == data });
+    this.subCat = met[index]
+    console.log(met[index])
+    console.log(this.subCat)
+  }
   showToast() {
     //this.element.width = "50%";
     this.element.title = "<center>Error</center>";

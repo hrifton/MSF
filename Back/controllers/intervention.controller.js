@@ -93,6 +93,7 @@ module.exports.listeByUser = async (req, res) => {
     ],
     (err, doc) => {
       if (!err) {
+        console.log(doc);
         res.send(doc);
       } else {
       }

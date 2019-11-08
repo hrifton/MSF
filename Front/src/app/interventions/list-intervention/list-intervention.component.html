@@ -21,7 +21,7 @@
       ></e-column>
       <e-column
         *ngIf="user != 'User'"
-        field="metier.0.name"
+        field="metier"
         headerText="Domaine"
         textAlign="center"
         width="auto"
@@ -93,6 +93,7 @@
           <div *ngIf="user != 'User'" class="form-row">
             <div class="form-group col-md-6">
               <div class="e-float-input e-control-wrapper">
+                <h2>{{ metier.name }}</h2>
                 <ejs-dropdownlist
                   id="metier"
                   (change)="onChange($event)"
@@ -116,8 +117,8 @@
                 <ejs-dropdownlist
                   id="subCat"
                   formControlName="subCat"
-                  [dataSource]="subCat"
-                  [fields]="{ text: 'subCat', value: 'subCat' }"
+                  [dataSource]="subCat.categorie"
+                  [fields]="{ text: 'name', value: 'id' }"
                   placeholder="Sub-Categorie *"
                   popupHeight="200px"
                   floatLabelType="Always"

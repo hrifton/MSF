@@ -121,6 +121,7 @@ module.exports.rmSubMetier = (req, res, next) => {
 };
 
 module.exports.addSubCat = (req, res, next) => {
+  req._id == undefined ? (req._id = mongoose.Types.ObjectId()) : req._id;
   Hospital.updateOne(
     { _id: ObjectId(req.idHopital), "metier._id": req.idMetier },
     {
