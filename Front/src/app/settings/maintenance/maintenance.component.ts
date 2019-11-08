@@ -32,14 +32,14 @@ export class MaintenanceComponent implements OnInit {
     private fb: FormBuilder,
     private ms: MaintenanceService,
     private mes: MetierService
-  ) {}
+  ) { }
   //#region Declaration Variable
   maintenances: Maintenance[];
 
   // date = new Date();
 
   periode: any;
-  public listeMetier: any[];
+  public listeMetier: Metier;
 
   @Output() messageEvent = new EventEmitter<any>();
 
@@ -126,11 +126,8 @@ export class MaintenanceComponent implements OnInit {
     console.log(args);
   }
 
-  ngOnInit() {
-    this.mes.getMetiers().subscribe((data: Metier[]) => {
-      this.listeMetier = data;
-      console.log(this.listeMetier);
-    });
+  async ngOnInit() {
+    this.listeMetier = await this.mes.getMetiers();
 
     this.createForm();
     this.mode = "CheckBox";

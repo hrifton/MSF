@@ -14,6 +14,10 @@ hospitalRoutes.route("/add").post(function(req, res, next) {
 
 //GetaHospital
 hospitalRoutes.route("/id").get(function(req, res) {
+  console.dir(req.originalUrl); // '/admin/new?a=b' (WARNING: beware query string)
+  console.dir(req.baseUrl); // '/admin'
+  console.dir(req.path); // '/new'
+  console.dir(req.baseUrl + req.path);
   ctrlHospital.findAHospital(req.query.id, res);
 });
 hospitalRoutes.route("/addmetier").post(function(req, res, next) {
@@ -25,11 +29,18 @@ hospitalRoutes
     ctrlHospital.rmMetier(req.params, res, next);
   });
 
+hospitalRoutes
+  .route("/delete/:idHopital/:idMetier/:_id")
+  .delete(function(req, res, next) {
+    ctrlHospital.rmSubMetier(req.params, res, next);
+  });
+
 hospitalRoutes.route("/addSubCat").post(function(req, res, next) {
   ctrlHospital.addSubCat(req.body, res, next);
 });
 //All User hospital
 hospitalRoutes.route("/userbyhospital").get(function(req, res) {
+  console.log("ByHospital User");
   ctrlUser.FindUserByHospital(req.query, res);
 });
 hospitalRoutes.route("/addDep").post(function(req, res, next) {

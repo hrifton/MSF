@@ -12,7 +12,7 @@ export class UserService {
   noAuthHeader = { headers: new HttpHeaders({ NoAtuh: "True" }) };
   selectedUser: { fullName: string; email: string; password: string };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    *
@@ -69,14 +69,18 @@ export class UserService {
   }
 
   getToLocalStorage(token): any {
-    console.log(token)
-    try {     
+    this.deleteToken()
+    token.id != undefined ? "" : token.id = token._id;
+    token.mail != undefined ? token.email = token.mail : "";
+    token.surname != undefined ? token.fullName = token.surname : "";
+    console.log(token.length)
+    try {
       this.setId(token.id);
-      //this.setStatus(token.status);
-      this.setFullName(token.surname);
-      this.setEmail(token.mail);
-      //this.setIdHopital(token.idHopital);
-      //this.setdepartements(token.departements);
+      this.setStatus(token.status);
+      this.setFullName(token.fullName);
+      this.setEmail(token.email);
+      this.setIdHopital(token.idHopital);
+      this.setdepartements(token.departements);
     } catch (Error) {
       return Error;
     }
@@ -89,7 +93,7 @@ export class UserService {
    * @memberof UserService
    */
   setId(_id) {
-    console.log("id :",_id)
+    console.log("id :", _id)
     localStorage.setItem("_id", _id);
   }
   getId() {
@@ -103,8 +107,16 @@ export class UserService {
 
    * @memberof UserService
    */
-  getUserProfil() {
-    return this.http.get(this.uri + "/:id", { params: { _id: this.getId() } });
+  async getUserProfil(user: any) {
+    console.log(user)
+    const fullName = user.fullName;
+    const email = user.email
+    const _id = user._id
+    //return await this.http.get<User>(this.uri + "/", { params: { id } }).toPromise();
+    return await this.http.get<User>(`${this.uri}/${_id}`, {
+      params: { fullName, email, _id }
+    }).toPromise();
+
   }
   /**
    *
@@ -112,8 +124,11 @@ export class UserService {
    * @returns
    * @memberof UserService
    */
-  getUserTech() {
-    return this.http.get(this.uri + "/techs");
+  async getUserTech(idHopital) {
+
+    return await this.http.get<User>(`${this.uri}/user/techsByHospital/`, {
+      params: { idHopital }
+    }).toPromise();
   }
 
   /**

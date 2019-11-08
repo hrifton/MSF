@@ -20,10 +20,13 @@ export class AuthService {
     private us: UserService,
     private router: Router // private alertsService: AlertsService
   ) {
-    this.authenticated = this.msalService.getUser() != null;
-    this.getUser().then(user => {
-      this.user = user;
-    });
+    if (localStorage.status == undefined) {
+      console.log("status non defini")
+      this.authenticated = this.msalService.getUser() != null;
+      this.getUser().then(user => {
+        this.user = user;
+      });
+    }
   }
 
   // Prompt the user to sign in and
@@ -39,7 +42,7 @@ export class AuthService {
     if (result) {
       this.authenticated = true;
       this.user = await this.getUser();
-      this.router.navigateByUrl("/interventions");
+
       return true;
     }
   }
@@ -93,7 +96,6 @@ export class AuthService {
     this.us.getToLocalStorage(graphUser);
     // Prefer the mail property, but fall back to userPrincipalName
     user.email = graphUser.mail || graphUser.userPrincipalName;
-
     return user;
   }
 }

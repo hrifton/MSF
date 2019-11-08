@@ -2,18 +2,19 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, map } from "rxjs/operators";
 import { of } from "rxjs";
+import { Metier } from '../Class/Metier';
 @Injectable({ providedIn: "root" })
 export class MetierService {
   uri = "http://localhost:3000/api/metier";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   // Insert a new metier
-  addMetier(metier) {
+  async addMetier(metier) {
     const obj = {
       metier
     };
 
-    return this.http.post(`${this.uri}/add`, obj).pipe(
+    return await this.http.post(`${this.uri}/add`, obj).pipe(
       map(res => res),
       catchError(err => {
         console.error(err);
@@ -23,8 +24,8 @@ export class MetierService {
   }
 
   // return all metier in Mongodb
-  getMetiers() {
-    return this.http.get(`${this.uri}`);
+  async getMetiers() {
+    return await this.http.get<Metier>(`${this.uri}/metier`).toPromise();
   }
 
   // return a metier

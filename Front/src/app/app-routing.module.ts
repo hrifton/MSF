@@ -34,14 +34,14 @@ const routes: Routes = [
   {
     path: "interventions",
     component: InterventionsComponent,
-    canActivate: [AuthGuard],
-    //canActivate: [MsalGuard]
+    //canActivate: [AuthGuard],
+    canActivate: [MsalGuard]
   },
   {
     path: "maintenances",
     component: MaintenancesComponent,
-    canActivate: [AuthGuard],
-    //canActivate: [MsalGuard]
+    //canActivate: [AuthGuard],
+    canActivate: [MsalGuard]
   },
   // { path: 'historic', component: HistoricComponent, canActivate: [AuthGuard]},
   // { path: 'setTec', component: TechnicienComponent, canActivate: [AuthGuard] },
@@ -49,8 +49,8 @@ const routes: Routes = [
   {
     path: "settings",
     component: SettingsComponent,
-    canActivate: [AuthGuard],
-    //canActivate: [MsalGuard],
+    //canActivate: [AuthGuard],
+    canActivate: [MsalGuard],
   }
 ];
 

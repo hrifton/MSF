@@ -41,14 +41,15 @@ module.exports.add = (req, res, next) => {
       console.log(error);
     });
 };
-
+//Find a hospital with ID
 module.exports.findAHospital = (req, res) => {
+  console.log("find a Hospital : ", req);
   Hospital.find({ _id: ObjectId(req) }, (err, doc) => {
     if (!err) {
       res.send(doc);
     } else {
       console.log(
-        "Error in Retriving Hopital:" + JSON.stringify(err, undefined, 2)
+        "Error in Retriving Hopital ????:" + JSON.stringify(err, undefined, 2)
       );
     }
   });
@@ -92,7 +93,23 @@ module.exports.addMetier = (req, res, next) => {
 
 module.exports.rmMetier = (req, res, next) => {
   Hospital.updateOne(
-    { _id: ObjectId(req.idHopital), "metier.id": req.idMetier },
+    { _id: ObjectId(req.idHopital) },
+    { $pull: { metier: { _id: req.idMetier } } },
+    (err, doc) => {
+      if (!err) {
+        res.status("200").send(doc);
+      } else {
+        res.status("400").send(err);
+      }
+    }
+  );
+};
+
+module.exports.rmSubMetier = (req, res, next) => {
+  console.log(req);
+  Hospital.updateOne(
+    { _id: ObjectId(req.idHopital), "metier._id": req.idMetier },
+    { $pull: { "metier.$.categorie": { id: req._id } } },
     (err, doc) => {
       if (!err) {
         res.status("200").send(doc);

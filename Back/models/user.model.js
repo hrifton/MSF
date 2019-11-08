@@ -8,6 +8,9 @@ var userSchema = new mongoose.Schema({
     unique: true,
     required: "FullName can't be empty"
   },
+  idMicrosoft: {
+    type: String
+  },
   email: {
     type: String,
     required: "email can't be empty",
@@ -21,15 +24,15 @@ var userSchema = new mongoose.Schema({
     ref: "hopital",
     required: false
   },
-   departements: [
+  departements: [
     {
       type: Object
     }
   ],
   password: {
-    type: String,
-    required: "password can't be empty",
-    minlength: [6, "Password must be atleast 6 character long"]
+    type: String
+    //required: "password can't be empty",
+    //minlength: [6, "Password must be atleast 6 character long"]
   },
   saltSecret: {
     type: String
@@ -58,7 +61,7 @@ userSchema.methods.verifyPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
 /**
- * composition de notre token id, fullname, email et status
+ * composition de notre token id, fullname, email, status, idHopital, departements
  */
 userSchema.methods.generateJwt = function() {
   return jwt.sign(
@@ -75,5 +78,16 @@ userSchema.methods.generateJwt = function() {
       expiresIn: process.env.JWT_EXP
     }
   );
+};
+/**
+ * Function regex return name of hospital between -
+ */
+userSchema.methods.extractHopital = function(email) {
+  var patt = /-[a-zA-Z0-9]*-/i;
+  var result = email.match(patt);
+  console.log(result);
+  result = result[0].replace(/-/g, "");
+  result = result.trim();
+  return result;
 };
 mongoose.model("User", userSchema);

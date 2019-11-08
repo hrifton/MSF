@@ -13,7 +13,7 @@ import { ListCategorieComponent } from './list-categorie/list-categorie.componen
 })
 export class MetiersComponent implements OnInit {
   @Input() projet;
-  public metiers: Metier[];
+  public metiers: Metier;
   public selectcategorie: Categorie[];
   public metierSelect: Metier;
   public flag: boolean;
@@ -26,12 +26,10 @@ export class MetiersComponent implements OnInit {
 
   constructor(private ms: MetierService, private cs: CategorieService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.flag = false;
-    this.ms.getMetiers().subscribe((data: Metier[]) => {
-      this.metiers = data
-      this.flag = true;
-    });
+    this.metiers = await this.ms.getMetiers();
+    this.metiers ? this.flag = true : this.flag = false;
   }
   /**
    *
@@ -39,20 +37,17 @@ export class MetiersComponent implements OnInit {
    * @memberof MetiersComponent
    * Get data To Service Metier For Save
    */
-  saveMetier(data: Metier) {
-    this.ms.addMetier(data).subscribe((metier: Metier) => {
-      this.metiers.unshift(metier);
+  async saveMetier(data: Metier) {
+    console.log(this.metiers, 'il y a un unshift normalement')
+    //this.metiers.unshift(await this.ms.addMetier(data))
+    this.listMetiersComponent.refresh();
 
-      this.listMetiersComponent.refresh();
-    });
   }
   saveCategorie(data: Categorie) {
-    console.log(data)
+    console.log(data, 'saveCategorie');
     this.cs.AddCategorie(data).subscribe((categorie: any) => {
-      
-      console.log(categorie)
       this.metierSelect.categorie.push(categorie);
-      this.ListCategorieComponent.grid.refresh()
+      this.ListCategorieComponent.grid.refresh();
     });
   }
 
@@ -60,7 +55,7 @@ export class MetiersComponent implements OnInit {
     console.log("data to MetierService for delete : ", data);
   }
   selectMetier(data: Metier) {
-    this.metierSelect = null
+    this.metierSelect = null;
     this.metierSelect = data;
 
   }

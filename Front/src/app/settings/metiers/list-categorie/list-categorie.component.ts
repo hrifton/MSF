@@ -38,7 +38,7 @@ export class ListCategorieComponent implements OnInit {
     console.log("data : ", this.data)
     this.pageSettings = { pageCount: 5 };
     this.filterSettings = { type: "Menu" };
-    this.toolbarItems = ["Edit", "Delete", "Update", "Cancel"];
+    this.toolbarItems = ["Delete"];
     this.editOptions = {
       allowEditing: true,
       allowDeleting: true,

@@ -54,7 +54,7 @@ export class FormulaireInterventionComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
   showSuccess() {
@@ -64,14 +64,15 @@ export class FormulaireInterventionComponent implements OnInit {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-   if (changes.statusInsertIntervention.currentValue === undefined) {
+    if (changes.statusInsertIntervention.currentValue === undefined) {
 
-    console.log("indefenid")}else{
-     if (changes.statusInsertIntervention.currentValue === true) {
-       this.showToast();
-       this.statusRequest.emit(null);
-     }
-   }
+      console.log("indefenid")
+    } else {
+      if (changes.statusInsertIntervention.currentValue === true) {
+        this.showToast();
+        this.statusRequest.emit(null);
+      }
+    }
   }
 
   addIntervention(data) {
@@ -82,7 +83,7 @@ export class FormulaireInterventionComponent implements OnInit {
 
 
   showToast() {
-    this.element.width = '100%';
+    //this.element.width = '100%';
     this.element.title = '<center>Success</center>';
     this.element.animation.show.effect = 'FlipRightDownIn';
     this.element.content = '<div class=\'e-custom\'><center>Your intervention is correctly recorded</center></div>';

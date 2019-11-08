@@ -25,14 +25,18 @@ userRoutes.route("/add").post(function(req, res) {
     }
   });
 });
-userRoutes.route("/:id").get(function(req,res){
-console.log("route id",req)
-  ctrlUser.getUser(req,res);
-})
+userRoutes.route("/").get(function(req, res) {
+  console.log("route id", req);
+  ctrlUser.getUser(req, res);
+});
+userRoutes.route("/techsByHospital").get((req, res) => {
+  ctrlUser.getTechByHopital(req.query, res);
+  //ctrlUser.getUser(req, res);
+});
 
-
-
-
+userRoutes.route("techsByHospital/:id").get((req, res) => {
+  ctrlUser.getTechByHopital(req.query, res);
+});
 
 module.exports = userRoutes;
 function newFunction() {

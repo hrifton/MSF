@@ -6,8 +6,11 @@ const Metier = mongoose.model("Metier");
 
 module.exports.all = (req, res) => {
   Metier.find((err, metier) => {
-    if (!err) res.send(metier);
-    else res.send("Error In Retrivings: " + JSON.stringify(err, undefined, 2));
+    if (!err) {
+      console.log("qsdfqsdf", metier);
+      res.send(metier);
+    } else
+      res.send("Error In Retrivings: " + JSON.stringify(err, undefined, 2));
   });
 };
 module.exports.add = (req, res, next) => {

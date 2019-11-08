@@ -36,6 +36,12 @@ export class FormHopitalComponent implements OnInit {
   /**
    * element validation form for new Hospital
    */
+
+  ngOnInit() {
+    this.hs.getCountry().subscribe(data => (this.lcountry = data));
+    console.log(this.lcountry)
+    this.createForm();
+  }
   public createForm(data?) {
     if (data) {
       this.hopitalForm = this.fb.group({
@@ -61,14 +67,12 @@ export class FormHopitalComponent implements OnInit {
 
   }
 
-  /**
-   * possible verification processing before sending
-   * create CodeProject whit codeCountry and nameOfProject
+  /**saveNewHospital
+   * send data to parent for save
+   * @param hospital 
    */
   saveNewHospital(hospital: Hospital) {
-    this.hs.PostNewHospital(hospital).subscribe(data =>
-      this.messageEvent.emit(data)
-    );
+    this.messageEvent.emit(hospital)
   }
 
   updateHospital(hospital: Hospital) {
@@ -81,9 +85,5 @@ export class FormHopitalComponent implements OnInit {
   public onChange(args: SimpleChange): void {
     console.log(args);
   }
-  ngOnInit() {
-    this.hs.getCountry().subscribe(data => (this.lcountry = data));
-    console.log(this.lcountry)
-    this.createForm();
-  }
+
 }

@@ -76,9 +76,10 @@ export class ListInterventionComponent implements OnInit {
   subCat: any;
   // router: Router;
 
-  constructor(private ss: SolutionService, private router: Router) {}
+  constructor(private ss: SolutionService, private router: Router) { }
 
   ngOnInit() {
+    console.log(this.interventions)
     this.filterSettings = {
       type: "Menu"
     };
@@ -132,8 +133,9 @@ export class ListInterventionComponent implements OnInit {
         slug: new FormControl(data.slug)
       });
     } else if (this.user === "Admin") {
-      console.log("Admin", data);
-      this.metier = this.projet.metier;
+      console.log("Admin", data.subCat);
+      this.metier = this.projet[0].metier;
+      console.log(this.projet)
 
       /*if (data.metier.length > 0 && data.metier != undefined) {
         metier = data.metier[0]._id;
@@ -164,11 +166,11 @@ export class ListInterventionComponent implements OnInit {
         asset: new FormControl(data.asset ? data.asset : null),
         slug: new FormControl(data.slug),
         metier: new FormControl(
-          data.metier.length > 0 ? data.metier[0]._id : null,
+          data.metier,
           Validators.required
         ),
         subCat: new FormControl(
-          data.subCat ? data.subCat : null,
+          data.subCat,
           Validators.required
         ),
         solution: new FormControl(data.solution ? data.solution : null)
@@ -201,8 +203,8 @@ export class ListInterventionComponent implements OnInit {
     }
   }
 
-  createFormMaintenance(data): FormGroup{
-    console.log('Formulaire Maintenance : ',data)
+  createFormMaintenance(data): FormGroup {
+    console.log('Formulaire Maintenance : ', data)
     return new FormGroup({
       _id: new FormControl(data._id, Validators.required),
       departement: new FormControl(
@@ -238,7 +240,8 @@ export class ListInterventionComponent implements OnInit {
   }
 
   public onChange(args: any): void {
-    this.subCat = args.itemData.categorie;
+    //this.subCat = args.itemData.categorie;
+    console.log(args.itemData.categorie)
   }
   // Action sur le tableau
   actionBegin(args: SaveEventArgs): void {
@@ -252,6 +255,7 @@ export class ListInterventionComponent implements OnInit {
       }
       let data: any = args.rowData;
       if (data.type == "JobRequest") {
+        console.log("go", data)
         this.angForm = this.createFormIntervention(data);
       } else if ((data.type = "Maintenance")) {
         this.angForm = this.createFormMaintenance(data);

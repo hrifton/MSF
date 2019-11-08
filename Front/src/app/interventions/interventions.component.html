@@ -1,5 +1,11 @@
-<div *ngIf="show" class="col-lg-12 control-section card-control-section basic_card_layout">
-  <div *ngIf="userDetails !='tech';else elseTech" class="e-sample-resize-container e-card-resize-container">
+<div
+  *ngIf="show"
+  class="col-lg-12 control-section card-control-section basic_card_layout"
+>
+  <div
+    *ngIf="userDetails != 'tech'; else elseTech"
+    class="e-sample-resize-container e-card-resize-container"
+  >
     <div class="row">
       <div class="col-xs-8 col-sm-8 col-lg-8 col-md-8">
         <div class="row" style="margin-top: 0px;">
@@ -12,15 +18,24 @@
               </div>
             </div>
             <div class="e-card-content">
-              <app-formulaire-intervention *ngIf="departements" (messageEvent)="update($event)"
-                (statusRequest)="modifieStatus($event)" [user]="userDetails" [departements]="departements"
-                [statusInsertIntervention]="statusInsertIntervention">
+              <app-formulaire-intervention
+                *ngIf="departements"
+                (messageEvent)="update($event)"
+                (statusRequest)="modifieStatus($event)"
+                [user]="userDetails"
+                [departements]="departements"
+                [statusInsertIntervention]="statusInsertIntervention"
+              >
               </app-formulaire-intervention>
             </div>
           </div>
         </div>
         <div class="row">
-          <div *ngFor="let dom of compte" class="e-card col-xs-4 col-sm-4 col-lg-2 col-md-2  mt-3 " id="basic_card">
+          <div
+            *ngFor="let dom of compte"
+            class="e-card col-xs-4 col-sm-4 col-lg-2 col-md-2  mt-3 "
+            id="basic_card"
+          >
             <div class="e-card-header">
               <div class="e-card-header-caption">
                 <div class="e-card-header-title">
@@ -44,14 +59,19 @@
             </div>
           </div>
           <div class="e-card-content">
-            <app-analyse-mix-intermaint *ngIf="interventions.length > 0" [interventions]="interventions"
-              [user]="userDetails">
+            <app-analyse-mix-intermaint
+              *ngIf="interventions.length > 0"
+              [interventions]="interventions"
+              [user]="userDetails"
+            >
             </app-analyse-mix-intermaint>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-lg-12 control-section card-control-section basic_card_layout">
+    <div
+      class="col-lg-12 control-section card-control-section basic_card_layout"
+    >
       <div class="e-sample-resize-container e-card-resize-container">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 ">
@@ -64,9 +84,17 @@
                 </div>
               </div>
               <div class="e-card-content">
-                <app-list-intervention (messageEvent)="check($event)" *ngIf="interventions.length > 0"
-                  [interventions]="interventions" [maintenance]="maintenance" [metier]="metier" [techs]="techs"
-                  [user]="userDetails" [departements]="departements" [projet]="projet">
+                <app-list-intervention
+                  (messageEvent)="check($event)"
+                  *ngIf="interventions.length > 0"
+                  [interventions]="interventions"
+                  [maintenance]="maintenance"
+                  [metier]="metier"
+                  [techs]="techs"
+                  [user]="userDetails"
+                  [departements]="departements"
+                  [projet]="projet"
+                >
                 </app-list-intervention>
               </div>
             </div>
@@ -75,13 +103,21 @@
       </div>
     </div>
   </div>
-  <ng-template #elseTech class="e-sample-resize-container e-card-resize-container">
+  <ng-template
+    #elseTech
+    class="e-sample-resize-container e-card-resize-container"
+  >
     <div class="row">
-      <app-calendrier-tech *ngIf="interventions.length > 0 || maintenance.length >0"
-        [interventions]="interventions" [maintenance]="maintenance"></app-calendrier-tech>
+      <app-calendrier-tech
+        *ngIf="interventions.length > 0 || maintenance.length > 0"
+        [interventions]="interventions"
+        [maintenance]="maintenance"
+      ></app-calendrier-tech>
     </div>
   </ng-template>
 </div>
-<div *ngIf="!show" class=" row justify-content-center">
-  <mat-spinner></mat-spinner>
+<div class="col-1">
+  <div *ngIf="!show" class=" row justify-content-center   mt-5 mb-5 ">
+    <mat-spinner></mat-spinner>
+  </div>
 </div>

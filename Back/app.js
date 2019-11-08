@@ -10,7 +10,7 @@ const cors = require("cors");
 const passport = require("passport");
 //#endregion
 //#region Routes
-const rtsIndex = require("./routes/index.router");
+
 const rtsIntervention = require("./routes/intervention.route");
 const rtsDepartement = require("./routes/departement.route");
 const rtsSolution = require("./routes/solution.route");
@@ -20,7 +20,8 @@ const rtsMetier = require("./routes/metier.route");
 const rtsAsset = require("./routes/asset.route");
 const rtsHostpital = require("./routes/hospital.route");
 const rtsCategorie = require("./routes/categorie.route");
-const rtsUser=require('./routes/user.route');
+const rtsUser = require("./routes/user.route");
+const rtsIndex = require("./routes/index.router");
 //#endregion
 // chargement express
 var app = express();
@@ -31,6 +32,7 @@ app.use(cors());
 //module passport auth jws
 app.use(passport.initialize());
 //chargement des routes
+
 app
   .use("/api", rtsIndex)
   .use("/api/intervention", rtsIntervention)
@@ -41,7 +43,7 @@ app
   .use("/api/asset", rtsAsset)
   .use("/api/hospital", rtsHostpital)
   .use("/api/categorie", rtsCategorie)
-  .use("/api/user",rtsUser)
+  .use("/api/user", rtsUser)
   .use("/api/metier", rtsMetier);
 
 //Demarrage serveur

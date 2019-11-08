@@ -25,10 +25,13 @@ import { Hospital } from 'src/app/Class/Hospital';
 })
 export class ListHospitalComponent implements OnInit {
   @Input() addToListHospital: Hospital;
+  @Input() projet: Hospital;
   constructor(private hs: HopitalService) { }
-  @ViewChild('grid')
+  @ViewChild("grid") public grid: GridComponent;
   selection: any;
-  public grid: GridComponent;
+
+
+
   public data: any;
   public pageSettings: Object;
   public filterSettings: Object;
@@ -47,13 +50,11 @@ export class ListHospitalComponent implements OnInit {
   public localFields: Object = { text: 'newRowPosition', value: 'id' };
   public ngOnInit(): void {
     this.show = false;
-    this.hs.getHospital().subscribe(data => {
-      this.data = data;
-      this.show = true;
-    });
+    this.data = this.projet;
+
     this.pageSettings = { pageCount: 5 };
     this.filterSettings = { type: 'Menu' };
-    this.toolbarItems = ['Edit', 'Delete', 'Update', 'Cancel'];
+    this.toolbarItems = ['Delete'];
     this.editOptions = {
       allowEditing: true,
       allowAdding: true,
@@ -64,18 +65,19 @@ export class ListHospitalComponent implements OnInit {
   }
 
   actionBegin(args: any): void {
-    console.log(args)
+    // console.log(args)
   }
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.addToListHospital) {
-      console.log(changes.addToListHospital);
-      this.data.push(changes.addToListHospital.currentValue);
-      this.grid.refresh();
-    }
-    // You can also use yourInput.previousValue and
+  /* ngOnChanges(changes: SimpleChanges) {
+     if (changes.addToListHospital) {
+       this.data.push(changes.addToListHospital.currentValue);
+ 
+     }
+     // You can also use yourInput.previousValue and
+   }
+ */
+  refreshGrid() {
+    this.grid.refresh();
   }
-
-
   rowSelected($event) {
     this.selection = $event.data;
     this.messageEvent.emit($event.data);

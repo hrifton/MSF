@@ -40,7 +40,7 @@ export class InterventionsComponent implements OnInit {
   public departements: any = [];
 
   userDetails;
-  techs: User[];
+  techs: User;
 
   @ViewChild(ListInterventionComponent)
   interentionList: ListInterventionComponent;
@@ -84,9 +84,7 @@ export class InterventionsComponent implements OnInit {
     /**
      * return liste des technicien
      */
-    this.us.getUserTech().subscribe((data: User[]) => {
-      this.techs = data;
-    });
+
     /**
      * return liste des deparement
      */
@@ -132,7 +130,7 @@ export class InterventionsComponent implements OnInit {
     this.interentionList.refreshInterventionTable();
   }
   returnDepartement(data: Intervention): any {
-    const found = this.departements.find(function(element) {
+    const found = this.departements.find(function (element) {
       if (element._id === data.idDepartement) {
         return element;
       }
@@ -185,6 +183,7 @@ export class InterventionsComponent implements OnInit {
     intervention.forEach(element => {
       if (element.status !== "Canceled" && element.status !== "Done") {
         for (let index = 0; index < this.compte.length; index++) {
+          console.log(element.metier)
           if (element.metier.length > 0) {
             if (this.compte[index].name === element.metier[0].name) {
               this.compte[index].nb += 1;
@@ -207,9 +206,12 @@ export class InterventionsComponent implements OnInit {
     }*/
     if (this.userDetails === "User") {
       this.departements = this.us.getIdDepartement();
-      this.is.getInterventionsByUser().subscribe((data: Intervention[]) => {
-        this.interventions = data;
-      });
+      this.interventions.push(await this.is.getInterventionsByUser());
+      console.log(this.interventions)
+
+      if (this.interventions.length <= 0) {
+        this.show = true
+      }
     } else if (this.userDetails === "tech") {
       this.is
         .getInterventionsBytech(this.us.getFullName())
@@ -217,8 +219,10 @@ export class InterventionsComponent implements OnInit {
           this.interventions = data;
         });
     } else if (this.userDetails === "Admin") {
+      console.log("Admin")
       this.projet = await this.hs.findHopital(this.us.getIdHopital());
-      this.departements = this.projet[0].departements;
+      this.techs = await this.us.getUserTech(this.us.getIdHopital());
+      this.projet.length > 0 ? this.departements = this.projet[0].departements : this.departements = null;
 
       this.is.getInterventions().subscribe((data: any[]) => {
         this.ds.getMaintenanceAndIntervention().subscribe((maindata: any[]) => {
@@ -254,13 +258,16 @@ export class InterventionsComponent implements OnInit {
             }
           });
           this.interventions = data;
-          console.log(this.projet);
-          this.comptemetier(this.projet[0].metier, this.interventions);
+
+          if (this.interventions.length > 0) {
+            this.comptemetier(this.projet[0].metier, this.interventions);
+          }
           this.show = true;
 
           // this.interventions.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
         });
       });
+
     } else {
       console.log("super Admin  *******************");
     }

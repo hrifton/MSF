@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
+require("../models/hospital.model");
+const Hospital = mongoose.model("Hospital");
 const passport = require("passport");
 const { ObjectId } = require("mongodb");
 const _ = require("lodash");
@@ -92,18 +94,30 @@ module.exports.getTech = (req, res, next) => {
     }
   });
 };
+module.exports.getTechByHopital = (req, res, next) => {
+  console.log(req);
+  User.find(
+    { status: "tech", idHopital: ObjectId(req.idHopital) },
+    (err, techs) => {
+      if (!err) {
+        res.status(200).send(techs);
+      } else {
+        res.status(404).send(err);
+      }
+    }
+  );
+};
 
 module.exports.FindUserByHospital = (req, res) => {
- 
   User.find(
     { idHopital: ObjectId(req.id) },
-    { fullName: 1, _id: 1, status: 1,departements:1 },
+    { fullName: 1, _id: 1, status: 1, departements: 1 },
     (err, users) => {
       if (!err) {
-        console.log(users)
-      res.status("200").send(users);
+        console.log(users);
+        res.status("200").send(users);
       } else {
-        console.log(err)
+        console.log(err);
         res.status("400").send(err);
       }
     }
@@ -122,7 +136,7 @@ module.exports.addDepartement = (req, res, next) => {
         }
       }
     },
-    { fullName: 1, _id: 1, status: 1, departements:1 },
+    { fullName: 1, _id: 1, status: 1, departements: 1 },
     (err, doc) => {
       if (!err) {
         res.status("200").send("doc");
@@ -133,17 +147,66 @@ module.exports.addDepartement = (req, res, next) => {
   );
 };
 
-module.exports.rmDepartementUser=(req,res)=>{
-   User.findByIdAndUpdate(req.params.idUser,{
-     $pull: { departements: { _id: req.params.idDepartement } }} ,
-     (err,doc)=>{
-       if(!err){
+module.exports.rmDepartementUser = (req, res) => {
+  User.findByIdAndUpdate(
+    req.params.idUser,
+    {
+      $pull: { departements: { _id: req.params.idDepartement } }
+    },
+    (err, doc) => {
+      if (!err) {
         res.status("200").send("Delete success");
-       }else{
-         console.log(err)
-       }
-     }
+      } else {
+        console.log(err);
+      }
+    }
+  );
+};
+module.exports.getUserMsal = (req, res) => {
+  User.find(
+    { idMicrosoft: req._id },
+    { fullName: 1, _id: 1, status: 1, departements: 1, idHopital: 1, email: 1 },
+    (err, doc) => {
+      if (!err) {
+        //If first Connexion With compte MSF
+        if (doc.length == 0) {
+          //Verifier L'hopital
+          var user = new User();
+          let hopital = user.extractHopital(req.email);
+          Hospital.find({ project: hopital }, (errHop, hop) => {
+            //ifHospital find
+            if (!errHop) {
+              user.fullName = req.fullName;
+              user.idMicrosoft = req._id;
+              user.email = req.email;
+              user.idHopital = ObjectId(hop[0]._id);
+              user.status = "User";
+              //Save MSF Account
+              user.save((errsave, usave) => {
+                if (!errsave) {
+                  console.log("Usave ", usave, "$$$$$$$$$$$$$$$$");
+                  res.status(200).send(usave);
+                } else {
+                  console.log("ici");
+                  res.status(400).send(errsave);
+                }
+              });
+            }
+            //else NotFind
+            else {
+              console.log("Erro if 0", errHop);
+            }
+          });
 
-     
-   )
-}
+          //else account MSF exist
+        } else {
+          res.status(200).send(doc[0]);
+        }
+      } else {
+        var user = new User();
+        user.NewUser(req);
+        console.log(" error ");
+      }
+    }
+  );
+};

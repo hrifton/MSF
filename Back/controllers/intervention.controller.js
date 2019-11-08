@@ -6,6 +6,7 @@ const Intervention = mongoose.model("Intervention");
 const User = mongoose.model("User");
 
 module.exports.liste = (req, res) => {
+  console.log("InterventionByHopital", req);
   Intervention.aggregate(
     [
       { $match: { idHopital: ObjectId(req.idHopital) } },
@@ -23,14 +24,6 @@ module.exports.liste = (req, res) => {
           localField: "idDepartement",
           foreignField: "_id",
           as: "departements"
-        }
-      },
-      {
-        $lookup: {
-          from: "metiers",
-          localField: "metier",
-          foreignField: "_id",
-          as: "metier"
         }
       },
       {
@@ -56,9 +49,9 @@ module.exports.liste = (req, res) => {
 module.exports.listeByUser = async (req, res) => {
   departement = new Intervention();
   departement = departement.parsing(req.idDepartement);
-  listIdDep=[]
+  listIdDep = [];
   departement.forEach(element => {
-    listIdDep.push(ObjectId(element._id))
+    listIdDep.push(ObjectId(element._id));
   });
 
   Intervention.aggregate(
@@ -100,7 +93,6 @@ module.exports.listeByUser = async (req, res) => {
     ],
     (err, doc) => {
       if (!err) {
-        
         res.send(doc);
       } else {
       }
@@ -298,7 +290,7 @@ module.exports.listeByTech = (req, res) => {
 };
 
 module.exports.add = (req, res, next) => {
-  console.log(req.body)
+  console.log(req.body);
   var intervention = new Intervention(req.body);
   intervention.save((err, doc) => {
     if (!err) {

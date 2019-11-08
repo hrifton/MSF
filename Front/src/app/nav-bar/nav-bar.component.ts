@@ -24,11 +24,11 @@ export class NavBarComponent implements OnInit {
     private us: UserService,
     private as: AuthService
   ) {
-    this.show=false
+    this.show = false
     this.user = localStorage;
     if (this.user.status == "User" || this.user.status == "tech") {
       this.show = false;
-    }else{
+    } else {
       this.show = true;
     }
   }
@@ -38,7 +38,7 @@ export class NavBarComponent implements OnInit {
     .pipe(map(result => result.matches));
 
   ngOnInit(): void {
-    localStorage=null
+    localStorage = null
     console.log(localStorage);
     this.storage = localStorage;
   }
@@ -50,7 +50,7 @@ export class NavBarComponent implements OnInit {
 
   LogOut() {
     this.us.deleteToken();
-    //this.as.signOut();
+    this.as.signOut();
     this.router.navigateByUrl("/");
   }
 }

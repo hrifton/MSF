@@ -11,24 +11,42 @@
       <div class="row" *ngIf="role === 'SuperAdmin'" style="margin-top: 0px;">
         <div class="col-4">
           <div class="e-card-content">
-            <app-form-hopital (messageEvent)="update($event)"></app-form-hopital>
+            <app-form-hopital
+              (messageEvent)="saveHospital($event)"
+            ></app-form-hopital>
           </div>
         </div>
         <div class="col-8">
           <div class="e-card-content">
-            <app-list-hospital [addToListHospital]="data" (messageEvent)="selectHopital($event)"></app-list-hospital>
+            <app-list-hospital
+              [projet]="projet"
+              [addToListHospital]="data"
+              (messageEvent)="selectHopital($event)"
+            ></app-list-hospital>
           </div>
         </div>
       </div>
       <div class="row" style="margin-top: 0px;">
         <div class="col-12">
-          <app-metier-hopital *ngIf="metiers" [metiers]="metiers" [projet]="projet" (messageEvent)="addMetier($event)"
-            (rmMetier)="rmMetier($event)" (addSubCat)="addSubCat($event)" (rmSubCat)="rmSubCat($event)">
+          <app-metier-hopital
+            *ngIf="metiers"
+            [metiers]="metiers"
+            [projet]="projet"
+            [projetMetier]="projetMetier"
+            (messageEvent)="addMetier($event)"
+            (rmMetier)="rmMetier($event)"
+            (addSubCat)="addSubCat($event)"
+            (rmSubCat)="rmSubCat($event)"
+          >
           </app-metier-hopital>
         </div>
         <div class="col-12">
-          <app-departement-hopital [departements]="departements" (addDep)="addDepartement($event)"
-            (delDep)="delDepartement($event)" [projet]="projet"></app-departement-hopital>
+          <app-departement-hopital
+            [departements]="departements"
+            (addDep)="addDepartement($event)"
+            (delDep)="delDepartement($event)"
+            [projet]="projet"
+          ></app-departement-hopital>
         </div>
       </div>
     </div>

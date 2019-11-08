@@ -6,7 +6,10 @@ const ctrlMetier = require("../controllers/metier.controller");
  * route for get all metier
  */
 
-metierRoutes.route("/").get(function(req, res) {
+metierRoutes.route("/metier").get(function(req, res) {
+  console.dir("metier", req.originalUrl); // '/admin/new?a=b' (WARNING: beware query string)
+  console.dir("base ", req.baseUrl); // '/admin'
+
   ctrlMetier.all(req, res);
 });
 
@@ -35,6 +38,8 @@ metierRoutes.route("/update/:id").put(function(req, res) {
  * route for get by id
  */
 metierRoutes.route("/:_id").get(function(req, res) {
+  console.dir(req.originalUrl); // '/admin/new?a=b' (WARNING: beware query string)
+  console.dir(req.baseUrl); // '/adm
   ctrlMetier.getById(req.params, res);
 });
 module.exports = metierRoutes;

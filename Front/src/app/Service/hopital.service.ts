@@ -15,69 +15,33 @@ import { User } from '../Class/user';
 export class HopitalService {
   uri = "http://localhost:3000/api/hospital";
 
-  // tslint:disable-next-line: deprecation
   constructor(
     private http: HttpClient,
     private httpApi: Http,
     private us: UserService
-  ) {}
+  ) { }
   private apiurl = "https://restcountries.eu/rest/v2/all";
   /**
    * return all country in API RestCountries.eu
    */
+  //#region Hopital
+  /**getCountry()
+   * get all Country in apiResCountries.eu
+   */
   getCountry() {
     return this.httpApi.get(`${this.apiurl}`).map(res => res.json());
   }
-
-  getHospital() {
-    return this.http.get(`${this.uri}`);
-  }
-  async findHopital(id) {
-    return await this.http.get<Hospital>(`${this.uri}/id/`, { params: { id } }).toPromise();
-  }
-
-  async getUserByHospital(id?: string) {
-    let idHopital = this.us.getIdHopital();
-    idHopital == "undefined" ? (idHopital = id) : "";
-    console.log(idHopital);
-
-    return await this.http
-      .get<User>(`${this.uri}/userbyhospital`, { params: { id } })
-      .toPromise();
-  }
-
-  PostNewHospital(hospital: Hospital) {
+  /**PostNewHospital(hospital: Hospital)
+   * 
+   * @param hospital
+   * 
+   * save a new Hospital
+   *  
+   */
+  async PostNewHospital(hospital: Hospital) {
     const obj = hospital;
-    return this.http.post(`${this.uri}/add`, obj);
+    return await this.http.post(`${this.uri}/add`, obj).toPromise();
   }
-
-  addMetier(data: any) {
-    data[0].idHopital = data.idHopital;
-
-    return this.http.post(`${this.uri}/addmetier`, data);
-  }
-
-  rmMetier(data: any) {
-    console.log("delete metier to liste Hopistal");
-    const obj = {
-      idHopital: data.idHopital,
-      idMetier: data[0]._id
-    };
-    return this.http.delete(
-      `${this.uri}/delete/${obj.idHopital}/${obj.idMetier}`
-    );
-  }
-
-  rmSub(data: any) {
-    console.log(data);
-  }
-
-  addSubCatToHop(data: any) {
-    console.log(data);
-    //data[0].idHopital = data.idHopital;
-    return this.http.post(`${this.uri}/addSubCat`, data);
-  }
-
   addDepToHop(data: any) {
     data[0].idHopital = data.idHopital;
     return this.http.post(`${this.uri}/addDep`, data);
@@ -88,4 +52,95 @@ export class HopitalService {
       `${this.uri}/delDep/${data.idHopital}/${data[0]._id}`
     );
   }
+  //#endregion
+  //#region maintenance
+  //#endregion
+  //#region Metier
+  /** addMetier(data: any)
+   * 
+   * @param data 
+   * add new metier 
+   */
+  addMetier(data: any) {
+    data[0].idHopital = data.idHopital;
+
+    return this.http.post(`${this.uri}/addmetier`, data);
+  }
+
+  /** rmMetier(data: any)
+   * 
+   * @param data 
+   * 
+   * remove a Metier
+   */
+  rmMetier(data: any) {
+    const obj = {
+      idHopital: data.idHopital,
+      idMetier: data[0]._id
+    };
+    return this.http.delete(
+      `${this.uri}/delete/${obj.idHopital}/${obj.idMetier}`
+    );
+  }
+  /**rmSub(data: any)
+   * @param data 
+   * remove subMetier
+   */
+  rmSub(data: any) {
+    return this.http.delete(
+      `${this.uri}/delete/${data.idHopital}/${data.idMetier}/${data._id}`
+    );
+  }
+  /**add a subMetier in a Hostpial
+   * 
+   * @param data 
+   */
+  addSubCatToHop(data: any) {
+    console.log(data);
+    //data[0].idHopital = data.idHopital;
+    return this.http.post(`${this.uri}/addSubCat`, data);
+  }
+  //#endregion
+  //#region User
+
+  //#endregion user
+  //#region For All component
+  /**getHospital()
+   * Get All Hospital
+   */
+  getHospital() {
+    return this.http.get(`${this.uri}/hopital`);
+  }
+  /**async findHopital()
+   * Requset Get Find Hospital By id 
+   */
+  async findHopital(id) {
+    return await this.http.get<Hospital>(`${this.uri}/id/`, { params: { id } }).toPromise();
+  }
+
+  /**async getUserByHospital(id?: string)
+   * @param id
+   * Get All User By id Hospital  
+   * 
+   * if this.us.getIdHopital is undefined 
+   * var idHopital take id in param
+   */
+  async getUserByHospital(id?: string) {
+    let idHopital = this.us.getIdHopital();
+    idHopital == "undefined" ? idHopital = id : "";
+    console.log(idHopital);
+
+    return await this.http
+      .get<User>(`${this.uri}/userbyhospital`, { params: { id } })
+      .toPromise();
+  }
+
+  //#endregion
+
+
+
+
+
+
+
 }

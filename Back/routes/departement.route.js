@@ -4,7 +4,7 @@ const ctrlDepartement = require("../controllers/departement.controller");
 //let Departement = require("../models/Departement");
 
 //getToutLesDepartement
-departementRoutes.route("/").get(function(req, res) {
+departementRoutes.route("/departement").get(function(req, res) {
   ctrlDepartement.liste(req, res);
 });
 //returne un departementDefini

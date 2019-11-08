@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
   /**
    * Tentative login
    * si action ok setToken contien
@@ -54,28 +54,40 @@ export class LoginComponent implements OnInit {
    * @param {FormGroup} form
    * @memberof LoginComponent
    */
-  onLoginSubmit(form: FormGroup) {
-    this.us.login(form.value).subscribe(
-      res => {
-        this.us.setToken(res["token"]);
-        if(this.us.getStatus()==="SuperAdmin"){
-          this.router.navigateByUrl("/analyse")
-        }else{
-          this.router.navigateByUrl("/interventions");
-        }        
-      },
-      err => {
-        this.toastObj.show();
-        this.serverErrorMessages = err.error.message;
+  async onLoginSubmit(form?: FormGroup) {
+    if (form == undefined) {
+      if (await this.authService.signIn()) {
+        if (this.authService.user.displayName) {
+          console.log(this.authService.user)
+          if (localStorage.status == "undefined") {
+            let user = await this.us.getUserProfil(localStorage)
+            this.us.getToLocalStorage(user)
+            console.log(this.us.getIdDepartement())
+            if (this.us.getStatus() === "SuperAdmin") {
+              this.router.navigateByUrl("/analyse")
+            } else {
+              this.router.navigateByUrl("/interventions");
+            }
+          }
+        }
       }
-    );
-  }
-  async signIn(): Promise<void> {
-    if (await this.authService.signIn()) {
-      if (this.authService.user.displayName) {
-        localStorage.user="User";
-        this.router.navigateByUrl("/interventions");
-      }
+    } else {
+      this.us.login(form.value).subscribe(
+        res => {
+          this.us.setToken(res["token"]);
+          if (this.us.getStatus() === "SuperAdmin") {
+            this.router.navigateByUrl("/analyse")
+          } else {
+            this.router.navigateByUrl("/interventions");
+          }
+        },
+        err => {
+          this.toastObj.show();
+          this.serverErrorMessages = err.error.message;
+        }
+      );
     }
+
   }
+
 }

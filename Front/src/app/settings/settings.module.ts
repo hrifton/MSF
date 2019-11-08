@@ -23,7 +23,8 @@ import { UsersModule } from "../users/users.module";
 //Syncfusion
 import {
   ToastComponent,
-  ToastCloseArgs
+  ToastCloseArgs,
+  ToastModule
 } from "@syncfusion/ej2-angular-notifications";
 import {
   AutoCompleteAllModule,
@@ -99,7 +100,9 @@ import { AssetRoutingModule } from './asset/asset-routing.module';
     // ListHospitalComponent,
     // HospitalComponent,
   ],
-  imports: [MultiSelectModule,
+  imports: [
+    ToastModule,
+    MultiSelectModule,
     UsersModule,
     MetiersModule,
     HospitalModule,
@@ -148,4 +151,4 @@ import { AssetRoutingModule } from './asset/asset-routing.module';
   ],
   exports: [SettingsComponent]
 })
-export class SettingsModule {}
+export class SettingsModule { }

@@ -32,7 +32,7 @@ export class ListMetiersComponent implements OnInit {
   public data: any;
   public pageSettings: Object;
   public filterSettings: Object;
-  public toolbar: ToolbarItems[] | object;
+  public toolbarItems: ToolbarItems[] | object;
   public editOptions: EditSettingsModel;
   public selectionOptions: SelectionSettingsModel;
 
@@ -44,14 +44,7 @@ export class ListMetiersComponent implements OnInit {
     this.data = this.metiers;
     this.pageSettings = { pageCount: 5 };
     this.filterSettings = { type: 'Menu' };
-    this.toolbar = [
-      {
-        text: 'delete',
-        tooltipText: 'delete',
-        prefixIcon: 'e-expand',
-        id: 'delete'
-      }
-    ];
+    this.toolbarItems = ["Delete"];
     this.editOptions = {
       allowEditing: true,
       allowDeleting: true,

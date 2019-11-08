@@ -63,8 +63,8 @@ export class UsersComponent implements OnInit {
   async ngOnInit() {
     this.mode = "CheckBox";
     this.data = this.projet;
-    this.hopital = this.projet[0];
-    this.data2 =await this.hs.getUserByHospital(this.hopital._id);
+    this.projet[0] != undefined ? this.hopital = this.projet[0] : this.hopital = null
+    this.projet[0] != undefined ? this.data2 = await this.hs.getUserByHospital(this.hopital._id) : "";
   }
 
   /**
