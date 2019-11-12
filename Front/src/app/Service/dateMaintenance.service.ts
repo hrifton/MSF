@@ -2,12 +2,12 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { DateMaintenance } from "../Class/DateMaintenance";
 import { Maintenance } from "../Class/Maintenance";
-
+import { environment } from "../../environments/environment";
 @Injectable({
   providedIn: "root"
 })
 export class DateMaintenanceService {
-  uri = "http://localhost:3000/api/datemaintenance";
+  uri = environment.apiBaseUrl+'/datemaintenance';
 
   constructor(private http: HttpClient) {}
   // Post a new datemaintenance

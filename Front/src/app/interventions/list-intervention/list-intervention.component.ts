@@ -23,7 +23,10 @@ import { Dialog } from "@syncfusion/ej2-angular-popups";
 import { SolutionService } from "src/app/Service/solution.service";
 import Intervention from "src/app/Class/Intervention";
 import * as _ from "lodash";
-import { findIndex } from 'rxjs/operators';
+import Departement from 'src/app/Class/Departement';
+import * as moment from "moment";
+
+
 @Component({
   selector: "app-list-intervention",
   templateUrl: "./list-intervention.component.html",
@@ -33,7 +36,6 @@ import { findIndex } from 'rxjs/operators';
 export class ListInterventionComponent implements OnInit {
   @Input() interventions;
   @Input() projet;
-  @Input() departements;
   @Input() metier;
   @Input() maintenance;
   @Input() techs;
@@ -75,12 +77,14 @@ export class ListInterventionComponent implements OnInit {
   public shipCountryDistinctData: Object[];
   public submitClicked = false;
   subCat: any;
+  public departements:Departement;
   // router: Router;
 
   constructor(private ss: SolutionService, private router: Router) { }
 
   ngOnInit() {
-    console.log(this.interventions)
+    console.log(this.interventions,this.projet,this.departements)
+    this.departements=this.projet[0].departements
     this.filterSettings = {
       type: "Menu"
     };
@@ -117,7 +121,10 @@ export class ListInterventionComponent implements OnInit {
    * @param data
    */
   createFormIntervention(data): FormGroup {
-    this.findSubCat(data.metier);
+    console.log(data)
+    if(this.user!="User"){
+      this.findSubCat(data.metier);
+    }
 
     if (this.user === "User") {
       return new FormGroup({
@@ -135,9 +142,8 @@ export class ListInterventionComponent implements OnInit {
         slug: new FormControl(data.slug)
       });
     } else if (this.user === "Admin") {
-      console.log("Admin", data.subCat);
+      console.log("Admin", data.departements[0],this.metier);
       this.metier = this.projet[0].metier;
-      console.log(this.projet)
 
       /*if (data.metier.length > 0 && data.metier != undefined) {
         metier = data.metier[0]._id;
@@ -148,9 +154,7 @@ export class ListInterventionComponent implements OnInit {
       return new FormGroup({
         _id: new FormControl(data._id, Validators.required),
         departement: new FormControl(
-          data.departements[0]._id
-            ? data.departements[0]._id
-            : data.idDepartement,
+          data.departements[0]._id,
           Validators.required
         ),
 
@@ -168,11 +172,11 @@ export class ListInterventionComponent implements OnInit {
         asset: new FormControl(data.asset ? data.asset : null),
         slug: new FormControl(data.slug),
         metier: new FormControl(
-          data.metier,
+          data.metier ? data.metier : null,
           Validators.required
         ),
         subCat: new FormControl(
-          data.subCat,
+          data.subCat ? data.subCat : null,
           Validators.required
         ),
         solution: new FormControl(data.solution ? data.solution : null)
@@ -251,6 +255,7 @@ export class ListInterventionComponent implements OnInit {
   // Action sur le tableau
   actionBegin(args: SaveEventArgs): void {
     // Verification de l'action debut edit ou ajout
+    console.log(args)
     if (args.requestType === "beginEdit" || args.requestType === "add") {
       if (this.user == "User") {
         let data: any = args.rowData;
@@ -272,6 +277,9 @@ export class ListInterventionComponent implements OnInit {
 
       // verification si le formulaire est valid
       if (this.angForm.valid) {
+        if(!this.angForm.value.dateAssing){
+          this.angForm.value.dateAssing= moment().format("DD/MM/YYYY");
+        };
         this.messageEvent.emit(this.angForm.value);
       } else {
         //retourn message error manque info
@@ -345,13 +353,15 @@ export class ListInterventionComponent implements OnInit {
 
 
   findSubCat(data) {
-    console.log(data)
+   console.log(this.projet,data)
     let met = this.projet[0].metier
     console.log(met)
     let index = _.findIndex(met, function (o) { return o._id == data });
     this.subCat = met[index]
     console.log(met[index])
     console.log(this.subCat)
+   
+    
   }
   showToast() {
     //this.element.width = "50%";

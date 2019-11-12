@@ -84,7 +84,7 @@ module.exports.getUser = (req, res, next) => {
 };
 
 module.exports.getTech = (req, res, next) => {
-  User.find({ status: "tech" }, { fullName: 1, _id: 1 }, (err, techs) => {
+  User.find({ status: "Tech" }, { fullName: 1, _id: 1 }, (err, techs) => {
     if (!err) {
       res.send(techs);
     } else {
@@ -97,7 +97,7 @@ module.exports.getTech = (req, res, next) => {
 module.exports.getTechByHopital = (req, res, next) => {
   console.log(req);
   User.find(
-    { status: "tech", idHopital: ObjectId(req.idHopital) },
+    { status: "Tech", idHopital: ObjectId(req.idHopital) },
     (err, techs) => {
       if (!err) {
         res.status(200).send(techs);
@@ -139,7 +139,7 @@ module.exports.addDepartement = (req, res, next) => {
     { fullName: 1, _id: 1, status: 1, departements: 1 },
     (err, doc) => {
       if (!err) {
-        res.status("200").send("doc");
+        res.status("200").send(doc);
       } else {
         res.status("400").send(err);
       }
@@ -210,3 +210,17 @@ module.exports.getUserMsal = (req, res) => {
     }
   );
 };
+module.exports.ModifieRole=(req,res)=>{
+  User.findByIdAndUpdate(
+    req._id,
+    {status:req.role    },
+    { fullName: 1, _id: 1, status: 1},
+    (err, doc) => {
+      if (!err) {
+        res.status("200").send(doc);
+      } else {
+        res.status("400").send(err);
+      }
+    }
+  );
+}

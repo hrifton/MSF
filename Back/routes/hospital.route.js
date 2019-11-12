@@ -3,7 +3,7 @@ const hospitalRoutes = express.Router();
 const ctrlHospital = require("../controllers/hospital.controller");
 const ctrlUser = require("../controllers/user.controller");
 
-hospitalRoutes.route("/").get((req, res) => {
+hospitalRoutes.route("/hopital").get((req, res) => {
   ctrlHospital.getAll(req, res);
 });
 
@@ -14,10 +14,6 @@ hospitalRoutes.route("/add").post(function(req, res, next) {
 
 //GetaHospital
 hospitalRoutes.route("/id").get(function(req, res) {
-  console.dir(req.originalUrl); // '/admin/new?a=b' (WARNING: beware query string)
-  console.dir(req.baseUrl); // '/admin'
-  console.dir(req.path); // '/new'
-  console.dir(req.baseUrl + req.path);
   ctrlHospital.findAHospital(req.query.id, res);
 });
 hospitalRoutes.route("/addmetier").post(function(req, res, next) {

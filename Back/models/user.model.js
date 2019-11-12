@@ -79,6 +79,7 @@ userSchema.methods.generateJwt = function() {
     }
   );
 };
+//TODO Function Regex
 /**
  * Function regex return name of hospital between -
  */

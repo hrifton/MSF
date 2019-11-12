@@ -93,8 +93,14 @@ module.exports.listeByUser = async (req, res) => {
     ],
     (err, doc) => {
       if (!err) {
-        console.log(doc);
-        res.send(doc);
+        
+        if(doc.length>0){
+          res.status(200).send(doc);
+        }else{
+          res.status(200).send(null)
+        }
+        
+        
       } else {
       }
     }

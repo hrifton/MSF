@@ -4,12 +4,13 @@ import { HttpClient } from "@angular/common/http";
 import Intervention from "../Class/Intervention";
 import { UserService } from "./user.service";
 import Departement from '../Class/Departement';
+import { environment } from "../../environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class InterventionService {
-  uri = "http://localhost:3000/api/intervention";
+  uri = environment.apiBaseUrl+"/intervention";
 
-  constructor(private http: HttpClient, private us: UserService) { }
+  constructor(private http: HttpClient, private us: UserService) {}
   // add a new Intervention
 
   postInter(intervention: Intervention) {
@@ -35,18 +36,18 @@ export class InterventionService {
   }
   // TODO USER
   // Get Interventions byUser
-  async getInterventionsByUser() {
+  getInterventionsByUser() {
     let idDepartement: any = [];
     idDepartement = JSON.stringify(this.us.getIdDepartement());
     const idHopital = this.us.getIdHopital();
     const idUser = this.us.getId();
-    console.log("ici")
-    return await this.http.get<Intervention>(`${this.uri}/ByUser/`, {
+    return this.http.get(`${this.uri}/ByUser/`, {
       params: { idDepartement, idHopital, idUser }
-    }).toPromise();
+    });
   }
 
   updateIntervention(form) {
+    console.log(form);
     return this.http.put(`${this.uri}/${form._id}`, form);
   }
 }

@@ -26,7 +26,7 @@ export class NavBarComponent implements OnInit {
   ) {
     this.show = false
     this.user = localStorage;
-    if (this.user.status == "User" || this.user.status == "tech") {
+    if (this.user.status == "User" || this.user.status == "Tech") {
       this.show = false;
     } else {
       this.show = true;

@@ -2,9 +2,13 @@ const express = require("express");
 const solutionRoutes = express.Router();
 const ctrlSolution = require("../controllers/solution.controller");
 
-solutionRoutes.route("/add").post(function(req, res, next) {
-  console.log("Soltuion Route");
-  ctrlSolution.add(req, res, next);
+solutionRoutes.route("/addClose").post(function(req, res, next) {
+  console.log("Soltuion Route",req.body);
+  ctrlSolution.add(req.body, res, next);
+});
+solutionRoutes.route("/addWaiting").post(function(req, res, next) {
+  console.log("Soltuion Route", req.body);
+  ctrlSolution.addWaiting(req.body, res, next);
 });
 solutionRoutes.route("/").get(function(req, res) {
   console.log("all Solition");

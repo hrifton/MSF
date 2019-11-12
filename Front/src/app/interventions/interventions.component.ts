@@ -1,5 +1,13 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from "@angular/core";
 import { Internationalization } from "@syncfusion/ej2-base";
+import {
+  EventSettingsModel,
+  DayService,
+  WeekService,
+  AgendaService,
+  TimelineViewsService,
+  TimelineMonthService
+} from "@syncfusion/ej2-angular-schedule";
 
 /**
  * Import service
@@ -9,7 +17,7 @@ import { InterventionService } from "./../Service/intervention.service";
 import { DateMaintenanceService } from "../Service/dateMaintenance.service";
 import { DepartementService } from "../Service/departement.service";
 import { MetierService } from "../Service/metier.service";
-
+import { SolutionService } from "../Service/solution.service";
 /**
  * import component
  */
@@ -26,6 +34,8 @@ import { Hospital } from "../Class/Hospital";
 import * as moment from "moment";
 import * as _ from "lodash";
 import { HopitalService } from "../Service/hopital.service";
+import Solution from '../Class/Solution';
+
 
 @Component({
   selector: "app-interventions",
@@ -33,14 +43,17 @@ import { HopitalService } from "../Service/hopital.service";
   encapsulation: ViewEncapsulation.None
 })
 export class InterventionsComponent implements OnInit {
-  public interventions: Intervention[];
+  public interventions: any[];
   public metier: Object = [];
   public maintenance: any = [];
   public compte = [];
   public departements: any = [];
 
+  public eventSettings: EventSettingsModel = {};
+  @ViewChild("element") element;
+
   userDetails;
-  techs: User;
+  techs: User[];
 
   @ViewChild(ListInterventionComponent)
   interentionList: ListInterventionComponent;
@@ -48,9 +61,10 @@ export class InterventionsComponent implements OnInit {
   @ViewChild(AnalyseMixIntermaintComponent)
   AnalyseMixIntermaint: AnalyseMixIntermaintComponent;
   public statusInsertIntervention: boolean;
-  projet: any;
+  projet: Hospital;
   hopital: any;
-  show: boolean;
+  show: boolean = false;
+  flagErrorFormTech: boolean = false;
   /**
    *
    * @param is service intervention
@@ -64,42 +78,21 @@ export class InterventionsComponent implements OnInit {
     private ds: DateMaintenanceService,
     private metierS: MetierService,
     private deps: DepartementService,
-    private hs: HopitalService
+    private hs: HopitalService,
+    private ss: SolutionService
   ) {
     this.interventions = [];
     this.maintenance = [];
     this.statusInsertIntervention = null;
+    this.eventSettings.dataSource = [];
     this.hopital = null;
-  }
-  ngOnInit() {
-    this.show = false;
-    /**
-     * assignation statut de l'utilisateur
-     */
-    this.userDetails = this.us.getStatus();
-    /**
-     * gestion Du type d'utilisateur
-     */
-    this.getInterventionByRole();
-    /**
-     * return liste des technicien
-     */
-
-    /**
-     * return liste des deparement
-     */
-    /* this.metierS.getMetiers().subscribe(data => {
-      this.metier = data;
-      console.log(this.metier)
-    });*/
-    this.projet = this.hs.findHopital(this.us.getIdHopital());
   }
 
   /**
    * @param $event
    * est appellé depuis le component Liste Intervention pour mise a jour de la liste intervention
    *  unshift ajoute data de event dans le tableau interventions
-   *Modification de la variable statusInsertIntervention envoyé a formulaire intervention pour affichage TOAST
+   *
    * Modification de la variable @statusInsertIntervention envoyé a formulaire intervention pour affichage TOAST
    */
   update($event) {
@@ -108,7 +101,6 @@ export class InterventionsComponent implements OnInit {
     $event.status = "Open";
     $event.day = moment().format("DD/MM/YYYY");
     $event.idHopital = this.us.getIdHopital();
-    console.log("add", $event);
     this.is.postInter($event).subscribe((data: Intervention) => {
       if (typeof data.slug === "number") {
         data.user = [];
@@ -130,7 +122,7 @@ export class InterventionsComponent implements OnInit {
     this.interentionList.refreshInterventionTable();
   }
   returnDepartement(data: Intervention): any {
-    const found = this.departements.find(function (element) {
+    const found = this.departements.find(function(element) {
       if (element._id === data.idDepartement) {
         return element;
       }
@@ -138,7 +130,6 @@ export class InterventionsComponent implements OnInit {
     return found;
   }
   check($event) {
-    console.log("update", $event);
     const inter = new Intervention(
       $event.departement,
       $event.hopital,
@@ -154,13 +145,14 @@ export class InterventionsComponent implements OnInit {
       $event.useMat,
       $event.asset,
       $event.slug,
-      $event.metier
+      $event.metier,
+      $event.dateAssing
     );
 
-    inter.subCat = $event.subCat;
-    inter.dateAssing = moment().format("L");
+    //inter.dateAssing=$event.dateAssing
 
     this.is.updateIntervention(inter).subscribe((data: Intervention) => {
+      console.log(data);
       this.getInterventionByRole();
     });
 
@@ -168,27 +160,46 @@ export class InterventionsComponent implements OnInit {
     // this.AnalyseMixIntermaint.refreshChart();
   }
 
-  /**  comptemetier(metier, intervention)
-   * @param {*} metier: Metier current hospital
-   * @param {*} intervention :liste Intervention
-   *first loop for create liste metier
-   *second loof for compte number intervention by metier
-   * @memberof InterventionsComponent
+  ngOnInit() {
+    /**
+     * assignation statut de l'utilisateur
+     */
+    this.userDetails = this.us.getStatus();
+    /**
+     * gestion Du type d'utilisateur
+     */
+    this.getInterventionByRole();
+    /**
+     * return liste des technicien
+     */
+    this.us.getUserTech().subscribe((data: User[]) => {
+      this.techs = data;
+    });
+    /**
+     * return liste des deparement
+     */
+    this.metierS.getMetiers().subscribe(data => {
+      this.metier = data;
+    });
+  }
+  /**
+   *
+   * @param metier
+   * @param intervention
+   * compte le nombre d'intervention par metier (corp de métier)
    */
+  // TODO verification du compte
   comptemetier(metier, intervention) {
+    console.log(metier);
     for (let index = 0; index < metier.length; index++) {
       const name = metier[index].name;
-      const _id = metier[index]._id
-      this.compte[index] = { _id, name, nb: 0 };
+      this.compte[index] = { name, nb: 0 };
     }
-    console.log("intervention")
     intervention.forEach(element => {
       if (element.status !== "Canceled" && element.status !== "Done") {
         for (let index = 0; index < this.compte.length; index++) {
-          console.log(element.metier)
           if (element.metier != undefined) {
-            console.log(this.compte[index], element.metier)
-            if (this.compte[index]._id === element.metier) {
+            if (this.compte[index].name === element.metier[0].name) {
               this.compte[index].nb += 1;
               break;
             }
@@ -196,104 +207,140 @@ export class InterventionsComponent implements OnInit {
         }
       }
     });
-    this.show = true;
+    if (this.projet) {
+      this.show = true;
+    }
   }
 
-  async getInterventionByRole() {
-    /* if (
-      this.us.getIdHopital() === 'undefined' ||this.us.getIdDepartement() === 'undefined'
+  getInterventionByRole() {
+    if (
+      this.us.getIdHopital() === "undefined" ||
+      this.us.getIdDepartement() === "undefined"
     ) {
       // TODO REdirection si manque idHopital ou idDepartement
-      console.log('redirection:', this.us.getIdDepartement());
+      console.log("redirection:", this.us.getIdDepartement());
     } else {
-    }*/
+    }
     if (this.userDetails === "User") {
+      this.is.getInterventionsByUser().subscribe((data: Intervention[]) => {
+        this.interventions = data;
+        this.show = true;
+      });
       this.departements = this.us.getIdDepartement();
-      this.interventions.push(await this.is.getInterventionsByUser());
-      console.log(this.interventions.length, this.interventions)
-
-      if (this.interventions.length == 1) {
-        console.log("dans le if")
-        this.show = true
-      }
-    } else if (this.userDetails === "tech") {
+    } else if (this.userDetails === "Tech") {
       this.is
         .getInterventionsBytech(this.us.getFullName())
-        .subscribe((data: Intervention[]) => {
+        .subscribe((data: any[]) => {
           this.interventions = data;
+          this.show = true;
         });
     } else if (this.userDetails === "Admin") {
-      console.log("Admin")
-      this.projet = await this.hs.findHopital(this.us.getIdHopital());
-      this.techs = await this.us.getUserTech(this.us.getIdHopital());
-      this.projet.length > 0 ? this.departements = this.projet[0].departements : this.departements = null;
+      this.hs
+        .findHopital(this.us.getIdHopital())
+        .subscribe((data: Hospital) => {
+          this.projet = data;
+          this.departements = data[0].departements;
 
-      this.is.getInterventions().subscribe((data: any[]) => {
-        this.ds.getMaintenanceAndIntervention().subscribe((maindata: any[]) => {
-          maindata.forEach(element => {
-            if (element.resultat.length <= 0) {
-              const inter = {
-                _id: element.idMaintenance,
-                day: moment(element.StartTime).format("DD/MM/YYYY"),
-                departement: "",
-                description: "",
-                locality: "",
-                priority: "Medium",
-                status: "In process",
-                tech: "",
-                type: "Maintenance",
-                user: ""
-              };
-              data.push(inter);
-            } else {
-              const inter = {
-                _id: element.idMaintenance,
-                day: moment(element.StartTime).format("DD/MM/YYYY"),
-                departement: element.resultat[0].executor,
-                description: element.resultat[0].description,
-                locality: "",
-                priority: "Medium",
-                status: "In process",
-                tech: "",
-                type: "Maintenance",
-                user: ""
-              };
-              data.push(inter);
-            }
+          this.is.getInterventions().subscribe((data: any[]) => {
+            this.ds
+              .getMaintenanceAndIntervention()
+              .subscribe((maindata: any[]) => {
+                maindata.forEach(element => {
+                  if (element.resultat.length <= 0) {
+                    const inter = {
+                      _id: element.idMaintenance,
+                      day: moment(element.StartTime).format("DD/MM/YYYY"),
+                      departement: "",
+                      description: "",
+                      locality: "",
+                      priority: "Medium",
+                      status: "In process",
+                      tech: "",
+                      type: "Maintenance",
+                      user: ""
+                    };
+                    data.push(inter);
+                  } else {
+                    const inter = {
+                      _id: element.idMaintenance,
+                      day: moment(element.StartTime).format("DD/MM/YYYY"),
+                      departement: element.resultat[0].executor,
+                      description: element.resultat[0].description,
+                      locality: "",
+                      priority: "Medium",
+                      status: "In process",
+                      tech: "",
+                      type: "Maintenance",
+                      user: ""
+                    };
+                    data.push(inter);
+                  }
+                });
+                this.interventions = data;
+
+                console.log(this.projet, this.departements);
+                if (this.interventions.length > 0) {
+                  this.comptemetier(this.projet[0].metier, this.interventions);
+                }
+
+                // this.interventions.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
+              });
           });
-          this.interventions = data;
-
-          if (this.interventions.length > 0) {
-            console.log(this.projet.metier)
-            this.comptemetier(this.projet[0].metier, this.interventions);
-          }
-          this.show = true;
-
-          // this.interventions.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
         });
-      });
-
     } else {
       console.log("super Admin  *******************");
     }
   }
-  dateToAgenda(data: Intervention[]) {
-    for (const i in data) {
-      const dateString = data[i].day;
-      const year = dateString.substr(6, 10);
-      const month = dateString.substr(3, 5);
-      const day = dateString.substr(0, 2);
-      // data[i].StartTime = new Date(Date.parse(data[i].day));
-      console.log(data[i].StartTime);
-      // data[i].EndTime = new Date(Date.parse(Date(data[i].day)));
-    }
-    return data;
-  }
+
   /**
    *
    * @param $event Modification status lors de l'insertion d'une intervention
    */
   modifieStatus($event) {
     this.statusInsertIntervention = $event;
+  }
+
+  SolutionSave($event) {
+    if ($event.status == "Waiting") {
+      $event.dateWaiting = [];
+      $event.dateWaiting.push(moment().format("DD/MM/YYYY"));
+      this.ss.postSolutionWaiting($event).subscribe((data: Solution) => {
+        console.log(data);
+      });
+      console.log($event);
+    } else if ($event.status = "Done") {
+      $event.dateCloture = moment().format("DD/MM/YYYY");
+      this.ss.postSolution($event).subscribe((data: Solution) => {
+        console.log(data);
+      });
+    } else {
+      console.log("error go Toast")
+      this.showToastError("you cannot use this option");
+      this.flagErrorFormTech = true;
+    }
+  }
+
+  showToastError(toast: string) {
+    if (toast == "Duplicate") {
+      this.element.content =
+        "<div class='e-custom'><center>This hospital exists</center></div>";
+    }
+    this.element.title = "<center>Error</center>";
+
+    this.element.cssClass = "e-toast-danger";
+    this.element.show({ timeOut: 4000 });
+  }
+
+  showToast(toast: string) {
+    console.log(toast);
+    this.element.title = "<center>Success</center>";
+    // this.element.animation.show.effect = 'FlipRightDownIn';
+    if (toast == "addNewHopital") {
+      this.element.content =
+        "<div class='e-custom'><center>New hospital add</center></div>";
+    }
+
+    this.element.cssClass = "e-toast-success";
+    this.element.show({ timeOut: 4000 });
   }
 }

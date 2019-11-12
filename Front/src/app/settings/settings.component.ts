@@ -12,9 +12,9 @@ import { HospitalComponent } from './hospital/hospital.component';
 import { FormHopitalComponent } from './hospital/form-hopital/form-hopital.component';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  selector: "app-settings",
+  templateUrl: "./settings.component.html",
+  styleUrls: ["./settings.component.css"]
 })
 export class SettingsComponent implements OnInit {
   @ViewChild(UserComponent)
@@ -28,37 +28,39 @@ export class SettingsComponent implements OnInit {
   @ViewChild(HospitalComponent)
   hospitalComponent: HospitalComponent;
   flagTosteAddHostpital: boolean;
-  @ViewChild('element') element;
+  @ViewChild("element") element;
   constructor(
     private ms: MetierService,
     private us: UserService,
     private hs: HopitalService,
     private ds: DepartementService
-  ) { }
+  ) {}
   public headerText: Object = [
-    { text: 'Users' },
-    { text: 'Hospital' },
-    { text: 'Maintenance' },
-    { text: 'Categories/Sub-Categories' },
-    { text: 'Assets' }
+    { text: "Users" },
+    { text: "Hospital" },
+    { text: "Maintenance" },
+    { text: "Categories/Sub-Categories" },
+    { text: "Assets" }
   ];
   public projet: any;
 
-  async ngOnInit() {
+  ngOnInit() {
     this.AllToastFalse();
     this.role = this.us.getStatus();
     console.log(this.role);
     this.checkStatut(this.role);
-    this.departements = await this.ds.getDepartements();
-    this.metiers = await this.ms.getMetiers();
-    console.log(this.metiers)
+    this.ds.getDepartements().subscribe((data:Departement)=>{
+      this.departements=data
+    });
+    this.ms.getMetiers().subscribe((data:Metier)=>{
+      this.metiers=data
+    });
   }
 
   AllToastFalse() {
     this.flagAddListMetier = false;
     this.flagTosteAddHostpital = false;
   }
-
 
   //#region Initialisation Function
   /**async checkStatut(statut)
@@ -71,17 +73,19 @@ export class SettingsComponent implements OnInit {
    * @callback hs call ServiceHopital
    * @returns Hopital or hopital[]
    */
-  async checkStatut(statut) {
-    if (statut !== 'SuperAdmin') {
-      this.projet = await this.hs
-        .findHopital(this.us.getIdHopital());
+   checkStatut(statut) {
+    if (statut !== "SuperAdmin") {
+
+      this.hs.findHopital(this.us.getIdHopital()).subscribe((data:Hospital)=>{
+        this.projet=data
+      });
     } else {
+      console.log("Superadmin")
       this.hs.getHospital().subscribe((data: Hospital[]) => {
         this.projet = data;
       });
     }
   }
-
 
   //#endregion
 
@@ -94,12 +98,11 @@ export class SettingsComponent implements OnInit {
     try {
       this.projet.unshift(await this.hs.PostNewHospital($event));
       this.hospitalComponent.refreshGridListeHopital();
-      this.showToast('addNewHopital');
+      this.showToast("addNewHopital");
       this.hospitalComponent.createFormHopital();
     } catch (error) {
-      error.error[0] === 'Duplicate' ? this.showToastError(error.error[0]) : '';
+      error.error[0] === "Duplicate" ? this.showToastError(error.error[0]) : "";
     }
-
   }
 
   addSubToHopital($event) {
@@ -108,7 +111,7 @@ export class SettingsComponent implements OnInit {
     });
   }
   rmDepToHopital($event) {
-    console.log('rmdepartement:', $event);
+    console.log("rmdepartement:", $event);
     this.hs.delDepToHop($event).subscribe((data: Hospital) => {
       console.log(data);
     });
@@ -136,11 +139,16 @@ export class SettingsComponent implements OnInit {
       console.log(data);
     });
   }
+  roleModif($event) {
+    console.log($event);
+    this.us.RoleModif($event).subscribe((data: any) => {
+      console.log(data);
+    });
+  }
   //#endregion
 
   //#region Maintenance
   //#endregion
-
 
   //#region Metier
   /**addMetier($event)
@@ -153,7 +161,7 @@ export class SettingsComponent implements OnInit {
    *
    */
   addMetier($event) {
-    console.log($event)
+    console.log($event);
     this.hs.addMetier($event).subscribe((data: Hospital) => {
       this.lastMetier = data;
     });
@@ -172,39 +180,35 @@ export class SettingsComponent implements OnInit {
 
   rmSubCat($event) {
     this.hs.rmSub($event).subscribe((data: Hospital) => {
-      console.log(data)
-    })
+      console.log(data);
+    });
   }
 
   //#endregion
-
 
   //#region Toast
   showToast(toast: string) {
     console.log(toast);
-    this.element.title = '<center>Success</center>';
+    this.element.title = "<center>Success</center>";
     // this.element.animation.show.effect = 'FlipRightDownIn';
-    if (toast == 'addNewHopital') {
-      this.element.content = '<div class=\'e-custom\'><center>New hospital add</center></div>';
+    if (toast == "addNewHopital") {
+      this.element.content =
+        "<div class='e-custom'><center>New hospital add</center></div>";
     }
 
-    this.element.cssClass = 'e-toast-success';
+    this.element.cssClass = "e-toast-success";
     this.element.show({ timeOut: 4000 });
   }
 
   showToastError(toast: string) {
-    if (toast == 'Duplicate') {
-      this.element.content = '<div class=\'e-custom\'><center>This hospital exists</center></div>';
+    if (toast == "Duplicate") {
+      this.element.content =
+        "<div class='e-custom'><center>This hospital exists</center></div>";
     }
-    this.element.title = '<center>Error</center>';
+    this.element.title = "<center>Error</center>";
 
-
-    this.element.cssClass = 'e-toast-danger';
+    this.element.cssClass = "e-toast-danger";
     this.element.show({ timeOut: 4000 });
   }
   //#endregion
-
-
-
-
 }

@@ -2,3 +2,6 @@
 .subject {
     text-align: center;
 }
+  #_dialog_wrapper > div.e-footer-content > button.e-control.e-btn.e-lib.e-event-delete.e-hide {
+      display: none;
+    }

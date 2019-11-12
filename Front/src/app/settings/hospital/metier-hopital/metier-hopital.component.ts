@@ -123,7 +123,10 @@ export class MetierHopitalComponent implements OnInit {
       if (!found) {
         tmpArrayMetier.push(elementConstMetier);
       } else {
-        this.SubCatSelect.push(elementConstMetier);
+        this.SubCatSelect == undefined
+          ? (this.SubCatSelect = elementConstMetier)
+          : this.SubCatSelect.push(elementConstMetier);
+        
       }
     });
     // reinitialisation des metier non assigne a l'hopital

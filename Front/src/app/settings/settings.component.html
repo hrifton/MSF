@@ -26,6 +26,7 @@
                             (departementUser)="addDepartementUser($event)"
                             (deparetmentUserRm)="deparetmentUserRm($event)"
                             (idHopital)="listUserHopital($event)"
+                            (RoleModifie)="roleModif($event)"
                             [projet]="projet"
                             [role]="role"
                           ></app-users>
@@ -67,7 +68,7 @@
                       <ng-template #content>
                         <div class="e-card-content">
                           <!-- App-Metier -->
-                          <app-metiers [projet]="projet"></app-metiers>
+                          <app-metiers [projet]="projet" [role]="role"></app-metiers>
                         </div>
                       </ng-template>
                     </e-tabitem>

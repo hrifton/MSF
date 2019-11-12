@@ -13,6 +13,7 @@ import { ListCategorieComponent } from './list-categorie/list-categorie.componen
 })
 export class MetiersComponent implements OnInit {
   @Input() projet;
+  @Input() role;
   public metiers: Metier;
   public selectcategorie: Categorie[];
   public metierSelect: Metier;
@@ -22,14 +23,21 @@ export class MetiersComponent implements OnInit {
   listMetiersComponent: ListMetiersComponent;
   @ViewChild(ListCategorieComponent)
   ListCategorieComponent: ListCategorieComponent;
+  itemToolBar: any;
 
+  constructor(private ms: MetierService, private cs: CategorieService) {}
 
-  constructor(private ms: MetierService, private cs: CategorieService) { }
-
-  async ngOnInit() {
+  ngOnInit() {
+    if(this.role=="Admin"){
+this.itemToolBar=null
+    }else if(this.role="SuperAdmin"){
+this.itemToolBar = ["Delete"];
+    }
     this.flag = false;
-    this.metiers = await this.ms.getMetiers();
-    this.metiers ? this.flag = true : this.flag = false;
+    this.ms.getMetiers().subscribe((data: Metier) => {
+      this.metiers = data;
+      this.flag = true;
+    });
   }
   /**
    *
@@ -37,14 +45,13 @@ export class MetiersComponent implements OnInit {
    * @memberof MetiersComponent
    * Get data To Service Metier For Save
    */
-  async saveMetier(data: Metier) {
-    console.log(this.metiers, 'il y a un unshift normalement')
+  saveMetier(data: Metier) {
+    console.log(this.metiers, "il y a un unshift normalement");
     //this.metiers.unshift(await this.ms.addMetier(data))
     this.listMetiersComponent.refresh();
-
   }
   saveCategorie(data: Categorie) {
-    console.log(data, 'saveCategorie');
+    console.log(data, "saveCategorie");
     this.cs.AddCategorie(data).subscribe((categorie: any) => {
       this.metierSelect.categorie.push(categorie);
       this.ListCategorieComponent.grid.refresh();
@@ -57,6 +64,5 @@ export class MetiersComponent implements OnInit {
   selectMetier(data: Metier) {
     this.metierSelect = null;
     this.metierSelect = data;
-
   }
 }

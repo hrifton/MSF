@@ -6,7 +6,7 @@
     "JWT_EXP": "60m"
   },
   "production": {
-    "PORT": 3000,
+    "PORT": 8080,
     "MONGODB_URL": "mongodb://localhost:27017/MsfRegie",
     "JWT_SECRET": "xtiTKEFUiokCivj05CVo0A",
     "JWT_EXP": "60m"

@@ -18,6 +18,7 @@ userRoutes
 userRoutes.route("/:id").get((req, res) => {
   ctrlUser.getUserMsal(req.query, res);
 });
+
 userRoutes.route("techsByHospital/:id").get((req, res) => {
   console.log(req);
   //ctrlUser.getTechByHopital(req.query, res);

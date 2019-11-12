@@ -18,7 +18,8 @@ import { Metier } from "src/app/Class/Metier";
 })
 export class ListCategorieComponent implements OnInit {
   @Input() metierSelect: any;
-  constructor() { }
+  @Input() itemToolBar: any;
+  constructor() {}
 
   @ViewChild("grid")
   public grid: GridComponent;
@@ -35,10 +36,10 @@ export class ListCategorieComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.metierSelect.categorie;
-    console.log("data : ", this.data)
+    console.log("data : ", this.data);
     this.pageSettings = { pageCount: 5 };
     this.filterSettings = { type: "Menu" };
-    this.toolbarItems = ["Delete"];
+    this.toolbarItems = this.itemToolBar;
     this.editOptions = {
       allowEditing: true,
       allowDeleting: true,
@@ -48,10 +49,9 @@ export class ListCategorieComponent implements OnInit {
     // this.orderidrules = { required: true };
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
+    console.log(changes);
     if (changes.metierSelect.firstChange === false) {
       this.data = changes.metierSelect.currentValue.categorie;
     }
-
   }
 }

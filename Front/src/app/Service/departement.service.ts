@@ -3,12 +3,12 @@ import { Injectable } from "@angular/core";
 import { catchError, map } from "rxjs/operators";
 import { of } from "rxjs";
 import Departement from '../Class/Departement';
-
+import { environment } from "../../environments/environment";
 @Injectable({ providedIn: "root" })
 export class DepartementService {
-  uri = "http://localhost:3000/api/departement";
+  uri = environment.apiBaseUrl+'/departement';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   addDeparement(departement) {
     const obj = {
@@ -29,7 +29,7 @@ export class DepartementService {
       .get(`${this.uri}/edit/${departement}`)
       .subscribe(res => console.log(res));
   }
-  async getDepartements() {
-    return await this.http.get<Departement>(`${this.uri}/departement`).toPromise();
+  getDepartements() {
+    return this.http.get<Departement>(`${this.uri}/departement`);
   }
 }

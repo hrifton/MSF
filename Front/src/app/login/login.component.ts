@@ -62,12 +62,16 @@ export class LoginComponent implements OnInit {
           if (localStorage.status == "undefined") {
             let user = await this.us.getUserProfil(localStorage)
             this.us.getToLocalStorage(user)
-            console.log(this.us.getIdDepartement())
             if (this.us.getStatus() === "SuperAdmin") {
               this.router.navigateByUrl("/analyse")
-            } else {
-              this.router.navigateByUrl("/interventions");
-            }
+            }else if (
+                    this.us.getIdDepartement().length == 0 &&
+                    this.us.getStatus() === "User"
+                  ) {
+                    this.router.navigateByUrl("/");
+                  } else {
+                    this.router.navigateByUrl("/interventions");
+                  }
           }
         }
       }

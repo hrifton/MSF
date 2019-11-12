@@ -8,18 +8,19 @@ import { Hospital } from "../Class/Hospital";
 import { response } from "express";
 import { UserService } from './user.service';
 import { User } from '../Class/user';
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root"
 })
 export class HopitalService {
-  uri = "http://localhost:3000/api/hospital";
+  uri = environment.apiBaseUrl+'/hospital';
 
   constructor(
     private http: HttpClient,
     private httpApi: Http,
     private us: UserService
-  ) { }
+  ) {}
   private apiurl = "https://restcountries.eu/rest/v2/all";
   /**
    * return all country in API RestCountries.eu
@@ -32,11 +33,11 @@ export class HopitalService {
     return this.httpApi.get(`${this.apiurl}`).map(res => res.json());
   }
   /**PostNewHospital(hospital: Hospital)
-   * 
+   *
    * @param hospital
-   * 
+   *
    * save a new Hospital
-   *  
+   *
    */
   async PostNewHospital(hospital: Hospital) {
     const obj = hospital;
@@ -57,9 +58,9 @@ export class HopitalService {
   //#endregion
   //#region Metier
   /** addMetier(data: any)
-   * 
-   * @param data 
-   * add new metier 
+   *
+   * @param data
+   * add new metier
    */
   addMetier(data: any) {
     data[0].idHopital = data.idHopital;
@@ -68,9 +69,9 @@ export class HopitalService {
   }
 
   /** rmMetier(data: any)
-   * 
-   * @param data 
-   * 
+   *
+   * @param data
+   *
    * remove a Metier
    */
   rmMetier(data: any) {
@@ -83,7 +84,7 @@ export class HopitalService {
     );
   }
   /**rmSub(data: any)
-   * @param data 
+   * @param data
    * remove subMetier
    */
   rmSub(data: any) {
@@ -92,8 +93,8 @@ export class HopitalService {
     );
   }
   /**add a subMetier in a Hostpial
-   * 
-   * @param data 
+   *
+   * @param data
    */
   addSubCatToHop(data: any) {
     console.log(data);
@@ -111,36 +112,29 @@ export class HopitalService {
   getHospital() {
     return this.http.get(`${this.uri}/hopital`);
   }
-  /**async findHopital()
-   * Requset Get Find Hospital By id 
+  /** findHopital()
+   * Requset Get Find Hospital By id
    */
-  async findHopital(id) {
-    return await this.http.get<Hospital>(`${this.uri}/id/`, { params: { id } }).toPromise();
+  findHopital(id) {
+    return this.http.get(`${this.uri}/id/`, { params: { id } });
   }
 
   /**async getUserByHospital(id?: string)
    * @param id
-   * Get All User By id Hospital  
-   * 
-   * if this.us.getIdHopital is undefined 
+   * Get All User By id Hospital
+   *
+   * if this.us.getIdHopital is undefined
    * var idHopital take id in param
    */
-  async getUserByHospital(id?: string) {
+  getUserByHospital(id?: string) {
     let idHopital = this.us.getIdHopital();
-    idHopital == "undefined" ? idHopital = id : "";
+    idHopital == "undefined" ? (idHopital = id) : "";
     console.log(idHopital);
 
-    return await this.http
-      .get<User>(`${this.uri}/userbyhospital`, { params: { id } })
-      .toPromise();
+    return this.http.get<User>(`${this.uri}/userbyhospital`, {
+      params: { id }
+    });
   }
 
   //#endregion
-
-
-
-
-
-
-
 }

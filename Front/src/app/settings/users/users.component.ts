@@ -5,20 +5,20 @@ import {
   SimpleChanges,
   Output,
   EventEmitter
-} from '@angular/core';
+} from "@angular/core";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators
-} from '@angular/forms';
-import { User } from 'src/app/Class/user';
-import { Hospital } from 'src/app/Class/Hospital';
-import { MustMatch } from 'src/app/_helpers/must_match.validator';
-import { UserService } from 'src/app/Service/user.service';
-import { HopitalService } from 'src/app/Service/hopital.service';
-import { EventRenderedArgs } from '@syncfusion/ej2-angular-schedule';
-import Departement from 'src/app/Class/Departement';
+} from "@angular/forms";
+import { User } from "src/app/Class/user";
+import { Hospital } from "src/app/Class/Hospital";
+import { MustMatch } from "src/app/_helpers/must_match.validator";
+import { UserService } from "src/app/Service/user.service";
+import { HopitalService } from "src/app/Service/hopital.service";
+import { EventRenderedArgs } from "@syncfusion/ej2-angular-schedule";
+import Departement from "src/app/Class/Departement";
 /**
  *
  *
@@ -41,11 +41,13 @@ export class UsersComponent implements OnInit {
   @Input() projet;
   @Input() role;
   @Output() messageEvent = new EventEmitter<User>();
+  @Output() RoleModifie = new EventEmitter<any>();
   @Output() departementUser = new EventEmitter<Departement>();
   @Output() deparetmentUserRm = new EventEmitter<Departement>();
   @Output() idHopital = new EventEmitter<string>();
   hopital = new Hospital();
-  status = ["User", "Tech", "Operator", "LocalAdmin", "SuperAdmin"];
+  lstatus: any;
+
   data: any[];
   userForm: FormGroup;
   data2: any = [];
@@ -60,11 +62,22 @@ export class UsersComponent implements OnInit {
     this.createForm();
   }
 
-  async ngOnInit() {
+  ngOnInit() {
+    if (this.role == "SuperAdmin") {
+      this.lstatus = ["User", "Tech", "Operator", "Admin", "SuperAdmin"];
+    } else {
+      this.lstatus = ["User", "Tech", "Operator"];
+    }
+
     this.mode = "CheckBox";
     this.data = this.projet;
-    this.projet[0] != undefined ? this.hopital = this.projet[0] : this.hopital = null
-    this.projet[0] != undefined ? this.data2 = await this.hs.getUserByHospital(this.hopital._id) : "";
+    this.projet[0] != undefined
+      ? (this.hopital = this.projet[0])
+      : (this.hopital = null);
+
+    this.hs.getUserByHospital(this.hopital._id).subscribe((data: User) => {
+      this.data2 = data;
+    });
   }
 
   /**
@@ -99,10 +112,12 @@ export class UsersComponent implements OnInit {
    * complete formulaire lors du changement de selection de projet
    */
   //TODO a resoudre probleme constructor
-  async onSelection(data) {
+  onSelection(data) {
     this.hopital = data;
     console.log("selectONe : ", data);
-    this.data2 = await this.hs.getUserByHospital(data._id);
+    this.hs.getUserByHospital(data._id).subscribe((data: User) => {
+      this.data2 = data;
+    });
     console.log(this.data2);
   }
 
@@ -123,8 +138,14 @@ export class UsersComponent implements OnInit {
   public checkWaterMark: string = "Select departement(s)";
 
   public select(args: any, id) {
+    console.log(args);
     args.itemData.idUser = id._id;
     this.departementUser.emit(args.itemData);
+  }
+  public selectRole(args: any, id) {
+    let role = { role: args.itemData.value, _id: id._id };
+    console.log(role);
+    this.RoleModifie.emit(role);
   }
   public removed(args: any, data) {
     args.itemData.idUser = data._id;
@@ -141,4 +162,3 @@ export class UsersComponent implements OnInit {
     return liste;
   }
 }
-

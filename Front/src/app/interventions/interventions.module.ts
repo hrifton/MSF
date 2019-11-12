@@ -47,7 +47,12 @@ import {
   ToolbarService,
   PageService
 } from "@syncfusion/ej2-angular-grids";
-import { ButtonModule, CheckBoxModule, RadioButtonModule } from '@syncfusion/ej2-angular-buttons';
+import {
+  ButtonModule,
+  CheckBoxModule,
+  RadioButtonModule,
+  SwitchModule
+} from "@syncfusion/ej2-angular-buttons";
 import {
   MatGridListModule,
   MatCardModule,
@@ -69,6 +74,8 @@ import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
     CalendrierTechComponent
   ],
   imports: [
+    SwitchModule,
+    CheckBoxModule,
     ButtonModule,
     ToastModule,
     MatGridListModule,
@@ -111,4 +118,4 @@ import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
   ],
   exports: [MatDatepickerModule, MatNativeDateModule]
 })
-export class InterventionsModule { }
+export class InterventionsModule {}

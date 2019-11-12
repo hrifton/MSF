@@ -126,8 +126,10 @@ export class MaintenanceComponent implements OnInit {
     console.log(args);
   }
 
-  async ngOnInit() {
-    this.listeMetier = await this.mes.getMetiers();
+  ngOnInit() {
+    this.mes.getMetiers().subscribe((data:Metier)=>{
+      this.listeMetier=data
+    });
 
     this.createForm();
     this.mode = "CheckBox";

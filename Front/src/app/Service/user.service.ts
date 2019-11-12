@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { environment } from "../../environments/environment";
 import { HttpClient, HttpHandler, HttpHeaders } from "@angular/common/http";
 import * as jwt_decode from "jwt-decode";
 import { User } from "../Class/user";
@@ -7,12 +8,12 @@ import { User } from "../Class/user";
   providedIn: "root"
 })
 export class UserService {
-  uri = "http://localhost:3000/api";
+  uri =  environment.apiBaseUrl;
 
   noAuthHeader = { headers: new HttpHeaders({ NoAtuh: "True" }) };
   selectedUser: { fullName: string; email: string; password: string };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    *
@@ -69,11 +70,11 @@ export class UserService {
   }
 
   getToLocalStorage(token): any {
-    this.deleteToken()
-    token.id != undefined ? "" : token.id = token._id;
-    token.mail != undefined ? token.email = token.mail : "";
-    token.surname != undefined ? token.fullName = token.surname : "";
-    console.log(token.length)
+    this.deleteToken();
+    console.log(token);
+    token.id != undefined ? "" : (token.id = token._id);
+    token.mail != undefined ? (token.email = token.mail) : "";
+    token.surname != undefined ? (token.fullName = token.surname) : "";
     try {
       this.setId(token.id);
       this.setStatus(token.status);
@@ -93,7 +94,7 @@ export class UserService {
    * @memberof UserService
    */
   setId(_id) {
-    console.log("id :", _id)
+    console.log("id :", _id);
     localStorage.setItem("_id", _id);
   }
   getId() {
@@ -108,15 +109,16 @@ export class UserService {
    * @memberof UserService
    */
   async getUserProfil(user: any) {
-    console.log(user)
+    console.log(user);
     const fullName = user.fullName;
-    const email = user.email
-    const _id = user._id
+    const email = user.email;
+    const _id = user._id;
     //return await this.http.get<User>(this.uri + "/", { params: { id } }).toPromise();
-    return await this.http.get<User>(`${this.uri}/${_id}`, {
-      params: { fullName, email, _id }
-    }).toPromise();
-
+    return await this.http
+      .get<User>(`${this.uri}/${_id}`, {
+        params: { fullName, email, _id }
+      })
+      .toPromise();
   }
   /**
    *
@@ -124,11 +126,11 @@ export class UserService {
    * @returns
    * @memberof UserService
    */
-  async getUserTech(idHopital) {
-
-    return await this.http.get<User>(`${this.uri}/user/techsByHospital/`, {
+  getUserTech() {
+    let idHopital = this.getIdHopital();
+    return this.http.get(`${this.uri}/user/techsByHospital/`, {
       params: { idHopital }
-    }).toPromise();
+    });
   }
 
   /**
@@ -253,4 +255,8 @@ export class UserService {
     });
     return test;
   }
+
+  RoleModif($event: any) {
+      return this.http.put(`${this.uri}/user/${$event._id}`, $event);
+    }
 }

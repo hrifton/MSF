@@ -1,10 +1,109 @@
+<ejs-schedule #agenda width='100%' height='650px' [selectedDate]="selectedDate" [eventSettings]="eventSettings"
+  [(currentView)]="currentView" (eventRendered)="oneventRendered($event)" [allowResizing]="allowResizing"
+  (actionBegin)="onActionBegin($event)" (popupOpen)='onPopupOpen($event)'>
+  <e-views>
+    <e-view option="Week" startHour="09:00" endHour="19:00" [timeScale]='timeScale'>
+    </e-view>
+    <e-view option="Month"></e-view>
+  </e-views>
+  <ng-template #editorTemplate let-data>
 
-  <ejs-schedule #agenda width='100%' height='650px' [selectedDate]="selectedDate" [eventSettings]="eventSettings"
-    [(currentView)]="currentView" (eventRendered)="oneventRendered($event)" [allowResizing]="allowResizing">
-    <e-views>
-      <e-view option="Week" startHour="09:00" endHour="19:00" [timeScale]='timeScale'>
-      </e-view>
-      <e-view option="Month"></e-view>
-    </e-views>
+    <div *ngIf="data != undefined" class="custom-event-editor" width="100%" cellpadding="5">
+      <div class="row">
+        <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+          <div class="e-float-input">
+            <span class="e-float-line">Departement :</span>
+            <input id="departement" type="text" value="{{data.departements[0].departement}}" disabled />
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+          <div class="e-float-input">
+            <span class="e-float-line">Assingation date :</span>
+            <input id="dateAssing" type="text" value="{{data.dateAssing}}" disabled />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+          <div class="e-float-input">
+            <span class="e-float-line">Categorie :</span>
+            <input id="categorie" type="text" value="{{data.metier[0].name}}" disabled />
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+          <div class="e-float-input">
+            <span class="e-float-line">Sub-Categorie :</span>
+            <input id="sub-categorie" type="text" value="{{data.metier[0].name}}" disabled />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="e-float-input">
+            <span class="e-float-line">Description :</span>
+            <input id="description" type="text" value="{{data.description}}" disabled />
+          </div>
+        </div>
+      </div>
+      <form [formGroup]="solutionForm" novalidate="novalidate">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-row">
+              <mat-form-field class="form-group col-12">
+                <mat-label>Solution *</mat-label>
+                <textarea matInput formControlName="solution" placeholder="Solution" rows="brightness_4"
+                  #solution></textarea>
+                <mat-error *ngIf="
+                                  solutionForm.get('solution').hasError('required') &&
+                                  solutionForm.get('solution').touched
+                                ">
+                  <span> Solution is required </span>
+                </mat-error>
+                <mat-error *ngIf="solutionForm.get('solution').hasError('minlength')">
+                  <span> Solution is required min 4 charaters </span>
+                </mat-error>
+                <mat-error *ngIf="solutionForm.get('solution').hasError('maxlength')">
+                  <span> Solution is required max 500 charaters </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <span>test{{solutionForm.value.status}}</span>
+            <div class="e-float-input e-control-wrapper">
+              <ejs-dropdownlist id="status" formControlName="status" [dataSource]="lStatus"
+                [fields]="{ text: 'status', value: 'status' }" placeholder="status" popupHeight="200px"
+                floatLabelType="Always" #status></ejs-dropdownlist>
+            </div>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+  </ng-template>
+<ng-template #editorTemplateFooter let-data>
+  <div *ngIf="data.elementType == 'cell'" class="e-cell-footer">
+    <div class="left-button">
+      <button class="e-event-details" title="Extra Details" (click)="onDetailsClick($event)">More Details</button>
+    </div>
+    <div class="right-button">
+      <button class="e-event-create" title="Add" (click)="onAddClick($event)">Add</button>
+    </div>
+  </div>
+  <div *ngIf="data.elementType == 'event'" class="e-event-footer">
+    <div class="left-button">
+      <button class="e-delete" title="Delete" (click)="onDeleteClick($event)">Delete</button>
+      <button *ngIf="data.RecurrenceRule != undefined && data.RecurrenceRule != ''" class="e-delete-series"
+        title="Delete" (click)="onDeleteClick($event)">Delete Series</button>
+    </div>
+    <div class="right-button">
+      <button class="e-edit" title="Edit" (click)="onEditClick($event)">Edit</button>
+      <button *ngIf="data.RecurrenceRule != undefined && data.RecurrenceRule != ''" class="e-edit-series" title="Edit"
+        (click)="onEditClick($event)">Edit Series</button>
+    </div>
+  </div>
+</ng-template>
 
-  </ejs-schedule>
+</ejs-schedule>

@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Categorie } from "../Class/Categorie";
-
+import { environment } from "../../environments/environment";
 @Injectable({
   providedIn: "root"
 })
 export class CategorieService {
-  uri = "http://localhost:3000/api/categorie";
+  uri = environment.apiBaseUrl+'/categorie';
 
   constructor(private http: HttpClient) {}
 

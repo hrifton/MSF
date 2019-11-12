@@ -22,7 +22,8 @@
       *ngIf="metiers"
       [metiers]="metiers"
       (deleteMetier)="deleteMetier($event)"
-      (messageEvent)="selectMetier($event)"
+      (messageEvent)="selectMetier($event)"itemToolBar
+      [itemToolBar]="itemToolBar"
     ></app-list-metiers>
   </div>
   <div class="col-4">
@@ -30,6 +31,7 @@
       *ngIf="metierSelect"
       [metierSelect]="metierSelect"
       (messageEvent)="saveCategorie($event)"
+      [itemToolBar]="itemToolBar"
     ></app-list-categorie>
   </div>
 </div>
