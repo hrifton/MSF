@@ -19,7 +19,7 @@
             </div>
             <div class="e-card-content">
               <app-formulaire-intervention
-                *ngIf="departements"
+                *ngIf="departements!=null"
                 (messageEvent)="update($event)"
                 (statusRequest)="modifieStatus($event)"
                 [user]="userDetails"
@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4 ">
+      <div  class="col-xs-4 col-sm-4 col-lg-4 col-md-4 ">
         <div class="e-card" id="basic_card">
           <div class="e-card-header">
             <div class="e-card-header-caption">
@@ -60,7 +60,7 @@
           </div>
           <div class="e-card-content">
             <app-analyse-mix-intermaint
-              *ngIf="interventions.length > 0"
+            *ngIf="interventions"
               [interventions]="interventions"
               [user]="userDetails"
             >
@@ -86,13 +86,14 @@
               <div class="e-card-content">
                 <app-list-intervention
                   (messageEvent)="check($event)"
-                  *ngIf="interventions.length > 0"
+                  *ngIf="interventions"
                   [interventions]="interventions"
                   [maintenance]="maintenance"
                   [metier]="metier"
                   [techs]="techs"
                   [user]="userDetails"
                   [projet]="projet"
+                  [departements]="departements"
                 >
                 </app-list-intervention>
               </div>
@@ -108,7 +109,7 @@
   >
     <div class="row">
       <app-calendrier-tech
-        *ngIf="interventions.length > 0 || maintenance.length > 0"
+        *ngIf="interventions"
         [interventions]="interventions"
         [maintenance]="maintenance"
         (SolutionSave)="SolutionSave($event)"

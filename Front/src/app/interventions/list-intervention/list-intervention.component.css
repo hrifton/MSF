@@ -35,3 +35,7 @@
 .disabledJs{
    background-color: rgba(25, 0, 255, 0.384);
 }
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
+}

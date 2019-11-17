@@ -3,18 +3,23 @@ import { HttpClient } from "@angular/common/http";
 import { Http, Response } from "@angular/http";
 import "rxjs/add/operator/map";
 import { catchError, map } from "rxjs/operators";
-import { of } from "rxjs";
+import { of, BehaviorSubject, Observable } from "rxjs";
 import { Hospital } from "../Class/Hospital";
 import { response } from "express";
 import { UserService } from './user.service';
 import { User } from '../Class/user';
 import { environment } from "../../environments/environment";
-
+const INIT_Hop=[];
+const INIT_List_Hop=[];
 @Injectable({
   providedIn: "root"
 })
 export class HopitalService {
-  uri = environment.apiBaseUrl+'/hospital';
+  uri = environment.apiBaseUrl + "/hospital";
+
+  //public listeHospital = new BehaviorSubject(INIT_List_Hop);
+
+  //public hospital = new BehaviorSubject(INIT_Hop);
 
   constructor(
     private http: HttpClient,
@@ -55,6 +60,26 @@ export class HopitalService {
   }
   //#endregion
   //#region maintenance
+/**
+ *add Maintenance in a Hosptial
+ *
+ * @param {*} $event
+ * @returns
+ * @memberof HopitalService
+ */
+AddMaintenanceToHosptial($event: any) {
+    $event.idHospial = this.us.getIdHopital();
+    return this.http.post(`${this.uri}/addmaintenance`, $event);
+  }
+/**
+ *Add Maintenance Default
+ *
+ * @param {*} $event
+ * @memberof HopitalService
+ */
+AddMaintenance($event: any) {
+    return this.http.post(`${this.uri}/newmaintenance`, $event);
+  }
   //#endregion
   //#region Metier
   /** addMetier(data: any)

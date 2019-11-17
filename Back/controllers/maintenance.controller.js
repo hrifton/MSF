@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 require("../models/maintenance.model");
+require("../models/hospital.model");
 const { ObjectId } = require("mongodb");
-
+const Hospital = mongoose.model("Hospital");
 const Maintenance = mongoose.model("Maintenance");
 
 module.exports.all = (req, res) => {
@@ -17,13 +18,8 @@ module.exports.all = (req, res) => {
 };
 
 module.exports.add = (req, res) => {
-  let maintenance = new Maintenance();
-  (maintenance.description = req.body.description),
-    (maintenance.duration = req.body.duration),
-    (maintenance.executor = req.body.executor),
-    (maintenance.interval = req.body.interval),
-    (maintenance.maintenance = req.body.maintenance),
-    (maintenance.periodicity = req.body.periodicity),
+  console.log(req)
+  let maintenance = new Maintenance(req);
     maintenance.save((err, doc) => {
       if (!err) res.send(doc);
       else {
@@ -33,3 +29,5 @@ module.exports.add = (req, res) => {
       }
     });
 };
+
+

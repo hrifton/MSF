@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  EventEmitter,
+  Output
+} from "@angular/core";
 import {
   extend,
   DialogEditEventArgs,
@@ -24,8 +31,13 @@ import {
 import * as moment from "moment";
 import { Browser } from "protractor";
 import { Dialog } from "@syncfusion/ej2-popups";
-import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
-import Solution from 'src/app/Class/Solution';
+import {
+  FormBuilder,
+  FormControl,
+  Validators,
+  FormGroup
+} from "@angular/forms";
+import Solution from "src/app/Class/Solution";
 @Component({
   selector: "app-calendrier-tech",
   templateUrl: "./calendrier-tech.component.html",
@@ -39,6 +51,7 @@ export class CalendrierTechComponent implements OnInit {
   @Output() SolutionSave = new EventEmitter<Solution>();
 
   public scheduleData: Object[] = [];
+  public showQuickInfo: Boolean = false;
   public CurrentTimeIndicator: boolean;
   public data: Object[] = extend([], this.scheduleData, null) as Object[];
   public selectedDate: Date = new Date();
@@ -80,55 +93,103 @@ export class CalendrierTechComponent implements OnInit {
       args.element.style.backgroundColor = categoryColor;
     }
   }
-
+  /**
+   * @function formatDataAgenda()
+   * formate data for conformity agenda
+   * agenda need champs StartTime, EndTime and Subject
+   *
+   * @returns tmp array interventions
+   * @memberof CalendrierTechComponent
+   */
   formatDataAgenda() {
     let tmp = [];
     this.interventions.forEach(element => {
-      element.StartTime = this.formatdate(element.dateAssing);
-      element.EndTime = element.StartTime;
-      element.Subject = element.description;
-      if (element.priority == "High") {
-        element.CategoryColor = "#df6666d5";
-      } else if (element.priority == "Low") {
-        element.CategoryColor = "#f8e620d5";
-      } else {
-        element.CategoryColor = "#f2b95dd5";
+      if (element.status != "Done") {
+        console.log(element.status);
+        element.StartTime = this.formatdate(element.dateAssing);
+        element.EndTime = element.StartTime;
+        element.Subject = element.description;
+        if (element.priority == "High") {
+          element.CategoryColor = "#df6666d5";
+        } else if (element.priority == "Low") {
+          element.CategoryColor = "#f8e620d5";
+        } else {
+          element.CategoryColor = "#f2b95dd5";
+        }
+        element.id = element._id;
+        tmp.push(element);
       }
-      element.id = element._id;
-      tmp.push(element);
     });
     return tmp;
   }
+
+  /**
+   *@function formateDate()
+   *formate date to format day-month-Year
+   * @param {*} date
+   * @returns
+   * @memberof CalendrierTechComponent
+   */
   formatdate(date) {
     return moment(date, "DD-MM-YYYY").format("MMMM Do YYYY");
   }
-
+  /**
+   *@function refreshAgenda()
+   * @call Function FormatDataAgenda()
+   * Refresh Agenda
+   * @memberof CalendrierTechComponent
+   */
   refreshAgenda() {
-    this.agenda.refresh();
+    //TODO This.agenda.refresh() not work
+    this.ngOnInit();
   }
-
+  /**
+   *
+   *
+   * @param {ActionEventArgs} args
+   * @memberof CalendrierTechComponent
+   */
   public onActionBegin(args: ActionEventArgs): void {
     if (
       args.requestType === "eventCreate" ||
       args.requestType === "eventChange"
     ) {
-      console.log(args.requestType)
+      console.log(args.requestType);
       //TODO rajouté status de l'intervention ensuite+date de cloture s'il y a cloture save()
       console.log(this.solutionForm.value);
       this.SolutionSave.emit(this.solutionForm.value);
-     
     }
   }
-
+  /**
+   *@function onPopupOpen
+   * Open Windows formu
+   *
+   * @param {PopupOpenEventArgs} args
+   * @returns {void}
+   * @memberof CalendrierTechComponent
+   */
   onPopupOpen(args: PopupOpenEventArgs): void {
-    console.log(args.type);
+    let any:any=args.data;
     if (args.type == "Editor") {
-      this.createForm(args.data);
-    } else if (args.type == "QuickInfo") {
-      return null;
+      console.log(any.Subject);
+      if(any.Subject!=undefined){
+        this.createForm(args.data);
+      }else{
+         args.cancel = true;
+      }
+      
+    } else {
+      args.cancel = true;
     }
   }
-
+  /**
+   *
+   *@function createForm
+   *generate Formulaire with data
+   * @param {*} data
+   * @memberof CalendrierTechComponent
+   *
+   */
   createForm(data) {
     console.log(data);
     this.solutionForm = this.fb.group({

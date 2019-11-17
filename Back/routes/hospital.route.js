@@ -36,12 +36,14 @@ hospitalRoutes.route("/addSubCat").post(function(req, res, next) {
 });
 //All User hospital
 hospitalRoutes.route("/userbyhospital").get(function(req, res) {
-  console.log("ByHospital User");
   ctrlUser.FindUserByHospital(req.query, res);
 });
 hospitalRoutes.route("/addDep").post(function(req, res, next) {
-  console.log(req.body);
   ctrlHospital.addDepToHop(req.body, res, next);
+});
+
+hospitalRoutes.route("/addmaintenance").post(function(req, res, next) {
+ ctrlHospital.addMaintenance(req.body,res,next);
 });
 
 hospitalRoutes

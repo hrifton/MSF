@@ -7,7 +7,6 @@ const { ObjectId } = require("mongodb");
 const _ = require("lodash");
 
 module.exports.register = (req, res, next) => {
-  console.log("****************************************");
   var user = new User(req.body);
   user.status = req.body.statut;
   console.log(req.body, user);
@@ -95,9 +94,9 @@ module.exports.getTech = (req, res, next) => {
   });
 };
 module.exports.getTechByHopital = (req, res, next) => {
-  console.log(req);
+ 
   User.find(
-    { status: "Tech", idHopital: ObjectId(req.idHopital) },
+    { status: "Tech", idHopital: ObjectId(req.idHopital) },{ fullName: 1, _id: 1, status: 1, departements: 1 },
     (err, techs) => {
       if (!err) {
         res.status(200).send(techs);
@@ -114,11 +113,11 @@ module.exports.FindUserByHospital = (req, res) => {
     { fullName: 1, _id: 1, status: 1, departements: 1 },
     (err, users) => {
       if (!err) {
-        console.log(users);
-        res.status("200").send(users);
+        
+        res.status(200).send(users);
       } else {
         console.log(err);
-        res.status("400").send(err);
+        res.status(400).send(err);
       }
     }
   );

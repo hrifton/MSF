@@ -114,6 +114,7 @@ export class MetierHopitalComponent implements OnInit {
       /**
        * check dans le tableau metierToHospital si element_id existe returne true ou false
        */
+      console.log(elementConstMetier)
       const found = this.metierToHospital.find(function (element) {
         return element._id == elementConstMetier._id;
       });
@@ -130,26 +131,32 @@ export class MetierHopitalComponent implements OnInit {
       }
     });
     // reinitialisation des metier non assigne a l'hopital
-    console.log
+    
     this.constMetiers = tmpArrayMetier;
   }
   /**
    *
    * @param $event
    * Metier selectionner transfere vers list sub-Categorie
+   * Verification Liste SubCat standart & subCatHopital
    */
   rowSelected($event) {
-    console.log($event)
-    this.subCat = $event.data;
+    console.log($event.data.categorie2==undefined)
+   
+   if(Object.keys($event.data).length==4){
+        this.subCat = $event.data;
     this.subCatToHospital = this.metierToHospital;
+   
     const name = this.subCat.name;
+  
     const index = _.findIndex(this.metiers, function (o) {
       return o.name === name;
     });
-    console.log(this.subCat)
+   
     this.subCat = this.metiers[index];
-    console.log($event.data.categorie, this.subCat)
     this.subCatToHospital.categorie = $event.data.categorie;
+
+   
     // si le tableau des subCat n'est pas vide
     if (this.subCatToHospital.categorie) {
 
@@ -158,7 +165,8 @@ export class MetierHopitalComponent implements OnInit {
       this.subCat.categorie.forEach(element1 => {
 
         const found = this.subCatToHospital.categorie.find(function (element) {
-          return element.id == element1._id;
+
+          return element._id == element1._id;
         });
 
         if (!found) {
@@ -169,10 +177,14 @@ export class MetierHopitalComponent implements OnInit {
 
       this.subCat.categorie2 = tmp;
     }
+   }else{
+     this.subCat.categorie2 = $event.data.categorie;
+     this.subCatToHospital.categorie==null
+   }
+    
 
     this.createFormCat(this.subCat);
     this.flagShowSubCat = true;
-    console.log($event.data.categorie, this.subCat)
 
   }
 

@@ -23,10 +23,12 @@ module.exports.add = (req, res, next) => {
   Solution.findOne({ idIntervention: req.idIntervention }, (err, sol) => {
     if (!err) {
       //if not found IdIntervention in solution create new solution
-      if (sol == null) {
+      if (sol == null||!sol.dateCloture) {
+        console.log("afet is null");
         //look id Tech tech
         User.findOne({ fullName: req.tech }, (err, user) => {
           if (!err) {
+            console.log("first If");
             var solution = new Solution();
             solution.solution = req.solution;
             solution.asset = req.asset;
@@ -41,6 +43,7 @@ module.exports.add = (req, res, next) => {
             solution.idHopital = req.idHopital;
             solution.save((err, doc) => {
               if (!err) {
+                console.log('second If')
                 //UpdateStatus of Intervention
                 Intervention.findByIdAndUpdate(
                   doc.idIntervention,
@@ -68,9 +71,9 @@ module.exports.add = (req, res, next) => {
           }
         });
       } else {
-        console.log("Solution deja existante Intervention Closed1.2");
-        res.send("Solution deja existante Intervention Closed");
-      }
+               console.log("Solution deja existante Intervention Closed1.2");
+               res.send("Solution deja existante Intervention Closed");
+             }
     } else {
       console.log("Solution deja existante Intervention Closed2");
       res.send("Solution deja existante Intervention Closed");
@@ -104,12 +107,13 @@ module.exports.addWaiting = (req, res, next) => {
             solution.save((err, doc) => {
               if (!err) {
                 console.log("ok save");
-
+                
                 Intervention.findByIdAndUpdate(
                   doc.idIntervention,
                   { status: "Waiting" },
                   (errInter, Inter) => {
                     if (!errInter) {
+                      res.send(Inter);
                       console.log("intervention Waiting ", Inter);
                     } else {
                       res.send(errInter);
@@ -139,7 +143,7 @@ module.exports.addWaiting = (req, res, next) => {
           },
           (errInter, Inter) => {
             if (!errInter) {
-             res.send(Inter)
+              res.send(Inter);
             } else {
               res.send(errInter);
               console.log(errInter);

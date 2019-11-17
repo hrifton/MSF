@@ -48,11 +48,14 @@ module.exports.liste = (req, res) => {
 
 module.exports.listeByUser = async (req, res) => {
   departement = new Intervention();
+  
   departement = departement.parsing(req.idDepartement);
+  console.log(departement);
   listIdDep = [];
   departement.forEach(element => {
     listIdDep.push(ObjectId(element._id));
   });
+  console.log(listIdDep)
 
   Intervention.aggregate(
     [
@@ -93,15 +96,17 @@ module.exports.listeByUser = async (req, res) => {
     ],
     (err, doc) => {
       if (!err) {
-        
+        console.log(doc.length)
         if(doc.length>0){
           res.status(200).send(doc);
         }else{
-          res.status(200).send(null)
+          res.status(200).send(false)
         }
         
         
       } else {
+        console.log(err)
+        res.status(400).send(err)
       }
     }
   );

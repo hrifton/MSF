@@ -8,6 +8,7 @@ import { User } from "../Class/user";
   providedIn: "root"
 })
 export class UserService {
+ 
   uri =  environment.apiBaseUrl;
 
   noAuthHeader = { headers: new HttpHeaders({ NoAtuh: "True" }) };
@@ -34,8 +35,14 @@ export class UserService {
       this.noAuthHeader
     );
   }
-
-  addDepartement($event: any) {
+/**
+ *Add Departement ListStandart
+ *
+ * @param {*} $event
+ * @returns
+ * @memberof UserService
+ */
+addDepartement($event: any) {
     console.log("addDepartement User", $event);
     return this.http.post(
       this.uri + "/addDepartement",
@@ -43,6 +50,13 @@ export class UserService {
       this.noAuthHeader
     );
   }
+  /**
+   *remove departement to user
+   *
+   * @param {*} $event
+   * @returns
+   * @memberof UserService
+   */
   remDepartement($event: any) {
     return this.http.delete(
       `${this.uri}/rmDepartementUser/${$event.idUser}/${$event._id}`

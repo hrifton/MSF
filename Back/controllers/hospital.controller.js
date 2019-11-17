@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 require("../models/hospital.model");
 require("../models/metier.model");
+require("../models/maintenance.model");
 const { ObjectId } = require("mongodb");
 mongoose.Promise - global.Promise;
 const Hospital = mongoose.model("Hospital");
+const Maintenance = mongoose.model("Maintenance");
 
 //GetAll Hospital
 module.exports.getAll = (req, res) => {
@@ -43,7 +45,7 @@ module.exports.add = (req, res, next) => {
 };
 //Find a hospital with ID
 module.exports.findAHospital = (req, res) => {
-  console.log("find a Hospital : ", req);
+  
   Hospital.find({ _id: ObjectId(req) }, (err, doc) => {
     if (!err) {
       res.send(doc);
@@ -67,7 +69,7 @@ module.exports.findAHospital = (req, res) => {
   
  */
 };
-
+//add metier to hospital
 module.exports.addMetier = (req, res, next) => {
   Hospital.findByIdAndUpdate(
     req[0].idHopital,
@@ -90,7 +92,7 @@ module.exports.addMetier = (req, res, next) => {
     }
   );
 };
-
+//remove metier to hospital
 module.exports.rmMetier = (req, res, next) => {
   Hospital.updateOne(
     { _id: ObjectId(req.idHopital) },
@@ -104,7 +106,7 @@ module.exports.rmMetier = (req, res, next) => {
     }
   );
 };
-
+//remeve subCat to hostpital
 module.exports.rmSubMetier = (req, res, next) => {
   console.log(req);
   Hospital.updateOne(
@@ -119,15 +121,15 @@ module.exports.rmSubMetier = (req, res, next) => {
     }
   );
 };
-
+//add subCategorie
 module.exports.addSubCat = (req, res, next) => {
   req._id == undefined ? (req._id = mongoose.Types.ObjectId()) : req._id;
-  Hospital.updateOne(
+  Hospital.findOneAndUpdate(
     { _id: ObjectId(req.idHopital), "metier._id": req.idMetier },
     {
       $addToSet: {
         "metier.$.categorie": {
-          id: req._id,
+          _id: req._id,
           name: req.name,
           color: req.color
         }
@@ -142,6 +144,7 @@ module.exports.addSubCat = (req, res, next) => {
     }
   );
 };
+//addDepartement to hosptiatl
 module.exports.addDepToHop = (req, res, next) => {
   console.log(req);
   Hospital.updateOne(
@@ -163,7 +166,7 @@ module.exports.addDepToHop = (req, res, next) => {
     }
   );
 };
-
+//remove Departement to hospital
 module.exports.delDepToHop = (req, res, next) => {
   console.log(req.idDepartement);
   Hospital.updateOne(
@@ -171,13 +174,55 @@ module.exports.delDepToHop = (req, res, next) => {
     { $pull: { departements: { _id: req.idDepartement } } },
     (err, doc) => {
       if (!err) {
-        res.status("200").send(doc);
+        res.status(200).send(doc);
       } else {
-        res.status("400").send(err);
+        res.status(400).send(err);
       }
     }
   );
 };
+module.exports.addMaintenance=(req,res,next)=>{
+let maintenance=setMaintenance(req);
+console.log(maintenance)
+ Hospital.updateOne(
+   { _id: ObjectId(req.idHospial) },
+   { $addToSet: {  maintenance  } },
+   (err, doc) => {
+     if (!err) {
+       res.status(200).send(doc);
+     } else {
+       res.status(400).send(err);
+     }
+   }
+ );
+}
+//get Number  hospital in a country 
 function getNbHospitalByCountry(country) {
   return Hospital.countDocuments({ country: country });
 }
+function setMaintenance(data){
+let maintenance={
+  _id:ObjectId(),
+      name:data.name,
+      StartTime:data.StartTime,
+      categorie:data.categorie,
+      choix:data.choix,
+      codeBarre:data.codeBarre,
+      count:data.count,
+      current:data.current,
+      date:data.date,
+      day:data.day,
+      dayOcc:data.dayOcc,
+      description:data.description,
+      end:data.end,
+      interval:data.interval,
+      listDay:data.listDay,
+      month:data.month,
+      periodicity:data.periodicity,
+      recurrence:data.recurrence,
+      subCat:data.subCat,
+      until:data.until
+    }
+   return maintenance;
+}
+

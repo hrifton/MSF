@@ -21,9 +21,7 @@ userRoutes.route("/:id").get((req, res) => {
 
 userRoutes.route("techsByHospital/:id").get((req, res) => {
   console.log(req);
-  //ctrlUser.getTechByHopital(req.query, res);
 });
 
-//userRoutes.rdelete("/rmDepartementUser/:idUser/:id", ctrlUser.rmDepartement);
 
 module.exports = userRoutes;

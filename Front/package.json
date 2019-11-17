@@ -5,7 +5,7 @@
     "start-webpack": "webpack-dev-serve --config webpack.dev.config.js",
     "ng": "ng",
     "start": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng serve",
-    "build": "node --max-old-space-size=8192 node_modules/@angular/cli/bin/ng build --aot --prod",
+    "build": "node --max-old-space-size=8192 node_modules/@angular/cli/bin/ng build --aot --prod --base-href ./",
     "build:stats": "ng build --stats-json",
     "test": "ng test",
     "lint": "ng lint",
@@ -92,7 +92,6 @@
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.5.3",
     "tslib": "^1.9.0",
-    "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1",
     "xlsx": "^0.14.3",
     "xmlrpc-client": "^0.2.1",
@@ -105,6 +104,7 @@
     "@angular/compiler-cli": "^7.2.9",
     "@angular/language-service": "~7.2.0",
     "@compodoc/compodoc": "^1.1.10",
+    "@ngtools/webpack": "^8.3.19",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^6.14.6",
@@ -127,11 +127,14 @@
     "protractor": "~5.4.0",
     "systemjs": "^0.19.47",
     "systemjs-builder": "^0.15.33",
+    "ts-loader": "^6.2.1",
     "ts-node": "^7.0.1",
     "tslint": "~5.11.0",
     "typescript": "^3.2.4",
     "webpack": "^4.41.2",
     "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-dashboard": "^3.2.0"
+    "webpack-cli": "^3.3.10",
+    "webpack-dashboard": "^3.2.0",
+    "webpack-node-externals": "^1.7.2"
   }
 }

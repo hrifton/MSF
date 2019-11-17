@@ -25,12 +25,6 @@ import Departement from "src/app/Class/Departement";
  * @export
  * @class UsersComponent
  * @implements {OnInit}
-/**
- *
- *
- * @export
- * @class UsersComponent
- * @implements {OnInit}
  */
 @Component({
   selector: "app-users",
@@ -68,13 +62,13 @@ export class UsersComponent implements OnInit {
     } else {
       this.lstatus = ["User", "Tech", "Operator"];
     }
-
+console.log(this.projet.length)
     this.mode = "CheckBox";
     this.data = this.projet;
     this.projet[0] != undefined
       ? (this.hopital = this.projet[0])
       : (this.hopital = null);
-
+console.log(this.hopital)
     this.hs.getUserByHospital(this.hopital._id).subscribe((data: User) => {
       this.data2 = data;
     });

@@ -1,15 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Hospital } from '../Class/Hospital';
-import { HopitalService } from '../Service/hopital.service';
-import { UserComponent } from '../user/user.component';
-import { UserService } from '../Service/user.service';
-import { User } from '../Class/user';
-import { Metier } from '../Class/Metier';
-import { MetierService } from '../Service/metier.service';
-import { DepartementService } from '../Service/departement.service';
-import Departement from '../Class/Departement';
-import { HospitalComponent } from './hospital/hospital.component';
-import { FormHopitalComponent } from './hospital/form-hopital/form-hopital.component';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { Hospital } from "../Class/Hospital";
+import { HopitalService } from "../Service/hopital.service";
+import { UserComponent } from "../user/user.component";
+import { UserService } from "../Service/user.service";
+import { User } from "../Class/user";
+import { Metier } from "../Class/Metier";
+import { MetierService } from "../Service/metier.service";
+import { DepartementService } from "../Service/departement.service";
+import Departement from "../Class/Departement";
+import { HospitalComponent } from "./hospital/hospital.component";
+import { FormHopitalComponent } from "./hospital/form-hopital/form-hopital.component";
+import { MaintenanceService } from "../Service/maintenance.service";
+import { Maintenance } from "../Class/Maintenance";
 
 @Component({
   selector: "app-settings",
@@ -29,11 +31,13 @@ export class SettingsComponent implements OnInit {
   hospitalComponent: HospitalComponent;
   flagTosteAddHostpital: boolean;
   @ViewChild("element") element;
+  public listeMaintenanceDefault: Maintenance;
   constructor(
     private ms: MetierService,
     private us: UserService,
     private hs: HopitalService,
-    private ds: DepartementService
+    private ds: DepartementService,
+    private MaintenanceService: MaintenanceService
   ) {}
   public headerText: Object = [
     { text: "Users" },
@@ -49,11 +53,12 @@ export class SettingsComponent implements OnInit {
     this.role = this.us.getStatus();
     console.log(this.role);
     this.checkStatut(this.role);
-    this.ds.getDepartements().subscribe((data:Departement)=>{
-      this.departements=data
+    this.ds.getDepartements().subscribe((data: Departement) => {
+      this.departements = data;
     });
-    this.ms.getMetiers().subscribe((data:Metier)=>{
-      this.metiers=data
+    this.ms.getMetiers().subscribe((data: Metier) => {
+      console.log(data);
+      this.metiers = data;
     });
   }
 
@@ -73,14 +78,16 @@ export class SettingsComponent implements OnInit {
    * @callback hs call ServiceHopital
    * @returns Hopital or hopital[]
    */
-   checkStatut(statut) {
+  checkStatut(statut) {
     if (statut !== "SuperAdmin") {
-
-      this.hs.findHopital(this.us.getIdHopital()).subscribe((data:Hospital)=>{
-        this.projet=data
-      });
+     
+      this.hs
+        .findHopital(this.us.getIdHopital())
+        .subscribe((data: Hospital) => {
+          this.projet = data;
+        });
     } else {
-      console.log("Superadmin")
+       this.getAllMaintenance();
       this.hs.getHospital().subscribe((data: Hospital[]) => {
         this.projet = data;
       });
@@ -148,6 +155,24 @@ export class SettingsComponent implements OnInit {
   //#endregion
 
   //#region Maintenance
+  AddNewMaintenanceToHospital($event) {
+    this.hs.AddMaintenanceToHosptial($event).subscribe((data: any) => {
+      console.log(data);
+    });
+  }
+  addNewMaintenance($event) {
+    this.MaintenanceService.PostNewMaintenance($event).subscribe(
+      (data: any) => {
+        console.log(data);
+      }
+    );
+  }
+  getAllMaintenance() {
+    this.MaintenanceService.getMaintenance().subscribe((data: Maintenance) => {
+      this.listeMaintenanceDefault = data;
+    });
+  }
+
   //#endregion
 
   //#region Metier

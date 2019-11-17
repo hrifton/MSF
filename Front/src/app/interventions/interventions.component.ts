@@ -1,13 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from "@angular/core";
-import { Internationalization } from "@syncfusion/ej2-base";
-import {
-  EventSettingsModel,
-  DayService,
-  WeekService,
-  AgendaService,
-  TimelineViewsService,
-  TimelineMonthService
-} from "@syncfusion/ej2-angular-schedule";
+import { EventSettingsModel } from "@syncfusion/ej2-angular-schedule";
 
 /**
  * Import service
@@ -15,7 +7,6 @@ import {
 import { UserService } from "../Service/user.service";
 import { InterventionService } from "./../Service/intervention.service";
 import { DateMaintenanceService } from "../Service/dateMaintenance.service";
-import { DepartementService } from "../Service/departement.service";
 import { MetierService } from "../Service/metier.service";
 import { SolutionService } from "../Service/solution.service";
 /**
@@ -34,8 +25,9 @@ import { Hospital } from "../Class/Hospital";
 import * as moment from "moment";
 import * as _ from "lodash";
 import { HopitalService } from "../Service/hopital.service";
-import Solution from '../Class/Solution';
-
+import Solution from "../Class/Solution";
+import { CalendrierTechComponent } from "./calendrier-tech/calendrier-tech.component";
+import { NavBarComponent } from "../nav-bar/nav-bar.component";
 
 @Component({
   selector: "app-interventions",
@@ -51,13 +43,15 @@ export class InterventionsComponent implements OnInit {
 
   public eventSettings: EventSettingsModel = {};
   @ViewChild("element") element;
-
+  @ViewChild(NavBarComponent)
+  navBar: NavBarComponent;
   userDetails;
-  techs: User[];
+  techs: User;
 
   @ViewChild(ListInterventionComponent)
   interentionList: ListInterventionComponent;
-
+  @ViewChild(CalendrierTechComponent)
+  calendrierTech: CalendrierTechComponent;
   @ViewChild(AnalyseMixIntermaintComponent)
   AnalyseMixIntermaint: AnalyseMixIntermaintComponent;
   public statusInsertIntervention: boolean;
@@ -77,7 +71,6 @@ export class InterventionsComponent implements OnInit {
     private us: UserService,
     private ds: DateMaintenanceService,
     private metierS: MetierService,
-    private deps: DepartementService,
     private hs: HopitalService,
     private ss: SolutionService
   ) {
@@ -110,7 +103,12 @@ export class InterventionsComponent implements OnInit {
         data.tech = "";
         data.departements = [];
         data.departements.push(this.returnDepartement(data));
-        this.interventions.unshift(data);
+        if (!this.interventions) {
+          this.interventions = [];
+          this.interventions.unshift(data);
+        } else {
+          this.interventions.unshift(data);
+        }
 
         this.interentionList.refreshInterventionTable();
         this.AnalyseMixIntermaint.refreshChart();
@@ -130,34 +128,12 @@ export class InterventionsComponent implements OnInit {
     return found;
   }
   check($event) {
-    const inter = new Intervention(
-      $event.departement,
-      $event.hopital,
-      $event.locality,
-      $event.priority,
-      $event.day,
-      $event.description,
-      $event.status,
-      $event.user,
-      $event.type,
-      $event.tech,
-      $event._id,
-      $event.useMat,
-      $event.asset,
-      $event.slug,
-      $event.metier,
-      $event.dateAssing
-    );
-
-    //inter.dateAssing=$event.dateAssing
-
-    this.is.updateIntervention(inter).subscribe((data: Intervention) => {
-      console.log(data);
+    this.is.updateIntervention($event).subscribe((data: Intervention) => {
       this.getInterventionByRole();
     });
 
-    // this.interentionList.refreshInterventionTable();
-    // this.AnalyseMixIntermaint.refreshChart();
+   //this.interentionList.refreshInterventionTable();
+   //this.AnalyseMixIntermaint.refreshChart();
   }
 
   ngOnInit() {
@@ -169,12 +145,7 @@ export class InterventionsComponent implements OnInit {
      * gestion Du type d'utilisateur
      */
     this.getInterventionByRole();
-    /**
-     * return liste des technicien
-     */
-    this.us.getUserTech().subscribe((data: User[]) => {
-      this.techs = data;
-    });
+
     /**
      * return liste des deparement
      */
@@ -193,13 +164,16 @@ export class InterventionsComponent implements OnInit {
     console.log(metier);
     for (let index = 0; index < metier.length; index++) {
       const name = metier[index].name;
-      this.compte[index] = { name, nb: 0 };
+      const _id=metier[index]._id
+      this.compte[index] = { name,_id, nb: 0 };
     }
     intervention.forEach(element => {
+      console.log(element)
       if (element.status !== "Canceled" && element.status !== "Done") {
         for (let index = 0; index < this.compte.length; index++) {
           if (element.metier != undefined) {
-            if (this.compte[index].name === element.metier[0].name) {
+            console.log(element.metier,this.compte[index])
+            if (this.compte[index]._id === element.metier) {
               this.compte[index].nb += 1;
               break;
             }
@@ -211,85 +185,105 @@ export class InterventionsComponent implements OnInit {
       this.show = true;
     }
   }
-
+  /**
+   *
+   *
+   * @memberof InterventionsComponent
+   */
   getInterventionByRole() {
+   
     if (
       this.us.getIdHopital() === "undefined" ||
       this.us.getIdDepartement() === "undefined"
     ) {
-      // TODO REdirection si manque idHopital ou idDepartement
-      console.log("redirection:", this.us.getIdDepartement());
+      if (this.us.getStatus() != "SuperAdmin") {
+        // TODO REdirection si manque idHopital ou idDepartement
+        console.log("redirection:", this.us.getIdDepartement());
+      }
     } else {
     }
+    //If status is USER
     if (this.userDetails === "User") {
+      this.findHospital();
       this.is.getInterventionsByUser().subscribe((data: Intervention[]) => {
         this.interventions = data;
         this.show = true;
       });
+      this.show = true;
+
       this.departements = this.us.getIdDepartement();
-    } else if (this.userDetails === "Tech") {
+    } //If status is TECH
+    else if (this.userDetails === "Tech") {
+      this.findHospital();
       this.is
         .getInterventionsBytech(this.us.getFullName())
         .subscribe((data: any[]) => {
           this.interventions = data;
           this.show = true;
         });
-    } else if (this.userDetails === "Admin") {
-      this.hs
-        .findHopital(this.us.getIdHopital())
-        .subscribe((data: Hospital) => {
-          this.projet = data;
-          this.departements = data[0].departements;
+      this.show = true;
+    } //If status is ADMIN
+    else if (this.userDetails === "Admin" || this.userDetails == "Operator") {
+           this.findTechByHospital();
+           this.hs
+             .findHopital(this.us.getIdHopital())
+             .subscribe((data: Hospital) => {
+               this.projet = data;
+               this.departements = data[0].departements;
 
-          this.is.getInterventions().subscribe((data: any[]) => {
-            this.ds
-              .getMaintenanceAndIntervention()
-              .subscribe((maindata: any[]) => {
-                maindata.forEach(element => {
-                  if (element.resultat.length <= 0) {
-                    const inter = {
-                      _id: element.idMaintenance,
-                      day: moment(element.StartTime).format("DD/MM/YYYY"),
-                      departement: "",
-                      description: "",
-                      locality: "",
-                      priority: "Medium",
-                      status: "In process",
-                      tech: "",
-                      type: "Maintenance",
-                      user: ""
-                    };
-                    data.push(inter);
-                  } else {
-                    const inter = {
-                      _id: element.idMaintenance,
-                      day: moment(element.StartTime).format("DD/MM/YYYY"),
-                      departement: element.resultat[0].executor,
-                      description: element.resultat[0].description,
-                      locality: "",
-                      priority: "Medium",
-                      status: "In process",
-                      tech: "",
-                      type: "Maintenance",
-                      user: ""
-                    };
-                    data.push(inter);
-                  }
-                });
-                this.interventions = data;
+               this.is.getInterventions().subscribe((data: any[]) => {
+                 this.ds
+                   .getMaintenanceAndIntervention()
+                   .subscribe((maindata: any[]) => {
+                     maindata.forEach(element => {
+                       if (element.resultat.length <= 0) {
+                         const inter = {
+                           _id: element.idMaintenance,
+                           day: moment(element.StartTime).format("DD/MM/YYYY"),
+                           departement: "",
+                           description: "",
+                           locality: "",
+                           priority: "Medium",
+                           status: "In process",
+                           tech: "",
+                           type: "Maintenance",
+                           user: ""
+                         };
+                         data.push(inter);
+                       } else {
+                         const inter = {
+                           _id: element.idMaintenance,
+                           day: moment(element.StartTime).format("DD/MM/YYYY"),
+                           departement: element.resultat[0].executor,
+                           description: element.resultat[0].description,
+                           locality: "",
+                           priority: "Medium",
+                           status: "In process",
+                           tech: "",
+                           type: "Maintenance",
+                           user: ""
+                         };
+                         data.push(inter);
+                       }
+                     });
+                     this.interventions = data;
+                     if (this.interventions.length > 0) {
+                       this.comptemetier(
+                         this.projet[0].metier,
+                         this.interventions
+                       );
+                     }
 
-                console.log(this.projet, this.departements);
-                if (this.interventions.length > 0) {
-                  this.comptemetier(this.projet[0].metier, this.interventions);
-                }
-
-                // this.interventions.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
-              });
-          });
-        });
-    } else {
-      console.log("super Admin  *******************");
-    }
+                     // this.interventions.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
+                   });
+               });
+             });
+           //If Status is SuperAdmin
+         } else if (this.userDetails === "SuperAdmin") {
+           console.log("super Admin  *******************");
+         } else {
+           console.log("Error return to login");
+         }
   }
 
   /**
@@ -301,20 +295,28 @@ export class InterventionsComponent implements OnInit {
   }
 
   SolutionSave($event) {
+    //Save if Intervention isnot closed but is status Waiting
     if ($event.status == "Waiting") {
       $event.dateWaiting = [];
       $event.dateWaiting.push(moment().format("DD/MM/YYYY"));
       this.ss.postSolutionWaiting($event).subscribe((data: Solution) => {
-        console.log(data);
+        if (data) {
+          this.remplaceIntervention(data, "Waiting");
+        } else {
+          console.log("err Waiting : Waiting", data);
+        }
       });
-      console.log($event);
-    } else if ($event.status = "Done") {
+      //Save if Intervention isclosed
+    } else if (($event.status = "Done")) {
       $event.dateCloture = moment().format("DD/MM/YYYY");
       this.ss.postSolution($event).subscribe((data: Solution) => {
-        console.log(data);
+        if (data) {
+          this.remplaceIntervention(data, "Done");
+        } else {
+          console.log("err Done : done", data);
+        }
       });
     } else {
-      console.log("error go Toast")
       this.showToastError("you cannot use this option");
       this.flagErrorFormTech = true;
     }
@@ -332,7 +334,6 @@ export class InterventionsComponent implements OnInit {
   }
 
   showToast(toast: string) {
-    console.log(toast);
     this.element.title = "<center>Success</center>";
     // this.element.animation.show.effect = 'FlipRightDownIn';
     if (toast == "addNewHopital") {
@@ -342,5 +343,23 @@ export class InterventionsComponent implements OnInit {
 
     this.element.cssClass = "e-toast-success";
     this.element.show({ timeOut: 4000 });
+  }
+  remplaceIntervention(data, status) {
+    let index = _.findIndex(this.interventions, function(o) {
+      return o._id == data.idIntervention;
+    });
+    this.interventions[index].status = status;
+
+    this.calendrierTech.refreshAgenda();
+  }
+  findHospital() {
+    this.hs.findHopital(this.us.getIdHopital()).subscribe((data: Hospital) => {
+      this.projet = data;
+    });
+  }
+  findTechByHospital() {
+    this.us.getUserTech().subscribe((data: User) => {
+      this.techs = data;
+    });
   }
 }

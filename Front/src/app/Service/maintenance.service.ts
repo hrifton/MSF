@@ -7,6 +7,9 @@ import { environment } from "../../environments/environment";
   providedIn: "root"
 })
 export class MaintenanceService {
+  AddMaintenance($event: any) {
+    throw new Error("Method not implemented.");
+  }
   uri = environment.apiBaseUrl + "/maintenance";
   constructor(private http: HttpClient) {}
 
@@ -16,13 +19,7 @@ export class MaintenanceService {
     return this.http.get(`${this.uri}/maintenance`);
   }
   PostNewMaintenance(maintenance: Maintenance) {
-    return this.http.post(`${this.uri}/add`, maintenance).subscribe(
-      data => {
-        // console.log(data);
-      },
-      err => {
-        // console.log('Erro' + err);
-      }
-    );
+    return this.http.post(`${this.uri}/add`, maintenance);
   }
+
 }

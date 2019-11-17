@@ -12,21 +12,15 @@ import { FormsModule } from '@angular/forms';
 
 import {
   ButtonModule,
-  CheckBoxModule,
-  SwitchModule
-} from '@syncfusion/ej2-angular-buttons';
+  CheckBoxModule} from '@syncfusion/ej2-angular-buttons';
 import { DatePickerAllModule } from '@syncfusion/ej2-angular-calendars';
 import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
 import {
   NumericTextBoxAllModule,
-  UploaderModule,ColorPickerModule
+  ColorPickerModule
 } from '@syncfusion/ej2-angular-inputs';
-import { GridAllModule } from '@syncfusion/ej2-angular-grids';
-import { AccordionModule } from '@syncfusion/ej2-angular-navigations';
 import {
-  SplitButtonModule,
-  ProgressButtonModule
-} from '@syncfusion/ej2-angular-splitbuttons';
+  SplitButtonModule} from '@syncfusion/ej2-angular-splitbuttons';
 import { DialogModule } from '@syncfusion/ej2-angular-popups';
 import { ToastModule } from '@syncfusion/ej2-angular-notifications';
 ////
@@ -52,11 +46,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 // Providers
 
-import { HttpModule, JsonpModule } from '@angular/http';
+import { HttpModule } from '@angular/http';
 
 // Component Declaration
 import { AppRoutingModule } from './app-routing.module';
@@ -85,18 +78,18 @@ import { AnalyseModule } from './analyse/analyse.module';
     //HistoricComponent
   ],
   imports: [
-    SwitchModule,
-    ProgressButtonModule,
-    AccordionModule,
-    UploaderModule,
+    //SwitchModule,
+    //ProgressButtonModule,
+    //AccordionModule,
+   // UploaderModule,
     DialogModule,
     CheckBoxModule,
     HttpModule,
     ToastModule,
     FormsModule,
-    FlexLayoutModule,
-    JsonpModule,
-    GridAllModule,
+    //FlexLayoutModule,
+    //JsonpModule,
+    //GridAllModule,
     ButtonModule,
     NumericTextBoxAllModule,
     DropDownListAllModule,

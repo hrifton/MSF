@@ -1,50 +1,5 @@
-<mat-card>
-  <form [formGroup]="userForm" novalidate="novalidate">
-    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
-      <img src="../../assets/img/logo.png" />
-    </div>
-    <mat-card-content>
-      <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
-        <mat-form-field>
-          <mat-label>fullName</mat-label>
-          <input
-            matInput="matInput"
-            type="text"
-            placeholder="fullName"
-            formControlName="fullName"
-            #fullName
-            required
-          />
-        </mat-form-field>
-      </div>
-      <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
-        <mat-form-field>
-          <mat-label>password</mat-label>
-          <input
-            matInput="matInput"
-            type="password"
-            placeholder="password"
-            formControlName="password"
-            #password
-            required
-          />
-        </mat-form-field>
-      </div>
-    </mat-card-content>
-    <mat-card-actions align="center">
-      <button
-        mat-flat-button
-        color="primary"
-        (click)="onLoginSubmit(userForm)"
-        [disabled]="!userForm.valid"
-      >
-        Sign in
-      </button>
-    </mat-card-actions>
-  </form>
-
   <!--TOASTE SUCCESS-->
-  <div class="col-lg-12 control-section toast-default-section">
+  <div *ngIf="showToast" class="col-lg-12 control-section toast-default-section">
     <div class="e-sample-resize-container">
       <ejs-toast
         #defaulttoast
@@ -63,34 +18,40 @@
       </ejs-toast>
     </div>
   </div>
-</mat-card>
 
-<div class="jumbotron">
-  <h1>Angular Graph Tutorial</h1>
-  <p class="lead">
-    This sample app shows how to use the Microsoft Graph API from Angular
-  </p>
-  <div
-    *ngIf="authService.authenticated; then welcomeUser; else signInPrompt"
-  ></div>
-  <ng-template #welcomeUser>
-    <h4>Welcome {{ authService.authenticated }}!</h4>
-    <p>Use the navigation bar at the top of the page to get started.</p>
-  </ng-template>
-  <ng-template #signInPrompt>
-    <a
-      href="javascript:undefined"
-      class="btn btn-primary btn-large"
-      role="button"
-      (click)="onLoginSubmit()"
-      >Click here to sign in</a
-    >
-    <a
-      href="javascript:undefined"
-      class="btn btn-primary btn-large"
-      role="button"
-      (click)="redirect()"
-      >passe in</a
-    >
-  </ng-template>
+<div class="row vertical-center" >
+  <div class="col-4">
+  <div class="e-card" style="max-width:400px">
+  <div class="e-card-content">
+  <form [formGroup]="userForm" novalidate="novalidate">
+    <div fxLayout="column" fxLayoutAlign="center center" >
+      <img src="../../assets/img/logo.png" />
+    </div>
+    <mat-card-content>
+      <div fxLayout="column" fxLayoutAlign="center center" >
+        <mat-form-field>
+          <mat-label>fullName</mat-label>
+          <input matInput="matInput" type="text" placeholder="fullName" formControlName="fullName" #fullName required />
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="center center" >
+        <mat-form-field>
+          <mat-label>password</mat-label>
+          <input matInput="matInput" type="password" placeholder="password" formControlName="password" #password
+            required />
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  <div class="e-card-actions e-card-vertical" >
+    <button  ejs-button cssClass="e-danger mb-3" (click)="onLoginSubmit(userForm)" [disabled]="!userForm.valid">Sign in</button>
+    
+    <button ejs-button cssClass="e-danger" (click)="onLoginSubmit()">Account Msf</button>
+  </div>
+   
+  
+  
+  </form>
+  </div>
+  </div>
+  </div>
 </div>

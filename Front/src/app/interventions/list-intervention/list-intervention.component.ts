@@ -36,6 +36,7 @@ import * as moment from "moment";
 export class ListInterventionComponent implements OnInit {
   @Input() interventions;
   @Input() projet;
+  @Input() departements
   @Input() metier;
   @Input() maintenance;
   @Input() techs;
@@ -77,14 +78,12 @@ export class ListInterventionComponent implements OnInit {
   public shipCountryDistinctData: Object[];
   public submitClicked = false;
   subCat: any;
-  public departements:Departement;
+  public departement:Departement;
   // router: Router;
 
   constructor(private ss: SolutionService, private router: Router) { }
 
   ngOnInit() {
-    console.log(this.interventions,this.projet,this.departements)
-    this.departements=this.projet[0].departements
     this.filterSettings = {
       type: "Menu"
     };
@@ -141,72 +140,72 @@ export class ListInterventionComponent implements OnInit {
         tech: new FormControl(data.tech),
         slug: new FormControl(data.slug)
       });
-    } else if (this.user === "Admin") {
-      console.log("Admin", data.departements[0],this.metier);
-      this.metier = this.projet[0].metier;
+    } else if (this.user === "Admin" || this.user === "Operator") {
+             console.log("Admin", data.departements[0], this.metier);
+             this.metier = this.projet[0].metier;
 
-      /*if (data.metier.length > 0 && data.metier != undefined) {
+             /*if (data.metier.length > 0 && data.metier != undefined) {
         metier = data.metier[0]._id;
       } else {
         metier = "";
       }*/
-      console.log("Metier", this.metier);
-      return new FormGroup({
-        _id: new FormControl(data._id, Validators.required),
-        departement: new FormControl(
-          data.departements[0]._id,
-          Validators.required
-        ),
+             console.log("Metier", this.metier);
+             return new FormGroup({
+               _id: new FormControl(data._id, Validators.required),
+               departement: new FormControl(
+                 data.departements[0]._id,
+                 Validators.required
+               ),
 
-        locality: new FormControl(data.locality ? data.locality : ""),
-        priority: new FormControl(data.priority),
-        description: new FormControl(data.description),
-        status: new FormControl(data.status),
-        type: new FormControl(data.type ? data.type : ""),
-        day: new FormControl(data.day),
-        tech: new FormControl(
-          data.tech ? data.tech : null,
-          Validators.required
-        ),
-        useMat: new FormControl(data.useMat ? data.useMat : null),
-        asset: new FormControl(data.asset ? data.asset : null),
-        slug: new FormControl(data.slug),
-        metier: new FormControl(
-          data.metier ? data.metier : null,
-          Validators.required
-        ),
-        subCat: new FormControl(
-          data.subCat ? data.subCat : null,
-          Validators.required
-        ),
-        solution: new FormControl(data.solution ? data.solution : null)
-      });
-    } else {
-      console.log("else", data);
-      return new FormGroup({
-        _id: new FormControl(data._id, Validators.required),
-        departement: new FormControl(
-          data.departements[0]._id,
-          Validators.required
-        ),
-        locality: new FormControl(data.locality),
-        priority: new FormControl(data.priority),
-        description: new FormControl(data.description),
-        status: new FormControl(data.status),
-        type: new FormControl(data.type),
-        day: new FormControl(data.day),
-        tech: new FormControl(data.tech),
-        useMat: new FormControl(data.useMat),
-        asset: new FormControl(data.asset),
-        slug: new FormControl(data.slug),
-        metier: new FormControl(data.metier[0]._id),
-        subCat: new FormControl(
-          data.subCat ? data.subCat : null,
-          Validators.required
-        ),
-        solution: new FormControl("")
-      });
-    }
+               locality: new FormControl(data.locality ? data.locality : ""),
+               priority: new FormControl(data.priority),
+               description: new FormControl(data.description),
+               status: new FormControl(data.status),
+               type: new FormControl(data.type ? data.type : ""),
+               day: new FormControl(data.day),
+               tech: new FormControl(
+                 data.tech ? data.tech : null,
+                 Validators.required
+               ),
+               useMat: new FormControl(data.useMat ? data.useMat : null),
+               asset: new FormControl(data.asset ? data.asset : null),
+               slug: new FormControl(data.slug),
+               metier: new FormControl(
+                 data.metier ? data.metier : null,
+                 Validators.required
+               ),
+               subCat: new FormControl(
+                 data.subCat ? data.subCat : null,
+                 Validators.required
+               ),
+               solution: new FormControl(data.solution ? data.solution : null)
+             });
+           } else {
+             console.log("else", data);
+             return new FormGroup({
+               _id: new FormControl(data._id, Validators.required),
+               departement: new FormControl(
+                 data.departements[0]._id,
+                 Validators.required
+               ),
+               locality: new FormControl(data.locality),
+               priority: new FormControl(data.priority),
+               description: new FormControl(data.description),
+               status: new FormControl(data.status),
+               type: new FormControl(data.type),
+               day: new FormControl(data.day),
+               tech: new FormControl(data.tech),
+               useMat: new FormControl(data.useMat),
+               asset: new FormControl(data.asset),
+               slug: new FormControl(data.slug),
+               metier: new FormControl(data.metier[0]._id),
+               subCat: new FormControl(
+                 data.subCat ? data.subCat : null,
+                 Validators.required
+               ),
+               solution: new FormControl("")
+             });
+           }
   }
 
   createFormMaintenance(data): FormGroup {
@@ -280,7 +279,8 @@ export class ListInterventionComponent implements OnInit {
         if(!this.angForm.value.dateAssing){
           this.angForm.value.dateAssing= moment().format("DD/MM/YYYY");
         };
-        this.messageEvent.emit(this.angForm.value);
+       
+       this.messageEvent.emit(this.angForm.value);
       } else {
         //retourn message error manque info
         this.showToast();
@@ -320,6 +320,7 @@ export class ListInterventionComponent implements OnInit {
    * refresh tableau liste intervention
    */
   refreshInterventionTable() {
+    console.log(this.interventions)
     this.grid.refresh();
   }
 

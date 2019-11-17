@@ -59,12 +59,17 @@
                       <ng-template #content>
                         <div class="e-card-content">
                           <!-- App-Maintenance -->
-                          <app-maintenance></app-maintenance>
+                          <app-maintenance
+                          [projet]="projet"
+                          [metiers]="metiers"
+                          [listeMaintenanceDefault]="listeMaintenanceDefault"
+                          (AddNewMaintenanceToHospital)="AddNewMaintenanceToHospital($event)"
+                          (saveMaintenance)="addNewMaintenance($event)"></app-maintenance>
                         </div>
                       </ng-template>
                     </e-tabitem>
 
-                    <e-tabitem [header]="headerText[3]">
+                    <e-tabitem *ngIf="role=='SuperAdmin'" [header]="headerText[3]">
                       <ng-template #content>
                         <div class="e-card-content">
                           <!-- App-Metier -->

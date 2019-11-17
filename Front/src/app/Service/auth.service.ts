@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Output, EventEmitter } from "@angular/core";
 import { MsalService } from "@azure/msal-angular";
 import { Client } from "@microsoft/microsoft-graph-client";
 
@@ -7,21 +7,23 @@ import { OAuthSettings } from "../auth/oauth";
 import { User } from "../Class/user";
 import { UserService } from './user.service';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
+  @Output() getLoggedInName: EventEmitter<any> = new EventEmitter();
   public authenticated: boolean;
   public user: User;
-
+  private loggedIn = new BehaviorSubject<boolean>(false);
   constructor(
     private msalService: MsalService,
     private us: UserService,
     private router: Router // private alertsService: AlertsService
   ) {
     if (localStorage.status == undefined) {
-      console.log("status non defini")
+      console.log("status non defini");
       this.authenticated = this.msalService.getUser() != null;
       this.getUser().then(user => {
         this.user = user;
@@ -49,9 +51,12 @@ export class AuthService {
 
   // Sign out
   signOut(): void {
+    localStorage.clear();
     this.msalService.logout();
+    this.loggedIn.next(false);
     this.user = null;
     this.authenticated = false;
+    this.router.navigate(["/login"]);
   }
 
   // Silently request an access token
@@ -97,5 +102,8 @@ export class AuthService {
     // Prefer the mail property, but fall back to userPrincipalName
     user.email = graphUser.mail || graphUser.userPrincipalName;
     return user;
+  }
+  get isLoggedIn() {
+    return this.loggedIn.asObservable();
   }
 }

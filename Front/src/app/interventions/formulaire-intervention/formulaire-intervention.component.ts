@@ -54,7 +54,7 @@ export class FormulaireInterventionComponent implements OnInit {
   }
 
   ngOnInit() {
-
+console.log(this.departements)
   }
 
   showSuccess() {
@@ -65,7 +65,6 @@ export class FormulaireInterventionComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.statusInsertIntervention.currentValue === undefined) {
-
       console.log("indefenid")
     } else {
       if (changes.statusInsertIntervention.currentValue === true) {

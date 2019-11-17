@@ -14,7 +14,7 @@
             <div class="form-row">
               <!--selection projet-->
               <div class="col-xs-12 col-sm-12 col-lg-2 col-md-4">
-                <div *ngIf="projet.length > 1" class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <div *ngIf="data" class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
                   <ejs-dropdownlist id="projet" class="e-float-text" formControlName="projet" [dataSource]="data"
                     [fields]="{ text: 'project', value: '_id' }" placeholder="Projet" popupHeight="200px"
                     (change)="onChange($event)" floatLabelType="Always" #projet></ejs-dropdownlist>
@@ -139,8 +139,9 @@
                 <div *ngIf="data.status == 'User'" class="col-lg-4 col-md-4 col-sm-4">
                   <span>Departement: </span>
                   <div class="e-float-input e-control-wrapper">
-                    <ejs-multiselect id="multiselectelement" [dataSource]="hopital.departements" [fields]="fields"
-                      (filtering)="onFiltering($event)" [mode]="mode" [placeholder]="placeholder"
+                    <ejs-multiselect id="multiselectelement" [dataSource]="hopital.departements"[placeholder]='checkWaterMark' [fields]='checkFields' [mode]='mode'
+                      [popupHeight]='popHeight' [showDropDownIcon]='true' showSelectAll='true'
+                      [filterBarPlaceholder]='filterPlaceholder'
                       (select)="select($event, data)" (removed)="removed($event, data)" [value]="listeDep(data)">
                     </ejs-multiselect>
                   </div>

@@ -24,6 +24,12 @@ var hospitalSchema = new mongoose.Schema({
     {
       type: Object
     }
+  ],
+   maintenance: [
+    {
+      _id: { type: Object },
+      type: Object
+    }
   ]
 });
 

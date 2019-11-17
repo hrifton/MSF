@@ -1,6 +1,10 @@
 export class Maintenance {
-  executor: String;
+  idHospital?:string;
+
+  categorie: String;
+  subCat:String;
   periodicity: String;
-  duration: String;
-  recurrence: String;
+  intervale: Number;
+  name: String;
+  description:String;
 }

@@ -12,13 +12,15 @@ import {
   ToastCloseArgs
 } from "@syncfusion/ej2-angular-notifications";
 import { AuthService } from "../Service/auth.service";
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"]
+  styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
+  showToast: boolean = false;
   constructor(
     public authService: AuthService,
     private fb: FormBuilder,
@@ -34,6 +36,8 @@ export class LoginComponent implements OnInit {
   password: String;
   @ViewChild("defaulttoast")
   public toastObj: ToastComponent;
+  @ViewChild("navBar")
+  public navBar: NavBarComponent;
   @ViewChild("toastBtnShow")
   public btnEleShow: ElementRef;
   public position: Object = { X: "Center" };
@@ -44,7 +48,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
   /**
    * Tentative login
    * si action ok setToken contien
@@ -58,20 +62,20 @@ export class LoginComponent implements OnInit {
     if (form == undefined) {
       if (await this.authService.signIn()) {
         if (this.authService.user.displayName) {
-          console.log(this.authService.user)
+          console.log(this.authService.user);
           if (localStorage.status == "undefined") {
-            let user = await this.us.getUserProfil(localStorage)
-            this.us.getToLocalStorage(user)
+            let user = await this.us.getUserProfil(localStorage);
+            this.us.getToLocalStorage(user);
             if (this.us.getStatus() === "SuperAdmin") {
-              this.router.navigateByUrl("/analyse")
-            }else if (
-                    this.us.getIdDepartement().length == 0 &&
-                    this.us.getStatus() === "User"
-                  ) {
-                    this.router.navigateByUrl("/");
-                  } else {
-                    this.router.navigateByUrl("/interventions");
-                  }
+              this.router.navigateByUrl("/analyse");
+            } else if (
+              this.us.getIdDepartement().length == 0 &&
+              this.us.getStatus() === "User"
+            ) {
+              this.router.navigateByUrl("/");
+            } else {
+              this.router.navigateByUrl("/interventions");
+            }
           }
         }
       }
@@ -80,18 +84,17 @@ export class LoginComponent implements OnInit {
         res => {
           this.us.setToken(res["token"]);
           if (this.us.getStatus() === "SuperAdmin") {
-            this.router.navigateByUrl("/analyse")
+            this.router.navigateByUrl("/analyse");
           } else {
             this.router.navigateByUrl("/interventions");
           }
         },
         err => {
+          this.showToast = true;
           this.toastObj.show();
           this.serverErrorMessages = err.error.message;
         }
       );
     }
-
   }
-
 }

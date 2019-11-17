@@ -1,6 +1,6 @@
 import { Router } from "@angular/router";
 //import { UsersComponent } from './../users/users.component';
-import { Component, OnInit, SimpleChanges } from "@angular/core";
+import { Component, OnInit, SimpleChanges, SimpleChange } from "@angular/core";
 //import { NgModule } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Observable } from "rxjs";
@@ -15,22 +15,22 @@ import { AuthService } from "../Service/auth.service";
   styleUrls: ["./nav-bar.component.css"]
 })
 export class NavBarComponent implements OnInit {
-  public user: any;
+  public user: any ;
   show: boolean;
-
+  opened: boolean = false;
+  showLogOut: boolean = false;
   constructor(
+    private authService: AuthService,
     private router: Router,
     private breakpointObserver: BreakpointObserver,
     private us: UserService,
     private as: AuthService
   ) {
-    this.show = false
-    this.user = localStorage;
-    if (this.user.status == "User" || this.user.status == "Tech") {
-      this.show = false;
-    } else {
-      this.show = true;
-    }
+    
+    this.refreshNav();
+  }
+  changeStatus(status: boolean): void {
+    console.log(status);
   }
   storage: any;
   isHandset$: Observable<boolean> = this.breakpointObserver
@@ -38,19 +38,49 @@ export class NavBarComponent implements OnInit {
     .pipe(map(result => result.matches));
 
   ngOnInit(): void {
-    localStorage = null
-    console.log(localStorage);
-    this.storage = localStorage;
+    this.authService.getLoggedInName.subscribe(status =>
+      this.changeStatus(status)
+    );
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
-
-  }
 
   LogOut() {
-    this.us.deleteToken();
+    localStorage.clear();
     this.as.signOut();
     this.router.navigateByUrl("/");
   }
+ 
+/**
+ *Open/close NavBare
+ *
+ * @memberof NavBarComponent
+ */
+switchOpened() {
+    console.log("switch");
+    this.opened = !this.opened;
+    this.refreshNav();
+  }
+  /**
+   *refresh navBar depending on the status
+   *
+   * @memberof NavBarComponent
+   */
+  refreshNav() {
+     this.user = this.us.getFullName();
+    if (this.us.getStatus() == "User" || this.us.getStatus() == "Tech") {
+      console.log("dans le false");
+      this.show = false;
+    } else if (
+      this.us.getStatus() == "SuperAdmin" ||
+      this.us.getStatus() == "Admin"
+    ) {
+      console.log("dans le true");
+      this.show = true;
+    } else {
+      //TODO a resoudre synchronisation navBar
+      this.show = true;
+    }
+    this.showLogOut=true
+  }
+  
 }
