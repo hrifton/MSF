@@ -32,6 +32,7 @@ import { NavBarComponent } from "../nav-bar/nav-bar.component";
 @Component({
   selector: "app-interventions",
   templateUrl: "./interventions.component.html",
+  styleUrls: ["./interventions.component.css"],
   encapsulation: ViewEncapsulation.None
 })
 export class InterventionsComponent implements OnInit {
@@ -132,8 +133,8 @@ export class InterventionsComponent implements OnInit {
       this.getInterventionByRole();
     });
 
-   //this.interentionList.refreshInterventionTable();
-   //this.AnalyseMixIntermaint.refreshChart();
+    //this.interentionList.refreshInterventionTable();
+    //this.AnalyseMixIntermaint.refreshChart();
   }
 
   ngOnInit() {
@@ -164,15 +165,15 @@ export class InterventionsComponent implements OnInit {
     console.log(metier);
     for (let index = 0; index < metier.length; index++) {
       const name = metier[index].name;
-      const _id=metier[index]._id
-      this.compte[index] = { name,_id, nb: 0 };
+      const _id = metier[index]._id;
+      this.compte[index] = { name, _id, nb: 0 };
     }
     intervention.forEach(element => {
-      console.log(element)
+      console.log(element);
       if (element.status !== "Canceled" && element.status !== "Done") {
         for (let index = 0; index < this.compte.length; index++) {
           if (element.metier != undefined) {
-            console.log(element.metier,this.compte[index])
+            console.log(element.metier, this.compte[index]);
             if (this.compte[index]._id === element.metier) {
               this.compte[index].nb += 1;
               break;
@@ -191,7 +192,6 @@ export class InterventionsComponent implements OnInit {
    * @memberof InterventionsComponent
    */
   getInterventionByRole() {
-   
     if (
       this.us.getIdHopital() === "undefined" ||
       this.us.getIdDepartement() === "undefined"
@@ -201,6 +201,7 @@ export class InterventionsComponent implements OnInit {
         console.log("redirection:", this.us.getIdDepartement());
       }
     } else {
+
     }
     //If status is USER
     if (this.userDetails === "User") {
@@ -224,66 +225,64 @@ export class InterventionsComponent implements OnInit {
       this.show = true;
     } //If status is ADMIN
     else if (this.userDetails === "Admin" || this.userDetails == "Operator") {
-           this.findTechByHospital();
-           this.hs
-             .findHopital(this.us.getIdHopital())
-             .subscribe((data: Hospital) => {
-               this.projet = data;
-               this.departements = data[0].departements;
+      this.findTechByHospital();
+      this.hs
+        .findHopital(this.us.getIdHopital())
+        .subscribe((data: Hospital) => {
+          this.projet = data;
+          this.departements = data[0].departements;
 
-               this.is.getInterventions().subscribe((data: any[]) => {
-                 this.ds
-                   .getMaintenanceAndIntervention()
-                   .subscribe((maindata: any[]) => {
-                     maindata.forEach(element => {
-                       if (element.resultat.length <= 0) {
-                         const inter = {
-                           _id: element.idMaintenance,
-                           day: moment(element.StartTime).format("DD/MM/YYYY"),
-                           departement: "",
-                           description: "",
-                           locality: "",
-                           priority: "Medium",
-                           status: "In process",
-                           tech: "",
-                           type: "Maintenance",
-                           user: ""
-                         };
-                         data.push(inter);
-                       } else {
-                         const inter = {
-                           _id: element.idMaintenance,
-                           day: moment(element.StartTime).format("DD/MM/YYYY"),
-                           departement: element.resultat[0].executor,
-                           description: element.resultat[0].description,
-                           locality: "",
-                           priority: "Medium",
-                           status: "In process",
-                           tech: "",
-                           type: "Maintenance",
-                           user: ""
-                         };
-                         data.push(inter);
-                       }
-                     });
-                     this.interventions = data;
-                     if (this.interventions.length > 0) {
-                       this.comptemetier(
-                         this.projet[0].metier,
-                         this.interventions
-                       );
-                     }
+          this.is.getInterventions().subscribe((data: any[]) => {
+            this.ds
+              .getMaintenanceAndIntervention()
+              .subscribe((maindata: any[]) => {
+                maindata.forEach(element => {
+                  if (element.resultat.length <= 0) {
+                    const inter = {
+                      _id: element.idMaintenance,
+                      day: moment(element.StartTime).format("DD/MM/YYYY"),
+                      departement: "",
+                      description: "",
+                      locality: "",
+                      priority: "Medium",
+                      status: "In process",
+                      tech: "",
+                      type: "Maintenance",
+                      user: ""
+                    };
+                    data.push(inter);
+                  } else {
+                    const inter = {
+                      _id: element.idMaintenance,
+                      day: moment(element.StartTime).format("DD/MM/YYYY"),
+                      departement: element.resultat[0].executor,
+                      description: element.resultat[0].description,
+                      locality: "",
+                      priority: "Medium",
+                      status: "In process",
+                      tech: "",
+                      type: "Maintenance",
+                      user: ""
+                    };
+                    data.push(inter);
+                  }
+                });
+                this.interventions = data;
+                if (this.interventions.length > 0) {
+                  this.comptemetier(this.projet[0].metier, this.interventions);
+                }
 
-                     // this.interventions.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
-                   });
-               });
-             });
-           //If Status is SuperAdmin
-         } else if (this.userDetails === "SuperAdmin") {
-           console.log("super Admin  *******************");
-         } else {
-           console.log("Error return to login");
-         }
+                // this.interventions.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
+              });
+          });
+        });
+        this.show = true;
+      //If Status is SuperAdmin
+    } else if (this.userDetails === "SuperAdmin") {
+      console.log("super Admin  *******************");
+    } else {
+      console.log("Error return to login");
+    }
   }
 
   /**

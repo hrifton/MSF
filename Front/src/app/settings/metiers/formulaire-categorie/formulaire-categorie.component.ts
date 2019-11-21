@@ -33,8 +33,7 @@ export class FormulaireCategorieComponent implements OnInit {
   createFormMetier(data) {
     this.categorieForm = this.fb.group({
       categorie: new FormControl("", [Validators.required]),
-      idMetier: new FormControl(data._id, [Validators.required]),
-      color: new FormControl("", [Validators.required])
+      idMetier: new FormControl(data._id, [Validators.required])
     });
   }
 

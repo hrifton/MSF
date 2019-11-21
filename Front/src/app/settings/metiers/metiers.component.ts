@@ -28,10 +28,10 @@ export class MetiersComponent implements OnInit {
   constructor(private ms: MetierService, private cs: CategorieService) {}
 
   ngOnInit() {
-    if(this.role=="Admin"){
-this.itemToolBar=null
-    }else if(this.role="SuperAdmin"){
-this.itemToolBar = ["Delete"];
+    if (this.role == "Admin") {
+      this.itemToolBar = null;
+    } else if ((this.role = "SuperAdmin")) {
+      this.itemToolBar = ["Delete"];
     }
     this.flag = false;
     this.ms.getMetiers().subscribe((data: Metier) => {
@@ -59,10 +59,15 @@ this.itemToolBar = ["Delete"];
   }
 
   deleteMetier(data: Metier) {
-    console.log("data to MetierService for delete : ", data);
+    console.log("data to MetierService for delete : ", {params:data});
   }
   selectMetier(data: Metier) {
     this.metierSelect = null;
     this.metierSelect = data;
   }
+  delSubCatStandar($event){
+   this.cs.delSubCat($event).subscribe((data:any)=>{
+     console.log(data)
+   })
+  };
 }

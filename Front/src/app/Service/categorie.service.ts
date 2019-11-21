@@ -6,7 +6,7 @@ import { environment } from "../../environments/environment";
   providedIn: "root"
 })
 export class CategorieService {
-  uri = environment.apiBaseUrl+'/categorie';
+  uri = environment.apiBaseUrl + "/categorie";
 
   constructor(private http: HttpClient) {}
 
@@ -19,5 +19,9 @@ export class CategorieService {
   AddCategorie(categorie: Categorie) {
     console.log(" service categorie : ", categorie);
     return this.http.post(`${this.uri}/add`, categorie);
+  }
+  delSubCat(data: any) {
+    console.log(data)
+   return this.http.delete(`${this.uri}/del`, {params:data});
   }
 }

@@ -109,7 +109,7 @@
   >
     <div class="row">
       <app-calendrier-tech
-        *ngIf="interventions"
+        *ngIf="interventions.length > 0"
         [interventions]="interventions"
         [maintenance]="maintenance"
         (SolutionSave)="SolutionSave($event)"
@@ -118,8 +118,15 @@
   </ng-template>
 </div>
 <ejs-toast #element> </ejs-toast>
-<div class="col-1">
-  <div *ngIf="!show" class=" row justify-content-center   mt-5 mb-5 ">
-    <mat-spinner></mat-spinner>
+
+<div *ngIf="!show" class="row vertical-center">
+  <div class="col-4">
+    <div class="e-card" style="max-width:400px">
+      <div class="e-card-content">
+      <div class="e-card-actions e-card-vertical">
+      <mat-spinner class="center"></mat-spinner>
+      </div>
+      </div>
+    </div>
   </div>
 </div>

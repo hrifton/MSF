@@ -12,6 +12,9 @@ import { HospitalComponent } from "./hospital/hospital.component";
 import { FormHopitalComponent } from "./hospital/form-hopital/form-hopital.component";
 import { MaintenanceService } from "../Service/maintenance.service";
 import { Maintenance } from "../Class/Maintenance";
+import { MaintenanceComponent } from "./maintenance/maintenance.component";
+
+import * as _ from "lodash";
 
 @Component({
   selector: "app-settings",
@@ -27,6 +30,8 @@ export class SettingsComponent implements OnInit {
   departements: Departement;
   flagAddListMetier: boolean;
   lastMetier: Hospital;
+  @ViewChild(MaintenanceComponent)
+  maintenanceComponent: MaintenanceComponent;
   @ViewChild(HospitalComponent)
   hospitalComponent: HospitalComponent;
   flagTosteAddHostpital: boolean;
@@ -51,7 +56,6 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     this.AllToastFalse();
     this.role = this.us.getStatus();
-    console.log(this.role);
     this.checkStatut(this.role);
     this.ds.getDepartements().subscribe((data: Departement) => {
       this.departements = data;
@@ -60,11 +64,6 @@ export class SettingsComponent implements OnInit {
       console.log(data);
       this.metiers = data;
     });
-  }
-
-  AllToastFalse() {
-    this.flagAddListMetier = false;
-    this.flagTosteAddHostpital = false;
   }
 
   //#region Initialisation Function
@@ -80,14 +79,14 @@ export class SettingsComponent implements OnInit {
    */
   checkStatut(statut) {
     if (statut !== "SuperAdmin") {
-     
+      this.getAllMaintenance();
       this.hs
         .findHopital(this.us.getIdHopital())
         .subscribe((data: Hospital) => {
           this.projet = data;
         });
     } else {
-       this.getAllMaintenance();
+      this.getAllMaintenance();
       this.hs.getHospital().subscribe((data: Hospital[]) => {
         this.projet = data;
       });
@@ -124,6 +123,7 @@ export class SettingsComponent implements OnInit {
     });
   }
   addDepToHopital($event) {
+    console.log($event, 'Setting')
     this.hs.addDepToHop($event).subscribe((data: Hospital) => {
       console.log(data);
     });
@@ -157,13 +157,19 @@ export class SettingsComponent implements OnInit {
   //#region Maintenance
   AddNewMaintenanceToHospital($event) {
     this.hs.AddMaintenanceToHosptial($event).subscribe((data: any) => {
-      console.log(data);
+      this.projet[0].maintenance.unshift(data);
+      this.maintenanceComponent.refreshGrid();
     });
   }
   addNewMaintenance($event) {
     this.MaintenanceService.PostNewMaintenance($event).subscribe(
       (data: any) => {
-        console.log(data);
+        this.listeMaintenanceDefault = _.concat(
+          data,
+          this.listeMaintenanceDefault
+        );
+        console.log(this.listeMaintenanceDefault)
+        this.maintenanceComponent.refreshGrid(this.listeMaintenanceDefault);
       }
     );
   }
@@ -234,6 +240,10 @@ export class SettingsComponent implements OnInit {
 
     this.element.cssClass = "e-toast-danger";
     this.element.show({ timeOut: 4000 });
+  }
+  AllToastFalse() {
+    this.flagAddListMetier = false;
+    this.flagTosteAddHostpital = false;
   }
   //#endregion
 }

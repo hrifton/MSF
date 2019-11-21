@@ -129,9 +129,12 @@
                   </div>
                   <div class="col-xs-6 col-sm-6 col-lg-2 col-md-4">
                     <div *ngIf="end.value==='Until'">
-                      <ejs-datepicker format='dd-MM-yyyy ' formControlName="until" placeholder="Until"
-                        [min]='minDate' floatLabelType="Always" #until>
-                      </ejs-datepicker>
+                    <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil" [min]='minDate' placeholder="Select date to start"
+                      floatLabelType='Auto' #until>
+                    </ejs-datepicker>
+                    <ejs-datepicker format='dd-MM-yyyy' formControlName="endUntil" [min]='maintenanceForm.value.Startuntil'
+                      placeholder="Select date to finish" floatLabelType='Auto' #until>
+                    </ejs-datepicker>
                     </div>
 
                     <div *ngIf="end.value==='Count'">
@@ -173,9 +176,12 @@
 
                   <div class="col-xs-6 col-sm-6 col-lg-2 col-md-4">
                     <div *ngIf="end.value==='Until'">
-                      <ejs-datepicker format='dd-MM-yyyy' formControlName="until" placeholder="Until" [min]='minDate'
-                        floatLabelType="Always" #until>
-                      </ejs-datepicker>
+                    <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil" [min]='minDate' placeholder="Select date to start"
+                      floatLabelType='Auto' #until>
+                    </ejs-datepicker>
+                    <ejs-datepicker format='dd-MM-yyyy' formControlName="endUntil" [min]='maintenanceForm.startUntil'
+                      placeholder="Select date to finish" floatLabelType='Auto' #until>
+                    </ejs-datepicker>
                     </div>
 
                     <div *ngIf="end.value==='Count'">
@@ -234,9 +240,12 @@
                     </div>
                     <div class="col-xs-6 col-sm-6 col-lg-2 col-md-4">
                       <div *ngIf="end.value==='Until'">
-                        <ejs-datepicker format='dd-MM-yyyy' formControlName="until" placeholder="Until" [min]='minDate'
-                          floatLabelType="Always" #until>
-                        </ejs-datepicker>
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil" [min]='minDate' placeholder="Select date to start"
+                        floatLabelType='Auto' #until>
+                      </ejs-datepicker>
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="endUntil" [min]='maintenanceForm.value.Startuntil'
+                        placeholder="Select date to finish" floatLabelType='Auto' #until>
+                      </ejs-datepicker>
                       </div>
                     
                       <div *ngIf="end.value==='Count'">
@@ -278,8 +287,12 @@
 
                   <div class="col-xs-6 col-sm-6 col-lg-4 col-md-4 mt-4">
                     <div *ngIf="end.value==='Until'">
-                      <ejs-datepicker format='dd-MM-yyyy' formControlName="until" [min]='minDate' #until>
-                      </ejs-datepicker>
+                        <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil" [min]='minDate' placeholder="Select date to start"
+                          floatLabelType='Auto' #until>
+                        </ejs-datepicker>
+                        <ejs-datepicker format='dd-MM-yyyy' formControlName="endUntil" [min]='startUntil'
+                          placeholder="Select date to finish" floatLabelType='Auto' #until>
+                        </ejs-datepicker>
                     </div>
 
                     <div *ngIf="end.value==='Count'">
@@ -371,14 +384,15 @@
     <div class="control-section">
       <!--<ejs-grid [dataSource]='listeMaintenance'  [allowSelection]="true"            
                     [selectionSettings]="selectionOptions" (rowSelected)="rowSelected($event)">-->
-                    <ejs-grid [dataSource]='listeMaintenanceDefault' allowPaging='true' [pageSettings]='pageOptions' allowSorting='true'
+                    <ejs-grid #grid [dataSource]='data' allowPaging='true' [pageSettings]='pageOptions' allowSorting='true'
                       allowGrouping='true' (rowSelected)="rowSelected($event)">
         <e-columns>
+          <e-column field='projet' headerText='From' width='150'></e-column>
           <e-column field='name' headerText='Maintenance' width='150'></e-column>
-          <e-column field='nameCat' headerText='Categprie' width='130' format="yMd" textAlign='Right'></e-column>
+          <e-column field='nameCat' headerText='Categorie' width='130' format="yMd" textAlign='Right'></e-column>
           <e-column field='nameSubCat' headerText='Sub/Cat' width='120' format='C2' textAlign='Right'></e-column>
-          <e-column field='periodicity' headerText='periodicity' width='130' format="yMd" textAlign='Right'></e-column>
-          <e-column field='interval' headerText='interval' width='150'></e-column>
+          <e-column field='periodicity' headerText='Periodicity' width='130' format="yMd" textAlign='Right'></e-column>
+          <e-column field='interval' headerText='Interval' width='150'></e-column>
         </e-columns>
       </ejs-grid>
     </div>

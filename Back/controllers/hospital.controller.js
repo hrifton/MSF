@@ -3,6 +3,7 @@ require("../models/hospital.model");
 require("../models/metier.model");
 require("../models/maintenance.model");
 const { ObjectId } = require("mongodb");
+const _ = require("lodash");
 mongoose.Promise - global.Promise;
 const Hospital = mongoose.model("Hospital");
 const Maintenance = mongoose.model("Maintenance");
@@ -17,7 +18,7 @@ module.exports.getAll = (req, res) => {
     }
   });
 };
-//Add hostpial
+//Add Hospital
 module.exports.add = (req, res, next) => {
   var hospital = new Hospital();
   (hospital.maintenance = req.body.maintenance),
@@ -43,9 +44,20 @@ module.exports.add = (req, res, next) => {
       console.log(error);
     });
 };
+//Delete a Hospital
+module.exports.delHopital = (req, res, next) => {
+  console.log(req.idHopital)
+  Hospital.findOneAndDelete(req.idHopital, (err, data) => {
+    if (!err) {
+      console.log(data);
+    } else {
+      console.log(err);
+    }
+  });
+};
+
 //Find a hospital with ID
 module.exports.findAHospital = (req, res) => {
-  
   Hospital.find({ _id: ObjectId(req) }, (err, doc) => {
     if (!err) {
       res.send(doc);
@@ -55,19 +67,6 @@ module.exports.findAHospital = (req, res) => {
       );
     }
   });
-
-  /*Hospital.findById(req, (err, doc) => {
-    if (!err) {
-      res.send(doc);
-    } else {
-      console.log(
-        "Error in Retriving Hopital:" + JSON.stringify(err, undefined, 2)
-      );
-    }
-  });
-  
-  
- */
 };
 //add metier to hospital
 module.exports.addMetier = (req, res, next) => {
@@ -111,7 +110,7 @@ module.exports.rmSubMetier = (req, res, next) => {
   console.log(req);
   Hospital.updateOne(
     { _id: ObjectId(req.idHopital), "metier._id": req.idMetier },
-    { $pull: { "metier.$.categorie": { id: req._id } } },
+    { $pull: { "metier.$.categorie": { _id: req._id } } },
     (err, doc) => {
       if (!err) {
         res.status("200").send(doc);
@@ -181,48 +180,48 @@ module.exports.delDepToHop = (req, res, next) => {
     }
   );
 };
-module.exports.addMaintenance=(req,res,next)=>{
-let maintenance=setMaintenance(req);
-console.log(maintenance)
- Hospital.updateOne(
-   { _id: ObjectId(req.idHospial) },
-   { $addToSet: {  maintenance  } },
-   (err, doc) => {
-     if (!err) {
-       res.status(200).send(doc);
-     } else {
-       res.status(400).send(err);
-     }
-   }
- );
-}
-//get Number  hospital in a country 
+//Add New Maintenance
+module.exports.addMaintenance = (req, res, next) => {
+  let maintenance = setMaintenance(req);
+  Hospital.findOneAndUpdate(
+    { _id: ObjectId(req.idHospial) },
+    { $addToSet: { maintenance } },
+    { new: true },
+    (err, doc) => {
+      if (!err) {
+        res.status(200).send(_.last(doc.maintenance));
+      } else {
+        res.status(400).send(err);
+      }
+    }
+  );
+};
+//get Number  hospital in a country
 function getNbHospitalByCountry(country) {
   return Hospital.countDocuments({ country: country });
 }
-function setMaintenance(data){
-let maintenance={
-  _id:ObjectId(),
-      name:data.name,
-      StartTime:data.StartTime,
-      categorie:data.categorie,
-      choix:data.choix,
-      codeBarre:data.codeBarre,
-      count:data.count,
-      current:data.current,
-      date:data.date,
-      day:data.day,
-      dayOcc:data.dayOcc,
-      description:data.description,
-      end:data.end,
-      interval:data.interval,
-      listDay:data.listDay,
-      month:data.month,
-      periodicity:data.periodicity,
-      recurrence:data.recurrence,
-      subCat:data.subCat,
-      until:data.until
-    }
-   return maintenance;
+function setMaintenance(data) {
+  let maintenance = {
+    _id: ObjectId(),
+    name: data.name,
+    startUntil: data.startUntil,
+    endUntil: data.endUntil,
+    categorie: data.categorie,
+    choix: data.choix,
+    codeBarre: data.codeBarre,
+    count: data.count,
+    current: data.current,
+    date: data.date,
+    day: data.day,
+    dayOcc: data.dayOcc,
+    description: data.description,
+    end: data.end,
+    interval: data.interval,
+    listDay: data.listDay,
+    month: data.month,
+    periodicity: data.periodicity,
+    recurrence: data.recurrence,
+    subCat: data.subCat
+  };
+  return maintenance;
 }
-

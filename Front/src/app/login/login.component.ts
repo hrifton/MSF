@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
   @ViewChild("toastBtnShow")
   public btnEleShow: ElementRef;
   public position: Object = { X: "Center" };
+  public show: boolean=false
   createForm() {
     this.userForm = this.fb.group({
       fullName: new FormControl("", [Validators.required]),
@@ -48,7 +49,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.show=this.authService.authenticated
+  }
   /**
    * Tentative login
    * si action ok setToken contien
@@ -62,21 +65,25 @@ export class LoginComponent implements OnInit {
     if (form == undefined) {
       if (await this.authService.signIn()) {
         if (this.authService.user.displayName) {
-          console.log(this.authService.user);
+      
           if (localStorage.status == "undefined") {
+            console.log("user Undefined")
             let user = await this.us.getUserProfil(localStorage);
             this.us.getToLocalStorage(user);
-            if (this.us.getStatus() === "SuperAdmin") {
-              this.router.navigateByUrl("/analyse");
-            } else if (
-              this.us.getIdDepartement().length == 0 &&
-              this.us.getStatus() === "User"
-            ) {
-              this.router.navigateByUrl("/");
-            } else {
-              this.router.navigateByUrl("/interventions");
-            }
+            this.router.navigateByUrl("/interventions");
           }
+           if (this.us.getStatus() === "SuperAdmin") {
+             console.log("user SuperAdmin");
+             this.router.navigateByUrl("/analyse");
+           } else if (
+             this.us.getIdDepartement().length == 0 &&
+             this.us.getStatus() === "User"
+           ) {
+             console.log("redirection page Pas de Départemente contact admin")
+             this.router.navigateByUrl("/");
+           } else {
+             this.router.navigateByUrl("/interventions");
+           }
         }
       }
     } else {

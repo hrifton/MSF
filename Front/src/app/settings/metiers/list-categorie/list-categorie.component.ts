@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, SimpleChanges } from "@angular/core";
+import { Component, OnInit, ViewChild, Input, SimpleChanges, Output, EventEmitter } from "@angular/core";
 import {
   FilterService,
   GridComponent,
@@ -19,6 +19,8 @@ import { Metier } from "src/app/Class/Metier";
 export class ListCategorieComponent implements OnInit {
   @Input() metierSelect: any;
   @Input() itemToolBar: any;
+  @Output() delSubCatStandar = new EventEmitter<any>();
+  
   constructor() {}
 
   @ViewChild("grid")
@@ -52,6 +54,16 @@ export class ListCategorieComponent implements OnInit {
     console.log(changes);
     if (changes.metierSelect.firstChange === false) {
       this.data = changes.metierSelect.currentValue.categorie;
+    }
+  }
+
+  actionBegin(args: any) {
+    if (args.requestType == "delete") {
+      let subCatDel = {
+        idSubCat: args.data[0]._id,
+        idCat: this.metierSelect._id
+      };
+      this.delSubCatStandar.emit(subCatDel);
     }
   }
 }

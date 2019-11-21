@@ -106,6 +106,7 @@ export class CalendrierTechComponent implements OnInit {
     this.interventions.forEach(element => {
       if (element.status != "Done") {
         console.log(element.status);
+        console.log(element)
         element.StartTime = this.formatdate(element.dateAssing);
         element.EndTime = element.StartTime;
         element.Subject = element.description;

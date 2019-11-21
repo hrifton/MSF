@@ -5,6 +5,9 @@ import { MaintenanceService } from "../Service/maintenance.service";
 import { Maintenance } from "../Class/Maintenance";
 import { DateMaintenance } from "../Class/DateMaintenance";
 import { CalendrierComponent } from "./calendrier/calendrier.component";
+import { UserService } from "../Service/user.service";
+import { HopitalService } from "../Service/hopital.service";
+import { Hospital } from "../Class/Hospital";
 //#endregion
 
 @Component({
@@ -30,6 +33,7 @@ export class MaintenancesComponent implements OnInit {
 
   @ViewChild(CalendrierComponent)
   calendrier: CalendrierComponent;
+  projet: Hospital;
   /**
    * @param ms
    * @param dms
@@ -37,23 +41,30 @@ export class MaintenancesComponent implements OnInit {
    */
   constructor(
     private ms: MaintenanceService,
-    private dms: DateMaintenanceService
+    private dms: DateMaintenanceService,
+    private us: UserService,
+    private hs: HopitalService
   ) {
     //initialiation variable
+    
     this.maintenance = [];
     this.datemaitenance = [];
     // recuperation date de maintenance
+    if (this.us.getStatus() == "Admin") {
+      this.hs.findHopital(this.us.getIdHopital()).subscribe((data: Hospital) => {
+        this.projet = data;
+        this.maintenance=this.projet[0].maintenance
+      });
+    }// recuperation des maintenance planifiable
     this.dms.getDateMaintenance().subscribe((data: DateMaintenance[]) => {
       this.datemaitenance = data;
     });
-    // recuperation des maintenance planifiable
-    this.ms.getMaintenance().subscribe((data: Maintenance[]) => {
-      this.maintenance = data;
-    });
+    
+  
   }
   // TODO Hicham multi requet
   saveMaintenance($event) {
-    console.log($event)
+    console.log($event);
     this.dms.postDateMaintenance($event);
     this.datemaitenance.push($event);
     this.calendrier.refreshAgenda();
@@ -65,5 +76,5 @@ export class MaintenancesComponent implements OnInit {
     // fonction du component enfant pour refresh le calendrier
     this.calendrier.refreshAgenda();
   }
-  ngOnInit() { }
+  ngOnInit() {}
 }

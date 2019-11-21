@@ -19,6 +19,7 @@ export class NavBarComponent implements OnInit {
   show: boolean;
   opened: boolean = false;
   showLogOut: boolean = false;
+  showMenu: boolean;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -26,7 +27,7 @@ export class NavBarComponent implements OnInit {
     private us: UserService,
     private as: AuthService
   ) {
-    
+    this.show = false;
     this.refreshNav();
   }
   changeStatus(status: boolean): void {
@@ -38,9 +39,15 @@ export class NavBarComponent implements OnInit {
     .pipe(map(result => result.matches));
 
   ngOnInit(): void {
+    if(this.us.getStatus()==null){
+      this.showMenu=false
+    }else{
+      this.showMenu=true
+    }
     this.authService.getLoggedInName.subscribe(status =>
       this.changeStatus(status)
     );
+   
   }
 
 

@@ -22,13 +22,14 @@
       *ngIf="metiers"
       [metiers]="metiers"
       (deleteMetier)="deleteMetier($event)"
-      (messageEvent)="selectMetier($event)"itemToolBar
+      (messageEvent)="selectMetier($event)"
       [itemToolBar]="itemToolBar"
     ></app-list-metiers>
   </div>
   <div class="col-4">
     <app-list-categorie
       *ngIf="metierSelect"
+      (delSubCatStandar)="delSubCatStandar($event)"
       [metierSelect]="metierSelect"
       (messageEvent)="saveCategorie($event)"
       [itemToolBar]="itemToolBar"

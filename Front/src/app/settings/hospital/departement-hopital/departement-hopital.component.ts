@@ -1,5 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import Departement from 'src/app/Class/Departement';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges
+} from "@angular/core";
+import Departement from "src/app/Class/Departement";
 
 import * as _ from "lodash";
 @Component({
@@ -28,9 +35,12 @@ export class DepartementHopitalComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.srcData = this.departements;
     this.destData = this.projet[0].departements;
-    this.filtreDepartement();
+
+    this.srcData = this.filtreDepartement(
+      this.departements.slice(),
+      this.destData
+    );
     this.pageOptions = { pageCount: 2 };
     this.selectionOptions = { type: "Multiple" };
     this.srcDropOptions = { targetID: "DestGrid" };
@@ -38,14 +48,23 @@ export class DepartementHopitalComponent implements OnInit {
     this.initialPage = { pageSizes: true, pageCount: 1 };
     this.toolbar = ["Search"];
   }
-  filtreDepartement() {
-    console.log("Filtre");
-    this.destData.forEach(element => {
-      const index = _.findIndex(this.srcData, function(o) {
+
+  /**
+   * compare listeDepartement with ListeDepInToHospital and remove double to listeDepartement
+   *
+   * @param {*} listDepartement
+   * @param {*} listDepInToHospital
+   * @returns listDepartement
+   * @memberof DepartementHopitalComponent
+   */
+  filtreDepartement(listDepartement, listDepInToHospital) {
+    listDepInToHospital.forEach(element => {
+      const index = _.findIndex(listDepartement, function(o) {
         return o._id == element._id;
       });
-      this.srcData.splice(index, 1);
+      listDepartement.splice(index, 1);
     });
+    return listDepartement;
   }
 
   rowDragStart(args: any) {
@@ -58,14 +77,28 @@ export class DepartementHopitalComponent implements OnInit {
   }
 
   actionBegin(args: any) {
-    if (this.flag) {
-      console.log(this.depAction);
+      if (this.flag) {
       this.addDep.emit(this.depAction);
-    } else {
+    } else if(this.flagRm) {
       //delete departement in to hospital
       this.delDep.emit(this.depAction);
     }
     this.flagRm = false;
     this.flag = false;
+  }
+  /**
+   *Execute if select Hospital in Liste-Hostpital
+   *
+   * @param {SimpleChanges} changes
+   * @memberof DepartementHopitalComponent
+   */
+  ngOnChanges(changes: SimpleChanges) {
+    if (typeof changes.projet.previousValue != "undefined") {
+      this.destData = changes.projet.currentValue.departements;
+      this.srcData = this.filtreDepartement(
+        this.departements.slice(),
+        changes.projet.currentValue.departements
+      );
+    }
   }
 }

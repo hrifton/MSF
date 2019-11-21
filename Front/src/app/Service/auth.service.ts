@@ -17,6 +17,7 @@ export class AuthService {
   public authenticated: boolean;
   public user: User;
   private loggedIn = new BehaviorSubject<boolean>(false);
+  loader: boolean;
   constructor(
     private msalService: MsalService,
     private us: UserService,
@@ -40,7 +41,7 @@ export class AuthService {
         console.log("error");
         console.log("Login failed", JSON.stringify(reason, null, 2));
       });
-    console.log(result);
+        this.loader=true
     if (result) {
       this.authenticated = true;
       this.user = await this.getUser();
@@ -66,6 +67,7 @@ export class AuthService {
       .catch(reason => {
         console.log("Get token failed", JSON.stringify(reason, null, 2));
       });
+
     console.log(result);
 
     return result;
@@ -105,5 +107,9 @@ export class AuthService {
   }
   get isLoggedIn() {
     return this.loggedIn.asObservable();
+  }
+
+  getLoader(){
+   return this.loader
   }
 }

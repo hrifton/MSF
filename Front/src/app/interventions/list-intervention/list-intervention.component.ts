@@ -320,7 +320,6 @@ export class ListInterventionComponent implements OnInit {
    * refresh tableau liste intervention
    */
   refreshInterventionTable() {
-    console.log(this.interventions)
     this.grid.refresh();
   }
 

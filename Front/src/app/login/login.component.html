@@ -23,18 +23,18 @@
   <div class="col-4">
   <div class="e-card" style="max-width:400px">
   <div class="e-card-content">
-  <form [formGroup]="userForm" novalidate="novalidate">
-    <div fxLayout="column" fxLayoutAlign="center center" >
+  <form *ngIf="!show" [formGroup]="userForm" novalidate="novalidate">
+    <div class="e-card-vertical" >
       <img src="../../assets/img/logo.png" />
     </div>
     <mat-card-content>
-      <div fxLayout="column" fxLayoutAlign="center center" >
+      <div class="e-card-actions e-card-vertical" >
         <mat-form-field>
           <mat-label>fullName</mat-label>
           <input matInput="matInput" type="text" placeholder="fullName" formControlName="fullName" #fullName required />
         </mat-form-field>
       </div>
-      <div fxLayout="column" fxLayoutAlign="center center" >
+      <div class="e-card-actions e-card-vertical" >
         <mat-form-field>
           <mat-label>password</mat-label>
           <input matInput="matInput" type="password" placeholder="password" formControlName="password" #password
@@ -51,6 +51,8 @@
   
   
   </form>
+            <mat-spinner  *ngIf="show" class="center"></mat-spinner>
+         
   </div>
   </div>
   </div>

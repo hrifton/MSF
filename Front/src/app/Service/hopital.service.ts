@@ -48,6 +48,12 @@ export class HopitalService {
     const obj = hospital;
     return await this.http.post(`${this.uri}/add`, obj).toPromise();
   }
+
+  delHopital(data: any) {
+    console.log(data)
+  return this.http.delete(`${this.uri}/delHopital/${data}`);
+  }
+
   addDepToHop(data: any) {
     data[0].idHopital = data.idHopital;
     return this.http.post(`${this.uri}/addDep`, data);
@@ -60,24 +66,25 @@ export class HopitalService {
   }
   //#endregion
   //#region maintenance
-/**
- *add Maintenance in a Hosptial
- *
- * @param {*} $event
- * @returns
- * @memberof HopitalService
- */
-AddMaintenanceToHosptial($event: any) {
+  /**
+   *add Maintenance in a Hosptial
+   *
+   * @param {*} $event
+   * @returns
+   * @memberof HopitalService
+   */
+  AddMaintenanceToHosptial($event: any) {
     $event.idHospial = this.us.getIdHopital();
+    console.log($event);
     return this.http.post(`${this.uri}/addmaintenance`, $event);
   }
-/**
- *Add Maintenance Default
- *
- * @param {*} $event
- * @memberof HopitalService
- */
-AddMaintenance($event: any) {
+  /**
+   *Add Maintenance Default
+   *
+   * @param {*} $event
+   * @memberof HopitalService
+   */
+  AddMaintenance($event: any) {
     return this.http.post(`${this.uri}/newmaintenance`, $event);
   }
   //#endregion

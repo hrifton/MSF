@@ -20,6 +20,7 @@
               [filterSettings]="filterSettings"
               [editSettings]="editOptions"
               [allowSorting]="true"
+              (actionBegin)="actionBegin($event)"
               [toolbar]="toolbarItems"
             >
               <e-columns>

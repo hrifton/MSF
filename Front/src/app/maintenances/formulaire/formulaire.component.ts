@@ -19,6 +19,7 @@ import * as moment from "moment";
 import { Maintenance } from "src/app/Class/Maintenance";
 import { MaintenanceService } from "src/app/Service/maintenance.service";
 import { MatNativeDateModule } from "@angular/material";
+import { Hospital } from "src/app/Class/Hospital";
 //#endregion
 
 // var momentDay = require('moment-weekdaysin');
@@ -29,19 +30,19 @@ import { MatNativeDateModule } from "@angular/material";
   styleUrls: ["./formulaire.component.css"]
 })
 export class FormulaireComponent {
+  data: any;
   constructor(private fb: FormBuilder, private ms: MaintenanceService) {
     this.createForm();
   }
   //#region Declaration Variable
 
   periode: any;
-  @Input() maintenances: Maintenance[];
+  @Input() maintenance: any;
   @Input() lrepeat: any;
   @Input() lEnd: any;
   @Output() messageEvent = new EventEmitter<any>();
-
   maintenanceForm: FormGroup;
-
+  minDate=new Date();
   // hasUnitNumber = false;
 
   @ViewChild("checkbox")
@@ -92,15 +93,49 @@ export class FormulaireComponent {
   public popHeight = "350px";
   //#endregion
 
-  createForm() {
+  createForm(data?) {
+    if (data) {
+      console.log(data);
+      this.maintenanceForm = this.fb.group({
+        name: new FormControl(data.name ? data.name : "", [
+          Validators.required
+        ]),
+        categorie: new FormControl(data.categorie, [Validators.required]),
+        subCat: new FormControl(data.subCat ? data.subCat : "", [
+          Validators.required
+        ]),
+        periodicity: new FormControl(data.periodicity ? data.periodicity : "", [
+          Validators.required
+        ]),
+        description: new FormControl(data.description ? data.description : "", [
+          Validators.required
+        ]),
+        choix: new FormControl(data.choix ? data.choix : ""),
+        interval: new FormControl(data.interval ? data.interval : ""),
+        recurrence: new FormControl(data.recurrence ? data.recurrence : ""),
+        date: new FormControl(data.date ? data.date : ""),
+        StartTime: new FormControl(data.StartTime ? data.StartTime : ""),
+        count: new FormControl(data.count ? data.count : ""),
+        until: new FormControl(data.until ? data.until : ""),
+        end: new FormControl(data.end ? data.end : ""),
+        codeBarre: new FormControl(data.codeBarre ? data.codeBarre : ""),
+        listDay: new FormControl(data.listDay ? data.listDay : ""),
+        dayOcc: new FormControl(data.dayOcc ? data.dayOcc : ""),
+        current: new FormControl(data.current ? data.current : ""),
+        day: new FormControl(data.day ? data.day : ""),
+        month: new FormControl(data.month ? data.month : "")
+      });
+    }
     this.maintenanceForm = this.fb.group({
-      maintenance: new FormControl("", [Validators.required]),
-      executor: new FormControl("", [Validators.required]),
+      name: new FormControl("", [Validators.required]),
+      categorie: new FormControl("", [Validators.required]),
+      subCat: new FormControl("", [Validators.required]),
+      interval: new FormControl("", [Validators.required]),
       periodicity: new FormControl("", [Validators.required]),
-      duration: new FormControl("", [Validators.required]),
+      end: new FormControl("", [Validators.required]),
       recurrence: new FormControl("", [Validators.required]),
       description: new FormControl("", [Validators.required]),
-      date: new FormControl("", [Validators.required]),
+      listDay: new FormControl("", [Validators.required]),
       StartTime: new FormControl("", [Validators.required]),
       count: new FormControl(""),
       until: new FormControl(""),
@@ -110,15 +145,17 @@ export class FormulaireComponent {
 
   public onChange(args: any): void {
     // TODO Hicham trouver une solution
-    if (args.itemData.maintenance != undefined) {
+
+    if (args.itemData != undefined) {
       this.onSelection(args.itemData);
     }
-    this.mulObj.showSelectAll = this.checkboxObj.checked;
+    //this.mulObj.showSelectAll = this.checkboxObj.checked;
   }
 
   ngOnInit() {
+    this.createForm();
+    this.data = this.maintenance;
     const recurrObject: RecurrenceEditor = new RecurrenceEditor({});
-
     this.mode = "CheckBox";
     this.filterPlaceholder = "Select Day(s)";
   }
@@ -127,26 +164,27 @@ export class FormulaireComponent {
    * Value est la maintenance qui auto-completera le formulaire avec ces valeurs par defaut
    */
   onSelection(value) {
-    this.periode = value.periodicity;
+    // don't work with function ??  this.createForm(value);
+    //this.periode = value.periodicity;
+    console.log(value);
     this.maintenanceForm = this.fb.group({
       idMaintnance: new FormControl(value._id, [Validators.required]),
-      maintenance: new FormControl(value.maintenance, [Validators.required]),
-      executor: new FormControl(value.executor, [Validators.required]),
-      periodicity: new FormControl("", [Validators.required]),
-      duration: new FormControl(value.duration, [Validators.required]),
-      recurrence: new FormControl("", [Validators.required]),
+      name: new FormControl(value.name, [Validators.required]),
+      categorie: new FormControl(value.categorie, [Validators.required]),
+      subCat: new FormControl(value.subCat, [Validators.required]),
+      periodicity: new FormControl(value.periodicity, [Validators.required]),
+      recurrence: new FormControl(value.recurrence, [Validators.required]),
       description: new FormControl(value.description, [Validators.required]),
       StartTime: new FormControl("", [Validators.required]),
-      count: new FormControl(""),
-      until: new FormControl(""),
-      listDay: new FormControl([]),
-      end: new FormControl(""),
+      count: new FormControl(value.count, [Validators.required]),
+      until: new FormControl(value.until),
+      listDay: new FormControl(value.listDay, [Validators.required]),
+      end: new FormControl(value.end, [Validators.required]),
       interval: new FormControl(value.interval),
-      dayOcc: new FormControl(""),
-      day: new FormControl(""),
-      choix: new FormControl(""),
-      current: new FormControl(""),
-      codeBarre: new FormControl("")
+      dayOcc: new FormControl(value.dayOcc, [Validators.required]),
+      day: new FormControl(value.day, [Validators.required]),
+      choix: new FormControl(value.choix, [Validators.required]),
+      current: new FormControl(value.current, [Validators.required])
     });
   }
 

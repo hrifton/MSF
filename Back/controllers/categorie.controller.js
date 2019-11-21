@@ -1,3 +1,7 @@
+//File METIER IS CATEGORIE
+//File CATEORIE IS SUBCATEGORIE
+
+
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
 const { ObjectId } = require("mongodb");
@@ -9,7 +13,6 @@ module.exports.add = (req, res, next) => {
   console.log("AssubCat ");
   var cat = new Categorie();
   cat.name = req.categorie;
-  cat.color = req.color;
   cat.save((err, doc) => {
     if (!err) {
       Metier.findOneAndUpdate(
@@ -54,3 +57,18 @@ module.exports.add = (req, res, next) => {
     }
   });
 };
+module.exports.del=(req,res,next)=>{
+  Categorie.findByIdAndDelete({_id:req.idSubCat},(err,data)=>{
+    if(!err){
+      Metier.findOneAndUpdate({_id:req.idMetier},{$pull:{categorie:{_id:req.idSubCat}}},(errCatSub,doc)=>{
+        if(!errCatSub){
+          res.status(200).send(doc);
+        }else{
+          res.status(400).send(errCatSub);
+        }
+      })
+      res.status(200).send(data)
+    }else{res.status(400).send(err);}
+  })
+  
+}

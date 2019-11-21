@@ -26,6 +26,8 @@ import { Hospital } from 'src/app/Class/Hospital';
 export class ListHospitalComponent implements OnInit {
   @Input() addToListHospital: Hospital;
   @Input() projet: Hospital;
+
+    @Output() HopitalDelete = new EventEmitter<Hospital>();
   constructor(private hs: HopitalService) { }
   @ViewChild("grid") public grid: GridComponent;
   selection: any;
@@ -65,7 +67,12 @@ export class ListHospitalComponent implements OnInit {
   }
 
   actionBegin(args: any): void {
-    // console.log(args)
+    console.log(args)
+    if (args.requestType == "delete") {
+      console.log("Delete*************");
+      console.log(args.data[0]._id);
+      this.HopitalDelete.emit(args.data[0]._id);
+    }
   }
   /* ngOnChanges(changes: SimpleChanges) {
      if (changes.addToListHospital) {
@@ -79,6 +86,7 @@ export class ListHospitalComponent implements OnInit {
     this.grid.refresh();
   }
   rowSelected($event) {
+    console.log($event)
     this.selection = $event.data;
     this.messageEvent.emit($event.data);
   }

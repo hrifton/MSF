@@ -1,11 +1,18 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import { Hospital } from "src/app/Class/Hospital";
 import { Metier } from "src/app/Class/Metier";
 import { FormHopitalComponent } from "./form-hopital/form-hopital.component";
-import { Categorie } from 'src/app/Class/Categorie';
-import Departement from 'src/app/Class/Departement';
-import { HopitalService } from 'src/app/Service/hopital.service';
-import { ListHospitalComponent } from './list-hospital/list-hospital.component';
+import { Categorie } from "src/app/Class/Categorie";
+import Departement from "src/app/Class/Departement";
+import { HopitalService } from "src/app/Service/hopital.service";
+import { ListHospitalComponent } from "./list-hospital/list-hospital.component";
 
 @Component({
   selector: "app-hospital",
@@ -14,14 +21,14 @@ import { ListHospitalComponent } from './list-hospital/list-hospital.component';
 })
 export class HospitalComponent implements OnInit {
   // metiers = new Array<Metier>();
-  constructor(private hs: HopitalService) { }
+  constructor(private hs: HopitalService) {}
 
   @ViewChild(FormHopitalComponent)
   FormHopitalComponent: FormHopitalComponent;
 
   data: Hospital;
   public metierSelect: Metier;
-  @Input() flagTosteAddHostpital
+  @Input() flagTosteAddHostpital;
   @Input() role;
   @Input() projet;
   @Input() metiers;
@@ -36,25 +43,24 @@ export class HospitalComponent implements OnInit {
 
   projetMetier: any = null;
 
-
   @ViewChild(ListHospitalComponent)
   listHospitalComponent: ListHospitalComponent;
   ngOnInit() {
-    this.projetMetier = this.projet[0]
+    this.projetMetier = this.projet[0];
   }
 
   saveHospital($event) {
     //crée un tableau avec tout les hopitaux
-    this.addNewHopital.emit($event)
+    this.addNewHopital.emit($event);
   }
   selectHopital($event) {
-    this.projetMetier = null
+    this.projetMetier = null;
     this.FormHopitalComponent.createForm($event);
     this.projetMetier = $event;
     this.projet = $event;
+    this.departements = this.departements;
   }
   addMetier($event) {
-    console.log(this.projet)
     if ($event.idHopital == undefined) {
       $event.idHopital = this.projet._id;
     }
@@ -63,7 +69,11 @@ export class HospitalComponent implements OnInit {
 
   rmMetier($event) {
     if ($event.idHopital == undefined) {
-      $event.idHopital = this.projet[0]._id;
+      if (this.role != "SuperAdmin") {
+        $event.idHopital = this.projet[0]._id;
+      } else {
+        $event.idHopital = this.projet._id;
+      }
     }
     this.rmMetierEvent.emit($event);
   }
@@ -74,34 +84,50 @@ export class HospitalComponent implements OnInit {
 
   rmSubCat($event) {
     if ($event.idHopital == undefined) {
-      console.log(this.projet[0]._id)
-      $event.idHopital = this.projet[0]._id;
+      if (this.role != "SuperAdmin") {
+        console.log(this.projet);
+        $event.idHopital = this.projet[0]._id;
+      } else {
+        console.log(this.projet);
+        $event.idHopital = this.projet._id;
+      }
     }
     this.rmSubToHopital.emit($event);
   }
 
   addSubCat($event) {
-    console.log($event)
     if ($event.idHopital == undefined) {
-      console.log(this.projet[0])
-      $event.idHopital = this.projet[0]._id;
+      if (this.role != "SuperAdmin") {
+        $event.idHopital = this.projet[0]._id;
+      } else {
+        $event.idHopital = this.projet._id;
+      }
     }
     this.addSubToHopital.emit($event);
   }
 
   addDepartement($event) {
-    console.log($event)
-    $event.idHopital = this.projet[0]._id;
+    if (this.role != "SuperAdmin") {
+      $event.idHopital = this.projet[0]._id;
+    } else {
+      $event.idHopital = this.projet._id;
+    }
     this.addDepToHopital.emit($event);
   }
-  delDepartement($event) {
-    console.log($event);
-    $event.idHopital = this.projet[0]._id;
+  delDepartement($event:any) {
+  console.log(this.projet)
+      $event.idHopital = this.projet._id;
+   
     this.rmDepToHopital.emit($event);
   }
-
+  deleteHopital($event) {
+    console.log($event)
+    this.hs.delHopital($event).subscribe(data => {
+      console.log(data);
+    });
+  }
   refreshGridListeHopital() {
-    this.listHospitalComponent.refreshGrid()
+    this.listHospitalComponent.refreshGrid();
   }
   createFormHopital() {
     this.FormHopitalComponent.createForm();

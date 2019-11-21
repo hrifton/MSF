@@ -72,7 +72,7 @@ export class MetierHopitalComponent implements OnInit {
     this.filtreTableMetier();
 
     this.selectionOptions = { type: "Multiple" };
-    this.srcDropOptions = { targetID: "DestGrid" };
+    this.srcDropOptions = { targetID: "DestGrid2" };
     this.destDropOptions = { targetID: "Grid" };
   }
 
@@ -114,7 +114,7 @@ export class MetierHopitalComponent implements OnInit {
       /**
        * check dans le tableau metierToHospital si element_id existe returne true ou false
        */
-      console.log(elementConstMetier)
+     
       const found = this.metierToHospital.find(function (element) {
         return element._id == elementConstMetier._id;
       });
@@ -141,7 +141,7 @@ export class MetierHopitalComponent implements OnInit {
    * Verification Liste SubCat standart & subCatHopital
    */
   rowSelected($event) {
-    console.log($event.data.categorie2==undefined)
+    console.log($event)
    
    if(Object.keys($event.data).length==4){
         this.subCat = $event.data;
@@ -213,13 +213,15 @@ export class MetierHopitalComponent implements OnInit {
   }
 
   subRowDrop(args: any) {
-
+console.log(args)
     if (this.flagAddSubCat) {
       let addSubCat = new Categorie(args.data[0].name, args.data[0].color, this.projetMetier._id, this.subCat._id, args.data[0]._id);
       this.addSubCat.emit(addSubCat);
       this.flagAddSubCat = false;
     } else if (this.flagRmSubCat) {
-      let rmSubCat = new Categorie(args.data[0].name, args.data[0].color, this.projetMetier._id, this.subCat._id, args.data[0].id);
+      console.log(args.data)
+      let rmSubCat = new Categorie(args.data[0].name, args.data[0].color, this.projetMetier._id, this.subCat._id, args.data[0]._id);
+      console.log(rmSubCat)
       this.rmSubCat.emit(rmSubCat);
       this.flagRmSubCat = false;
     }
@@ -234,7 +236,7 @@ export class MetierHopitalComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
-    console.log(changes.projetMetier.currentValue)
+    
     if (changes.projetMetier.currentValue.departements) {
       this.flagShowSubCat = false
       this.metierToHospital = changes.projetMetier.currentValue.metier

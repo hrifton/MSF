@@ -1,4 +1,12 @@
 [
+{
+    "_id": {"$oid":"5d95a16beb3d811f548f1d9e"},
+    "fullName": "Sadmin",
+    "email": "Sadmin@Sadmin.com",
+    "password": "$2a$10$vANjGSLcWfr.1qdnqXTTnekTfhkfglS4./.poQ4y0HJDON2JTOZwq",
+    "status" : "SuperAdmin",
+    "saltSecret": "$2a$10$vANjGSLcWfr.1qdnqXTTne"
+  },
   {
     "_id": {"$oid":"5d95a16beb3d811f548f1d97"},
     "fullName": "admin",
@@ -18,24 +26,6 @@
     "idHopital":{"$oid": "5d95a16beb3d811f548f1d85"}
   },
   {
-    "_id": {"$oid":"5d95a16beb3d811f548f1d99"},
-    "fullName": "tech2",
-    "email": "tech@tech.com",
-    "password": "$2a$10$vANjGSLcWfr.1qdnqXTTnekTfhkfglS4./.poQ4y0HJDON2JTOZwq",
-    "status": "Tech",
-    "saltSecret": "$2a$10$vANjGSLcWfr.1qdnqXTTne",
-    "idHopital":{"$oid": "5d95a16beb3d811f548f1d85"}
-  },
-  {
-    "_id": {"$oid":"5d95a16beb3d811f548f1d9a"},
-    "fullName": "tech3",
-    "email": "tech@tech.com",
-    "password": "$2a$10$vANjGSLcWfr.1qdnqXTTnekTfhkfglS4./.poQ4y0HJDON2JTOZwq",
-    "status": "Tech",
-    "saltSecret": "$2a$10$vANjGSLcWfr.1qdnqXTTne",
-    "idHopital":{"$oid": "5d95a16beb3d811f548f1d85"}
-  },
-  {
     "_id": {"$oid":"5d95a16beb3d811f548f1d9b"},
     "fullName": "user",
     "email": "user@user.com",
@@ -46,21 +36,6 @@
     "idDepartement":{
       "$oid": "5d959e9ba0bb5d211c114ae2"
     }
-  },
-  {
-    "_id": {
-      "$oid": "5d95a16beb3d811f548f1fff"
-    },
-    "fullName": "user",
-    "email": "user@user.com",
-    "password": "$2a$10$vANjGSLcWfr.1qdnqXTTnekTfhkfglS4./.poQ4y0HJDON2JTOZwq",
-    "status": "User",
-    "saltSecret": "$2a$10$vANjGSLcWfr.1qdnqXTTne",
-    "idHopital": {
-      "$oid": "5d95a16beb3d811f548f1d85"
-    },
-    "idDepartement": {
-      "$oid": "5d959e9ba0bb5d211c114ae2"
-    }
   }
+  
 ]

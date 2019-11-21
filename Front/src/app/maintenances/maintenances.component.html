@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <div class="col-xs-12 col-sm-12 col-lg-6 col-md-12">
+      <div *ngIf="maintenance.length > 0" class="col-xs-12 col-sm-12 col-lg-6 col-md-12">
         <div tabindex="0" class="e-card" id="basic_card">
           <div class="e-card-header">
             <div class="e-card-header-caption">
@@ -33,11 +33,11 @@
           </div>
           <div class="e-card-content">
             <app-formulaire
-              *ngIf="lrepeat.length > 0"
+              
               (messageEvent)="saveMaintenance($event)"
               [lrepeat]="lrepeat"
               [lEnd]="lEnd"
-              [maintenances]="maintenance"
+              [maintenance]="maintenance"
             ></app-formulaire>
           </div>
         </div>

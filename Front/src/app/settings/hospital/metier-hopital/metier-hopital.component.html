@@ -97,7 +97,7 @@
                 </div>
                 <div class="col-6">
                   <ejs-grid
-                    id="DestGrid"
+                    id="DestGrid2"
                     #grid2
                     [dataSource]="metierToHospital"
                     (rowDragStart)="rmRowDragStart($event)"
@@ -133,7 +133,6 @@
             <div class="e-card-header-caption">
               <div class="e-card-header-title">
                 <h5>List Sub-categories of {{ subCat.name }}</h5>
-                <button (click)="refreshDestGrid()"></button>
               </div>
             </div>
           </div>
@@ -165,6 +164,7 @@
                 </div>
                 <div class="col-6">
                   <ejs-grid
+                  #DestGrid2
                     id="DestGrid2"
                     [dataSource]="subCatToHospital.categorie"
                     (rowDragStart)="subRmRowDrag($event)"

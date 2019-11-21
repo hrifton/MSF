@@ -12,6 +12,10 @@ hospitalRoutes.route("/add").post(function(req, res, next) {
   ctrlHospital.add(req, res, next);
 });
 
+hospitalRoutes.route("/delHopital/:idHopital").delete(function(req, res, next) {
+  ctrlHospital.delHopital(req.params, res, next);
+});
+
 //GetaHospital
 hospitalRoutes.route("/id").get(function(req, res) {
   ctrlHospital.findAHospital(req.query.id, res);
@@ -45,6 +49,8 @@ hospitalRoutes.route("/addDep").post(function(req, res, next) {
 hospitalRoutes.route("/addmaintenance").post(function(req, res, next) {
  ctrlHospital.addMaintenance(req.body,res,next);
 });
+
+
 
 hospitalRoutes
   .route("/delDep/:idHopital/:idDepartement")
