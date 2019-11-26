@@ -55,13 +55,16 @@ export class HopitalService {
   }
 
   addDepToHop(data: any) {
-    data[0].idHopital = data.idHopital;
-    return this.http.post(`${this.uri}/addDep`, data);
+    if(data[0].idHopital==undefined){
+      data[0].idHopital=data.idHopital
+    }
+       
+    return this.http.post(`${this.uri}/addDep`, {params:data});
   }
   delDepToHop(data: any) {
     console.log(data);
     return this.http.delete(
-      `${this.uri}/delDep/${data.idHopital}/${data[0]._id}`
+      `${this.uri}/delDep/${data[0].idHopital}/${data[0]._id}`
     );
   }
   //#endregion
@@ -120,9 +123,10 @@ export class HopitalService {
    * remove subMetier
    */
   rmSub(data: any) {
-    return this.http.delete(
-      `${this.uri}/delete/${data.idHopital}/${data.idMetier}/${data._id}`
-    );
+    console.log(data)
+    return this.http.delete(`${this.uri}/delete/subcat/`, {
+      params: data
+    });
   }
   /**add a subMetier in a Hostpial
    *

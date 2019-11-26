@@ -12,11 +12,7 @@ import { ToastComponent } from "@syncfusion/ej2-angular-notifications";
 import {
   DayService,
   WeekService,
-  WorkWeekService,
   MonthService,
-  MonthAgendaService,
-  TimelineViewsService,
-  TimelineMonthService,
   EventSettingsModel,
   PopupOpenEventArgs,
   View,
@@ -37,15 +33,7 @@ import { DateMaintenanceService } from "src/app/Service/dateMaintenance.service"
   selector: "app-calendrier",
   templateUrl: "./calendrier.component.html",
   styleUrls: ["./calendrier.component.scss"],
-  providers: [
-    DayService,
-    WeekService,
-    WorkWeekService,
-    MonthService,
-    MonthAgendaService,
-    TimelineViewsService,
-    TimelineMonthService
-  ]
+  providers: [DayService, WeekService, MonthService]
 })
 export class CalendrierComponent implements OnInit {
   constructor(private fb: FormBuilder, private ds: DateMaintenanceService) {
@@ -68,6 +56,7 @@ export class CalendrierComponent implements OnInit {
   public data: Object[] = extend([], this.scheduleData, null) as Object[];
   public selectedDate: Date = new Date();
   public minDate: Date = new Date();
+  public timeScale: string = "Hide";
   public eventSettings: EventSettingsModel = {};
   public currentView: View = "Month";
   public lrepeat: { [key: string]: Object }[] = [
@@ -95,6 +84,8 @@ export class CalendrierComponent implements OnInit {
   ngOnInit() {
     this.toastObj.hide("All");
     this.createlisteMaintenance(this.datemaitenance, this.maintenance);
+    this.agenda.timeScale.enable = false;
+    //this.agenda.dataBind();
     console.log("maintenance calendier Init");
     console.log("Maintenance was initialized with : ", this.maintenance);
 
@@ -102,7 +93,7 @@ export class CalendrierComponent implements OnInit {
     this.eventSettings = {
       dataSource: this.data
     };
-    console.log(this.eventSettings)
+    console.log(this.eventSettings);
   }
   /**Creation formulaire avec champs date precomplété
    *

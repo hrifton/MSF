@@ -2,20 +2,20 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, map } from "rxjs/operators";
 import { of } from "rxjs";
-import { Metier } from '../Class/Metier';
+import { Metier } from "../Class/Metier";
 import { environment } from "../../environments/environment";
 @Injectable({ providedIn: "root" })
 export class MetierService {
-  uri = environment.apiBaseUrl+'/metier';
+  uri = environment.apiBaseUrl + "/metier";
 
   constructor(private http: HttpClient) {}
   // Insert a new metier
-  async addMetier(metier) {
+  addMetier(metier) {
     const obj = {
       metier
     };
 
-    return await this.http.post(`${this.uri}/add`, obj).pipe(
+    return this.http.post(`${this.uri}/add`, obj).pipe(
       map(res => res),
       catchError(err => {
         console.error(err);
@@ -40,5 +40,10 @@ export class MetierService {
     this.http
       .put(`${this.uri}/update/${id}`, obj)
       .subscribe(res => console.log("OK update"));
+  }
+
+  //delete Metier
+  deleteMetier(data) {
+    return this.http.delete(`${this.uri}/delete/${data}`);
   }
 }

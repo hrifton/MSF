@@ -9,6 +9,7 @@ export class DateMaintenance {
   StartTime: Date;
   EndTime: Date;
   idMaintenance: String;
+  idHopital:String;
 
   /**
    *Creates an instance of DateMaintenance.
@@ -22,11 +23,13 @@ export class DateMaintenance {
     codeBarre: String,
     StartTime: Date,
     EndTime: Date,
-    idMaintenance: String
+    idMaintenance: String,
+    idHopital:String
   ) {
     this.codeBarre = codeBarre;
     this.StartTime = StartTime;
     this.EndTime = EndTime;
     this.idMaintenance = idMaintenance;
+    this.idHopital = idHopital;
   }
 }

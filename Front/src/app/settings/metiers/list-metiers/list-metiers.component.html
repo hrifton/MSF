@@ -4,7 +4,7 @@
       <div class="e-card-header">
         <div class="e-card-header-caption">
           <div class="e-card-header-title">
-            <h3>List of categories</h3>
+            <h3>Categories</h3>
           </div>
         </div>
       </div>
@@ -21,17 +21,17 @@
               [editSettings]="editOptions"
               [toolbar]="toolbarItems"
               [allowSorting]="true"
+              (actionBegin)="actionBegin($event)"
               (rowSelected)="rowSelected($event)"
-              (toolbarClick)="clickHandler($event)"
             >
               <e-columns>
                 <e-column
-                  style="background-color: aqua"
                   field="name"
-                  headerText="Metier"
-                  width="120"
+                  headerText="Categories"
+                   width="120"
                   textAlign="Right"
                   [validationRules]="orderidrules"
+                  isPrimaryKey="true"
                 ></e-column>
               </e-columns>
             </ejs-grid>

@@ -43,7 +43,6 @@ export class ListHospitalComponent implements OnInit {
 
   public orderidrules: Object;
 
-  show: boolean;
 
   public newRowPosition: { [key: string]: Object }[] = [
     { id: 'Top', newRowPosition: 'Top' },
@@ -51,7 +50,6 @@ export class ListHospitalComponent implements OnInit {
   ];
   public localFields: Object = { text: 'newRowPosition', value: 'id' };
   public ngOnInit(): void {
-    this.show = false;
     this.data = this.projet;
 
     this.pageSettings = { pageCount: 5 };
@@ -86,7 +84,7 @@ export class ListHospitalComponent implements OnInit {
     this.grid.refresh();
   }
   rowSelected($event) {
-    console.log($event)
+    
     this.selection = $event.data;
     this.messageEvent.emit($event.data);
   }

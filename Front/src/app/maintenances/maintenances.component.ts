@@ -34,6 +34,7 @@ export class MaintenancesComponent implements OnInit {
   @ViewChild(CalendrierComponent)
   calendrier: CalendrierComponent;
   projet: Hospital;
+  techs: any[];
   /**
    * @param ms
    * @param dms
@@ -46,15 +47,21 @@ export class MaintenancesComponent implements OnInit {
     private hs: HopitalService
   ) {
     //initialiation variable
-    
+    this.techs=[]
     this.maintenance = [];
     this.datemaitenance = [];
     // recuperation date de maintenance
-    if (this.us.getStatus() == "Admin") {
-      this.hs.findHopital(this.us.getIdHopital()).subscribe((data: Hospital) => {
-        this.projet = data;
-        this.maintenance=this.projet[0].maintenance
-      });
+    if (this.us.getStatus() == "Admin" || this.us.getStatus() == "Operator") {
+      this.hs
+        .findHopital(this.us.getIdHopital())
+        .subscribe((data: Hospital) => {
+          this.projet = data;
+          this.maintenance = this.projet[0].maintenance;
+        });
+        this.us.getUserTech().subscribe((data: any) => {
+          this.techs = data;
+          console.log(this.techs)
+        });
     }// recuperation des maintenance planifiable
     this.dms.getDateMaintenance().subscribe((data: DateMaintenance[]) => {
       this.datemaitenance = data;
@@ -66,6 +73,7 @@ export class MaintenancesComponent implements OnInit {
   saveMaintenance($event) {
     console.log($event);
     this.dms.postDateMaintenance($event);
+    console.log(this.datemaitenance);
     this.datemaitenance.push($event);
     this.calendrier.refreshAgenda();
   }

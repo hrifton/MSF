@@ -47,6 +47,8 @@ export class HospitalComponent implements OnInit {
   listHospitalComponent: ListHospitalComponent;
   ngOnInit() {
     this.projetMetier = this.projet[0];
+    console.log(this.projet[0])
+    this.FormHopitalComponent.createForm(this.projetMetier);
   }
 
   saveHospital($event) {

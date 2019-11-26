@@ -20,6 +20,7 @@ import { Maintenance } from "src/app/Class/Maintenance";
 import { MaintenanceService } from "src/app/Service/maintenance.service";
 import { MatNativeDateModule } from "@angular/material";
 import { Hospital } from "src/app/Class/Hospital";
+import * as _ from "lodash";
 //#endregion
 
 // var momentDay = require('moment-weekdaysin');
@@ -32,17 +33,19 @@ import { Hospital } from "src/app/Class/Hospital";
 export class FormulaireComponent {
   data: any;
   constructor(private fb: FormBuilder, private ms: MaintenanceService) {
-    this.createForm();
+    // this.createForm();
   }
   //#region Declaration Variable
 
   periode: any;
   @Input() maintenance: any;
+  @Input() techs: any;
+  @Input() projet: any;
   @Input() lrepeat: any;
   @Input() lEnd: any;
   @Output() messageEvent = new EventEmitter<any>();
   maintenanceForm: FormGroup;
-  minDate=new Date();
+  minDate = new Date();
   // hasUnitNumber = false;
 
   @ViewChild("checkbox")
@@ -95,7 +98,7 @@ export class FormulaireComponent {
 
   createForm(data?) {
     if (data) {
-      console.log(data);
+      console.log(data, this.projet);
       this.maintenanceForm = this.fb.group({
         name: new FormControl(data.name ? data.name : "", [
           Validators.required
@@ -114,33 +117,38 @@ export class FormulaireComponent {
         interval: new FormControl(data.interval ? data.interval : ""),
         recurrence: new FormControl(data.recurrence ? data.recurrence : ""),
         date: new FormControl(data.date ? data.date : ""),
-        StartTime: new FormControl(data.StartTime ? data.StartTime : ""),
+        startUntil: new FormControl(data.startUntil ? data.startUntil : ""),
         count: new FormControl(data.count ? data.count : ""),
-        until: new FormControl(data.until ? data.until : ""),
+
+        endUntil: new FormControl(data.endUntil ? data.endUntil : ""),
         end: new FormControl(data.end ? data.end : ""),
         codeBarre: new FormControl(data.codeBarre ? data.codeBarre : ""),
         listDay: new FormControl(data.listDay ? data.listDay : ""),
         dayOcc: new FormControl(data.dayOcc ? data.dayOcc : ""),
         current: new FormControl(data.current ? data.current : ""),
         day: new FormControl(data.day ? data.day : ""),
+        tech: new FormControl(""),
         month: new FormControl(data.month ? data.month : "")
       });
+    } else {
+      this.maintenanceForm = this.fb.group({
+        name: new FormControl("", [Validators.required]),
+        categorie: new FormControl("", [Validators.required]),
+        subCat: new FormControl("", [Validators.required]),
+        interval: new FormControl("", [Validators.required]),
+        periodicity: new FormControl("", [Validators.required]),
+        end: new FormControl("", [Validators.required]),
+        recurrence: new FormControl("", [Validators.required]),
+        description: new FormControl("", [Validators.required]),
+        listDay: new FormControl("", [Validators.required]),
+        StartTime: new FormControl("", [Validators.required]),
+        count: new FormControl(""),
+        startUntil: new FormControl(""),
+        endUntil: new FormControl(""),
+        tech: new FormControl(""),
+        codeBarre: new FormControl("")
+      });
     }
-    this.maintenanceForm = this.fb.group({
-      name: new FormControl("", [Validators.required]),
-      categorie: new FormControl("", [Validators.required]),
-      subCat: new FormControl("", [Validators.required]),
-      interval: new FormControl("", [Validators.required]),
-      periodicity: new FormControl("", [Validators.required]),
-      end: new FormControl("", [Validators.required]),
-      recurrence: new FormControl("", [Validators.required]),
-      description: new FormControl("", [Validators.required]),
-      listDay: new FormControl("", [Validators.required]),
-      StartTime: new FormControl("", [Validators.required]),
-      count: new FormControl(""),
-      until: new FormControl(""),
-      codeBarre: new FormControl("")
-    });
   }
 
   public onChange(args: any): void {
@@ -154,6 +162,7 @@ export class FormulaireComponent {
 
   ngOnInit() {
     this.createForm();
+    console.log(this.techs);
     this.data = this.maintenance;
     const recurrObject: RecurrenceEditor = new RecurrenceEditor({});
     this.mode = "CheckBox";
@@ -166,29 +175,39 @@ export class FormulaireComponent {
   onSelection(value) {
     // don't work with function ??  this.createForm(value);
     //this.periode = value.periodicity;
-    console.log(value);
+    console.log(value)
+   /* let categorie = this.getNameCategorie(
+      value.categorie,
+      this.projet[0].metier
+    );*/
     this.maintenanceForm = this.fb.group({
       idMaintnance: new FormControl(value._id, [Validators.required]),
       name: new FormControl(value.name, [Validators.required]),
       categorie: new FormControl(value.categorie, [Validators.required]),
+      idcategorie: new FormControl(value.categorie, [Validators.required]),
       subCat: new FormControl(value.subCat, [Validators.required]),
       periodicity: new FormControl(value.periodicity, [Validators.required]),
       recurrence: new FormControl(value.recurrence, [Validators.required]),
       description: new FormControl(value.description, [Validators.required]),
-      StartTime: new FormControl("", [Validators.required]),
       count: new FormControl(value.count, [Validators.required]),
-      until: new FormControl(value.until),
+      startUntil: new FormControl(value.startUntil),
+      endUntil: new FormControl(value.endUntil),
       listDay: new FormControl(value.listDay, [Validators.required]),
       end: new FormControl(value.end, [Validators.required]),
       interval: new FormControl(value.interval),
       dayOcc: new FormControl(value.dayOcc, [Validators.required]),
       day: new FormControl(value.day, [Validators.required]),
       choix: new FormControl(value.choix, [Validators.required]),
-      current: new FormControl(value.current, [Validators.required])
+      current: new FormControl(value.current, [Validators.required]),
+      tech: new FormControl("", [Validators.required])
     });
   }
-
+  /**
+   * Save Maintenance Switch en fonction de la périodicité
+   */
   saveDate(maintenance) {
+     console.log("Save Date : ", maintenance.value);
+    console.log("Save Date : ", maintenance.value.periodicity);
     switch (maintenance.value.periodicity) {
       case "Daily": {
         this.saveDaily(maintenance.value);
@@ -251,14 +270,14 @@ export class FormulaireComponent {
     // loop for nomber occurence ask
     for (let index = 0; index < maintenance.count; index++) {
       // this.traitementCurrentByMonth(maintenance.current, date, maintenance);
-      // maintenance.StartTime = (moment(maintenance.StartTime.format('ll') + ' ' + time).format('llll'));
+      // maintenance.StartTime = (moment(maintenance.StartTime.format('ll') + ' ' + time).format('l'));
       // this.traitementPlanByDay(maintenance, newMaintenances);
       // date.add(maintenance.interval, 'M');
       this.traitementByMonth(maintenance, newMaintenances, date, time);
     }
 
     this.messageEvent.emit(newMaintenances);
-    this.createForm();
+    //this.createForm();
   }
   /**
    *
@@ -280,7 +299,7 @@ export class FormulaireComponent {
       this.traitementByMonth(maintenance, newMaintenances, date, time);
     }
     this.messageEvent.emit(newMaintenances);
-    this.createForm();
+    //this.createForm();
   }
   //#endregion
 
@@ -307,25 +326,32 @@ export class FormulaireComponent {
    * traitement du planning par semaine avec nombre de repétition determiner
    */
   planWeekCount(maintenance: any) {
-    const nbWeek = moment(moment(maintenance.StartTime)).week();
+    //TODO Correction doit ajouté date de part dans le formulaire
+
     const newMaintenances: any = [];
-    const time = moment(maintenance.StartTime).format("LT");
+    maintenance.StartTime = maintenance.startUntil;
     for (let index = 0; index < maintenance.count; index++) {
       maintenance.listDay.forEach(element => {
-        const date = moment()
-          .day(element)
-          .week(nbWeek + index)
-          .format("LL");
-        maintenance.StartTime = moment(date + " " + time).format("llll");
-        this.traitementPlanByDay(maintenance, newMaintenances);
+        const date = moment().day(element);
+        //.week(nbWeek + index)
+        //.format("LL");
+        console.log(date, element);
+        maintenance.StartTime = date;
+        // this.traitementPlanByDay(maintenance, newMaintenances);
         maintenance.StartTime = moment(maintenance.StartTime).add(
           maintenance.interval,
           "weeks"
         );
+        console.log(maintenance.StartTime);
       });
+      console.log(maintenance.StartTime, maintenance.interval);
+      maintenance.StartTime = moment(maintenance.StartTime).add(
+        maintenance.interval,
+        "w"
+      );
     }
 
-    // console.log(newMaintenances)
+     console.log(newMaintenances)
 
     this.messageEvent.emit(newMaintenances);
     this.createForm();
@@ -338,17 +364,18 @@ export class FormulaireComponent {
   planWeekUntil(maintenance: any) {
     let nbWeek;
     const newMaintenances: any = [];
-    const time = moment(maintenance.StartTime).format("LT");
+    maintenance.StartTime = maintenance.startUntil;
 
-    while (moment(maintenance.StartTime).isBefore(maintenance.until)) {
+    while (moment(maintenance.StartTime).isBefore(maintenance.endUntil)) {
       nbWeek = moment(moment(maintenance.StartTime)).week();
 
       maintenance.listDay.forEach(element => {
         const date = moment()
           .day(element)
-          .week(nbWeek)
-          .format("LL");
-        maintenance.StartTime = moment(date + " " + time).format("llll");
+          .week(nbWeek);
+
+        maintenance.StartTime = date;
+
         this.traitementPlanByDay(maintenance, newMaintenances);
       });
 
@@ -356,9 +383,10 @@ export class FormulaireComponent {
         maintenance.interval,
         "weeks"
       );
+      console.log(moment(maintenance.StartTime).format("LLLL"));
     }
-    this.messageEvent.emit(newMaintenances);
-    this.createForm();
+    // this.messageEvent.emit(newMaintenances);
+    //this.createForm();
   }
   //#endregion
 
@@ -371,6 +399,7 @@ export class FormulaireComponent {
    * pour plannification par jour
    */
   saveDaily(maintenance) {
+    console.log("SaveDaily", maintenance.end);
     if (maintenance.end === "Until") {
       this.planDayUntil(maintenance);
     } else {
@@ -381,10 +410,15 @@ export class FormulaireComponent {
   // TODO Hicham Date depasse tjs de 1
   planDayUntil(maintenance) {
     const newMaintenances: any = [];
-    while (moment(maintenance.StartTime).isBefore(maintenance.until)) {
+    maintenance.StartTime = maintenance.startUntil;
+    //As long as the date is not reached
+    while (moment(maintenance.StartTime).isBefore(maintenance.endUntil)) {
+      //Function add day interval
       this.traitementPlanByDay(maintenance, newMaintenances);
     }
+    //Seed to Component parent for save to DB
     this.messageEvent.emit(newMaintenances);
+    //create a new form
     this.createForm();
   }
 
@@ -393,8 +427,9 @@ export class FormulaireComponent {
     for (let index = 1; index <= maintenance.count; index++) {
       this.traitementPlanByDay(maintenance, newMaintenances);
     }
+    console.log(newMaintenances);
     this.messageEvent.emit(newMaintenances);
-    this.createForm();
+    //this.createForm();
   }
   //#endregion
 
@@ -485,12 +520,12 @@ export class FormulaireComponent {
       this.traitementCurrentByMonth(maintenance.current, date, maintenance);
       maintenance.StartTime = moment(
         maintenance.StartTime.format("ll") + " " + time
-      ).format("llll");
+      ).format("LLLL");
       this.traitementPlanByDay(maintenance, newMaintenances);
 
       maintenance.StartTime = date.add(maintenance.interval, "M");
     } else {
-      maintenance.StartTime = date.date(maintenance.dayOcc).format("llll");
+      maintenance.StartTime = date.date(maintenance.dayOcc).format("LLLL");
       this.traitementPlanByDay(maintenance, newMaintenances);
       maintenance.StartTime = date.add(maintenance.interval, "M");
     }
@@ -502,26 +537,40 @@ export class FormulaireComponent {
    * Traitement sur la durée de la maitenance par occurence
    */
   traitementPlanByDay(maintenance, newMaintenances) {
-    maintenance.StartTime = moment(maintenance.StartTime).format("LLLL");
+    let dateRefStart;
+    if (maintenance.StartTime == undefined) {
+      dateRefStart = maintenance.startUntil;
+      maintenance.StartTime = maintenance.startUntil;
+    } else {
+      dateRefStart = maintenance.StartTime;
+    }
+
+    //maintenance.StartTime = moment(maintenance.StartTime).format("LLLL");
+    console.log(maintenance.StartTime);
+
+    /* Si notion de temps a rajouté en H ou M (MSF demande à le retiré)
     maintenance.EndTime = this.addTime(
       moment(maintenance.StartTime, "LLLL"),
       maintenance.duration
-    );
-
+    );*/
+    //create date maintenance
     const dayMain: DayMain = {
       codeBarre: maintenance.codeBarre,
       StartTime: maintenance.StartTime,
-      EndTime: maintenance.EndTime,
-      Subject: maintenance.maintenance,
-      idMaintenance: maintenance.idMaintnance
+      EndTime: maintenance.StartTime,
+      description: maintenance.name,
+      idMaintenance: maintenance.idMaintnance,
+      subCat: maintenance.subCat,
+      categorie: maintenance.categorie,
+      status: "Open",
+      idTech: maintenance.tech,
+      idHopital: this.projet[0]._id
     };
-
+    console.log(dayMain);
+    //push date maintenance to array
     newMaintenances.push(dayMain);
-
-    maintenance.StartTime = moment(maintenance.StartTime, "LLLL").add(
-      maintenance.interval,
-      "days"
-    );
+    //add Interval day
+    maintenance.StartTime = moment(dateRefStart).add(maintenance.interval, "d");
   }
   addTime(StartTime, duration) {
     // split  string nb unité (hours or minutes)
@@ -538,6 +587,14 @@ export class FormulaireComponent {
     EndTime = moment(StartTime, "LLLL").add(tab[0], mesureTemps);
     return moment(EndTime).format("LLLL");
   }
+
+  getNameCategorie(idCategorie, metier) {
+    console.log(idCategorie, metier);
+    let index = _.findIndex(metier, function(o) {
+      return o._id == idCategorie;
+    });
+    return metier[index].name;
+  }
   //#endregion
 
   public onChangeDrop(): void {
@@ -552,7 +609,12 @@ export class FormulaireComponent {
 export interface DayMain {
   StartTime?: Date;
   EndTime?: Date;
-  Subject?: string;
+  description?: string;
   idMaintenance?: any;
   codeBarre?: string;
+  idTech?: string;
+  status:string;
+  idHopital?: Object;
+  categorie?:string;
+  subCat?:string;
 }

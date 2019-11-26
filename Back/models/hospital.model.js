@@ -13,11 +13,7 @@ var hospitalSchema = new mongoose.Schema({
       name: { type: String },
       descriptif: { type: String },
       color: { type: String },
-      categorie: [
-        {
-          type: Object
-        }
-      ]
+      categorie: [{ _id: false, name: { type: String } }]
     }
   ],
   departements: [
@@ -25,7 +21,7 @@ var hospitalSchema = new mongoose.Schema({
       type: Object
     }
   ],
-   maintenance: [
+  maintenance: [
     {
       _id: { type: Object },
       type: Object
@@ -34,4 +30,3 @@ var hospitalSchema = new mongoose.Schema({
 });
 
 mongoose.model("Hospital", hospitalSchema);
-

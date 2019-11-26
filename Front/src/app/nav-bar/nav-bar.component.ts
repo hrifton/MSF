@@ -85,7 +85,7 @@ switchOpened() {
       this.show = true;
     } else {
       //TODO a resoudre synchronisation navBar
-      this.show = true;
+      this.show = false;
     }
     this.showLogOut=true
   }

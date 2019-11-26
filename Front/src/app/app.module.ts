@@ -64,6 +64,8 @@ import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { UsersModule } from './users/users.module';
 import { SettingsModule } from './settings/settings.module';
 import { AnalyseModule } from './analyse/analyse.module';
+import { PageErrorForStatusComponent } from './pageError/page-error-for-status/page-error-for-status.component';
+import { PageErrorUserEmptyDepartementComponent } from './pageError/page-error-user-empty-departement/page-error-user-empty-departement.component';
 
 //import { HistoricModule } from "./historic/historic.module";
 //import { HistoricComponent } from "./historic/historic.component";
@@ -74,7 +76,9 @@ import { AnalyseModule } from './analyse/analyse.module';
     NavBarComponent,
     LoginComponent,
     UserComponent,
-    SignUpComponent
+    SignUpComponent,
+    PageErrorForStatusComponent,
+    PageErrorUserEmptyDepartementComponent
     //HistoricComponent
   ],
   imports: [

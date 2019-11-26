@@ -36,9 +36,16 @@ userRoutes.route("/techsByHospital").get((req, res) => {
 userRoutes.route("/:id").put((req, res) => {
   ctrlUser.ModifieRole(req.body, res);
 });
-userRoutes.route("techsByHospital/:id").get((req, res) => {
+userRoutes.route("/techsByHospital/:id").get((req, res) => {
   ctrlUser.getTechByHopital(req.query, res);
 });
+
+userRoutes.route("/adminByHospital").get((req, res) => {
+  ctrlUser.getAdminByHopital(req.query, res);
+});
+
+
+
 
 module.exports = userRoutes;
 function newFunction() {

@@ -37,4 +37,8 @@ metierRoutes.route("/update/:id").put(function(req, res) {
 metierRoutes.route("/:_id").get(function(req, res) {
   ctrlMetier.getById(req.params, res);
 });
+
+metierRoutes.route('/delete/:_id').delete(function(req,res){
+   ctrlMetier.DeleteById(req.params, res);
+})
 module.exports = metierRoutes;

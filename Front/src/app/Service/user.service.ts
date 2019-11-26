@@ -8,8 +8,7 @@ import { User } from "../Class/user";
   providedIn: "root"
 })
 export class UserService {
- 
-  uri =  environment.apiBaseUrl;
+  uri = environment.apiBaseUrl;
 
   noAuthHeader = { headers: new HttpHeaders({ NoAtuh: "True" }) };
   selectedUser: { fullName: string; email: string; password: string };
@@ -28,6 +27,11 @@ export class UserService {
     return this.http.post(this.uri + "/register", user, this.noAuthHeader);
   }
 
+  getAdminHospital(data) {
+    return this.http.get(`${this.uri}/user/adminByHospital/`, {
+      params: { data }
+    });
+  }
   login(authCredentials) {
     return this.http.post(
       this.uri + "/authenticate",
@@ -35,14 +39,14 @@ export class UserService {
       this.noAuthHeader
     );
   }
-/**
- *Add Departement ListStandart
- *
- * @param {*} $event
- * @returns
- * @memberof UserService
- */
-addDepartement($event: any) {
+  /**
+   *Add Departement ListStandart
+   *
+   * @param {*} $event
+   * @returns
+   * @memberof UserService
+   */
+  addDepartement($event: any) {
     console.log("addDepartement User", $event);
     return this.http.post(
       this.uri + "/addDepartement",
@@ -271,6 +275,8 @@ addDepartement($event: any) {
   }
 
   RoleModif($event: any) {
-      return this.http.put(`${this.uri}/user/${$event._id}`, $event);
-    }
+    return this.http.put(`${this.uri}/user/${$event._id}`, $event);
+  }
+
+  
 }

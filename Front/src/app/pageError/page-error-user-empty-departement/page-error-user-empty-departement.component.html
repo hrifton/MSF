@@ -1,0 +1,27 @@
+<div *ngIf="admin" class="row vertical-center">
+  <div class="col-4">
+    <div class="e-card" style="max-width:400px">
+      <div class="e-card-content">
+        <div class="e-card-vertical">
+          <img class="mt-5 mb-5" src="../../assets/img/logo.png" />
+        </div>
+        <mat-card-content >
+          <div class="mt-1 mb-1 text-center">
+        Contact Your Admin<br>
+          </div>
+
+<div class="e-card-actions e-card-vertical text-center" >
+  <a href="mailto:{{admin.email}}" target="_top">{{admin.fullName}}</a>
+
+</div>
+        </mat-card-content>
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>

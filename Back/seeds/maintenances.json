@@ -1,0 +1,31 @@
+
+[{
+    "_id":{"$oid":"5ddce382591fab41401aa7fd"},
+    "name": "GLUCOMETRE, lecteur glycémie (Nova StatStrip) ",
+    "categorie": "5db7409f2aeed167d49fb55c",
+    "subCat": "Electro-mechanical Devices ",
+    "periodicity": "Monthly",
+    "description": "GLUCOMETRE, lecteur glycémie (Nova StatStrip) ",
+    "interval": 3,
+    "__v": 0
+},
+{
+    "_id":{"$oid":"5ddce3be591fab41401aa7fe"},
+    "name": "C-arm - Amplificateur de brillance",
+    "categorie": "5db7409f2aeed167d49fb55c",
+    "subCat": "Electro-mechanical Devices ",
+    "periodicity": "Monthly",
+    "description": "C-arm - Amplificateur de brillance",
+    "interval": 1,
+    "__v": 0
+},
+{
+    "_id":{"$oid":"5ddce3d1591fab41401aa7ff"},
+    "name": "UNITE DE CHAUFFAGE (Bair Hugger 775)",
+    "categorie": "5db7409f2aeed167d49fb55c",
+    "subCat": "Diagnostic imaging equipment ",
+    "periodicity": "Monthly",
+    "description": "UNITE DE CHAUFFAGE (Bair Hugger 775)",
+    "interval": 6,
+    "__v": 0
+}]

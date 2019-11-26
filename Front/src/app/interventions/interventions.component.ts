@@ -93,7 +93,7 @@ export class InterventionsComponent implements OnInit {
     $event.idUser = this.us.getId();
     $event.type = "JobRequest";
     $event.status = "Open";
-    $event.day = moment().format("DD/MM/YYYY");
+    $event.day = new Date();
     $event.idHopital = this.us.getIdHopital();
     this.is.postInter($event).subscribe((data: Intervention) => {
       if (typeof data.slug === "number") {
@@ -120,14 +120,7 @@ export class InterventionsComponent implements OnInit {
     });
     this.interentionList.refreshInterventionTable();
   }
-  returnDepartement(data: Intervention): any {
-    const found = this.departements.find(function(element) {
-      if (element._id === data.idDepartement) {
-        return element;
-      }
-    });
-    return found;
-  }
+
   check($event) {
     this.is.updateIntervention($event).subscribe((data: Intervention) => {
       this.getInterventionByRole();
@@ -201,7 +194,6 @@ export class InterventionsComponent implements OnInit {
         console.log("redirection:", this.us.getIdDepartement());
       }
     } else {
-
     }
     //If status is USER
     if (this.userDetails === "User") {
@@ -220,8 +212,17 @@ export class InterventionsComponent implements OnInit {
         .getInterventionsBytech(this.us.getFullName())
         .subscribe((data: any[]) => {
           this.interventions = data;
-          this.show = true;
+          this.ds
+            .getDateMaintenanceByTech(this.us.getId())
+            .subscribe((data: any) => {
+              console.log(data);
+              this.interventions = _.concat(this.interventions, data);
+              this.formatDate();
+              this.show = true;
+            });
         });
+      this.formatDate();
+      console.log(this.projet);
       this.show = true;
     } //If status is ADMIN
     else if (this.userDetails === "Admin" || this.userDetails == "Operator") {
@@ -234,41 +235,17 @@ export class InterventionsComponent implements OnInit {
 
           this.is.getInterventions().subscribe((data: any[]) => {
             this.ds
-              .getMaintenanceAndIntervention()
+              .getMaintenanceByHospitalAndDate()
               .subscribe((maindata: any[]) => {
                 maindata.forEach(element => {
-                  if (element.resultat.length <= 0) {
-                    const inter = {
-                      _id: element.idMaintenance,
-                      day: moment(element.StartTime).format("DD/MM/YYYY"),
-                      departement: "",
-                      description: "",
-                      locality: "",
-                      priority: "Medium",
-                      status: "In process",
-                      tech: "",
-                      type: "Maintenance",
-                      user: ""
-                    };
-                    data.push(inter);
-                  } else {
-                    const inter = {
-                      _id: element.idMaintenance,
-                      day: moment(element.StartTime).format("DD/MM/YYYY"),
-                      departement: element.resultat[0].executor,
-                      description: element.resultat[0].description,
-                      locality: "",
-                      priority: "Medium",
-                      status: "In process",
-                      tech: "",
-                      type: "Maintenance",
-                      user: ""
-                    };
-                    data.push(inter);
-                  }
+                  this.interventions = maindata;
+                  this.formatDate();
                 });
-                this.interventions = data;
+                this.interventions = _.concat(data, this.interventions);
+                console.log(this.interventions);
                 if (this.interventions.length > 0) {
+                  this.formatDate();
+                  this.remplaceIdCatByNameCat();
                   this.comptemetier(this.projet[0].metier, this.interventions);
                 }
 
@@ -276,13 +253,39 @@ export class InterventionsComponent implements OnInit {
               });
           });
         });
-        this.show = true;
+      this.show = true;
       //If Status is SuperAdmin
     } else if (this.userDetails === "SuperAdmin") {
       console.log("super Admin  *******************");
     } else {
       console.log("Error return to login");
     }
+  }
+  remplaceIdCatByNameCat() {
+    let categorie = this.projet[0].metier;
+
+    this.interventions.forEach(element => {
+      let index = _.findIndex(categorie, function(c) {
+        return element.metier == c._id;
+      });
+      element.categorie = categorie[index].name;
+    });
+  }
+  formatDate() {
+    this.interventions.forEach(element => {
+      if (element.idMaintenance) {
+        element.type = "Maintenance";
+        element.StartTime = moment(element.StartTime).format("LL");
+        element.EndTime = element.StartTime;
+        element.day = element.StartTime;
+        element.tech = this.findTechInList(this.techs, element.idTech);
+      } else {
+        console.log(element)
+        element.day = moment(element.day).format("LL");
+        console.log(this.returnCategorie(element.metier))
+        element.categorie=this.returnCategorie(element.metier)
+      }
+    });
   }
 
   /**
@@ -351,14 +354,63 @@ export class InterventionsComponent implements OnInit {
 
     this.calendrierTech.refreshAgenda();
   }
+
+  /**
+   * return info hopital
+   */
   findHospital() {
     this.hs.findHopital(this.us.getIdHopital()).subscribe((data: Hospital) => {
       this.projet = data;
     });
   }
+  /**
+   *
+   *Return liste Tech par hopital
+   * @memberof InterventionsComponent
+   */
   findTechByHospital() {
     this.us.getUserTech().subscribe((data: User) => {
       this.techs = data;
     });
+  }
+  /**
+   *
+   *Return nom Tech
+   * @memberof InterventionsComponent
+   */
+
+  findTechInList(listeTech, idTech) {
+    let index = _.findIndex(listeTech, function(t) {
+      return t._id == idTech;
+    });
+    return listeTech[index].fullName;
+  }
+
+  /**
+   *
+   *return departement d'une intervention
+   * @param {Intervention} data
+   * @returns {*}
+   * @memberof InterventionsComponent
+   */
+  returnDepartement(data: Intervention): any {
+    const found = this.departements.find(function(element) {
+      if (element._id === data.idDepartement) {
+        return element;
+      }
+    });
+    return found;
+  }
+
+
+  returnCategorie(data){
+  const found=this.projet[0].metier.find(function(element){
+    console.log(element,data);
+      if(element._id===data){
+        console.log(element.name)
+        return element
+      }
+    })
+    return found.name
   }
 }

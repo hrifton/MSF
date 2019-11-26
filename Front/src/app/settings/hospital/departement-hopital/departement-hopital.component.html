@@ -4,13 +4,13 @@
       <div class="e-card-content">
         <div class="row">
           <!--Liste Metier dispo-->
-          <div class="col-xs-12 col-sm-12 col-lg-8 col-md-8">
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
             <div class="row" style="margin-top: 0px;">
               <div class="e-card" id="basic_card">
                 <div class="e-card-header">
                   <div class="e-card-header-caption">
                     <div class="e-card-header-title">
-                      <h5>List of Departement</h5>
+                      <h5>Departements</h5>
                     </div>
                   </div>
                 </div>
@@ -18,20 +18,47 @@
                 <div class="e-card-content">
                   <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
                     <div class="row">
-                      <div class="col-6">
+                      <div class="e-card col-xs-6 col-sm-6 col-lg-2 col-md-4" style="height: 200px;">
+                        <div class="e-card-header">
+                          <div class="e-card-header-caption">
+                            <div class="e-card-title">
+                              <h6>Add new Departement</h6>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="e-card-content" >
+                          <form id="departementForm" [formGroup]="departementForm" class="form-horizontal" novalidate="">
+                            <div class="form-group">
+                              <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                                <div class="e-float-input">
+                                  <input id="departement" type="text" formControlName="departement" />
+                                  <span class="e-float-line"></span>
+                                  <label for="departement" class="e-float-text">Departement</label>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                          <button (click)="saveDep(departementForm)" mat-raised-button="mat-raised-button-rigth" color="primary"
+                            [disabled]="!departementForm.valid">
+                            Save
+                          </button>
+                        </div>
+                      
+                      </div>
+                      <div class="col-xs-6 col-sm-6 col-lg-4 col-md-4">
                         <ejs-grid id="Grid" #grid  allowPaging='true' (rowDragStart)="rowDragStart($event)" [toolbar]='toolbar'[dataSource]="srcData"  [pageSettings]='initialPage'
                           [allowSelection]="true" [allowRowDragAndDrop]="true" [selectionSettings]="selectionOptions" (actionBegin)="actionBegin($event)"
-                          [rowDropSettings]="srcDropOptions" width="100%" height=365>
+                          [rowDropSettings]="srcDropOptions" width="100%" >
                           <e-columns>
                             <e-column field="departement" headerText="Departements" width="120" textAlign="Right">
                             </e-column>
                           </e-columns>
                         </ejs-grid>
                       </div>
-                      <div class="col-6">
+                      <div class="col-xs-6 col-sm-6 col-lg-4 col-md-4">
                         <ejs-grid id="DestGrid" #grid2  allowPaging='true' [dataSource]="destData" (rowDragStart)="rmRowDragStart($event)"  [pageSettings]='initialPage'
                           [allowSelection]="true" [allowRowDragAndDrop]="true" [rowDropSettings]="destDropOptions" [toolbar]='toolbar' 
-                          [selectionSettings]="selectionOptions" width="100%" height=365>
+                          [selectionSettings]="selectionOptions" width="100%">
                           <e-columns>
                             <e-column field="departement" headerText="Departements in to Hospital" width="120"
                               textAlign="Right">

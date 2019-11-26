@@ -6,6 +6,8 @@ import { UserService } from "./user.service";
 import Departement from '../Class/Departement';
 import { environment } from "../../environments/environment";
 
+import * as moment from "moment";
+
 @Injectable({ providedIn: "root" })
 export class InterventionService {
   uri = environment.apiBaseUrl+"/intervention";
@@ -14,6 +16,7 @@ export class InterventionService {
   // add a new Intervention
 
   postInter(intervention: Intervention) {
+    console.log(typeof intervention.day)
     return this.http.post(`${this.uri}/add`, intervention);
   }
 
@@ -25,9 +28,15 @@ export class InterventionService {
 
   // TODO Local ADMIN OPERATOR
   getInterventions() {
+     const startOfMonth = moment()
+       .startOf("month")
+       .format("YYYY-MM-DD hh:mm");
+     const endOfMonth = moment()
+       .endOf("month")
+       .format("YYYY-MM-DD hh:mm");
     const idHopital = this.us.getIdHopital();
 
-    return this.http.get(`${this.uri}/byHopital`, { params: { idHopital } });
+    return this.http.get(`${this.uri}/byHopital`, { params: { idHopital,startOfMonth,endOfMonth } });
   }
   // TODO TECH
   // Get Interventions byUser

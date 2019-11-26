@@ -5,6 +5,26 @@
     "name" : "Biomedical equipment",
     "description" : "",
     "color" : "#7dff2f",
+    "categorie": [
+        {
+            "name": "Electro-mechanical Devices "
+        },
+        {
+            "name": "Anaesthesia "
+        },
+        {
+            "name": "Electrical laboratory equipment "
+        },
+        {
+            "name": "Diagnostic imaging equipment "
+        },
+        {
+            "name": "Sterilization "
+        },
+        {
+            "name": "Anthropometric equipment "
+        }
+    ],
     "__v" : 0
 },
 

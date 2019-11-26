@@ -4,13 +4,7 @@ var userSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
   description: { type: String },
   color: { type: String, required: true, unique: true },
-  categorie: [
-    {
-      type: Object,
-      ref: "categorie",
-      required: false
-    }
-  ]
+  categorie: [{_id : false ,name: { type: String }}]
 });
 
 mongoose.model("Metier", userSchema);

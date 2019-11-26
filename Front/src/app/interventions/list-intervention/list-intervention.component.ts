@@ -79,11 +79,18 @@ export class ListInterventionComponent implements OnInit {
   public submitClicked = false;
   subCat: any;
   public departement:Departement;
+  public type:string;
   // router: Router;
 
-  constructor(private ss: SolutionService, private router: Router) { }
+  constructor(private ss: SolutionService, private router: Router) {console.log(
+                                                                      this
+                                                                        .interventions,
+                                                                      this
+                                                                        .maintenance
+                                                                    ); }
 
   ngOnInit() {
+    console.log(this.interventions,this.maintenance)
     this.filterSettings = {
       type: "Menu"
     };
@@ -111,6 +118,7 @@ export class ListInterventionComponent implements OnInit {
     };
     this.pageSettings = { pageSizes: true, pageSize: 8 };
     this.dropData = ["Order Placed", "Processing", "Delivered"];
+    console.log(this.interventions, this.maintenance);
   }
   sendLink(data) {
     this.router.navigate(["historic/"], { queryParams: { asset: data } });
@@ -212,15 +220,16 @@ export class ListInterventionComponent implements OnInit {
     console.log('Formulaire Maintenance : ', data)
     return new FormGroup({
       _id: new FormControl(data._id, Validators.required),
-      departement: new FormControl(
-        data.departement,
-        Validators.required
-      ),
+      //departement a rajouté
+      departement: new FormControl("", Validators.required),
+      categorie: new FormControl(data.categorie ? data.categorie : ""),
+      subCat: new FormControl(data.subCat ? data.categorie : ""),
+      tech: new FormControl(data.tech ? data.tech : ""),
       locality: new FormControl(data.locality ? data.locality : ""),
-      priority: new FormControl(data.priority),
+      priority: new FormControl("Medium"),
       description: new FormControl(data.description),
       status: new FormControl(data.status),
-      day: new FormControl(data.day)
+      StartTime: new FormControl(data.StartTime)
     });
   }
   public sortComparer = (reference: string, comparer: string) => {
@@ -254,7 +263,7 @@ export class ListInterventionComponent implements OnInit {
   // Action sur le tableau
   actionBegin(args: SaveEventArgs): void {
     // Verification de l'action debut edit ou ajout
-    console.log(args)
+    console.log("Action Begin :",args)
     if (args.requestType === "beginEdit" || args.requestType === "add") {
       if (this.user == "User") {
         let data: any = args.rowData;
@@ -263,6 +272,7 @@ export class ListInterventionComponent implements OnInit {
         }
       }
       let data: any = args.rowData;
+      this.type=data.type
       if (data.type == "JobRequest") {
         console.log("go", data)
         this.angForm = this.createFormIntervention(data);
@@ -277,7 +287,7 @@ export class ListInterventionComponent implements OnInit {
       // verification si le formulaire est valid
       if (this.angForm.valid) {
         if(!this.angForm.value.dateAssing){
-          this.angForm.value.dateAssing= moment().format("DD/MM/YYYY");
+          this.angForm.value.dateAssing= new Date();
         };
        
        this.messageEvent.emit(this.angForm.value);
@@ -302,7 +312,7 @@ export class ListInterventionComponent implements OnInit {
    */
   actionComplete(args: DialogEditEventArgs): void {
     let data: any = args.rowData;
-
+console.log("ActionComplet: ",data)
     if (args.requestType === "beginEdit" || args.requestType === "add") {
       if (data.type == "JobRequest") {
         args.dialog.header = "Details of Intervention";
@@ -311,7 +321,11 @@ export class ListInterventionComponent implements OnInit {
           (args.dialog as Dialog).dataBind();
         }
       } else if (data.type == "Maintenance") {
-        alert("actionCOmpelte Maintenance");
+       args.dialog.header = "Details of Maintenance";
+       if (Browser.isDevice) {
+         args.dialog.height = window.innerHeight - 500 + "px";
+         (args.dialog as Dialog).dataBind();
+       }
       }
     }
   }

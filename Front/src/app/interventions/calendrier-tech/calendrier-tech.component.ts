@@ -4,14 +4,15 @@ import {
   Input,
   ViewChild,
   EventEmitter,
-  Output
+  Output,
+  SimpleChanges
 } from "@angular/core";
 import {
   extend,
   DialogEditEventArgs,
   SaveEventArgs
 } from "@syncfusion/ej2-grids/src";
-
+import * as _ from "lodash";
 import {
   DayService,
   WeekService,
@@ -106,7 +107,7 @@ export class CalendrierTechComponent implements OnInit {
     this.interventions.forEach(element => {
       if (element.status != "Done") {
         console.log(element.status);
-        console.log(element)
+        console.log(element);
         element.StartTime = this.formatdate(element.dateAssing);
         element.EndTime = element.StartTime;
         element.Subject = element.description;
@@ -132,7 +133,8 @@ export class CalendrierTechComponent implements OnInit {
    * @memberof CalendrierTechComponent
    */
   formatdate(date) {
-    return moment(date, "DD-MM-YYYY").format("MMMM Do YYYY");
+    console.log(date);
+    return moment(date).format("MMMM Do YYYY");
   }
   /**
    *@function refreshAgenda()
@@ -170,15 +172,14 @@ export class CalendrierTechComponent implements OnInit {
    * @memberof CalendrierTechComponent
    */
   onPopupOpen(args: PopupOpenEventArgs): void {
-    let any:any=args.data;
+    let any: any = args.data;
     if (args.type == "Editor") {
       console.log(any.Subject);
-      if(any.Subject!=undefined){
+      if (any.Subject != undefined) {
         this.createForm(args.data);
-      }else{
-         args.cancel = true;
+      } else {
+        args.cancel = true;
       }
-      
     } else {
       args.cancel = true;
     }
@@ -213,5 +214,11 @@ export class CalendrierTechComponent implements OnInit {
       dateCloture: new FormControl("")
     });
     console.log(this.solutionForm.value);
+  }
+  ngOnChanges(changes: SimpleChanges) {
+   this.interventions = _.concat(this.interventions, changes.currentValue);
+   console.log(this.interventions)
+   this.agenda.refresh()
+    // You can also use yourInput.previousValue and
   }
 }

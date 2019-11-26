@@ -26,6 +26,7 @@ export class FormulaireMetierComponent implements OnInit {
   createFormMetier() {
     this.metierForm = this.fb.group({
       name: new FormControl("", [Validators.required]),
+      color: new FormControl("", [Validators.required]),
       description: new FormControl("")
     });
   }

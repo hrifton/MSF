@@ -23,10 +23,13 @@ import { Maintenance } from "../../Class/Maintenance";
 import { MetierService } from "../../Service/metier.service";
 import { Metier } from "src/app/Class/Metier";
 import { UserService } from "src/app/Service/user.service";
+import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import {
   SelectionSettingsModel,
   DataStateChangeEventArgs,
-  GridComponent
+  GridComponent,
+  EditSettingsModel,
+  ToolbarItems
 } from "@syncfusion/ej2-angular-grids";
 import { Observable } from "rxjs";
 
@@ -47,7 +50,7 @@ export class MaintenanceComponent implements OnInit {
   listeMaintenance: Maintenance;
   subCat: any;
   public role: string = this.us.getStatus();
-
+  public toolbar: ToolbarItems[];
   constructor(
     private fb: FormBuilder,
 
@@ -65,7 +68,7 @@ export class MaintenanceComponent implements OnInit {
   maintenanceForm: FormGroup;
 
   // hasUnitNumber = false;
-
+  @ViewChild("ejDialog") ejDialog: DialogComponent;
   @ViewChild("checkbox")
   public mulObj: MultiSelectComponent;
   @ViewChild("selectall")
@@ -77,6 +80,7 @@ export class MaintenanceComponent implements OnInit {
   @ViewChild("grid")
   public grid: GridComponent;
   public mode: string;
+  public editSettings: EditSettingsModel;
   public filterPlaceholder: string;
   public lrepeat: { [key: string]: Object }[] = [
     { repeat: "Daily" },
@@ -86,8 +90,8 @@ export class MaintenanceComponent implements OnInit {
   ];
 
   public lEnd: { [key: string]: Object }[] = [
-    { end: "Until" },
-    { end: "Count" }
+    { end: "Period ", value: "Until" },
+    { end: "Occurrence ", value: "Count" }
   ];
   // define the data with category
   public days: { [key: string]: Object }[] = [
@@ -127,12 +131,25 @@ export class MaintenanceComponent implements OnInit {
   // set the MultiSelect popup height
   public popHeight = "350px";
   public selectionOptions: SelectionSettingsModel;
-  minDate=new Date();
+  minDate = new Date();
+  public targetElement: HTMLElement;
   //#endregion
-
+  ngOnInit() {
+    this.toolbar = ["Delete"];
+    this.editSettings = {
+      allowEditing: false,
+      allowAdding: false,
+      allowDeleting: true,
+      mode: "Normal"
+    };
+    this.trieTableauMaintenance();
+    this.mode = "CheckBox";
+    this.filterPlaceholder = "Select Day(s)";
+    this.selectionOptions = { type: "Multiple" };
+  }
   createForm(data?) {
     if (data) {
-      console.log("FormAdmin");
+      console.log("forma ", data);
       this.maintenanceForm = this.fb.group({
         name: new FormControl(data.name ? data.name : "", [
           Validators.required
@@ -165,7 +182,6 @@ export class MaintenanceComponent implements OnInit {
         month: new FormControl(data.month ? data.month : "")
       });
     } else {
-      console.log("FormAdmin sans DATA");
       this.maintenanceForm = this.fb.group({
         name: new FormControl("", [Validators.required]),
         categorie: new FormControl("", [Validators.required]),
@@ -206,24 +222,21 @@ export class MaintenanceComponent implements OnInit {
   }
 
   rowSelected($event) {
+    console.log($event);
     this.createForm($event.data);
   }
   saveNewMaintenance(maintenance) {
     this.saveMaintenance.emit(maintenance.value);
   }
   public onChange(args: any): void {
-    console.log(args);
     if (args.itemData.categorie) {
-      console.log(args.itemData.categorie);
       this.subCat = args.itemData.categorie;
     }
-
-    if (args.itemData.maintenance != undefined) {
-      this.onSelection(args.itemData);
-    }
     if (null) {
-      console.log(this.checkboxObj);
       this.mulObj.showSelectAll = this.checkboxObj.checked;
+    }
+    if (args.itemData.maintenance != undefined) {
+      this.createForm(args.itemData);
     }
   }
   /**
@@ -231,6 +244,7 @@ export class MaintenanceComponent implements OnInit {
    * Value est la maintenance qui auto-completera le formulaire avec ces valeurs par defaut
    */
   onSelection(value) {
+    console.log("OnSelect");
     this.periode = value.periodicity;
     this.maintenanceForm = this.fb.group({
       idMaintnance: new FormControl(value._id, [Validators.required]),
@@ -239,7 +253,7 @@ export class MaintenanceComponent implements OnInit {
       periodicity: new FormControl("", [Validators.required]),
       recurrence: new FormControl("", [Validators.required]),
       description: new FormControl(value.description, [Validators.required]),
-      StartTime: new FormControl("", [Validators.required]),
+      startUntil: new FormControl(value.startUntil ? value.StartTime : ""),
       count: new FormControl(""),
       until: new FormControl(""),
       listDay: new FormControl([]),
@@ -252,27 +266,23 @@ export class MaintenanceComponent implements OnInit {
       codeBarre: new FormControl("")
     });
   }
-  ngOnInit() {
-    this.trieTableauMaintenance();
-    this.mode = "CheckBox";
-    this.filterPlaceholder = "Select Day(s)";
-    this.selectionOptions = { type: "Multiple" };
-  }
+
   trieTableauMaintenance() {
     let tmp = [];
     this.data = null;
     if (this.role == "SuperAdmin") {
-      console.log("SuperAdmin");
-      this.listeMetier = this.metiers;
+      this.listeMetier = this.metiers.slice();
       tmp = this.trieMaintenanceForAllHospital(this.projet);
-      console.log(this.projet, this.listeMaintenanceDefault);
       this.data = _.concat(
         this.trieMaintenance(this.listeMaintenanceDefault),
         tmp
       );
       this.createFormSuperAdmin();
     } else {
-      this.listeMetier = this.projet[0].metier;
+      this.listeMetier = _.concat(
+        this.projet[0].metier.slice(),
+        this.metiers.slice()
+      );
       this.listeMaintenanceDefault = this.trieMaintenance(
         this.listeMaintenanceDefault
       );
@@ -295,15 +305,15 @@ export class MaintenanceComponent implements OnInit {
 
       for (let index1 = 0; index1 < listeMaintenanceDefault.length; index1++) {
         const maintenance = listeMaintenanceDefault[index1];
-
+        listeMaintenanceDefault.projet != undefined
+          ? (listeMaintenanceDefault[index1].projet =
+              listeMaintenanceDefault.projet)
+          : (listeMaintenanceDefault[index1].projet = "Standard");
         //if categorieMaintenance find
+
         if (maintenance.categorie == metier._id) {
-          console.log(listeMaintenanceDefault.projet);
           listeMaintenanceDefault[index1].nameCat = metier.name;
-          listeMaintenanceDefault.projet != undefined
-            ? (listeMaintenanceDefault[index1].projet =
-                listeMaintenanceDefault.projet)
-            : (listeMaintenanceDefault[index1].projet = "Standard");
+
           //boucle for find subCat
           for (let index2 = 0; index2 < metier.categorie.length; index2++) {
             const subCat = metier.categorie[index2];
@@ -350,4 +360,29 @@ export class MaintenanceComponent implements OnInit {
     this.trieTableauMaintenance();
     this.grid.refresh();
   }
+  /**
+   * delete maintenance + delete date if
+   * @param  {} data
+   */
+  delete(data) {
+    console.log(data);
+  }
+
+  public onOpenDialog = function(event: any): void {
+    // Call the show method to open the Dialog
+    this.ejDialog.show();
+  };
+  actionBegin($event) {
+    this.onOpenDialog($event);
+    console.log("actionBegin", $event);
+  }
+  actionComplete($event) {
+    console.log("actionComplete", $event);
+  }
+
+  public animationSettings: Object = {
+    effect: "Zoom",
+    duration: 400,
+    delay: 0
+  };
 }

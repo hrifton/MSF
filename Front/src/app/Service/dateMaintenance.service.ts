@@ -3,14 +3,20 @@ import { Injectable } from "@angular/core";
 import { DateMaintenance } from "../Class/DateMaintenance";
 import { Maintenance } from "../Class/Maintenance";
 import { environment } from "../../environments/environment";
+import { UserService } from "./user.service";
+import * as moment from "moment";
 @Injectable({
   providedIn: "root"
 })
 export class DateMaintenanceService {
-  uri = environment.apiBaseUrl+'/datemaintenance';
+  uri = environment.apiBaseUrl + "/datemaintenance";
 
-  constructor(private http: HttpClient) {}
-  // Post a new datemaintenance
+  constructor(private http: HttpClient, private us: UserService) {}
+  
+  /**
+   * add New Maintenance
+   * @param  {DateMaintenance} datemaintenance
+   */
   postDateMaintenance(datemaintenance: DateMaintenance) {
     return this.http.post(`${this.uri}/add`, datemaintenance).subscribe(
       data => {
@@ -21,7 +27,10 @@ export class DateMaintenanceService {
       }
     );
   }
-
+  /**
+   * delete a date Maintenance
+   * @param  {} datemaintenance
+   */
   deleteDateMaintenance(datemaintenance) {
     const id = datemaintenance.event._id;
     console.log("deleteDateMaintenance " + id);
@@ -34,6 +43,10 @@ export class DateMaintenanceService {
       }
     );
   }
+  /**
+   * delete date Maintenance By _idMaintenance
+   * @param  {} datemaintenance
+   */
   deleteSerieDateMaintenance(datemaintenance) {
     const id = datemaintenance.event.idMaintenance;
     const codeBarre = datemaintenance.event.codeBarre;
@@ -44,12 +57,43 @@ export class DateMaintenanceService {
       .then(response => response);
   }
 
-  // Get all datemaintenance
+  
+  /**
+   * return all Date Maintenance For a Hosptial
+   */
   getDateMaintenance() {
-    return this.http.get(`${this.uri}`);
+    let idHopital = this.us.getIdHopital();
+    return this.http.get(`${this.uri}/byHopital`, { params: { idHopital } });
   }
-
+ 
+  /**
+   * 
+   */
   getMaintenanceAndIntervention() {
     return this.http.get(`${this.uri}/maintenancedate`);
+  }
+  /**
+   * return all maintenance of month Current
+   */
+  getMaintenanceByHospitalAndDate() {
+  const startOfMonth = moment()
+    .startOf("month")
+    .format("YYYY-MM-DD hh:mm");
+  const endOfMonth = moment()
+    .endOf("month")
+    .format("YYYY-MM-DD hh:mm");
+    let idHopital = this.us.getIdHopital();
+    return this.http.get(`${this.uri}/MaintenanceByHospitalAndDate`, {
+      params: { idHopital,startOfMonth, endOfMonth }
+    });
+  }
+  /**
+   * return maintenance by _idTech
+   * @param  {string} idTech
+   */
+  getDateMaintenanceByTech(idTech: string) {
+    return this.http.get(`${this.uri}/getDateMaintenanceByTech`, {
+      params: { idTech }
+    });
   }
 }

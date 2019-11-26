@@ -15,21 +15,21 @@
               <!--Name Maintenance -->
               <div class="col-xs-6 col-sm-6 col-lg-4 col-md-4">
                 <div class="e-float-input">
-                  <input id="name" type="text" formControlName="name" placeholder="New Maintenance" />
+                  <input id="name" type="text" formControlName="name" placeholder="Task" />
                   <span class="e-float-line"></span>
-                  <label for="name" class="e-float-text">New Maintenance</label>
+                  <label for="name" class="e-float-text">Task</label>
                 </div>
               </div>
               <!--Select Categorie-->
               <div class="col-xs-6 col-sm-6 col-lg-4 col-md-4">
                 <ejs-dropdownlist id="Categorie" formControlName="categorie" [dataSource]="listeMetier"
-                  (change)="onChange($event)" [fields]="{ text: 'name', value: '_id' }" placeholder="Categorie"
+                  (change)="onChange($event)" [fields]="{ text: 'name', value: 'name' }" placeholder="Categories"
                   popupHeight="200px" floatLabelType="Always" #metier></ejs-dropdownlist>
               </div>
               <!--Select subCategorie-->
               <div *ngIf="subCat" class="col-xs-6 col-sm-6 col-lg-4 col-md-4">
                 <ejs-dropdownlist id="subCat" formControlName="subCat" [dataSource]="subCat" (change)="onChange($event)"
-                  [fields]="{ text: 'name', value: '_id' }" placeholder="SubCategorie" popupHeight="200px"
+                  [fields]="{ text: 'name', value: 'name' }" placeholder="Sub Categories" popupHeight="200px"
                   floatLabelType="Always" #metier></ejs-dropdownlist>
               </div>
             </div>
@@ -68,7 +68,8 @@
                         <div class="form-row">
                           <div class="col-xs-6 col-sm-6 col-lg-4 col-md-4">
                             <span class="e-float-line"></span>
-                            <label for="duration" class="e-float-text  ml-2">Repeat every {{ maintenanceForm.value.interval}}
+                            <label for="duration" class="e-float-text  ml-2">Repeat every
+                              {{ maintenanceForm.value.interval}}
                               Week(s)</label>
                             <ejs-numerictextbox class="mt-4" formControlName="interval" placeholder="Interval Week"
                               format="###.##" placeholder="Repeat Every" decimals="0" value="0" min="0" max="100"
@@ -117,30 +118,34 @@
               </div>
             </div>
           </div>
-          <div *ngIf="role!='SuperAdmin'" [ngSwitch]="periodicity.value">
+          <div [ngSwitch]="periodicity.value">
             <!--Formulaire by Day-->
             <div *ngSwitchCase="'Daily'">
               <div class="form-group">
                 <div class="form-row">
                   <div class="col-xs-6 col-sm-6 col-lg-4 col-md-4">
                     <ejs-dropdownlist id="end" formControlName="end" [dataSource]='lEnd' (change)='onChange($event)'
-                      [fields]="{text:'end',value:'end' }" placeholder="End" floatLabelType='Always' #end>
+                      [fields]="{text:'end',value:'value' }" placeholder="Duration" floatLabelType='Always' #end>
                     </ejs-dropdownlist>
                   </div>
                   <div class="col-xs-6 col-sm-6 col-lg-2 col-md-4">
                     <div *ngIf="end.value==='Until'">
-                    <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil" [min]='minDate' placeholder="Select date to start"
-                      floatLabelType='Auto' #until>
-                    </ejs-datepicker>
-                    <ejs-datepicker format='dd-MM-yyyy' formControlName="endUntil" [min]='maintenanceForm.value.Startuntil'
-                      placeholder="Select date to finish" floatLabelType='Auto' #until>
-                    </ejs-datepicker>
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil"
+                        placeholder="Select date to start" floatLabelType='Auto' #until>
+                      </ejs-datepicker>
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="endUntil"
+                        [min]='maintenanceForm.value.Startuntil' placeholder="Select date to finish"
+                        floatLabelType='Auto' #until>
+                      </ejs-datepicker>
                     </div>
 
                     <div *ngIf="end.value==='Count'">
                       <ejs-numerictextbox formControlName="count" format='###.##' placeholder="Count" decimals='0'
                         value="0" min="0" max="100" step="1" floatLabelType="Always" #count>
                       </ejs-numerictextbox>
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil"
+                        placeholder="Select date to start" floatLabelType='Auto' #until>
+                      </ejs-datepicker>
                     </div>
                   </div>
                 </div>
@@ -167,7 +172,7 @@
                   </div>
                   <div class=" col-xs-6 col-sm-6 col-lg-4 col-md-4">
                     <ejs-dropdownlist id="end" formControlName="end" [dataSource]='lEnd' (change)='onChange($event)'
-                      [fields]="{text:'end',value:'end' }" placeholder="End" floatLabelType='Always' #end>
+                      [fields]="{text:'end',value:'value' }" placeholder="Duration" floatLabelType='Always' #end>
                     </ejs-dropdownlist>
                   </div>
 
@@ -176,18 +181,21 @@
 
                   <div class="col-xs-6 col-sm-6 col-lg-2 col-md-4">
                     <div *ngIf="end.value==='Until'">
-                    <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil" [min]='minDate' placeholder="Select date to start"
-                      floatLabelType='Auto' #until>
-                    </ejs-datepicker>
-                    <ejs-datepicker format='dd-MM-yyyy' formControlName="endUntil" [min]='maintenanceForm.startUntil'
-                      placeholder="Select date to finish" floatLabelType='Auto' #until>
-                    </ejs-datepicker>
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil" [min]='minDate'
+                        placeholder="Select date to start" floatLabelType='Auto' #until>
+                      </ejs-datepicker>
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="endUntil" [min]='maintenanceForm.startUntil'
+                        placeholder="Select date to finish" floatLabelType='Auto' #until>
+                      </ejs-datepicker>
                     </div>
 
                     <div *ngIf="end.value==='Count'">
                       <ejs-numerictextbox formControlName="count" format='###.##' placeholder="Count" decimals='0'
                         value="0" min="0" max="100" step="1" floatLabelType="Always" #count>
                       </ejs-numerictextbox>
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil"
+                        placeholder="Select date to start" floatLabelType='Auto' #until>
+                      </ejs-datepicker>
                     </div>
                   </div>
 
@@ -204,57 +212,66 @@
             <div *ngSwitchCase="'Monthly'">
               <div class="form-group">
                 <div class="form-row">
-                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1">
-                      <ejs-radiobutton label="Day" name="choix" formControlName="choix" labelPosition="Before" value="day">
-                      </ejs-radiobutton>
-                    </div>
-                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1">
-                      <ejs-radiobutton label="Current" name="choix" formControlName="choix" labelPosition="Before"  value="current">
-                      </ejs-radiobutton>
-                    </div>
-                    <div *ngIf="maintenanceForm.value.choix =='day'" class="col-xs-6 col-sm-6 col-lg-1 col-md-1">
-                      <ejs-numerictextbox formControlName="dayOcc" placeholder="dayOcc" format='###.##'
-                        placeholder="Repeat Every" decimals='0' value="0" min="0" max="31" step="1" #dayOcc>
-                      </ejs-numerictextbox>
-                    </div>
 
-                    
-                     <div *ngIf="maintenanceForm.value.choix=='current'" class="col-xs-6 col-sm-6 col-lg-2 col-md-2">
-                      <ejs-dropdownlist  id="current" formControlName="current"
-                        [dataSource]='currents' (change)='onChange($event)' [fields]="{text:'Name',value:'Code' }"
-                        placeholder="Current"  floatLabelType='Always' #current></ejs-dropdownlist>
-                    </div>
-                    <div *ngIf="maintenanceForm.value.choix=='current'" class="col-xs-8 col-sm-8 col-lg-3 col-md-3">
-                      <ejs-dropdownlist  id="day" formControlName="day" [dataSource]='days'
-                        (change)='onChange($event)' [fields]="{text:'Name',value:'Code' }" 
-                        floatLabelType='Always' placeholder="Select a day "#day></ejs-dropdownlist>
-                    </div>
+                  <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1">
+                    <ejs-radiobutton label="Date" name="choix" formControlName="choix" labelPosition="Before"
+                      value="day">
+                    </ejs-radiobutton>
+                  </div>
+                  <div class="col-xs-3 col-sm-3 col-lg-2 col-md-2">
+                    <ejs-radiobutton label="Select Period" name="choix" formControlName="choix" labelPosition="Before"
+                      value="current">
+                    </ejs-radiobutton>
+                  </div>
+                </div>
+                <div class="form-row mt-5">
+                  <div *ngIf="maintenanceForm.value.choix =='day'" class="col-xs-6 col-sm-6 col-lg-1 col-md-1">
+                    <ejs-numerictextbox formControlName="dayOcc" placeholder="dayOcc" format='###.##'
+                      placeholder="Repeat Every" decimals='0' value="0" min="0" max="31" step="1" #dayOcc>
+                    </ejs-numerictextbox>
+                  </div>
+
+                  <div *ngIf="maintenanceForm.value.choix=='current'" class="col-xs-6 col-sm-6 col-lg-2 col-md-2">
+                    <ejs-dropdownlist id="current" formControlName="current" [dataSource]='currents'
+                      (change)='onChange($event)' [fields]="{text:'Name',value:'Code' }" placeholder="Current"
+                      floatLabelType='Always' #current></ejs-dropdownlist>
+                  </div>
+                  <div *ngIf="maintenanceForm.value.choix=='current'" class="col-xs-8 col-sm-8 col-lg-3 col-md-3">
+                    <ejs-dropdownlist id="day" formControlName="day" [dataSource]='days' (change)='onChange($event)'
+                      [fields]="{text:'Name',value:'Code' }" floatLabelType='Always' placeholder="Select a day " #day>
+                    </ejs-dropdownlist>
+                  </div>
                 </div>
               </div>
+
               <div class="form-group">
-                    <div class="form-row">
-                    <div class="col-xs-6 col-sm-6 col-lg-4 col-md-4">
-                      <ejs-dropdownlist id="end" formControlName="end" [dataSource]='lEnd' (change)='onChange($event)'
-                        [fields]="{text:'end',value:'end' }" placeholder="End" floatLabelType='Always' #end>
-                      </ejs-dropdownlist>
-                    </div>
-                    <div class="col-xs-6 col-sm-6 col-lg-2 col-md-4">
-                      <div *ngIf="end.value==='Until'">
-                      <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil" [min]='minDate' placeholder="Select date to start"
+                <div class="form-row">
+                  <div class="col-xs-6 col-sm-6 col-lg-4 col-md-4">
+                    <ejs-dropdownlist id="end" formControlName="end" [dataSource]='lEnd' (change)='onChange($event)'
+                      [fields]="{text:'end',value:'value' }" placeholder="Duration" floatLabelType='Always' #end>
+                    </ejs-dropdownlist>
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-lg-2 col-md-4">
+                    <div *ngIf="end.value==='Until'">
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil" [min]='minDate'
+                        placeholder="Select date to start" floatLabelType='Auto' #until>
+                      </ejs-datepicker>
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="endUntil"
+                        [min]='maintenanceForm.value.Startuntil' placeholder="Select date to finish"
                         floatLabelType='Auto' #until>
                       </ejs-datepicker>
-                      <ejs-datepicker format='dd-MM-yyyy' formControlName="endUntil" [min]='maintenanceForm.value.Startuntil'
-                        placeholder="Select date to finish" floatLabelType='Auto' #until>
+                    </div>
+
+                    <div *ngIf="end.value==='Count'">
+                      <ejs-numerictextbox formControlName="count" format='###.##' placeholder="Count" decimals='0'
+                        value="0" min="0" max="100" step="1" floatLabelType="Always" #count>
+                      </ejs-numerictextbox>
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil"
+                        placeholder="Select date to start" floatLabelType='Auto' #until>
                       </ejs-datepicker>
-                      </div>
-                    
-                      <div *ngIf="end.value==='Count'">
-                        <ejs-numerictextbox formControlName="count" format='###.##' placeholder="Count" decimals='0' value="0" min="0"
-                          max="100" step="1" floatLabelType="Always" #count>
-                        </ejs-numerictextbox>
-                      </div>
                     </div>
                   </div>
+                </div>
               </div>
             </div>
 
@@ -269,8 +286,8 @@
                 <div class="form-row">
                   <div class="mt-2 col-xs-6 col-sm-6 col-lg-4 col-md-4">
                     <ejs-dropdownlist id="end" formControlName="end" [dataSource]='lEnd' (change)='onChange($event)'
-                      [fields]="{text:'end',value:'end' }" placeholder="End" popupHeight='200px' floatLabelType='Always'
-                      #end>
+                      [fields]="{text:'end',value:'value' }" placeholder="Duration" popupHeight='200px'
+                      floatLabelType='Always' #end>
                     </ejs-dropdownlist>
                   </div>
 
@@ -287,12 +304,12 @@
 
                   <div class="col-xs-6 col-sm-6 col-lg-4 col-md-4 mt-4">
                     <div *ngIf="end.value==='Until'">
-                        <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil" [min]='minDate' placeholder="Select date to start"
-                          floatLabelType='Auto' #until>
-                        </ejs-datepicker>
-                        <ejs-datepicker format='dd-MM-yyyy' formControlName="endUntil" [min]='startUntil'
-                          placeholder="Select date to finish" floatLabelType='Auto' #until>
-                        </ejs-datepicker>
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil" [min]='minDate'
+                        placeholder="Select date to start" floatLabelType='Auto' #until>
+                      </ejs-datepicker>
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="endUntil" [min]='startUntil'
+                        placeholder="Select date to finish" floatLabelType='Auto' #until>
+                      </ejs-datepicker>
                     </div>
 
                     <div *ngIf="end.value==='Count'">
@@ -300,6 +317,9 @@
                       <ejs-numerictextbox formControlName="count" format='###.##' placeholder="Count" decimals='0'
                         value="0" min="0" max="100" step="1" #count>
                       </ejs-numerictextbox>
+                      <ejs-datepicker format='dd-MM-yyyy' formControlName="startUntil"
+                        placeholder="Select date to start" floatLabelType='Auto' #until>
+                      </ejs-datepicker>
 
 
                     </div>
@@ -307,7 +327,7 @@
                   <div class="col-xs-6 col-sm-6 col-lg-4 col-md-4 mt-4">
                     <div class="form-row">
                       <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
-                        <ejs-radiobutton label="Day" name="choix" labelPosition="After" formControlName="choix"
+                        <ejs-radiobutton label="Date" name="choix" labelPosition="After" formControlName="choix"
                           value="day">
                         </ejs-radiobutton>
                       </div>
@@ -352,14 +372,14 @@
           <div class="row">
             <div style="width: 320px;margin:0px auto;height: 100px;padding-top: 25px;">
               <div style="display: inline-block;">
-                <button *ngIf="role=='SuperAdmin'" class="samplebtn e-control e-btn" (click)="saveNewMaintenance(maintenanceForm)" color="primary"
-                  data-ripple="true" id="validateSubmit" mat-raised-button="mat-raised-button-left"
-                  [disabled]="!maintenanceForm.valid">
+                <button *ngIf="role=='SuperAdmin'" class="samplebtn e-control e-btn"
+                  (click)="saveNewMaintenance(maintenanceForm)" color="primary" data-ripple="true" id="validateSubmit"
+                  mat-raised-button="mat-raised-button-left" [disabled]="!maintenanceForm.valid">
                   save
                 </button>
-                <button *ngIf="role!='SuperAdmin'" class="samplebtn e-control e-btn" (click)="addNewMaintenanceToHospital(maintenanceForm)"
-                  color="primary" data-ripple="true" id="validateSubmit" mat-raised-button="mat-raised-button-left"
-                  [disabled]="!maintenanceForm.valid">
+                <button *ngIf="role!='SuperAdmin'" class="samplebtn e-control e-btn"
+                  (click)="addNewMaintenanceToHospital(maintenanceForm)" color="primary" data-ripple="true"
+                  id="validateSubmit" mat-raised-button="mat-raised-button-left" [disabled]="!maintenanceForm.valid">
                   Add to hospital
                 </button>
               </div>
@@ -384,17 +404,22 @@
     <div class="control-section">
       <!--<ejs-grid [dataSource]='listeMaintenance'  [allowSelection]="true"            
                     [selectionSettings]="selectionOptions" (rowSelected)="rowSelected($event)">-->
-                    <ejs-grid #grid [dataSource]='data' allowPaging='true' [pageSettings]='pageOptions' allowSorting='true'
-                      allowGrouping='true' (rowSelected)="rowSelected($event)">
+      <ejs-grid #grid [dataSource]='data' allowPaging='true' [pageSettings]='pageOptions' allowSorting='true'
+        allowGrouping='true' (rowSelected)="rowSelected($event)" [allowPaging]='true' [editSettings]='editSettings'
+        [toolbar]='toolbar' (actionBegin)='actionBegin($event)' (actionComplete)='actionComplete($event)'>
         <e-columns>
           <e-column field='projet' headerText='From' width='150'></e-column>
           <e-column field='name' headerText='Maintenance' width='150'></e-column>
           <e-column field='nameCat' headerText='Categorie' width='130' format="yMd" textAlign='Right'></e-column>
-          <e-column field='nameSubCat' headerText='Sub/Cat' width='120' format='C2' textAlign='Right'></e-column>
-          <e-column field='periodicity' headerText='Periodicity' width='130' format="yMd" textAlign='Right'></e-column>
-          <e-column field='interval' headerText='Interval' width='150'></e-column>
+          <e-column field='subCat' headerText='Sub/Cat' width='120' format='C2' textAlign='Right'></e-column>
+          <e-column field='periodicity' headerText='Periodicity' width='80' format="yMd" textAlign='Right'></e-column>
+          <e-column field='interval' headerText='Interval' width='50'></e-column>
+
         </e-columns>
       </ejs-grid>
     </div>
   </div>
 </div>
+<ejs-dialog id='dialog' #ejDialog header='Dialog' content='Dialog enabled with Zoom effect' [target]='targetElement'
+  [animationSettings]='animationSettings' width='250px' [buttons]='buttons'>
+</ejs-dialog>

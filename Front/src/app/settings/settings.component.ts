@@ -45,7 +45,7 @@ export class SettingsComponent implements OnInit {
     private MaintenanceService: MaintenanceService
   ) {}
   public headerText: Object = [
-    { text: "Users" },
+    { text: "Profils" },
     { text: "Hospital" },
     { text: "Maintenance" },
     { text: "Categories/Sub-Categories" },
@@ -113,7 +113,7 @@ export class SettingsComponent implements OnInit {
 
   addSubToHopital($event) {
     this.hs.addSubCatToHop($event).subscribe((data: Hospital) => {
-      console.log(data);
+     return data;
     });
   }
   rmDepToHopital($event) {
@@ -203,13 +203,13 @@ export class SettingsComponent implements OnInit {
    * remove metier
    */
   rmMetier($event) {
-    console.log($event);
-    this.hs.rmMetier($event).subscribe((data: Hospital) => {
+     this.hs.rmMetier($event).subscribe((data: Hospital) => {
       console.log(data);
     });
   }
 
   rmSubCat($event) {
+    console.log($event)
     this.hs.rmSub($event).subscribe((data: Hospital) => {
       console.log(data);
     });

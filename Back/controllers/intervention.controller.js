@@ -5,11 +5,28 @@ require("../models/intervention.model");
 const Intervention = mongoose.model("Intervention");
 const User = mongoose.model("User");
 
+/**
+ * Recupere intervention du mois courant et les intervention avec le statut "Open" et Waiting 
+ * hors du mois courant
+ */
 module.exports.liste = (req, res) => {
   console.log("InterventionByHopital", req);
-  Intervention.aggregate(
+  var listOfMonth=[];
+ Intervention.aggregate(
     [
-      { $match: { idHopital: ObjectId(req.idHopital) } },
+      {
+        $match: {
+          $and: [
+            { idHopital: ObjectId(req.idHopital) },
+            {
+              day: {
+                $gte: new Date(req.startOfMonth),
+                $lte: new Date(req.endOfMonth)
+              }
+            }
+          ]
+        }
+      },
       {
         $lookup: {
           from: "users",
@@ -35,7 +52,58 @@ module.exports.liste = (req, res) => {
     ],
     (err, docs) => {
       if (!err) {
-        res.send(docs);
+        listOfMonth.push(...docs);
+        Intervention.aggregate(
+          [
+            {
+              $match: {
+                $and: [
+                  { idHopital: ObjectId(req.idHopital) },
+                  {
+                    day: {
+                      $lte: new Date(req.startOfMonth)
+                      //$gte: new Date(req.endOfMonth)
+                    }
+                  },
+                  { $or: [{ status: "Open" }, { status: "Waiting" }] }
+                ]
+              }
+            },
+            {
+              $lookup: {
+                from: "users",
+                localField: "idUser",
+                foreignField: "_id",
+                as: "user"
+              }
+            },
+            {
+              $lookup: {
+                from: "departements",
+                localField: "idDepartement",
+                foreignField: "_id",
+                as: "departements"
+              }
+            },
+            {
+              $project: {
+                "user.password": 0,
+                "user.saltSecret": 0
+              }
+            }
+          ],
+          (err, docs2) => {
+            if (!err) {
+            listOfMonth.push(...docs2);
+            res.status(200).send(listOfMonth)
+            } else {
+              console.log(
+                "Error in Retriving Interventions:" +
+                  JSON.stringify(err, undefined, 2)
+              );
+            }
+          }
+        );
       } else {
         console.log(
           "Error in Retriving Interventions:" +
@@ -43,9 +111,12 @@ module.exports.liste = (req, res) => {
         );
       }
     }
-  ).sort({ field: "asc", _id: -1 });
+  );
+  
 };
-
+/**
+ * recupere la liste des intervention par User et par Departement de l'utilisateur
+ */
 module.exports.listeByUser = async (req, res) => {
   departement = new Intervention();
   
@@ -252,7 +323,9 @@ module.exports.listeByUser = async (req, res) => {
     }
   );*/
 };
-
+/**
+ * recupere toute les interventions d'un tech
+ */
 module.exports.listeByTech = (req, res) => {
   Intervention.aggregate(
     [
@@ -300,7 +373,9 @@ module.exports.listeByTech = (req, res) => {
     }
   ).sort({ field: "asc", _id: -1 });
 };
-
+/**
+ * ajout d'une nouvelle Intervention
+ */
 module.exports.add = (req, res, next) => {
   console.log(req.body);
   var intervention = new Intervention(req.body);
@@ -313,7 +388,7 @@ module.exports.add = (req, res, next) => {
     }
   });
 };
-
+/**mise a jour d'une intervention */
 module.exports.update = (req, res, next) => {
   console.log("ctrlUpdate", req.body);
 

@@ -11,6 +11,8 @@ import { LoginComponent } from "./login/login.component";
 import { UserComponent } from "./user/user.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { MsalGuard } from "@azure/msal-angular";
+import { PageErrorForStatusComponent } from "./pageError/page-error-for-status/page-error-for-status.component";
+import { PageErrorUserEmptyDepartementComponent } from './pageError/page-error-user-empty-departement/page-error-user-empty-departement.component';
 // import { HistoricComponent } from './historic/historic.component';
 // import { DepartementComponent } from './setting/departement/departement.component';
 // import { TechnicienComponent } from './setting/technicien/technicien.component';
@@ -35,11 +37,23 @@ const routes: Routes = [
     path: "interventions",
     component: InterventionsComponent,
     //canActivate: [AuthGuard],
-    //canActivate: [MsalGuard]
+  //  canActivate: [MsalGuard]
   },
   {
     path: "maintenances",
     component: MaintenancesComponent,
+    //canActivate: [AuthGuard],
+    //canActivate: [MsalGuard]
+  },
+  {
+    path: "redirectToSadmin",
+    component: PageErrorForStatusComponent,
+    //canActivate: [AuthGuard],
+    //canActivate: [MsalGuard]
+  },
+  {
+    path: "redirectToadmin",
+    component: PageErrorUserEmptyDepartementComponent,
     //canActivate: [AuthGuard],
     //canActivate: [MsalGuard]
   },
@@ -50,7 +64,7 @@ const routes: Routes = [
     path: "settings",
     component: SettingsComponent,
     //canActivate: [AuthGuard],
-    //canActivate: [MsalGuard],
+    //canActivate: [MsalGuard]
   }
 ];
 

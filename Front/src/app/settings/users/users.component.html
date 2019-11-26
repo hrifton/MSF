@@ -4,7 +4,7 @@
       <div class="e-card-header">
         <div class="e-card-header-caption">
           <div class="e-card-header-title">
-            <h3>New User</h3>
+            <h3>Extra User</h3>
           </div>
         </div>
       </div>
@@ -118,7 +118,7 @@
       <div class="e-card-header">
         <div class="e-card-header-caption">
           <div class="e-card-header-title">
-            <h3>Liste Users</h3>
+            <h3>Liste Profils</h3>
           </div>
         </div>
       </div>
@@ -130,7 +130,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-4"><span>Full name: </span> {{ data.fullName }}</div>
                 <div *ngIf="data.status != 'SuperAdmin'" class="col-lg-4 col-md-4 col-sm-4">
                   <div class="e-float-input e-control-wrapper">
-                    <ejs-dropdownlist *ngIf="role!='Admin'" class="e-float-text" id="statut" [value]="data.status" [dataSource]="lstatus"
+                    <ejs-dropdownlist *ngIf="data.status!='Admin'" class="e-float-text" id="statut" [value]="data.status" [dataSource]="lstatus"
                       (select)="selectRole($event, data)" [fields]="{ text: 'statut', value: 'statut' }"
                       placeholder="Statut" popupHeight="200px" floatLabelType="Always" #statut>
                     </ejs-dropdownlist>

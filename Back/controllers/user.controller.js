@@ -106,6 +106,19 @@ module.exports.getTechByHopital = (req, res, next) => {
     }
   );
 };
+module.exports.getAdminByHopital=(req,res,next)=>{
+  User.find(
+    { status: "Admin", idHopital: ObjectId(req.data) },
+    { fullName: 1, _id: 1, status: 1, email:1 },
+    (err, admin) => {
+      if (!err) {
+        res.status(200).send(admin);
+      } else {
+        res.status(404).send(err);
+      }
+    }
+  );
+}
 
 module.exports.FindUserByHospital = (req, res) => {
   User.find(
@@ -223,3 +236,4 @@ module.exports.ModifieRole=(req,res)=>{
     }
   );
 }
+

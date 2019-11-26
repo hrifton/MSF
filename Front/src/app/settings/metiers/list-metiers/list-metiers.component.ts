@@ -4,17 +4,18 @@ import {
   Input,
   ViewChild,
   Output,
-  EventEmitter
-} from '@angular/core';
-import { Metier } from 'src/app/Class/Metier';
-import { ClickEventArgs } from '@syncfusion/ej2-navigations';
+  EventEmitter,
+  SimpleChanges
+} from "@angular/core";
+import { Metier } from "src/app/Class/Metier";
+import { ClickEventArgs } from "@syncfusion/ej2-navigations";
 import {
   GridComponent,
   ToolbarItems,
   EditSettingsModel,
   SelectionSettingsModel,
   RowDataBoundEventArgs
-} from '@syncfusion/ej2-angular-grids';
+} from "@syncfusion/ej2-angular-grids";
 
 @Component({
   selector: "app-list-metiers",
@@ -33,9 +34,8 @@ export class ListMetiersComponent implements OnInit {
   public data: any;
   public pageSettings: Object;
   public filterSettings: Object;
-  public toolbarItems: ToolbarItems[] | object;
+  public toolbarItems: ToolbarItems[];
   public editOptions: EditSettingsModel;
-  public selectionOptions: SelectionSettingsModel;
 
   public orderidrules: Object;
 
@@ -46,26 +46,36 @@ export class ListMetiersComponent implements OnInit {
     this.data = this.metiers;
     this.pageSettings = { pageCount: 5 };
     this.filterSettings = { type: "Menu" };
-    this.toolbarItems = this.itemToolBar;
+    this.toolbarItems = ["Delete"];
     this.editOptions = {
       allowEditing: true,
+      allowAdding: true,
       allowDeleting: true,
       mode: "Normal"
     };
-    this.selectionOptions = { type: "Multiple" };
-    // this.orderidrules = { required: true };
+    this.orderidrules = { required: true };
   }
 
   rowSelected($event) {
     this.selection = $event.data;
     this.messageEvent.emit($event.data);
   }
-  clickHandler(args: ClickEventArgs): void {
-    if (args.item.id === "delete") {
-      this.deleteMetier.emit(this.selection);
+
+  refresh() {
+    console.log("refresh Liste Metier");
+    this.grid.refresh();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes.metiers.currentValue);
+    if (changes.metiers.currentValue) {
+      this.data = changes.metiers.currentValue;
+      this.refresh();
     }
   }
-  refresh() {
-    this.grid.refresh();
+  actionBegin(args: any) {
+    if (args.requestType == "delete") {
+      console.log(args.data);
+      this.deleteMetier.emit(args.data[0]._id);
+    }
   }
 }

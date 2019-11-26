@@ -7,7 +7,11 @@ import {
   EventEmitter,
   ViewChild
 } from "@angular/core";
-import { RowDDService, SelectionService, GridComponent } from "@syncfusion/ej2-angular-grids";
+import {
+  RowDDService,
+  SelectionService,
+  GridComponent
+} from "@syncfusion/ej2-angular-grids";
 import { Metier } from "src/app/Class/Metier";
 import {
   FormBuilder,
@@ -17,10 +21,18 @@ import {
 } from "@angular/forms";
 import { Categorie } from "src/app/Class/Categorie";
 import * as _ from "lodash";
+import { concat } from "rxjs";
+/**
+ *
+ *
+ * @export
+ * @class MetierHopitalComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: "app-metier-hopital",
   templateUrl: "./metier-hopital.component.html",
-  styleUrls: ["./metier-hopital.component.scss"],
+  styleUrls: ["./metier-hopital.component.css"],
   providers: [RowDDService, SelectionService]
 })
 export class MetierHopitalComponent implements OnInit {
@@ -31,8 +43,8 @@ export class MetierHopitalComponent implements OnInit {
 
   @Output() messageEvent = new EventEmitter<Metier>();
   @Output() rmMetier = new EventEmitter<Metier>();
-  @Output() addSubCat = new EventEmitter<Categorie>();
-  @Output() rmSubCat = new EventEmitter<Categorie>();
+  @Output() addSubCat = new EventEmitter<any>();
+  @Output() rmSubCat = new EventEmitter<any>();
 
   public metierSelect: any;
   public metierToHospital: any[];
@@ -56,19 +68,25 @@ export class MetierHopitalComponent implements OnInit {
   subCatToHospital: any;
   flagShowSubCat: boolean;
   subRm: any;
-  constructor(public fb: FormBuilder) { }
+  listeSubCatStandar: any;
+  nameCategorie: any;
+  _idCat: any;
+  constructor(public fb: FormBuilder) {}
   public categorieForm: FormGroup;
   public myClonedArray: any[];
   public listeMetier: any[];
-  @ViewChild('grid') public DestGrid2: GridComponent;
+  @ViewChild("grid") public grid: GridComponent;
+  @ViewChild("grid1") public DestGrid: GridComponent;
+  @ViewChild("grid2") public grid2: GridComponent;
+  @ViewChild("grid3") public DestGrid2: GridComponent;
   //#endregion
 
   ngOnInit() {
-    console.log(this.projetMetier, this.projet)
-    this.flagShowSubCat = false
+    console.log(this.projetMetier, this.projet, this.metiers);
+    this.flagShowSubCat = false;
     this.SubCatSelect = [];
-    this.constMetiers = this.metiers;
-    this.metierToHospital = this.projet[0].metier;
+    this.constMetiers = this.metiers.slice();
+    this.metierToHospital = this.projetMetier.metier.slice();
     this.filtreTableMetier();
 
     this.selectionOptions = { type: "Multiple" };
@@ -84,18 +102,30 @@ export class MetierHopitalComponent implements OnInit {
    * if Flag true add element to array => db
    */
   rowDrop(args: any) {
-    this.idx = args.fromIndex;
+    console.log(args);
+console.log("addMetier", this.metierToHospital);
     this.dta = args.data;
 
     if (this.rmFlag) {
-      this.dta.idHopital = this.projetMetier._id
+      console.log("remove",this.constMetiers,this.metierToHospital)
+      this.dta.idHopital = this.projetMetier._id;
+      console.log("RmFlag ", this.dta);
       this.rmMetier.emit(this.dta);
       this.rmFlag = false;
+      this.listeSubCatStandar = [];
+      this.subCatToHospital = [];
+      console.log("remove", this.constMetiers, this.metierToHospital);
     } else if (this.flag) {
-      this.dta.idHopital = this.projetMetier._id
+      console.log("Add", this.constMetiers, this.metierToHospital);
+      this.metierToHospital.push(this.dta[0]);
+      console.log("Add", this.constMetiers, this.metierToHospital);
+      this.dta.idHopital = this.projetMetier._id;
       this.messageEvent.emit(this.dta);
-      this.flag = false;
+      this.DestGrid.refresh()
+      // this.flag = false;
     }
+   
+   
   }
   // si deplacement element du tableau de gauche vers tableau de droit  flag passe a true pour ajouter element des catégorie de l'hopital
   rowDragStart(args: any) {
@@ -114,8 +144,8 @@ export class MetierHopitalComponent implements OnInit {
       /**
        * check dans le tableau metierToHospital si element_id existe returne true ou false
        */
-     
-      const found = this.metierToHospital.find(function (element) {
+      const found = this.metierToHospital.find(function(element) {
+        console.log(element, elementConstMetier);
         return element._id == elementConstMetier._id;
       });
 
@@ -127,11 +157,10 @@ export class MetierHopitalComponent implements OnInit {
         this.SubCatSelect == undefined
           ? (this.SubCatSelect = elementConstMetier)
           : this.SubCatSelect.push(elementConstMetier);
-        
       }
     });
     // reinitialisation des metier non assigne a l'hopital
-    
+
     this.constMetiers = tmpArrayMetier;
   }
   /**
@@ -141,117 +170,150 @@ export class MetierHopitalComponent implements OnInit {
    * Verification Liste SubCat standart & subCatHopital
    */
   rowSelected($event) {
-    console.log($event)
-   
-   if(Object.keys($event.data).length==4){
-        this.subCat = $event.data;
-    this.subCatToHospital = this.metierToHospital;
-   
-    const name = this.subCat.name;
-  
-    const index = _.findIndex(this.metiers, function (o) {
-      return o.name === name;
-    });
-   
-    this.subCat = this.metiers[index];
-    this.subCatToHospital.categorie = $event.data.categorie;
-
-   
-    // si le tableau des subCat n'est pas vide
-    if (this.subCatToHospital.categorie) {
-
-      const tmp = [];
-      // this.subCatToHospital = $event.data;
-      this.subCat.categorie.forEach(element1 => {
-
-        const found = this.subCatToHospital.categorie.find(function (element) {
-
-          return element._id == element1._id;
-        });
-
-        if (!found) {
-          tmp.push(element1);
-        }
-      });
-
-
-      this.subCat.categorie2 = tmp;
+    this.nameCategorie = $event.data.name;
+    this._idCat = $event.data._id;
+    //recupere la liste des subCat standar
+    this.listeSubCatStandar = this.getListeSubcat(
+      $event.data.name,
+      this.metiers
+    );
+    //recupere la liste des subCat present dans l'hopital
+    if (this.projetMetier.metier.length > 0) {
+      console.log("relance");
+      this.subCatToHospital = this.getListeSubcat(
+        $event.data.name,
+        this.projetMetier.metier.slice()
+      );
+    } else {
+      this.subCatToHospital = [];
     }
-   }else{
-     this.subCat.categorie2 = $event.data.categorie;
-     this.subCatToHospital.categorie==null
-   }
-    
 
-    this.createFormCat(this.subCat);
+    this.comparaisonListeSubCat();
+
+    this.createFormCat(this._idCat);
     this.flagShowSubCat = true;
-
   }
 
   //#endregion
   //#region SubCategorie
   createFormCat(data) {
+    console.log(data);
     this.categorieForm = this.fb.group({
       idHopital: new FormControl(this.projetMetier._id, [Validators.required]),
       name: new FormControl("", [Validators.required]),
-      idMetier: new FormControl(data._id, [Validators.required]),
-      color: new FormControl("", [Validators.required])
+      idCat: new FormControl(data, [Validators.required])
     });
   }
 
-  /*ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
     // this.createFormCat(changes.metierSelect.currentValue);
-  }*/
+  }
   subRowDragStart($event) {
     this.flagAddSubCat = true;
   }
   subRmRowDrag($event) {
     this.flagRmSubCat = true;
     //this.subRm = $event.data[0];
-
   }
 
   subRowDrop(args: any) {
-console.log(args)
+    console.log(args, this.projetMetier._id);
     if (this.flagAddSubCat) {
-      let addSubCat = new Categorie(args.data[0].name, args.data[0].color, this.projetMetier._id, this.subCat._id, args.data[0]._id);
+      console.log("addSub ", args.data[0]);
+      let addSubCat = {
+        name: args.data[0].name,
+        idCat: this._idCat,
+        idHopital: this.projetMetier._id
+      };
+      _.remove(this.listeSubCatStandar, function(n) {
+        return n.name == addSubCat.name;
+      });
+      this.comparaisonListeSubCat();
+
+      console.log(this.subCatToHospital);
       this.addSubCat.emit(addSubCat);
       this.flagAddSubCat = false;
     } else if (this.flagRmSubCat) {
-      console.log(args.data)
-      let rmSubCat = new Categorie(args.data[0].name, args.data[0].color, this.projetMetier._id, this.subCat._id, args.data[0]._id);
-      console.log(rmSubCat)
+      console.log("RmSub ", args.data[0]);
+      let rmSubCat = {
+        name: args.data[0].name,
+        idCat: this._idCat,
+        idHopital: this.projetMetier._id
+      };
+      console.log(this.listeSubCatStandar);
+      _.remove(this.subCatToHospital, function(n) {
+        return n.name == rmSubCat.name;
+      });
+      this.comparaisonListeSubCat();
+      let name = { name: rmSubCat.name };
+      let find = _.findIndex(this.listeSubCatStandar, function(o) {
+        return o.name == name.name;
+      });
+      console.log(find);
+      this.listeSubCatStandar.unshift(name);
+      console.log(this.listeSubCatStandar);
       this.rmSubCat.emit(rmSubCat);
       this.flagRmSubCat = false;
+      this.DestGrid2.refresh();
     }
+    //this.refreshDestGrid();
   }
 
   saveSub(data) {
-    this.addSubCat.emit(data.value);
-    this.subCatToHospital.categorie.unshift(data.value)
+    let result = _.findIndex(this.subCatToHospital, function(o) {
+      return o.name == data.value.name;
+    });
+    if (result == -1) {
+      this.subCatToHospital.unshift({ name: data.value.name });
+      this.addSubCat.emit(data.value);
+    }
+
     this.DestGrid2.refresh();
   }
   //#endregion
-  ngOnChanges(changes: SimpleChanges): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
-    
-    if (changes.projetMetier.currentValue.departements) {
-      this.flagShowSubCat = false
-      this.metierToHospital = changes.projetMetier.currentValue.metier
-      this.constMetiers = this.metiers
-      //this.subCatToHospital.categorie = changes.projetMetier.currentValue.metier
-      this.filtreTableMetier();
-
-    }
-  }
 
   rowSelectedSub($event) {
-    console.log($event)
+    console.log($event);
   }
 
   refreshDestGrid() {
-    this.DestGrid2.refresh()
+    console.log(this.listeSubCatStandar, this.subCatToHospital);
+
+    // this.grid.refresh();
+    this.grid2.refresh();
+    // this.DestGrid.refresh();
+    this.DestGrid2.refresh();
+  }
+  /**
+   * Return Liste des subCat d'un metier
+   */
+  getListeSubcat(name: any, metier: any) {
+    console.log(name, metier);
+    const index = _.findIndex(metier, function(o) {
+      return o.name == name;
+    });
+    if (metier[index] != undefined) {
+      if (metier[index].categorie != undefined) {
+        return metier[index].categorie;
+      }
+    }
+  }
+  /**
+   *supprimer doublon
+   *
+   * @memberof MetierHopitalComponent
+   */
+  comparaisonListeSubCat() {
+    let tmp = [];
+    this.listeSubCatStandar.forEach(element => {
+      let index = _.findIndex(this.subCatToHospital, function(o) {
+        return o.name == element.name;
+      });
+      if (index == -1) {
+        tmp.push(element);
+      }
+      this.listeSubCatStandar = tmp;
+    });
   }
 }

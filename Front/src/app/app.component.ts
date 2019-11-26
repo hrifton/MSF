@@ -22,7 +22,7 @@ export class AppComponent {
     private _loadingBar: SlimLoadingBarService,
     private _router: Router
   ) {
-    moment.locale("fr");
+    moment.locale("us");
     const currentTimeFR = moment().format("LLLL");
     console.log(currentTimeFR);
     this._router.events.subscribe((event: Event) => {

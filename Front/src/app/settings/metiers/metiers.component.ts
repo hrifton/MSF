@@ -4,8 +4,8 @@ import { Metier } from "src/app/Class/Metier";
 import { Categorie } from "src/app/Class/Categorie";
 import { CategorieService } from "src/app/Service/categorie.service";
 import { ListMetiersComponent } from "./list-metiers/list-metiers.component";
-import { ListCategorieComponent } from './list-categorie/list-categorie.component';
-
+import { ListCategorieComponent } from "./list-categorie/list-categorie.component";
+import * as _ from "lodash";
 @Component({
   selector: "app-metiers",
   templateUrl: "./metiers.component.html",
@@ -46,28 +46,58 @@ export class MetiersComponent implements OnInit {
    * Get data To Service Metier For Save
    */
   saveMetier(data: Metier) {
-    console.log(this.metiers, "il y a un unshift normalement");
-    //this.metiers.unshift(await this.ms.addMetier(data))
-    this.listMetiersComponent.refresh();
-  }
-  saveCategorie(data: Categorie) {
-    console.log(data, "saveCategorie");
-    this.cs.AddCategorie(data).subscribe((categorie: any) => {
-      this.metierSelect.categorie.push(categorie);
-      this.ListCategorieComponent.grid.refresh();
+    console.log("ici")
+    this.ms.addMetier(data).subscribe((data: Metier) => {
+      if(data!=null){
+         this.metiers = _.concat(this.metiers, data)
+      console.log(this.metiers)
+      this.listMetiersComponent.grid.refresh()
+      console.log("finish Metier")
+      }else{
+        alert("La catégorie existe deja ou la couleur Choisi est deja utisé")
+      }
+     
     });
   }
 
-  deleteMetier(data: Metier) {
-    console.log("data to MetierService for delete : ", {params:data});
+  refresListeMetier(){
+    this.listMetiersComponent.refresh();
+  }
+  saveCategorie(data: any) {
+    let sub:any={name:data.subCat}
+    this.cs.AddCategorie(data).subscribe((categorie: any) => {
+      if(categorie.nModified==1){
+       
+         this.metierSelect.categorie.push(sub);
+
+         console.log(this.metierSelect.categorie)
+      this.ListCategorieComponent.grid.refresh();
+      }else{
+        alert("sub/categorie non rajouté "+ data)
+      }
+     
+    });
+  }
+
+  deleteMetier(data: any) {
+   this.ms.deleteMetier(data).subscribe((data:any)=>{
+     console.log(data,this.metiers)
+     let index = _.findIndex(this.metiers, function(o) {
+       return o._id == data._id;
+     });
+     let tmp:any=this.metiers
+     tmp.splice(index,1)
+     this.metiers=tmp;
+
+   })
   }
   selectMetier(data: Metier) {
     this.metierSelect = null;
     this.metierSelect = data;
   }
-  delSubCatStandar($event){
-   this.cs.delSubCat($event).subscribe((data:any)=>{
-     console.log(data)
-   })
-  };
+  delSubCatStandar($event) {
+    this.cs.delSubCat($event).subscribe((data: any) => {
+      console.log(data);
+    });
+  }
 }

@@ -27,7 +27,7 @@
         width="auto"
       >
       </e-column>
-      <e-column *ngIf="user != 'User'" field="metier" headerText="Categorie" textAlign="center" width="auto">
+      <e-column *ngIf="user != 'User'" field="categorie" headerText="Categorie" textAlign="center" width="auto">
       </e-column>
       <e-column
         *ngIf="user != 'User'"
@@ -82,20 +82,20 @@
       ></e-column>
     </e-columns>
     <ng-template #editSettingsTemplate let-data>
-      <div>
+      <div >
         <div class="row">
-          <div class="col-md-6">
+          <div *ngIf="type=='JobRequest'"  class="col-md-6">
             {{ angForm.value.slug || angForm.value._id }}
           </div>
           <div class="col-md-6">
             {{ today | date: "dd/MM/yyyy" }} {{ angForm.value.type }}
           </div>
         </div>
-        <form [formGroup]="angForm">
+        <!--Formulaire Intervention-->
+        <form *ngIf="type=='JobRequest'; else Maintenance" [formGroup]="angForm">
           <div *ngIf="user != 'User'" class="form-row">
             <div class="form-group col-md-6">
               <div class="e-float-input e-control-wrapper">
-                <h2>{{ metier.name }}</h2>
                 <ejs-dropdownlist
                   id="metier"
                   (change)="onChange($event)"
@@ -120,7 +120,7 @@
                   id="subCat"
                   formControlName="subCat"
                   [dataSource]="subCat.categorie"
-                  [fields]="{ text: 'name', value: '_id' }"
+                  [fields]="{ text: 'name', value: 'name' }"
                   placeholder="Sub-Categorie *"
                   popupHeight="200px"
                   floatLabelType="Always"
@@ -276,6 +276,124 @@
             </div>
           </div>
         </form>
+        <!--Formulaire Maintenance-->
+        <ng-template #Maintenance>
+          <form [formGroup]="angForm">
+            <div *ngIf="user != 'User'" class="form-row">
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id="metier" (change)="onChange($event)" formControlName="categorie" [dataSource]="metier"
+                    [fields]="{ text: 'name', value: 'name' }" placeholder="Categorie *" popupHeight="200px"
+                    floatLabelType="Always"></ejs-dropdownlist>
+                  <mat-error *ngIf="
+                              angForm.get('categorie').hasError('required') &&
+                              angForm.get('categorie').touched
+                            ">
+                    <span> Categorie is required </span>
+                  </mat-error>
+                </div>
+                <div *ngIf="subCat" class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id="subCat" formControlName="subCat" [dataSource]="subCat.categorie"
+                    [fields]="{ text: 'name', value: 'name' }" placeholder="Sub-Categorie *" popupHeight="200px"
+                    floatLabelType="Always">
+                  </ejs-dropdownlist>
+                  <mat-error *ngIf="
+                              angForm.get('subCat').hasError('required') &&
+                              angForm.get('subCat').touched
+                            ">
+                    <span> Categorie is required </span>
+                  </mat-error>
+                </div>
+              </div>
+          
+              <div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id="status" formControlName="status" [dataSource]="lStatus"
+                    [fields]="{ text: 'status', value: 'status' }" placeholder="status" popupHeight="200px"
+                    floatLabelType="Always" #status></ejs-dropdownlist>
+                </div>
+              </div>
+            </div>
+          
+            <!--<div class="form-row">
+              <div [ngClass]="data.subCat==null? 'form-group col-md-6 ' : 'form-group col-md-6 disablegrid'">
+                <div class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id="Departement" formControlName="departement" [dataSource]="departements"
+                    [fields]="{ text: 'departement', value: '_id' }" placeholder="Departement" popupHeight="200px"
+                    floatLabelType="Always"></ejs-dropdownlist>
+                </div>
+              </div>
+          
+              <div
+                [ngClass]="(data.subCat==null && user=='User')||user!='User' ? 'form-group col-md-6 ' : 'form-group col-md-6 disablegrid'">
+                <div class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id="priority" formControlName="priority" [dataSource]="priorities"
+                    [fields]="{ text: 'priority', value: 'priority' }" placeholder="Priority" popupHeight="200px"
+                    floatLabelType="Always" #priority></ejs-dropdownlist>
+                </div>
+              </div>
+            </div>-->
+          
+            <div class="form-row">
+              <div *ngIf="user != 'User'" class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                  <ejs-dropdownlist id="tech" formControlName="tech" [dataSource]="techs"
+                    [fields]="{ text: 'fullName', value: 'fullName' }" placeholder="Change technicien" popupHeight="200px"
+                    floatLabelType="Always">
+                  </ejs-dropdownlist>
+                  <mat-error *ngIf="
+                              angForm.get('tech').hasError('required') &&
+                              angForm.get('tech').touched
+                            ">
+                    <span> Select technician is required </span>
+                  </mat-error>
+                </div>
+              </div>
+              <div [ngClass]="data.subCat==null? 'form-group col-md-6 ' : 'form-group col-md-6 disablegrid'">
+                <mat-label>Locality</mat-label>
+                <div class="e-float-input e-control-wrapper">
+                  <input matInput="matInput" placeholder="Locality" formControlName="locality" #locality />
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <mat-form-field
+                [ngClass]="(data.subCat==null || user.status =='Admin') ? 'form-group col-md-12 ' : 'form-group col-md-12 disablegrid'">
+                <mat-label>Description Intervention</mat-label>
+                <textarea matInput formControlName="description" placeholder="Description Intervention" rows="brightness_4"
+                  #description></textarea>
+              </mat-form-field>
+            </div>
+            <div *ngIf="user !='User'">
+              <ejs-datepicker format='dd-MM-yyyy' formControlName="StartTime"
+                placeholder="Change date" floatLabelType='Auto' #until>
+              </ejs-datepicker>
+             <!--  pour Prochaine developpement Asset et Materiel utilisé
+               <div class="form-row">
+                <div class="form-group col-md-6">
+                  <div class="e-float-input e-control-wrapper">
+                    <input matInput="matInput" placeholder="Materiel utilisé" formControlName="useMat" #useMat />
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="e-float-input e-control-wrapper">
+                    <input matInput="matInput" placeholder="Asset" formControlName="asset" #asset />
+                  </div>
+                </div>
+              </div>-->
+              <div class="form-row">
+                <mat-form-field class="form-group col-md-12">
+                  <mat-label>Description Solution</mat-label>
+                  <textarea matInput formControlName="solution" placeholder="Description solution" rows="brightness_4"
+                    #solution></textarea>
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <input matInput="matInput" value="{{ today | date: 'dd/MM/yyyy' }}" [hidden]="true" #date />
+              </div>
+            </div>
+          </form>
+        </ng-template>
       </div>
     </ng-template>
   </ejs-grid>

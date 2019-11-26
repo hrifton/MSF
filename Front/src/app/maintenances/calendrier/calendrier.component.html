@@ -1,13 +1,12 @@
 <div>
     <ejs-schedule #agenda width='100%' height='450px' [selectedDate]="selectedDate" [eventSettings]="eventSettings"
-        (actionBegin)="onActionBegin($event)" (popupOpen)="onPopupOpen($event)"
-        (eventRendered)="onEventRendered($event)">
+        (actionBegin)="onActionBegin($event)" (popupOpen)="onPopupOpen($event)" [(currentView)]="currentView"
+        (eventRendered)="onEventRendered($event)" [timeScale]="timeScale">
         <e-views>
             <e-view option="Day"></e-view>
             <e-view option="Week"></e-view>
-            <e-view option="WorkWeek"></e-view>
             <e-view option="Month"></e-view>
-            <e-view option="Agenda"></e-view>
+            <e-view option="Year"></e-view>
         </e-views>
 <!--Formulaire-->
         <ng-template #editorTemplate>
@@ -24,11 +23,11 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <ejs-datetimepicker format='dd-MM-yyyy HH:mm' formControlName="StartTime"
+                        <ejs-datetimepicker format='dd-MM-yyyy ' formControlName="StartTime"
                             placeholder="Start Date" #StartTime></ejs-datetimepicker>
                     </div>
                     <div class="form-group col-md-6">
-                        <ejs-datetimepicker format='dd-MM-yyyy HH:mm' formControlName="EndTime" placeholder="End Date"
+                        <ejs-datetimepicker format='dd-MM-yyyy ' formControlName="EndTime" placeholder="End Date"
                             #EndTime></ejs-datetimepicker>
                     </div>
                 </div>

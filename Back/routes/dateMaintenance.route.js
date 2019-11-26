@@ -21,13 +21,22 @@ dateMaintenanceRoutes
   });
 
 //GetAllDateMaintenance
-dateMaintenanceRoutes.route("/").get((req, res) => {
-  ctrlDateMaintenance.getAll(req, res);
+dateMaintenanceRoutes.route("/byHopital").get((req, res) => {
+  ctrlDateMaintenance.getDateMainteToHopital(req.query, res);
 });
 
 dateMaintenanceRoutes.route("/maintenancedate").get((req, res) => {
   console.log("dateMiantenance");
   ctrlDateMaintenance.getAllMaintDate(req, res);
 });
+
+dateMaintenanceRoutes.route("/getDateMaintenanceByTech").get((req, res) => {
+ ctrlDateMaintenance.getDateMaintenanceByTech(req.query, res);
+});
+
+dateMaintenanceRoutes.route("/MaintenanceByHospitalAndDate").get((req, res) => {
+ ctrlDateMaintenance.getMaintenanceByHospitalAndDate(req.query, res);
+});
+
 
 module.exports = dateMaintenanceRoutes;

@@ -62,15 +62,20 @@ export class LoginComponent implements OnInit {
    * @memberof LoginComponent
    */
   async onLoginSubmit(form?: FormGroup) {
+     console.log(this.us.getStatus());
     if (form == undefined) {
       if (await this.authService.signIn()) {
         if (this.authService.user.displayName) {
-      
+     
           if (localStorage.status == "undefined") {
-            console.log("user Undefined")
+            console.log(this.us.getStatus()=="undefined");
             let user = await this.us.getUserProfil(localStorage);
             this.us.getToLocalStorage(user);
-            this.router.navigateByUrl("/interventions");
+            if(this.us.getStatus()=="undefined"){
+              console.log("resdirection constact SuperAdmin")
+              this.router.navigateByUrl("/redirectToSadmin");
+            }
+            
           }
            if (this.us.getStatus() === "SuperAdmin") {
              console.log("user SuperAdmin");
@@ -79,10 +84,8 @@ export class LoginComponent implements OnInit {
              this.us.getIdDepartement().length == 0 &&
              this.us.getStatus() === "User"
            ) {
-             console.log("redirection page Pas de Départemente contact admin")
-             this.router.navigateByUrl("/");
-           } else {
-             this.router.navigateByUrl("/interventions");
+             console.log("redirect to Admin")
+             this.router.navigateByUrl("/redirectToadmin");
            }
         }
       }
@@ -93,6 +96,7 @@ export class LoginComponent implements OnInit {
           if (this.us.getStatus() === "SuperAdmin") {
             this.router.navigateByUrl("/analyse");
           } else {
+             console.log(this.us.getStatus());
             this.router.navigateByUrl("/interventions");
           }
         },

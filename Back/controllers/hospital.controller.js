@@ -46,7 +46,7 @@ module.exports.add = (req, res, next) => {
 };
 //Delete a Hospital
 module.exports.delHopital = (req, res, next) => {
-  console.log(req.idHopital)
+  console.log(req.idHopital);
   Hospital.findOneAndDelete(req.idHopital, (err, data) => {
     if (!err) {
       console.log(data);
@@ -107,10 +107,10 @@ module.exports.rmMetier = (req, res, next) => {
 };
 //remeve subCat to hostpital
 module.exports.rmSubMetier = (req, res, next) => {
-  console.log(req);
+  console.log("rmSubCat", req);
   Hospital.updateOne(
-    { _id: ObjectId(req.idHopital), "metier._id": req.idMetier },
-    { $pull: { "metier.$.categorie": { _id: req._id } } },
+    { _id: ObjectId(req.idHopital), "metier._id": req.idCat },
+    { $pull: { "metier.$.categorie": { name: req.name } } },
     (err, doc) => {
       if (!err) {
         res.status("200").send(doc);
@@ -122,37 +122,29 @@ module.exports.rmSubMetier = (req, res, next) => {
 };
 //add subCategorie
 module.exports.addSubCat = (req, res, next) => {
-  req._id == undefined ? (req._id = mongoose.Types.ObjectId()) : req._id;
-  Hospital.findOneAndUpdate(
-    { _id: ObjectId(req.idHopital), "metier._id": req.idMetier },
-    {
-      $addToSet: {
-        "metier.$.categorie": {
-          _id: req._id,
-          name: req.name,
-          color: req.color
-        }
-      }
-    },
-    (err, doc) => {
-      if (!err) {
-        res.status("200").send(doc);
-      } else {
-        res.status("400").send(err);
-      }
+  console.log("addToHospitalSubCat", req);
+Hospital.updateOne(
+  { _id: ObjectId(req.idHopital), "metier._id": req.idCat },
+  { $addToSet: { "metier.$.categorie": { name: req.name } } },
+  (err, doc) => {
+    if (!err) {
+      res.status("200").send(doc);
+    } else {
+      res.status("400").send(err);
     }
-  );
+  }
+);
 };
 //addDepartement to hosptiatl
 module.exports.addDepToHop = (req, res, next) => {
-  console.log(req);
+  req._id==null?req._id=ObjectId():req._id=req._id
   Hospital.updateOne(
-    { _id: req[0].idHopital },
+    { _id: ObjectId(req.idHopital) },
     {
       $addToSet: {
         departements: {
-          _id: req[0]._id,
-          departement: req[0].departement
+          _id: ObjectId(req._id),
+          departement: req.departement
         }
       }
     },
@@ -168,17 +160,23 @@ module.exports.addDepToHop = (req, res, next) => {
 //remove Departement to hospital
 module.exports.delDepToHop = (req, res, next) => {
   console.log(req.idDepartement);
-  Hospital.updateOne(
-    { _id: req.idHopital },
-    { $pull: { departements: { _id: req.idDepartement } } },
-    (err, doc) => {
-      if (!err) {
-        res.status(200).send(doc);
-      } else {
-        res.status(400).send(err);
-      }
-    }
-  );
+ Hospital.updateOne(
+   { _id: ObjectId(req.idHopital) },
+   {
+     $pull: {
+       departements: {
+         _id: ObjectId(req.idDepartement)
+       }
+     }
+   },
+   (err, doc) => {
+     if (!err) {
+       res.status(200).send(doc);
+     } else {
+       res.status(400).send(err);
+     }
+   }
+ );
 };
 //Add New Maintenance
 module.exports.addMaintenance = (req, res, next) => {

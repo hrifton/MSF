@@ -26,14 +26,13 @@ hospitalRoutes.route("/addmetier").post(function(req, res, next) {
 hospitalRoutes
   .route("/delete/:idHopital/:idMetier")
   .delete(function(req, res, next) {
+    console.log("delete metier");
     ctrlHospital.rmMetier(req.params, res, next);
   });
 
-hospitalRoutes
-  .route("/delete/:idHopital/:idMetier/:_id")
-  .delete(function(req, res, next) {
-    ctrlHospital.rmSubMetier(req.params, res, next);
-  });
+hospitalRoutes.route("/delete/subcat").delete(function(req, res, next) {
+  ctrlHospital.rmSubMetier(req.query, res, next);
+});
 
 hospitalRoutes.route("/addSubCat").post(function(req, res, next) {
   ctrlHospital.addSubCat(req.body, res, next);
@@ -43,18 +42,16 @@ hospitalRoutes.route("/userbyhospital").get(function(req, res) {
   ctrlUser.FindUserByHospital(req.query, res);
 });
 hospitalRoutes.route("/addDep").post(function(req, res, next) {
-  ctrlHospital.addDepToHop(req.body, res, next);
+  ctrlHospital.addDepToHop(req.body.params[0], res, next);
 });
 
 hospitalRoutes.route("/addmaintenance").post(function(req, res, next) {
- ctrlHospital.addMaintenance(req.body,res,next);
+  ctrlHospital.addMaintenance(req.body, res, next);
 });
 
-
-
 hospitalRoutes
-  .route("/delDep/:idHopital/:idDepartement")
-  .delete(function(req, res, next) {
+  .route("/delDep/:idHopital/:idDepartement").delete(function(req, res, next) {
+    console.log(req.params);
     ctrlHospital.delDepToHop(req.params, res, next);
   });
 

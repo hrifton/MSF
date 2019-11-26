@@ -38,6 +38,7 @@ export class ListCategorieComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.metierSelect.categorie;
+    
     console.log("data : ", this.data);
     this.pageSettings = { pageCount: 5 };
     this.filterSettings = { type: "Menu" };
@@ -65,5 +66,10 @@ export class ListCategorieComponent implements OnInit {
       };
       this.delSubCatStandar.emit(subCatDel);
     }
+  }
+
+  refreshGrid(){
+    console.log("refresh")
+    this.grid.refresh();
   }
 }
