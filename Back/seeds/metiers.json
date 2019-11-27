@@ -61,4 +61,39 @@
     "description" : null,
     "color" : "#800040",
     "__v" : 0
+},
+{
+    "_id": {
+        "$oid": "5db74b713432fb62808432a4"
+    },
+    "name": "Watsan",
+    "description": null,
+    "color": "#803040",
+    "__v": 0
+},
+{
+    "_id": {
+        "$oid": "5db74b713432fa62808432a4"
+    },
+    "name": "IT",
+    "description": null,
+    "color": "#f03040",
+    "__v": 0
+},{
+    "_id": {
+        "$oid": "5db74b713482fa62808432a4"
+    },
+    "name": "Telecom",
+    "description": null,
+    "color": "#103040",
+    "__v": 0
+},
+{
+    "_id": {
+        "$oid": "5db74b713482aa62808432a4"
+    },
+    "name": "Mobility",
+    "description": null,
+    "color": "#1F3F4F",
+    "__v": 0
 }]

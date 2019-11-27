@@ -88,12 +88,14 @@ export class CalendrierComponent implements OnInit {
     //this.agenda.dataBind();
     console.log("maintenance calendier Init");
     console.log("Maintenance was initialized with : ", this.maintenance);
-
+this.formatDataAgenda()
     this.data.push(...this.datemaitenance);
     this.eventSettings = {
       dataSource: this.data
     };
     console.log(this.eventSettings);
+
+    
   }
   /**Creation formulaire avec champs date precomplété
    *
@@ -247,7 +249,27 @@ export class CalendrierComponent implements OnInit {
       });
     });
   }
-
+  formatDataAgenda() {
+    let tmp = [];
+    this.datemaitenance.forEach(element => {
+      console.log(element)
+      if (element.status != "Done") {
+        console.log(element.status);
+        console.log(element);
+        element.Subject = element.description;
+        if (element.priority == "High") {
+          element.CategoryColor = "#df6666d5";
+        } else if (element.priority == "Low") {
+          element.CategoryColor = "#f8e620d5";
+        } else {
+          element.CategoryColor = "#f2b95dd5";
+        }
+        element.id = element._id;
+        tmp.push(element);
+      }
+    });
+    return tmp;
+  }
   refreshAgenda() {
     this.eventSettings = {
       dataSource: this.datemaitenance

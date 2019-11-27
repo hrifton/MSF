@@ -96,7 +96,7 @@ export class InterventionsComponent implements OnInit {
     $event.day = new Date();
     $event.idHopital = this.us.getIdHopital();
     this.is.postInter($event).subscribe((data: Intervention) => {
-      if (typeof data.slug === "number") {
+      if (typeof data.slugI === "number") {
         data.user = [];
         const u = new User();
         u.fullName = this.us.getFullName();
@@ -122,19 +122,21 @@ export class InterventionsComponent implements OnInit {
   }
 
   check($event) {
-
-    console.log($event)
+    console.log($event);
     if ($event.solution) {
       /**
        * ajout d'une solution
        */
-      console.log('AddSolution')
-      this.is.addSolution($event).subscribe((data) => { console.log(data) });
+      console.log("AddSolution");
+      this.is.addSolution($event).subscribe(data => {
+        console.log(data);
+      });
+      this.getInterventionByRole();
     } else {
       /**
        * Modification de l'intervention (technicien, categorie, subCategorie, priorité)
        */
-      console.log('Modifie Intervention')
+      console.log("Modifie Intervention");
       this.is.updateIntervention($event).subscribe((data: Intervention) => {
         this.getInterventionByRole();
       });
@@ -225,16 +227,22 @@ export class InterventionsComponent implements OnInit {
       this.is
         .getInterventionsBytech(this.us.getFullName())
         .subscribe((data: any[]) => {
-          this.interventions = data;
+          console.log(this.interventions.length)
+          //this.interventions=data
+          console.log(this.interventions.length);
           this.ds
             .getDateMaintenanceByTech(this.us.getId())
-            .subscribe((data: any) => {
+            .subscribe((dataMaint: any) => {
               console.log(data);
-              this.interventions = _.concat(this.interventions, data);
+              console.log(this.interventions.length);
+             this.interventions = _.concat(dataMaint, data);
+              console.log(this.interventions.length);
+            
               this.formatDate();
               this.show = true;
             });
         });
+        console.log(this.maintenance)
       this.formatDate();
       console.log(this.projet);
       this.show = true;
@@ -253,19 +261,25 @@ export class InterventionsComponent implements OnInit {
               .subscribe((maindata: any[]) => {
                 maindata.forEach(element => {
                   this.interventions = maindata;
-                  this.formatDate();
                 });
-                this.interventions = _.concat(data, this.interventions);
+                if (this.interventions.length > 0) {
+                  this.interventions = [];
+                  this.interventions = _.concat(data, this.interventions);
+                } else {
+                  this.interventions = _.concat(data, this.interventions);
+                }
+                this.formatDate();
                 console.log(this.interventions);
                 if (this.interventions.length > 0) {
-                  this.formatDate();
                   this.remplaceIdCatByNameCat();
                   this.comptemetier(this.projet[0].metier, this.interventions);
                 }
 
                 // this.interventions.sort((a, b) => (a.day > b.day) ? 1 : ((b.day > a.day) ? -1 : 0));
               });
+            this.formatDate();
           });
+          this.formatDate();
         });
       this.show = true;
       //If Status is SuperAdmin
@@ -279,7 +293,7 @@ export class InterventionsComponent implements OnInit {
     let categorie = this.projet[0].metier;
 
     this.interventions.forEach(element => {
-      let index = _.findIndex(categorie, function (c) {
+      let index = _.findIndex(categorie, function(c) {
         return element.metier == c._id;
       });
       element.categorie = categorie[index].name;
@@ -292,12 +306,17 @@ export class InterventionsComponent implements OnInit {
         element.StartTime = moment(element.StartTime).format("LL");
         element.EndTime = element.StartTime;
         element.day = element.StartTime;
-        element.tech = this.findTechInList(this.techs, element.idTech);
+        if (this.userDetails!="Tech"){
+          element.tech = this.findTechInList(this.techs, element.idTech);
+        }          
       } else {
-        console.log(element)
+        console.log(element);
         element.day = moment(element.day).format("LL");
-        console.log(this.returnCategorie(element.metier))
-        element.categorie = this.returnCategorie(element.metier)
+        element.StartTime = element.day;
+        element.EndTime = element.day;
+        console.log(element);
+        if (typeof element.metier == "string")
+          element.categorie = this.returnCategorie(element.metier);
       }
     });
   }
@@ -361,7 +380,7 @@ export class InterventionsComponent implements OnInit {
     this.element.show({ timeOut: 4000 });
   }
   remplaceIntervention(data, status) {
-    let index = _.findIndex(this.interventions, function (o) {
+    let index = _.findIndex(this.interventions, function(o) {
       return o._id == data.idIntervention;
     });
     this.interventions[index].status = status;
@@ -383,7 +402,9 @@ export class InterventionsComponent implements OnInit {
    * @memberof InterventionsComponent
    */
   findTechByHospital() {
+    console.log("findTechHospital")
     this.us.getUserTech().subscribe((data: User) => {
+      console.log(data)
       this.techs = data;
     });
   }
@@ -394,9 +415,11 @@ export class InterventionsComponent implements OnInit {
    */
 
   findTechInList(listeTech, idTech) {
-    let index = _.findIndex(listeTech, function (t) {
+    console.log(listeTech, idTech);
+    let index = _.findIndex(listeTech, function(t) {
       return t._id == idTech;
     });
+    console.log(listeTech[index].fullName);
     return listeTech[index].fullName;
   }
 
@@ -408,7 +431,7 @@ export class InterventionsComponent implements OnInit {
    * @memberof InterventionsComponent
    */
   returnDepartement(data: Intervention): any {
-    const found = this.departements.find(function (element) {
+    const found = this.departements.find(function(element) {
       if (element._id === data.idDepartement) {
         return element;
       }
@@ -416,15 +439,16 @@ export class InterventionsComponent implements OnInit {
     return found;
   }
 
-
   returnCategorie(data) {
-    const found = this.projet[0].metier.find(function (element) {
-      console.log(element, data);
-      if (element._id === data) {
-        console.log(element.name)
-        return element
+    const found = this.projet[0].metier.find(function(element) {
+      if (typeof data == "string") {
+        if (element._id === data) {
+          return element;
+        }
+      } else {
+        console.log(data);
       }
-    })
-    return found.name
+    });
+    return found.name;
   }
 }

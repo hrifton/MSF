@@ -99,6 +99,7 @@ module.exports.getTechByHopital = (req, res, next) => {
     { status: "Tech", idHopital: ObjectId(req.idHopital) },{ fullName: 1, _id: 1, status: 1, departements: 1 },
     (err, techs) => {
       if (!err) {
+        console.log(techs)
         res.status(200).send(techs);
       } else {
         res.status(404).send(err);

@@ -16,7 +16,7 @@ export default class Intervention {
                  _id: Object;
                  useMat: String;
                  asset: String;
-                 slug: Number;
+                 slugI: Number;
                  metier: String;
                  user: Array<User>;
                  dateAssing: String;
@@ -35,7 +35,7 @@ export default class Intervention {
                    _id: string,
                    useMat: string,
                    asset: string,
-                   slug: number,
+                   slugI: number,
                    metier: string,
                    dateAssing?: string
                  ) {
@@ -52,7 +52,7 @@ export default class Intervention {
                    this._id = _id;
                    this.useMat = useMat;
                    this.asset = asset;
-                   this.slug = slug;
+                   this.slugI = slugI;
                    this.metier = metier;
                    this.dateAssing = dateAssing;
                  }

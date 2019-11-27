@@ -14,7 +14,7 @@
   >
     <e-columns>
       <e-column
-        field="slug"
+        field="slugI"
         headerText="ID"
         textAlign="center"
         width="70"
@@ -91,7 +91,7 @@
       <div>
         <div class="row">
           <div *ngIf="type == 'JobRequest'" class="col-md-6">
-            {{ angForm.value.slug || angForm.value._id }}
+            {{ angForm.value.slugI || angForm.value._id }}
           </div>
           <div class="col-md-6">
             {{ today | date: "dd/MM/yyyy" }} {{ angForm.value.type }}

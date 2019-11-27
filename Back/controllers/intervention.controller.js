@@ -387,7 +387,7 @@ module.exports.add = (req, res, next) => {
 };
 /**mise a jour d'une intervention */
 module.exports.update = (req, res, next) => {
-  console.log("ctrlUpdate", req.body.solution);
+  console.log("ctrlUpdate", req.body);
   var d = moment().format("L");
 
   Intervention.findByIdAndUpdate(
@@ -398,7 +398,8 @@ module.exports.update = (req, res, next) => {
         priority: req.body.priority,
         tech: req.body.tech,
         subCat: req.body.subCat,
-        metier: req.body.metier
+        metier: req.body.metier,
+        dateAssing: req.body.dateAssing
       }
     },
     (err, docs) => {
@@ -431,9 +432,7 @@ module.exports.addSolution = (req, res, next) => {
     {
       $addToSet: {
         solution: { solution }
-      }
-    },
-    {
+      },
       $set: {
         status: req.body.status,
         priority: req.body.priority,
@@ -442,6 +441,7 @@ module.exports.addSolution = (req, res, next) => {
         metier: req.body.metier
       }
     },
+    {},
     (err, data) => {
       if (!err) {
         res.status(200).send(data);

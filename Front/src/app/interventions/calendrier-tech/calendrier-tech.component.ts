@@ -59,9 +59,12 @@ export class CalendrierTechComponent implements OnInit {
   public eventSettings: EventSettingsModel = { dataSource: this.data };
   public currentView: View = "Month";
   public allowResizing: boolean = false;
-  public timeScale: TimeScaleModel = { interval: 60, slotCount: 4 };
+  public timeScale: string = "Hide";
   public solution: string;
   public solutionForm: FormGroup;
+  public monthEventTemplate: string =
+    '<div class="subject center"> ${Subject}</div>';
+
   @ViewChild("agenda") public agenda: ScheduleComponent;
   public lStatus: { [key: string]: Object }[] = [
     { status: "Waiting" },
@@ -105,18 +108,21 @@ export class CalendrierTechComponent implements OnInit {
   formatDataAgenda() {
     let tmp = [];
     this.interventions.forEach(element => {
-      if (element.status != "Done") {
-        console.log(element.status);
+      if (element) {
         console.log(element);
-        element.StartTime = this.formatdate(element.dateAssing);
         element.EndTime = element.StartTime;
         element.Subject = element.description;
         if (element.priority == "High") {
           element.CategoryColor = "#df6666d5";
         } else if (element.priority == "Low") {
           element.CategoryColor = "#f8e620d5";
-        } else {
+        } else if (element.priority == "Medium") {
           element.CategoryColor = "#f2b95dd5";
+        } else if (element.status == "Done") {
+          console.log(element, "Status Done ");
+          element.CategoryColor = "#c5c5c5d5";
+        } else if (element.type == "Maintenance") {
+          element.CategoryColor = "##0861c5d5";
         }
         element.id = element._id;
         tmp.push(element);
@@ -172,11 +178,18 @@ export class CalendrierTechComponent implements OnInit {
    * @memberof CalendrierTechComponent
    */
   onPopupOpen(args: PopupOpenEventArgs): void {
+
     let any: any = args.data;
+    console.log(args)
     if (args.type == "Editor") {
       console.log(any.Subject);
       if (any.Subject != undefined) {
-        this.createForm(args.data);
+        if(any.type=="Maintenance"){
+          alert('Formulaire Maintenance pas encore fait')
+        }else{
+          this.createForm(args.data);
+        }
+        
       } else {
         args.cancel = true;
       }
@@ -216,9 +229,10 @@ export class CalendrierTechComponent implements OnInit {
     console.log(this.solutionForm.value);
   }
   ngOnChanges(changes: SimpleChanges) {
-   this.interventions = _.concat(this.interventions, changes.currentValue);
-   console.log(this.interventions)
-   this.agenda.refresh()
+    this.interventions = changes.interventions.currentValue;
+    this.eventSettings.dataSource = this.formatDataAgenda();
+    console.log(this.interventions);
+    this.agenda.refresh();
     // You can also use yourInput.previousValue and
   }
 }

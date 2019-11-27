@@ -123,11 +123,12 @@ export class ListInterventionComponent implements OnInit {
    */
   createFormIntervention(data): FormGroup {
     console.log(data)
-    if (this.user != "User") {
+    if (this.user != "User" && data.metier!=undefined) {
       this.findSubCat(data.metier);
     }
 
     if (this.user === "User") {
+      
       return new FormGroup({
         _id: new FormControl(data._id, Validators.required),
         departement: new FormControl(
@@ -140,10 +141,11 @@ export class ListInterventionComponent implements OnInit {
         status: new FormControl(data.status),
         day: new FormControl(data.day),
         tech: new FormControl(data.tech),
-        slug: new FormControl(data.slug)
+        slugI: new FormControl(data.slugI)
       });
     } else if (this.user === "Admin" || this.user === "Operator") {
       this.metier = this.projet[0].metier;
+      console.log(data)
       return new FormGroup({
         _id: new FormControl(data._id, Validators.required),
         departement: new FormControl(
@@ -163,7 +165,7 @@ export class ListInterventionComponent implements OnInit {
         ),
         useMat: new FormControl(data.useMat ? data.useMat : null),
         asset: new FormControl(data.asset ? data.asset : null),
-        slug: new FormControl(data.slug),
+        slugI: new FormControl(data.slugI),
         metier: new FormControl(
           data.metier ? data.metier : null,
           Validators.required
@@ -192,7 +194,7 @@ export class ListInterventionComponent implements OnInit {
         tech: new FormControl(data.tech),
         useMat: new FormControl(data.useMat),
         asset: new FormControl(data.asset),
-        slug: new FormControl(data.slug),
+        slugI: new FormControl(data.slugI),
         metier: new FormControl(data.metier[0]._id),
         subCat: new FormControl(
           data.subCat ? data.subCat : null,
@@ -259,6 +261,7 @@ export class ListInterventionComponent implements OnInit {
       let data: any = args.rowData;
       this.type = data.type
       if (data.type == "JobRequest") {
+        
         this.angForm = this.createFormIntervention(data);
       } else if ((data.type = "Maintenance")) {
         this.angForm = this.createFormMaintenance(data);
@@ -271,6 +274,7 @@ export class ListInterventionComponent implements OnInit {
       // verification si le formulaire est valid
       if (this.angForm.valid) {
         if (!this.angForm.value.dateAssing) {
+          console.log("assigne Date ")
           this.angForm.value.dateAssing = new Date();
         };
 
