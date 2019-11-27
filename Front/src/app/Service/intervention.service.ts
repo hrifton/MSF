@@ -10,9 +10,10 @@ import * as moment from "moment";
 
 @Injectable({ providedIn: "root" })
 export class InterventionService {
-  uri = environment.apiBaseUrl+"/intervention";
 
-  constructor(private http: HttpClient, private us: UserService) {}
+  uri = environment.apiBaseUrl + "/intervention";
+
+  constructor(private http: HttpClient, private us: UserService) { }
   // add a new Intervention
 
   postInter(intervention: Intervention) {
@@ -28,15 +29,15 @@ export class InterventionService {
 
   // TODO Local ADMIN OPERATOR
   getInterventions() {
-     const startOfMonth = moment()
-       .startOf("month")
-       .format("YYYY-MM-DD hh:mm");
-     const endOfMonth = moment()
-       .endOf("month")
-       .format("YYYY-MM-DD hh:mm");
+    const startOfMonth = moment()
+      .startOf("month")
+      .format("YYYY-MM-DD hh:mm");
+    const endOfMonth = moment()
+      .endOf("month")
+      .format("YYYY-MM-DD hh:mm");
     const idHopital = this.us.getIdHopital();
 
-    return this.http.get(`${this.uri}/byHopital`, { params: { idHopital,startOfMonth,endOfMonth } });
+    return this.http.get(`${this.uri}/byHopital`, { params: { idHopital, startOfMonth, endOfMonth } });
   }
   // TODO TECH
   // Get Interventions byUser
@@ -56,7 +57,10 @@ export class InterventionService {
   }
 
   updateIntervention(form) {
-    console.log(form);
     return this.http.put(`${this.uri}/${form._id}`, form);
+  }
+
+  addSolution(form) {
+    return this.http.put(`${this.uri}/solution/${form._id}`, form);
   }
 }

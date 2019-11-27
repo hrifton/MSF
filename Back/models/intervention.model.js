@@ -32,16 +32,16 @@ var interventionScheam = new mongoose.Schema({
     required: true
   },
   subCat: { type: String },
-  asset: { type: String }
+  asset: { type: String },
+  solution: []
 });
 
 //converte String to Array[Objet]
 interventionScheam.methods.parsing = function(json) {
   var newJson = json.replace(/([a-zA-Z0-9]+?):/g, '"$1":');
-  newJson = newJson.replace(/'/g, '"');  
+  newJson = newJson.replace(/'/g, '"');
   return JSON.parse(newJson);
 };
 
-
-interventionScheam.plugin(AutoIncrement, { inc_field: "slug" });
+interventionScheam.plugin(AutoIncrement, { inc_field: "slugI" });
 mongoose.model("Intervention", interventionScheam);

@@ -122,9 +122,23 @@ export class InterventionsComponent implements OnInit {
   }
 
   check($event) {
-    this.is.updateIntervention($event).subscribe((data: Intervention) => {
-      this.getInterventionByRole();
-    });
+
+    console.log($event)
+    if ($event.solution) {
+      /**
+       * ajout d'une solution
+       */
+      console.log('AddSolution')
+      this.is.addSolution($event).subscribe((data) => { console.log(data) });
+    } else {
+      /**
+       * Modification de l'intervention (technicien, categorie, subCategorie, priorité)
+       */
+      console.log('Modifie Intervention')
+      this.is.updateIntervention($event).subscribe((data: Intervention) => {
+        this.getInterventionByRole();
+      });
+    }
 
     //this.interentionList.refreshInterventionTable();
     //this.AnalyseMixIntermaint.refreshChart();
@@ -265,7 +279,7 @@ export class InterventionsComponent implements OnInit {
     let categorie = this.projet[0].metier;
 
     this.interventions.forEach(element => {
-      let index = _.findIndex(categorie, function(c) {
+      let index = _.findIndex(categorie, function (c) {
         return element.metier == c._id;
       });
       element.categorie = categorie[index].name;
@@ -283,7 +297,7 @@ export class InterventionsComponent implements OnInit {
         console.log(element)
         element.day = moment(element.day).format("LL");
         console.log(this.returnCategorie(element.metier))
-        element.categorie=this.returnCategorie(element.metier)
+        element.categorie = this.returnCategorie(element.metier)
       }
     });
   }
@@ -347,7 +361,7 @@ export class InterventionsComponent implements OnInit {
     this.element.show({ timeOut: 4000 });
   }
   remplaceIntervention(data, status) {
-    let index = _.findIndex(this.interventions, function(o) {
+    let index = _.findIndex(this.interventions, function (o) {
       return o._id == data.idIntervention;
     });
     this.interventions[index].status = status;
@@ -380,7 +394,7 @@ export class InterventionsComponent implements OnInit {
    */
 
   findTechInList(listeTech, idTech) {
-    let index = _.findIndex(listeTech, function(t) {
+    let index = _.findIndex(listeTech, function (t) {
       return t._id == idTech;
     });
     return listeTech[index].fullName;
@@ -394,7 +408,7 @@ export class InterventionsComponent implements OnInit {
    * @memberof InterventionsComponent
    */
   returnDepartement(data: Intervention): any {
-    const found = this.departements.find(function(element) {
+    const found = this.departements.find(function (element) {
       if (element._id === data.idDepartement) {
         return element;
       }
@@ -403,10 +417,10 @@ export class InterventionsComponent implements OnInit {
   }
 
 
-  returnCategorie(data){
-  const found=this.projet[0].metier.find(function(element){
-    console.log(element,data);
-      if(element._id===data){
+  returnCategorie(data) {
+    const found = this.projet[0].metier.find(function (element) {
+      console.log(element, data);
+      if (element._id === data) {
         console.log(element.name)
         return element
       }

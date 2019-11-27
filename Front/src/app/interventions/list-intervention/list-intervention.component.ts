@@ -78,19 +78,13 @@ export class ListInterventionComponent implements OnInit {
   public shipCountryDistinctData: Object[];
   public submitClicked = false;
   subCat: any;
-  public departement:Departement;
-  public type:string;
+  public departement: Departement;
+  public type: string;
   // router: Router;
 
-  constructor(private ss: SolutionService, private router: Router) {console.log(
-                                                                      this
-                                                                        .interventions,
-                                                                      this
-                                                                        .maintenance
-                                                                    ); }
+  constructor(private ss: SolutionService, private router: Router) { }
 
   ngOnInit() {
-    console.log(this.interventions,this.maintenance)
     this.filterSettings = {
       type: "Menu"
     };
@@ -129,7 +123,7 @@ export class ListInterventionComponent implements OnInit {
    */
   createFormIntervention(data): FormGroup {
     console.log(data)
-    if(this.user!="User"){
+    if (this.user != "User") {
       this.findSubCat(data.metier);
     }
 
@@ -149,79 +143,73 @@ export class ListInterventionComponent implements OnInit {
         slug: new FormControl(data.slug)
       });
     } else if (this.user === "Admin" || this.user === "Operator") {
-             console.log("Admin", data.departements[0], this.metier);
-             this.metier = this.projet[0].metier;
+      this.metier = this.projet[0].metier;
+      return new FormGroup({
+        _id: new FormControl(data._id, Validators.required),
+        departement: new FormControl(
+          data.departements[0]._id,
+          Validators.required
+        ),
 
-             /*if (data.metier.length > 0 && data.metier != undefined) {
-        metier = data.metier[0]._id;
-      } else {
-        metier = "";
-      }*/
-             console.log("Metier", this.metier);
-             return new FormGroup({
-               _id: new FormControl(data._id, Validators.required),
-               departement: new FormControl(
-                 data.departements[0]._id,
-                 Validators.required
-               ),
-
-               locality: new FormControl(data.locality ? data.locality : ""),
-               priority: new FormControl(data.priority),
-               description: new FormControl(data.description),
-               status: new FormControl(data.status),
-               type: new FormControl(data.type ? data.type : ""),
-               day: new FormControl(data.day),
-               tech: new FormControl(
-                 data.tech ? data.tech : null,
-                 Validators.required
-               ),
-               useMat: new FormControl(data.useMat ? data.useMat : null),
-               asset: new FormControl(data.asset ? data.asset : null),
-               slug: new FormControl(data.slug),
-               metier: new FormControl(
-                 data.metier ? data.metier : null,
-                 Validators.required
-               ),
-               subCat: new FormControl(
-                 data.subCat ? data.subCat : null,
-                 Validators.required
-               ),
-               solution: new FormControl(data.solution ? data.solution : null)
-             });
-           } else {
-             console.log("else", data);
-             return new FormGroup({
-               _id: new FormControl(data._id, Validators.required),
-               departement: new FormControl(
-                 data.departements[0]._id,
-                 Validators.required
-               ),
-               locality: new FormControl(data.locality),
-               priority: new FormControl(data.priority),
-               description: new FormControl(data.description),
-               status: new FormControl(data.status),
-               type: new FormControl(data.type),
-               day: new FormControl(data.day),
-               tech: new FormControl(data.tech),
-               useMat: new FormControl(data.useMat),
-               asset: new FormControl(data.asset),
-               slug: new FormControl(data.slug),
-               metier: new FormControl(data.metier[0]._id),
-               subCat: new FormControl(
-                 data.subCat ? data.subCat : null,
-                 Validators.required
-               ),
-               solution: new FormControl("")
-             });
-           }
+        locality: new FormControl(data.locality ? data.locality : ""),
+        priority: new FormControl(data.priority),
+        description: new FormControl(data.description),
+        status: new FormControl(data.status),
+        type: new FormControl(data.type ? data.type : ""),
+        day: new FormControl(data.day),
+        tech: new FormControl(
+          data.tech ? data.tech : null,
+          Validators.required
+        ),
+        useMat: new FormControl(data.useMat ? data.useMat : null),
+        asset: new FormControl(data.asset ? data.asset : null),
+        slug: new FormControl(data.slug),
+        metier: new FormControl(
+          data.metier ? data.metier : null,
+          Validators.required
+        ),
+        subCat: new FormControl(
+          data.subCat ? data.subCat : null,
+          Validators.required
+        ),
+        solution: new FormControl(""),
+        liste: new FormControl(data.solution ? data.solution : null)
+      });
+    } else {
+      console.log("else", data);
+      return new FormGroup({
+        _id: new FormControl(data._id, Validators.required),
+        departement: new FormControl(
+          data.departements[0]._id,
+          Validators.required
+        ),
+        locality: new FormControl(data.locality),
+        priority: new FormControl(data.priority),
+        description: new FormControl(data.description),
+        status: new FormControl(data.status),
+        type: new FormControl(data.type),
+        day: new FormControl(data.day),
+        tech: new FormControl(data.tech),
+        useMat: new FormControl(data.useMat),
+        asset: new FormControl(data.asset),
+        slug: new FormControl(data.slug),
+        metier: new FormControl(data.metier[0]._id),
+        subCat: new FormControl(
+          data.subCat ? data.subCat : null,
+          Validators.required
+        ),
+        solution: new FormControl("")
+      });
+    }
   }
 
   createFormMaintenance(data): FormGroup {
-    console.log('Formulaire Maintenance : ', data)
+    // this.findSubCat(data.categorie)
+    console.log('Formulaire Maintenance : ', data, this.subCat)
     return new FormGroup({
-      _id: new FormControl(data._id, Validators.required),
+      _id: new FormControl(data._id),
       //departement a rajouté
-      departement: new FormControl("", Validators.required),
+      departement: new FormControl(""),
       categorie: new FormControl(data.categorie ? data.categorie : ""),
       subCat: new FormControl(data.subCat ? data.categorie : ""),
       tech: new FormControl(data.tech ? data.tech : ""),
@@ -255,15 +243,12 @@ export class ListInterventionComponent implements OnInit {
 
   public onChange(args: any): void {
     this.findSubCat(args.itemData._id)
-    /*console.log(this.subCat.categorie)
-    this.subCat.categorie = args.itemData;
-    console.log(args.itemData)
-    console.log(this.subCat.categorie)*/
+
   }
   // Action sur le tableau
   actionBegin(args: SaveEventArgs): void {
     // Verification de l'action debut edit ou ajout
-    console.log("Action Begin :",args)
+    console.log("Action Begin :", args)
     if (args.requestType === "beginEdit" || args.requestType === "add") {
       if (this.user == "User") {
         let data: any = args.rowData;
@@ -272,9 +257,8 @@ export class ListInterventionComponent implements OnInit {
         }
       }
       let data: any = args.rowData;
-      this.type=data.type
+      this.type = data.type
       if (data.type == "JobRequest") {
-        console.log("go", data)
         this.angForm = this.createFormIntervention(data);
       } else if ((data.type = "Maintenance")) {
         this.angForm = this.createFormMaintenance(data);
@@ -286,11 +270,11 @@ export class ListInterventionComponent implements OnInit {
 
       // verification si le formulaire est valid
       if (this.angForm.valid) {
-        if(!this.angForm.value.dateAssing){
-          this.angForm.value.dateAssing= new Date();
+        if (!this.angForm.value.dateAssing) {
+          this.angForm.value.dateAssing = new Date();
         };
-       
-       this.messageEvent.emit(this.angForm.value);
+
+        this.messageEvent.emit(this.angForm.value);
       } else {
         //retourn message error manque info
         this.showToast();
@@ -312,7 +296,7 @@ export class ListInterventionComponent implements OnInit {
    */
   actionComplete(args: DialogEditEventArgs): void {
     let data: any = args.rowData;
-console.log("ActionComplet: ",data)
+    console.log("ActionComplet: ", data)
     if (args.requestType === "beginEdit" || args.requestType === "add") {
       if (data.type == "JobRequest") {
         args.dialog.header = "Details of Intervention";
@@ -321,11 +305,11 @@ console.log("ActionComplet: ",data)
           (args.dialog as Dialog).dataBind();
         }
       } else if (data.type == "Maintenance") {
-       args.dialog.header = "Details of Maintenance";
-       if (Browser.isDevice) {
-         args.dialog.height = window.innerHeight - 500 + "px";
-         (args.dialog as Dialog).dataBind();
-       }
+        args.dialog.header = "Details of Maintenance";
+        if (Browser.isDevice) {
+          args.dialog.height = window.innerHeight - 500 + "px";
+          (args.dialog as Dialog).dataBind();
+        }
       }
     }
   }
@@ -367,15 +351,16 @@ console.log("ActionComplet: ",data)
 
 
   findSubCat(data) {
-   console.log(this.projet,data)
+    console.log(this.projet, data)
     let met = this.projet[0].metier
-    console.log(met)
+
     let index = _.findIndex(met, function (o) { return o._id == data });
     this.subCat = met[index]
-    console.log(met[index])
-    console.log(this.subCat)
-   
-    
+
+
+
+
+
   }
   showToast() {
     //this.element.width = "50%";

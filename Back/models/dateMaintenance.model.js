@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 var dateMaintenanceSchema = new mongoose.Schema({
   StartTime: { type: Date, required: true },
   EndTime: { type: Date, required: true },
@@ -13,7 +13,6 @@ var dateMaintenanceSchema = new mongoose.Schema({
   idHopital: { type: Object }
 });
 
-
-
+dateMaintenanceSchema.plugin(AutoIncrement, { inc_field: "slugD" });
 mongoose.model("DateMaintenance", dateMaintenanceSchema);
 //TODO  Construtor ??

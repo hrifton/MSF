@@ -34,5 +34,8 @@ interventionRoutes.route("/delete/:id").get(function(req, res) {
     else res.json("ok Delete");
   });
 });
+interventionRoutes.route("/solution/:_id").put(function(req, res, next) {
+  ctrlIntervention.addSolution(req, res, next);
+});
 
 module.exports = interventionRoutes;

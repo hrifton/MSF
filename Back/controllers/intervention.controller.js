@@ -4,15 +4,15 @@ const { ObjectId } = require("mongodb");
 require("../models/intervention.model");
 const Intervention = mongoose.model("Intervention");
 const User = mongoose.model("User");
-
+var moment = require("moment");
 /**
- * Recupere intervention du mois courant et les intervention avec le statut "Open" et Waiting 
+ * Recupere intervention du mois courant et les intervention avec le statut "Open" et Waiting
  * hors du mois courant
  */
 module.exports.liste = (req, res) => {
   console.log("InterventionByHopital", req);
-  var listOfMonth=[];
- Intervention.aggregate(
+  var listOfMonth = [];
+  Intervention.aggregate(
     [
       {
         $match: {
@@ -94,8 +94,8 @@ module.exports.liste = (req, res) => {
           ],
           (err, docs2) => {
             if (!err) {
-            listOfMonth.push(...docs2);
-            res.status(200).send(listOfMonth)
+              listOfMonth.push(...docs2);
+              res.status(200).send(listOfMonth);
             } else {
               console.log(
                 "Error in Retriving Interventions:" +
@@ -112,21 +112,20 @@ module.exports.liste = (req, res) => {
       }
     }
   );
-  
 };
 /**
  * recupere la liste des intervention par User et par Departement de l'utilisateur
  */
 module.exports.listeByUser = async (req, res) => {
   departement = new Intervention();
-  
+
   departement = departement.parsing(req.idDepartement);
   console.log(departement);
   listIdDep = [];
   departement.forEach(element => {
     listIdDep.push(ObjectId(element._id));
   });
-  console.log(listIdDep)
+  console.log(listIdDep);
 
   Intervention.aggregate(
     [
@@ -167,17 +166,15 @@ module.exports.listeByUser = async (req, res) => {
     ],
     (err, doc) => {
       if (!err) {
-        console.log(doc.length)
-        if(doc.length>0){
+        console.log(doc.length);
+        if (doc.length > 0) {
           res.status(200).send(doc);
-        }else{
-          res.status(200).send(false)
+        } else {
+          res.status(200).send(false);
         }
-        
-        
       } else {
-        console.log(err)
-        res.status(400).send(err)
+        console.log(err);
+        res.status(400).send(err);
       }
     }
   );
@@ -390,17 +387,67 @@ module.exports.add = (req, res, next) => {
 };
 /**mise a jour d'une intervention */
 module.exports.update = (req, res, next) => {
-  console.log("ctrlUpdate", req.body);
+  console.log("ctrlUpdate", req.body.solution);
+  var d = moment().format("L");
 
-  Intervention.findByIdAndUpdate(req.body._id, req.body, (err, docs) => {
-    // Handle any possible database errors
-    if (err) {
-      console.log(err);
+  Intervention.findByIdAndUpdate(
+    req.body._id,
+    {
+      $set: {
+        status: req.body.status,
+        priority: req.body.priority,
+        tech: req.body.tech,
+        subCat: req.body.subCat,
+        metier: req.body.metier
+      }
+    },
+    (err, docs) => {
+      // Handle any possible database errors
+      if (err) {
+        res.status(400).send(docs);
+      }
+      //return res.status(500).send(err);
+      else {
+        res.status(200).send(docs);
+      } //res.send(intervention);
     }
-    //return res.status(500).send(err);
-    else {
-      console.log("update ok ");
-      res.send(docs);
-    } //res.send(intervention);
-  });
+  );
+};
+
+module.exports.addSolution = (req, res, next) => {
+  var d = moment().format("L");
+  console.log(req.body.solution);
+  solution =
+    req.body.status +
+    "  " +
+    d +
+    "   :  " +
+    req.body.solution +
+    "  (" +
+    req.body.tech +
+    ")";
+  Intervention.findByIdAndUpdate(
+    req.body._id,
+    {
+      $addToSet: {
+        solution: { solution }
+      }
+    },
+    {
+      $set: {
+        status: req.body.status,
+        priority: req.body.priority,
+        tech: req.body.tech,
+        subCat: req.body.subCat,
+        metier: req.body.metier
+      }
+    },
+    (err, data) => {
+      if (!err) {
+        res.status(200).send(data);
+      } else {
+        res.status(400).send(err);
+      }
+    }
+  );
 };
