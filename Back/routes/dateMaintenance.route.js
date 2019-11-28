@@ -31,12 +31,19 @@ dateMaintenanceRoutes.route("/maintenancedate").get((req, res) => {
 });
 
 dateMaintenanceRoutes.route("/getDateMaintenanceByTech").get((req, res) => {
- ctrlDateMaintenance.getDateMaintenanceByTech(req.query, res);
+  ctrlDateMaintenance.getDateMaintenanceByTech(req.query, res);
 });
 
 dateMaintenanceRoutes.route("/MaintenanceByHospitalAndDate").get((req, res) => {
- ctrlDateMaintenance.getMaintenanceByHospitalAndDate(req.query, res);
+  ctrlDateMaintenance.getMaintenanceByHospitalAndDate(req.query, res);
 });
 
+dateMaintenanceRoutes.route("/addsolution/:id").put((req, res) => {
+  ctrlDateMaintenance.addSolution(req.body, res);
+});
+
+dateMaintenanceRoutes.route("/updatedatemaintenance/:id").put((req, res) => {
+  ctrlDateMaintenance.updatedatemaintenance(req.body, res);
+});
 
 module.exports = dateMaintenanceRoutes;

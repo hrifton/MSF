@@ -32,7 +32,7 @@ import { concat } from "rxjs";
 @Component({
   selector: "app-metier-hopital",
   templateUrl: "./metier-hopital.component.html",
-  styleUrls: ["./metier-hopital.component.css"],
+  //styleUrls: ["./metier-hopital.component.css"],
   providers: [RowDDService, SelectionService]
 })
 export class MetierHopitalComponent implements OnInit {
@@ -71,7 +71,7 @@ export class MetierHopitalComponent implements OnInit {
   listeSubCatStandar: any;
   nameCategorie: any;
   _idCat: any;
-  constructor(public fb: FormBuilder) {}
+  constructor(public fb: FormBuilder) { }
   public categorieForm: FormGroup;
   public myClonedArray: any[];
   public listeMetier: any[];
@@ -103,11 +103,11 @@ export class MetierHopitalComponent implements OnInit {
    */
   rowDrop(args: any) {
     console.log(args);
-console.log("addMetier", this.metierToHospital);
+    console.log("addMetier", this.metierToHospital);
     this.dta = args.data;
 
     if (this.rmFlag) {
-      console.log("remove",this.constMetiers,this.metierToHospital)
+      console.log("remove", this.constMetiers, this.metierToHospital)
       this.dta.idHopital = this.projetMetier._id;
       console.log("RmFlag ", this.dta);
       this.rmMetier.emit(this.dta);
@@ -124,8 +124,8 @@ console.log("addMetier", this.metierToHospital);
       this.DestGrid.refresh()
       // this.flag = false;
     }
-   
-   
+
+
   }
   // si deplacement element du tableau de gauche vers tableau de droit  flag passe a true pour ajouter element des catégorie de l'hopital
   rowDragStart(args: any) {
@@ -144,7 +144,7 @@ console.log("addMetier", this.metierToHospital);
       /**
        * check dans le tableau metierToHospital si element_id existe returne true ou false
        */
-      const found = this.metierToHospital.find(function(element) {
+      const found = this.metierToHospital.find(function (element) {
         console.log(element, elementConstMetier);
         return element._id == elementConstMetier._id;
       });
@@ -226,7 +226,7 @@ console.log("addMetier", this.metierToHospital);
         idCat: this._idCat,
         idHopital: this.projetMetier._id
       };
-      _.remove(this.listeSubCatStandar, function(n) {
+      _.remove(this.listeSubCatStandar, function (n) {
         return n.name == addSubCat.name;
       });
       this.comparaisonListeSubCat();
@@ -242,12 +242,12 @@ console.log("addMetier", this.metierToHospital);
         idHopital: this.projetMetier._id
       };
       console.log(this.listeSubCatStandar);
-      _.remove(this.subCatToHospital, function(n) {
+      _.remove(this.subCatToHospital, function (n) {
         return n.name == rmSubCat.name;
       });
       this.comparaisonListeSubCat();
       let name = { name: rmSubCat.name };
-      let find = _.findIndex(this.listeSubCatStandar, function(o) {
+      let find = _.findIndex(this.listeSubCatStandar, function (o) {
         return o.name == name.name;
       });
       console.log(find);
@@ -261,7 +261,7 @@ console.log("addMetier", this.metierToHospital);
   }
 
   saveSub(data) {
-    let result = _.findIndex(this.subCatToHospital, function(o) {
+    let result = _.findIndex(this.subCatToHospital, function (o) {
       return o.name == data.value.name;
     });
     if (result == -1) {
@@ -290,7 +290,7 @@ console.log("addMetier", this.metierToHospital);
    */
   getListeSubcat(name: any, metier: any) {
     console.log(name, metier);
-    const index = _.findIndex(metier, function(o) {
+    const index = _.findIndex(metier, function (o) {
       return o.name == name;
     });
     if (metier[index] != undefined) {
@@ -307,7 +307,7 @@ console.log("addMetier", this.metierToHospital);
   comparaisonListeSubCat() {
     let tmp = [];
     this.listeSubCatStandar.forEach(element => {
-      let index = _.findIndex(this.subCatToHospital, function(o) {
+      let index = _.findIndex(this.subCatToHospital, function (o) {
         return o.name == element.name;
       });
       if (index == -1) {

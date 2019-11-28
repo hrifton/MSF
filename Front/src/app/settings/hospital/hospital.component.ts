@@ -17,11 +17,11 @@ import { ListHospitalComponent } from "./list-hospital/list-hospital.component";
 @Component({
   selector: "app-hospital",
   templateUrl: "./hospital.component.html",
-  styleUrls: ["./hospital.component.scss"]
+  //styleUrls: ["./hospital.component.scss"]
 })
 export class HospitalComponent implements OnInit {
   // metiers = new Array<Metier>();
-  constructor(private hs: HopitalService) {}
+  constructor(private hs: HopitalService) { }
 
   @ViewChild(FormHopitalComponent)
   FormHopitalComponent: FormHopitalComponent;
@@ -116,10 +116,10 @@ export class HospitalComponent implements OnInit {
     }
     this.addDepToHopital.emit($event);
   }
-  delDepartement($event:any) {
-  console.log(this.projet)
-      $event.idHopital = this.projet._id;
-   
+  delDepartement($event: any) {
+    console.log(this.projet)
+    $event.idHopital = this.projet._id;
+
     this.rmDepToHopital.emit($event);
   }
   deleteHopital($event) {

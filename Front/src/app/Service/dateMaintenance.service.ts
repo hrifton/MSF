@@ -9,10 +9,12 @@ import * as moment from "moment";
   providedIn: "root"
 })
 export class DateMaintenanceService {
+
+
   uri = environment.apiBaseUrl + "/datemaintenance";
 
-  constructor(private http: HttpClient, private us: UserService) {}
-  
+  constructor(private http: HttpClient, private us: UserService) { }
+
   /**
    * add New Maintenance
    * @param  {DateMaintenance} datemaintenance
@@ -57,7 +59,7 @@ export class DateMaintenanceService {
       .then(response => response);
   }
 
-  
+
   /**
    * return all Date Maintenance For a Hosptial
    */
@@ -65,7 +67,7 @@ export class DateMaintenanceService {
     let idHopital = this.us.getIdHopital();
     return this.http.get(`${this.uri}/byHopital`, { params: { idHopital } });
   }
- 
+
   /**
    * 
    */
@@ -76,15 +78,15 @@ export class DateMaintenanceService {
    * return all maintenance of month Current
    */
   getMaintenanceByHospitalAndDate() {
-  const startOfMonth = moment()
-    .startOf("month")
-    .format("YYYY-MM-DD hh:mm");
-  const endOfMonth = moment()
-    .endOf("month")
-    .format("YYYY-MM-DD hh:mm");
+    const startOfMonth = moment()
+      .startOf("month")
+      .format("YYYY-MM-DD hh:mm");
+    const endOfMonth = moment()
+      .endOf("month")
+      .format("YYYY-MM-DD hh:mm");
     let idHopital = this.us.getIdHopital();
     return this.http.get(`${this.uri}/MaintenanceByHospitalAndDate`, {
-      params: { idHopital,startOfMonth, endOfMonth }
+      params: { idHopital, startOfMonth, endOfMonth }
     });
   }
   /**
@@ -95,5 +97,19 @@ export class DateMaintenanceService {
     return this.http.get(`${this.uri}/getDateMaintenanceByTech`, {
       params: { idTech }
     });
+  }
+  /**
+   * Ajout de solution a la Date de Maintenance
+   * @param $event 
+   */
+  addSolution($event: any) {
+    return this.http.put(`${this.uri}/addsolution/${$event._id}`, $event);
+  }
+  /**
+   * Update Date Maintenance (tech,date)
+   * @param $event 
+   */
+  updateWithOutSolution($event: any) {
+    return this.http.put(`${this.uri}/updatedatemaintenance/${$event._id}`, $event);
   }
 }

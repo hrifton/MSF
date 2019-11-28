@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { ObjectId } = require("mongodb");
 require("../models/dateMaintenance.model");
 const DateMaintenance = mongoose.model("DateMaintenance");
+var moment = require("moment");
 
 module.exports.add = (req, res, next) => {
   console.log("add DateMaintenance");
@@ -32,16 +33,6 @@ module.exports.add = (req, res, next) => {
       else return next(err);
     }
   });
-
-  /* 
- 
-dateMaintenance.save((err, doc) => {
-    if (!err) res.send(doc);
-    else {
-      if (err.code === 1000) res.status(422).send(["erreur Date Maintenance"]);
-      else return next(err);
-    }
-  });*/
 };
 
 module.exports.delete = (req, res) => {
@@ -107,7 +98,8 @@ module.exports.getAllMaintDate = (req, res) => {
   );
 };
 module.exports.getDateMainteToHopital = (req, res) => {
-  DateMaintenance.find({ idHopital: req.idHopital }, (err, data) => {
+  console.log("getDateMainteToHopital", req);
+  DateMaintenance.find({ idHopital: ObjectId(req.idHopital) }, (err, data) => {
     if (!err) {
       res.status(200).send(data);
     } else {
@@ -117,7 +109,8 @@ module.exports.getDateMainteToHopital = (req, res) => {
 };
 
 module.exports.getDateMaintenanceByTech = (req, res) => {
-  DateMaintenance.find({ idTech: req.idTech }, (err, data) => {
+  console.log("getDateMaintenanceByTech", req);
+  DateMaintenance.find({ idTech: ObjectId(req.idTech) }, (err, data) => {
     if (!err) {
       res.status(200).send(data);
     } else {
@@ -125,34 +118,62 @@ module.exports.getDateMaintenanceByTech = (req, res) => {
     }
   });
 };
-module.exports.getMaintenanceByHospitalAndDate = (req, res) => {
-  console.log(req)
- DateMaintenance.aggregate(
-   [
-     {
-       $match: {
-         $and: [
-           { idHopital: req.idHopital },
-           {
-             StartTime: {
-               $gte: new Date(req.startOfMonth),
-               $lte: new Date(req.endOfMonth)
-             }
-           }
-         ]
-       }
-     },
-     { $sort: { StartTime: 1 } }
-   ],
-   function(err, datemaintenances) {
-     if (err) res.send(err);
-     else {
-     }
-     res.json(datemaintenances);
-   }
- );
 
-/*
+module.exports.getMaintenanceByHospitalAndDate = (req, res) => {
+  var listOfMonth = [];
+  DateMaintenance.aggregate(
+    [
+      {
+        $match: {
+          $and: [
+            { idHopital: ObjectId(req.idHopital) },
+            {
+              StartTime: {
+                $gte: new Date(req.startOfMonth),
+                $lte: new Date(req.endOfMonth)
+              }
+            }
+          ]
+        }
+      },
+      { $sort: { StartTime: 1 } }
+    ],
+    (err, datemaintenances) => {
+      if (!err) {
+        listOfMonth.push(...datemaintenances);
+        DateMaintenance.aggregate(
+          [
+            {
+              $match: {
+                $and: [
+                  { idHopital: ObjectId(req.idHopital) },
+                  {
+                    StartTime: {
+                      $lte: new Date(req.startOfMonth)
+                    }
+                  },
+                  { $or: [{ status: "Open" }, { status: "Waiting" }] }
+                ]
+              }
+            },
+            { $sort: { StartTime: 1 } }
+          ],
+          (dateErr, date) => {
+            if (!dateErr) {
+              listOfMonth.push(...date);
+              res.status(200).send(listOfMonth);
+            } else {
+              res.status(400).send(err);
+            }
+          }
+        );
+      } else {
+        res.status(400).send(err);
+      }
+    }
+  );
+
+  /*
   DateMaintenance.find(
     { idHopital: req.idHopital ,
       StartTime: {
@@ -168,4 +189,62 @@ module.exports.getMaintenanceByHospitalAndDate = (req, res) => {
       }
     }
   );*/
+};
+/**
+ * @params req
+ * ajoute solution a une date de maintenance et modifi si necessaire
+ *
+ */
+module.exports.addSolution = (req, res) => {
+  var id = ObjectId(req._id);
+  var d = moment().format("L");
+  console.log(req.StartTime);
+  var solution =
+    req.status + "  " + d + "   :  " + req.solution + "  (" + req.tech + ")";
+  DateMaintenance.findByIdAndUpdate(
+    id,
+    {
+      $addToSet: {
+        solution: { solution }
+      },
+      $set: {
+        status: req.status,
+        idTech: req.idTech,
+        subCat: req.subCat,
+        categorie: req.categorie
+      }
+    },
+    (err, data) => {
+      if (!err) {
+        res.status(200).send(data);
+      } else {
+        res.status(400).send(err);
+      }
+    }
+  );
+};
+
+module.exports.updatedatemaintenance = (req, res) => {
+  var id = ObjectId(req._id);
+
+  DateMaintenance.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        status: req.status,
+        idTech: req.idTech,
+        subCat: req.subCat,
+        categorie: req.categorie,
+        StartTime: req.StartTime,
+        EndTime: req.StartTime
+      }
+    },
+    (err, data) => {
+      if (!err) {
+        res.status(200).send(data);
+      } else {
+        res.status(400).send(err);
+      }
+    }
+  );
 };

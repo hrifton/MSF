@@ -120,12 +120,10 @@ module.exports.listeByUser = async (req, res) => {
   departement = new Intervention();
 
   departement = departement.parsing(req.idDepartement);
-  console.log(departement);
   listIdDep = [];
   departement.forEach(element => {
     listIdDep.push(ObjectId(element._id));
   });
-  console.log(listIdDep);
 
   Intervention.aggregate(
     [
@@ -178,155 +176,15 @@ module.exports.listeByUser = async (req, res) => {
       }
     }
   );
-
-  /* Intervention.aggregate(
-    [
-      { $match: { idUser: ObjectId(req.idUser) } },
-      {
-        $lookup: {
-          from: "users",
-          localField: "idUser",
-          foreignField: "_id",
-          as: "user"
-        }
-      },
-      {
-        $lookup: {
-          from: "departements",
-          localField: "idDepartement",
-          foreignField: "_id",
-          as: "departements"
-        }
-      },
-      {
-        $project: {
-          "user.password": 0,
-          "user.saltSecret": 0
-        }
-      }
-    ],
-    (err, lisByUs) => {
-      if (!err) {
-        if (lisByUs.length > 0) {
-          list = lisByUs;
-          Intervention.aggregate(
-            [
-              {
-                $match: {
-                  idHopital: ObjectId(req.idHopital),
-                  idDepartement: ObjectId(req.idDepartement),
-                  idUser: { $ne: ObjectId(req.idUser) }
-                }
-              },
-              {
-                $lookup: {
-                  from: "users",
-                  localField: "idUser",
-                  foreignField: "_id",
-                  as: "user"
-                }
-              },
-              {
-                $lookup: {
-                  from: "departements",
-                  localField: "idDepartement",
-                  foreignField: "_id",
-                  as: "departements"
-                }
-              }
-            ],
-            (err, docs) => {
-              if (!err) {
-                res.send(list.concat(docs));
-              }
-            }
-          );
-        } else {
-          Intervention.aggregate(
-            [
-              {
-                $match: {
-                  idHopital: ObjectId(req.idHopital),
-                  idDepartement: ObjectId(req.idDepartement),
-                  idUser: { $ne: ObjectId(req.idUser) }
-                }
-              },
-              {
-                $lookup: {
-                  from: "users",
-                  localField: "idUser",
-                  foreignField: "_id",
-                  as: "user"
-                }
-              },
-              {
-                $lookup: {
-                  from: "departements",
-                  localField: "idDepartement",
-                  foreignField: "_id",
-                  as: "departements"
-                }
-              }
-            ],
-            (err, docs) => {
-              if (!err) {
-                res.send(docs);
-              }
-            }
-          );
-        }
-
-        //res.send(lisByUs);
-      } else {
-        console.log("if listByUs Empty");
-        Intervention.aggregate(
-          [
-            {
-              $match: {
-                idHopital: ObjectId(req.idHopital),
-                idDepartement: ObjectId(req.idDepartement),
-                idUser: { $ne: ObjectId(req.idUser) }
-              }
-            },
-            {
-              $lookup: {
-                from: "users",
-                localField: "idUser",
-                foreignField: "_id",
-                as: "user"
-              }
-            },
-            {
-              $lookup: {
-                from: "departements",
-                localField: "idDepartement",
-                foreignField: "_id",
-                as: "departements"
-              }
-            }
-          ],
-          (err, docs) => {
-            if (!err) {
-              res.send(docs);
-            } else {
-              console.log(
-                "Error in Retriving Interventions:" +
-                  JSON.stringify(err, undefined, 2)
-              );
-            }
-          }
-        );
-      }
-    }
-  );*/
 };
 /**
  * recupere toute les interventions d'un tech
  */
 module.exports.listeByTech = (req, res) => {
+  console.log("listeByTech  ", req);
   Intervention.aggregate(
     [
-      { $match: { tech: req } },
+      { $match: { idTech: ObjectId(req) } },
       {
         $lookup: {
           from: "metiers",
@@ -387,16 +245,16 @@ module.exports.add = (req, res, next) => {
 };
 /**mise a jour d'une intervention */
 module.exports.update = (req, res, next) => {
-  console.log("ctrlUpdate", req.body);
+  req.body.idTech = ObjectId(req.body.idTech);
   var d = moment().format("L");
-
+  console.log("ctrlUpdate", (req.body.idTech = ObjectId(req.body.idTech)));
   Intervention.findByIdAndUpdate(
     req.body._id,
     {
       $set: {
         status: req.body.status,
         priority: req.body.priority,
-        tech: req.body.tech,
+        idTech: req.body.idTech,
         subCat: req.body.subCat,
         metier: req.body.metier,
         dateAssing: req.body.dateAssing
@@ -425,7 +283,7 @@ module.exports.addSolution = (req, res, next) => {
     "   :  " +
     req.body.solution +
     "  (" +
-    req.body.tech +
+    req.body.idTech +
     ")";
   Intervention.findByIdAndUpdate(
     req.body._id,
@@ -436,7 +294,7 @@ module.exports.addSolution = (req, res, next) => {
       $set: {
         status: req.body.status,
         priority: req.body.priority,
-        tech: req.body.tech,
+        idTech: req.body.idTech,
         subCat: req.body.subCat,
         metier: req.body.metier
       }

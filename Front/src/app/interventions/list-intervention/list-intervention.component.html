@@ -77,7 +77,7 @@
       <e-column
         *ngIf="user != 'User'"
         field="tech"
-        headerText="tech"
+        headerText="Tech"
         textAlign="center"
       ></e-column>
       <e-column
@@ -209,22 +209,22 @@
             <div *ngIf="user != 'User'" class="form-group col-md-6">
               <div class="e-float-input e-control-wrapper">
                 <ejs-dropdownlist
-                  id="tech"
-                  formControlName="tech"
+                  id="idTech"
+                  formControlName="idTech"
                   [dataSource]="techs"
-                  [fields]="{ text: 'fullName', value: 'fullName' }"
-                  placeholder="Technician *"
+                  [fields]="{ text: 'fullName', value: '_id' }"
+                  placeholder="idTechnician *"
                   popupHeight="200px"
                   floatLabelType="Always"
                 >
                 </ejs-dropdownlist>
                 <mat-error
                   *ngIf="
-                    angForm.get('tech').hasError('required') &&
-                    angForm.get('tech').touched
+                    angForm.get('idTech').hasError('required') &&
+                    angForm.get('idTech').touched
                   "
                 >
-                  <span> Select technician is required </span>
+                  <span> Select Technician is required </span>
                 </mat-error>
               </div>
             </div>
@@ -400,22 +400,22 @@
               <div *ngIf="user != 'User'" class="form-group col-md-6">
                 <div class="e-float-input e-control-wrapper">
                   <ejs-dropdownlist
-                    id="tech"
-                    formControlName="tech"
+                    id="idTech"
+                    formControlName="idTech"
                     [dataSource]="techs"
-                    [fields]="{ text: 'fullName', value: 'fullName' }"
-                    placeholder="Change technicien"
+                    [fields]="{ text: 'fullName', value: '_id' }"
+                    placeholder="Change Technicien"
                     popupHeight="200px"
                     floatLabelType="Always"
                   >
                   </ejs-dropdownlist>
                   <mat-error
                     *ngIf="
-                      angForm.get('tech').hasError('required') &&
-                      angForm.get('tech').touched
+                      angForm.get('idTech').hasError('required') &&
+                      angForm.get('idTech').touched
                     "
                   >
-                    <span> Select technician is required </span>
+                    <span> Select Technician is required </span>
                   </mat-error>
                 </div>
               </div>

@@ -82,6 +82,24 @@ export class InterventionsComponent implements OnInit {
     this.hopital = null;
   }
 
+
+  ngOnInit() {
+    /**
+     * assignation statut de l'utilisateur
+     */
+    this.userDetails = this.us.getStatus();
+    /**
+     * gestion Du type d'utilisateur
+     */
+    this.getInterventionByRole();
+
+    /**
+     * return liste des deparement
+     */
+    this.metierS.getMetiers().subscribe(data => {
+      this.metier = data;
+    });
+  }
   /**
    * @param $event
    * est appellé depuis le component Liste Intervention pour mise a jour de la liste intervention
@@ -122,47 +140,56 @@ export class InterventionsComponent implements OnInit {
   }
 
   check($event) {
-    console.log($event);
-    if ($event.solution) {
-      /**
-       * ajout d'une solution
-       */
-      console.log("AddSolution");
-      this.is.addSolution($event).subscribe(data => {
-        console.log(data);
-      });
-      this.getInterventionByRole();
-    } else {
-      /**
-       * Modification de l'intervention (technicien, categorie, subCategorie, priorité)
-       */
-      console.log("Modifie Intervention");
-      this.is.updateIntervention($event).subscribe((data: Intervention) => {
-        this.getInterventionByRole();
-      });
+    //If mise a jour to maintenance
+    if ($event.idMaintenance) {
+      $event.tech = this.findTechInList(this.techs, $event.idTech)
+      //Ajout solution pour Date Maintenance
+      if ($event.solution) {
+        this.ds.addSolution($event).subscribe(data => {
+          console.log(data)
+          //TODO Mise a jour de la liste
+        })
+      }
+      //Modification Maintenance
+      else {
+        $event.StartTime = new Date($event.StartTime).toISOString();
+        this.ds.updateWithOutSolution($event).subscribe(data => {
+          console.log(data)
+          //TODO Mise a jour de la liste
+        })
+
+
+      }
     }
+    //else mise a jour Intervention
+    else {
+      if ($event.solution) {
+        /**
+         * ajout d'une solution
+         */
+        console.log("AddSolution");
+        this.is.addSolution($event).subscribe(data => {
+          console.log(data);
+        });
+        this.getInterventionByRole();
+      } else {
+        /**
+         * Modification de l'intervention (technicien, categorie, subCategorie, priorité)
+         */
+        console.log("Modifie Intervention");
+        this.is.updateIntervention($event).subscribe((data: Intervention) => {
+          this.getInterventionByRole();
+        });
+      }
+    }
+
+
+
 
     //this.interentionList.refreshInterventionTable();
     //this.AnalyseMixIntermaint.refreshChart();
   }
 
-  ngOnInit() {
-    /**
-     * assignation statut de l'utilisateur
-     */
-    this.userDetails = this.us.getStatus();
-    /**
-     * gestion Du type d'utilisateur
-     */
-    this.getInterventionByRole();
-
-    /**
-     * return liste des deparement
-     */
-    this.metierS.getMetiers().subscribe(data => {
-      this.metier = data;
-    });
-  }
   /**
    *
    * @param metier
@@ -225,7 +252,7 @@ export class InterventionsComponent implements OnInit {
     else if (this.userDetails === "Tech") {
       this.findHospital();
       this.is
-        .getInterventionsBytech(this.us.getFullName())
+        .getInterventionsBytech(this.us.getId())
         .subscribe((data: any[]) => {
           console.log(this.interventions.length)
           //this.interventions=data
@@ -235,39 +262,40 @@ export class InterventionsComponent implements OnInit {
             .subscribe((dataMaint: any) => {
               console.log(data);
               console.log(this.interventions.length);
-             this.interventions = _.concat(dataMaint, data);
+              this.interventions = _.concat(dataMaint, data);
               console.log(this.interventions.length);
-            
+
               this.formatDate();
               this.show = true;
             });
         });
-        console.log(this.maintenance)
+      console.log(this.maintenance)
       this.formatDate();
       console.log(this.projet);
       this.show = true;
     } //If status is ADMIN
     else if (this.userDetails === "Admin" || this.userDetails == "Operator") {
+      //return liste Tech
       this.findTechByHospital();
+      //return info hospital
       this.hs
         .findHopital(this.us.getIdHopital())
         .subscribe((data: Hospital) => {
           this.projet = data;
           this.departements = data[0].departements;
-
+          //return Intervention by month current + all intervention open or waiting out of month
           this.is.getInterventions().subscribe((data: any[]) => {
             this.ds
+              //return all maintenance programming of Hospital
               .getMaintenanceByHospitalAndDate()
               .subscribe((maindata: any[]) => {
-                maindata.forEach(element => {
-                  this.interventions = maindata;
-                });
                 if (this.interventions.length > 0) {
-                  this.interventions = [];
-                  this.interventions = _.concat(data, this.interventions);
+                  this.interventions = _.concat(data, maindata);
                 } else {
-                  this.interventions = _.concat(data, this.interventions);
+                  this.interventions = _.concat(data, maindata);
                 }
+
+                console.log('in Admin : ', this.interventions)
                 this.formatDate();
                 console.log(this.interventions);
                 if (this.interventions.length > 0) {
@@ -293,7 +321,7 @@ export class InterventionsComponent implements OnInit {
     let categorie = this.projet[0].metier;
 
     this.interventions.forEach(element => {
-      let index = _.findIndex(categorie, function(c) {
+      let index = _.findIndex(categorie, function (c) {
         return element.metier == c._id;
       });
       element.categorie = categorie[index].name;
@@ -306,17 +334,21 @@ export class InterventionsComponent implements OnInit {
         element.StartTime = moment(element.StartTime).format("LL");
         element.EndTime = element.StartTime;
         element.day = element.StartTime;
-        if (this.userDetails!="Tech"){
-          element.tech = this.findTechInList(this.techs, element.idTech);
-        }          
+
       } else {
         console.log(element);
         element.day = moment(element.day).format("LL");
+        element.dateAssing = moment(element.dateAssing).format("LL");
         element.StartTime = element.day;
         element.EndTime = element.day;
         console.log(element);
         if (typeof element.metier == "string")
           element.categorie = this.returnCategorie(element.metier);
+      }
+
+      if (this.userDetails != "Tech") {
+        console.log("go findTech")
+        element.tech = this.findTechInList(this.techs, element.idTech);
       }
     });
   }
@@ -380,7 +412,7 @@ export class InterventionsComponent implements OnInit {
     this.element.show({ timeOut: 4000 });
   }
   remplaceIntervention(data, status) {
-    let index = _.findIndex(this.interventions, function(o) {
+    let index = _.findIndex(this.interventions, function (o) {
       return o._id == data.idIntervention;
     });
     this.interventions[index].status = status;
@@ -416,7 +448,7 @@ export class InterventionsComponent implements OnInit {
 
   findTechInList(listeTech, idTech) {
     console.log(listeTech, idTech);
-    let index = _.findIndex(listeTech, function(t) {
+    let index = _.findIndex(listeTech, function (t) {
       return t._id == idTech;
     });
     console.log(listeTech[index].fullName);
@@ -431,7 +463,7 @@ export class InterventionsComponent implements OnInit {
    * @memberof InterventionsComponent
    */
   returnDepartement(data: Intervention): any {
-    const found = this.departements.find(function(element) {
+    const found = this.departements.find(function (element) {
       if (element._id === data.idDepartement) {
         return element;
       }
@@ -440,7 +472,7 @@ export class InterventionsComponent implements OnInit {
   }
 
   returnCategorie(data) {
-    const found = this.projet[0].metier.find(function(element) {
+    const found = this.projet[0].metier.find(function (element) {
       if (typeof data == "string") {
         if (element._id === data) {
           return element;

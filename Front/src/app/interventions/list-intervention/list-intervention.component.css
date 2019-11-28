@@ -25,17 +25,20 @@
   background-color: #ff0202;
 }
 
-.diffUser{ 
+.diffUser {
   background-color: darkgray;
-} 
-.maintenance{
-   background-color: rgba(25, 0, 255, 0.384);
+}
+.maintenance {
+  background-color: rgba(25, 0, 255, 0.384);
 }
 
-.disabledJs{
-   background-color: rgba(25, 0, 255, 0.384);
+.disabledJs {
+  background-color: rgba(25, 0, 255, 0.384);
 }
 .disabledbutton {
-    pointer-events: none;
-    opacity: 0.4;
+  pointer-events: none;
+  opacity: 0.4;
+}
+.done {
+  background-color: rgba(93, 149, 15, 0.287);
 }

@@ -112,7 +112,7 @@ export class ListInterventionComponent implements OnInit {
     };
     this.pageSettings = { pageSizes: true, pageSize: 8 };
     this.dropData = ["Order Placed", "Processing", "Delivered"];
-    console.log(this.interventions, this.maintenance);
+    //console.log(this.interventions, this.maintenance);
   }
   sendLink(data) {
     this.router.navigate(["historic/"], { queryParams: { asset: data } });
@@ -123,12 +123,12 @@ export class ListInterventionComponent implements OnInit {
    */
   createFormIntervention(data): FormGroup {
     console.log(data)
-    if (this.user != "User" && data.metier!=undefined) {
+    if (this.user != "User" && data.metier != undefined) {
       this.findSubCat(data.metier);
     }
 
     if (this.user === "User") {
-      
+
       return new FormGroup({
         _id: new FormControl(data._id, Validators.required),
         departement: new FormControl(
@@ -140,7 +140,7 @@ export class ListInterventionComponent implements OnInit {
         description: new FormControl(data.description),
         status: new FormControl(data.status),
         day: new FormControl(data.day),
-        tech: new FormControl(data.tech),
+        idTech: new FormControl(data.idTech),
         slugI: new FormControl(data.slugI)
       });
     } else if (this.user === "Admin" || this.user === "Operator") {
@@ -159,8 +159,8 @@ export class ListInterventionComponent implements OnInit {
         status: new FormControl(data.status),
         type: new FormControl(data.type ? data.type : ""),
         day: new FormControl(data.day),
-        tech: new FormControl(
-          data.tech ? data.tech : null,
+        idTech: new FormControl(
+          data.idTech ? data.idTech : null,
           Validators.required
         ),
         useMat: new FormControl(data.useMat ? data.useMat : null),
@@ -191,7 +191,7 @@ export class ListInterventionComponent implements OnInit {
         status: new FormControl(data.status),
         type: new FormControl(data.type),
         day: new FormControl(data.day),
-        tech: new FormControl(data.tech),
+        idTech: new FormControl(data.idTech),
         useMat: new FormControl(data.useMat),
         asset: new FormControl(data.asset),
         slugI: new FormControl(data.slugI),
@@ -210,16 +210,18 @@ export class ListInterventionComponent implements OnInit {
     console.log('Formulaire Maintenance : ', data, this.subCat)
     return new FormGroup({
       _id: new FormControl(data._id),
+      idMaintenance: new FormControl(data._id),
       //departement a rajouté
       departement: new FormControl(""),
       categorie: new FormControl(data.categorie ? data.categorie : ""),
-      subCat: new FormControl(data.subCat ? data.categorie : ""),
-      tech: new FormControl(data.tech ? data.tech : ""),
+      subCat: new FormControl(data.subCat ? data.subCat : ""),
+      idTech: new FormControl(data.idTech ? data.idTech : ""),
       locality: new FormControl(data.locality ? data.locality : ""),
       priority: new FormControl("Medium"),
       description: new FormControl(data.description),
       status: new FormControl(data.status),
-      StartTime: new FormControl(data.StartTime)
+      StartTime: new FormControl(data.StartTime),
+      solution: new FormControl(""),
     });
   }
   public sortComparer = (reference: string, comparer: string) => {
@@ -261,7 +263,7 @@ export class ListInterventionComponent implements OnInit {
       let data: any = args.rowData;
       this.type = data.type
       if (data.type == "JobRequest") {
-        
+
         this.angForm = this.createFormIntervention(data);
       } else if ((data.type = "Maintenance")) {
         this.angForm = this.createFormMaintenance(data);
@@ -333,7 +335,7 @@ export class ListInterventionComponent implements OnInit {
     if (data.type != "Maintenance") {
       if (
         data.metier != undefined &&
-        (data.tech != undefined && data.tech.length > 0)
+        (data.idTech != undefined && data.idTech.length > 0)
       ) {
         if (data["priority"] === "High") {
           args.row.classList.add("high");
@@ -350,6 +352,9 @@ export class ListInterventionComponent implements OnInit {
 
     if (data.idUser != localStorage._id && this.user === "User") {
       args.row.classList.add("diffUser");
+    }
+    if (data["status"] === "Done") {
+      args.row.classList.add("done");
     }
   }
 

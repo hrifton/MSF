@@ -73,7 +73,7 @@ export class CalendrierTechComponent implements OnInit {
   ];
   public status: boolean = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
     this.formatDataAgenda();
@@ -149,8 +149,7 @@ export class CalendrierTechComponent implements OnInit {
    * @memberof CalendrierTechComponent
    */
   refreshAgenda() {
-    //TODO This.agenda.refresh() not work
-    this.ngOnInit();
+    this.agenda.refresh()
   }
   /**
    *
@@ -184,12 +183,12 @@ export class CalendrierTechComponent implements OnInit {
     if (args.type == "Editor") {
       console.log(any.Subject);
       if (any.Subject != undefined) {
-        if(any.type=="Maintenance"){
-          alert('Formulaire Maintenance pas encore fait')
-        }else{
+        if (any.type == "Maintenance") {
+          this.createFormMaintenance(args.data)
+        } else {
           this.createForm(args.data);
         }
-        
+
       } else {
         args.cancel = true;
       }
@@ -200,13 +199,13 @@ export class CalendrierTechComponent implements OnInit {
   /**
    *
    *@function createForm
-   *generate Formulaire with data
+   *generate Formulaire for Intervention
    * @param {*} data
    * @memberof CalendrierTechComponent
    *
    */
   createForm(data) {
-    console.log(data);
+
     this.solutionForm = this.fb.group({
       idIntervention: new FormControl(data._id, [Validators.required]),
       solution: new FormControl("", [
@@ -228,6 +227,32 @@ export class CalendrierTechComponent implements OnInit {
     });
     console.log(this.solutionForm.value);
   }
+
+
+
+
+
+  createFormMaintenance(data): FormGroup {
+    // this.findSubCat(data.categorie)
+    console.log('Formulaire Maintenance : ', data)
+    return new FormGroup({
+      _id: new FormControl(data._id),
+      idMaintenance: new FormControl(data._id),
+      //departement a rajouté
+      departement: new FormControl(""),
+      categorie: new FormControl(data.categorie ? data.categorie : ""),
+      subCat: new FormControl(data.subCat ? data.subCat : ""),
+      idTech: new FormControl(data.idTech ? data.idTech : ""),
+      locality: new FormControl(data.locality ? data.locality : ""),
+      priority: new FormControl("Medium"),
+      description: new FormControl(data.description),
+      status: new FormControl(data.status),
+      StartTime: new FormControl(data.StartTime),
+      solution: new FormControl(""),
+    });
+  }
+
+
   ngOnChanges(changes: SimpleChanges) {
     this.interventions = changes.interventions.currentValue;
     this.eventSettings.dataSource = this.formatDataAgenda();

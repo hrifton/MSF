@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
+
 var dateMaintenanceSchema = new mongoose.Schema({
   StartTime: { type: Date, required: true },
   EndTime: { type: Date, required: true },
@@ -9,8 +10,17 @@ var dateMaintenanceSchema = new mongoose.Schema({
   subCat: { type: String },
   categorie: { type: String },
   status: { type: String },
-  idTech: { type: String },
-  idHopital: { type: Object }
+  idTech: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: false
+  },
+  idHopital: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "hospital",
+    required: true
+  },
+  solution: []
 });
 
 dateMaintenanceSchema.plugin(AutoIncrement, { inc_field: "slugD" });
