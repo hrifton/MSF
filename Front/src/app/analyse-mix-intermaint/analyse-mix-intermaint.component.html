@@ -23,7 +23,8 @@
   </div>
 </div>
 -->
-<div class="control-section">
+{{ show }}
+<div *ngIf="show" class="control-section">
   <div class="control-section e-tab-section">
     <div class="e-sample-resize-container">
       <!-- Render the Tab Component -->
@@ -33,7 +34,7 @@
             <ng-template #content>
               <ejs-accumulationchart
                 #chart
-                id="container"
+                id="chart"
                 #pie
                 style="display:block;  width: 92%"
                 [legendSettings]="legendSettings"

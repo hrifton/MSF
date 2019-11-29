@@ -9,7 +9,9 @@ import {
 import {
   ChartComponent,
   IAccLoadedEventArgs,
-  AccumulationTheme
+  AccumulationTheme,
+  AccumulationChartComponent,
+  AccumulationChart
 } from '@syncfusion/ej2-angular-charts';
 import {
   TabComponent,
@@ -41,12 +43,13 @@ export class AnalyseMixIntermaintComponent implements OnInit {
   public analyseMaintenance = [];
   @Input() interventions;
   @Input() user;
-
+  @ViewChild('chart')
+  public pie: AccumulationChartComponent | AccumulationChart;
   @ViewChild(AnalyseInterventionComponent)
   AnalyseIntervention: AnalyseInterventionComponent;
   @ViewChild(AnalyseMaintenanceComponent)
   AnalyseMaintenance: AnalyseMaintenanceComponent;
-  @ViewChild('chart') public chart: ChartComponent;
+  //@ViewChild('chart') public chart: ChartComponent;
   // tslint:disable-next-line: ban-types
   private piedata: Object[];
   legendSettings: Object;
@@ -56,10 +59,11 @@ export class AnalyseMixIntermaintComponent implements OnInit {
   private done: number;
   @ViewChild('element') tabObj: TabComponent;
   public headerText: Object = [];
-  @ViewChild('pie') public pie: ChartComponent;
+  //@ViewChild('pie') public pie: ChartComponent;
 
   // custom code end
   public center: Object = { x: '50%', y: '50%' };
+  public show: boolean = false
   public startAngle = 0;
   public endAngle = 360;
   public explode = true;
@@ -69,53 +73,8 @@ export class AnalyseMixIntermaintComponent implements OnInit {
     format: '${point.x} : <b>${point.y}%</b>'
   };
 
-  /**
-   *
-   * @param e value de l'onglet
-   * refesh le chart
-   */
-  public tabSelected(e: SelectEventArgs): void {
-    switch (e.selectedItem.innerText) {
-      case 'INTER./MAINT.':
-        this.refreshChart();
-        break;
-
-      case 'MAINTENANCE':
-        this.AnalyseMaintenance.getChart(
-          this.getNumberOpenClose(this.analyseMaintenance)
-        );
-        break;
-
-      case 'INTERVENTION':
-        this.AnalyseIntervention.getChart(
-          this.getNumberOpenClose(this.analyseIntervention)
-        );
-        break;
-    }
-  }
-
-  ngOnChanges(ChangeEventArgs: any): void {
-    // verifie si le tableau d'interventions a changer
-    if (!ChangeEventArgs.interventions.firstChange) {
-      this.refreshChart();
-      this.AnalyseIntervention.getChart(
-        this.getNumberOpenClose(this.analyseIntervention)
-      );
-      this.AnalyseMaintenance.getChart(
-        this.getNumberOpenClose(this.analyseMaintenance)
-      );
-    }
-  }
-
-  public load(args: IAccLoadedEventArgs): void {
-    let selectedTheme: string = location.hash.split('/')[1];
-    selectedTheme = selectedTheme ? selectedTheme : 'Material';
-    args.accumulation.theme = (
-      selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)
-    ).replace(/-dark/i, 'Dark') as AccumulationTheme;
-  }
-
   ngOnInit(): void {
+    console.log(this.interventions)
     if (this.user != 'User') {
       this.headerText = [
         { text: 'Inter./Maint.' },
@@ -135,16 +94,68 @@ export class AnalyseMixIntermaintComponent implements OnInit {
     statusIntMaint = this.getNumberOpenClose(this.interventions);
     this.statusInt = this.getNumberOpenClose(this.analyseIntervention);
     this.statusMaint = this.getNumberOpenClose(this.analyseMaintenance);
-    this.getChart(statusIntMaint);
-    // this.AnalyseIntervention.refreshChart(this.statusInt);
-    // this.AnalyseMaintenance.getChart(this.statusMaint);
+
+    this.getChart(this.getNumberOpenClose(this.interventions));
+
+    //this.AnalyseIntervention.refreshChart(this.statusInt);
+    //this.AnalyseMaintenance.getChart(this.statusMaint);
   }
+
+  /**
+   *
+   * @param e value de l'onglet
+   * refesh le chart
+   */
+  public tabSelected(e: SelectEventArgs): void {
+    switch (e.selectedItem.innerText) {
+      case 'INTER./MAINT.':
+        this.refreshChart();
+        break;
+
+      case 'MAINTENANCE':
+        let data = this.getNumberOpenClose(this.analyseMaintenance)
+        if (data)
+          this.AnalyseMaintenance.getChart(data);
+        break;
+
+      case 'INTERVENTION':
+        this.AnalyseIntervention.getChart(
+          this.getNumberOpenClose(this.analyseIntervention)
+        );
+        break;
+    }
+  }
+
+  /*ngOnChanges(ChangeEventArgs: any): void {
+    // verifie si le tableau d'interventions a changer
+    console.log(ChangeEventArgs.interventions)
+    if (!ChangeEventArgs.interventions.firstChange) {
+      this.refreshChart();
+      let analysInter = this.getNumberOpenClose(this.analyseIntervention);
+      let analysMaint = this.getNumberOpenClose(this.analyseMaintenance)
+      console.log(analysMaint, analysInter)
+      if (analysInter)
+        this.AnalyseIntervention.getChart(analysInter);
+      if (analysMaint)
+        this.AnalyseMaintenance.getChart(analysMaint);
+    }
+  }*/
+
+  public load(args: IAccLoadedEventArgs): void {
+    let selectedTheme: string = location.hash.split('/')[1];
+    selectedTheme = selectedTheme ? selectedTheme : 'Material';
+    args.accumulation.theme = (
+      selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)
+    ).replace(/-dark/i, 'Dark') as AccumulationTheme;
+  }
+
+
 
   refreshChart() {
     const obj = this.getNumberOpenClose(this.interventions);
     this.getChart(obj);
 
-    this.chart.refresh();
+    //this.chart.refresh();
 
     this.checkMaintInter(this.interventions);
   }
@@ -234,5 +245,6 @@ export class AnalyseMixIntermaintComponent implements OnInit {
     this.legendSettings = {
       visible: true
     };
+    this.show = true
   }
 }

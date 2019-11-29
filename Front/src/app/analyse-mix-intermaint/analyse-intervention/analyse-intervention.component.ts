@@ -43,6 +43,7 @@ export class AnalyseInterventionComponent implements OnInit {
   }
 
   getChart(data) {
+    console.log(data)
     this.piedata = [
 
       {

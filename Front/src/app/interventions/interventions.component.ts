@@ -153,9 +153,11 @@ export class InterventionsComponent implements OnInit {
       //Modification Maintenance
       else {
         $event.StartTime = new Date($event.StartTime).toISOString();
+        this.remplaceById(this.interventions, $event)
         this.ds.updateWithOutSolution($event).subscribe(data => {
-          console.log(data)
-          //TODO Mise a jour de la liste
+          this.formatDate()
+          this.AnalyseMixIntermaint.refreshChart()
+          this.interentionList.refreshInterventionTable();
         })
 
 
@@ -198,7 +200,7 @@ export class InterventionsComponent implements OnInit {
    */
   // TODO verification du compte
   comptemetier(metier, intervention) {
-    console.log(metier);
+    console.log('Categorie 7777777', metier);
     for (let index = 0; index < metier.length; index++) {
       const name = metier[index].name;
       const _id = metier[index]._id;
@@ -319,12 +321,16 @@ export class InterventionsComponent implements OnInit {
   }
   remplaceIdCatByNameCat() {
     let categorie = this.projet[0].metier;
-
+    console.log(categorie)
     this.interventions.forEach(element => {
-      let index = _.findIndex(categorie, function (c) {
-        return element.metier == c._id;
-      });
-      element.categorie = categorie[index].name;
+      if (element.idMaintenance == undefined) {
+        let index = _.findIndex(categorie, function (c) {
+          return element.metier == c._id;
+        });
+
+        element.categorie = categorie[index].name;
+      }
+
     });
   }
   formatDate() {
@@ -482,5 +488,11 @@ export class InterventionsComponent implements OnInit {
       }
     });
     return found.name;
+  }
+  remplaceById(liste, obj) {
+    let index = _.findIndex(liste, function (m) {
+      return m._id == obj._id
+    })
+    liste.splice(index, 1, obj)
   }
 }

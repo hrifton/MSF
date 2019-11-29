@@ -56,6 +56,11 @@ export class AnalyseMaintenanceComponent implements OnInit {
       selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)
     ).replace(/-dark/i, "Dark") as AccumulationTheme;
   }
+  ngOnChanges(changes: SimpleChanges): void {
+
+    console.log(changes)
+
+  }
 
   getChart(data) {
     this.piedata = [
