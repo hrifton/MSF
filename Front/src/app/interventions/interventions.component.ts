@@ -128,7 +128,7 @@ export class InterventionsComponent implements OnInit {
         } else {
           this.interventions.unshift(data);
         }
-
+        this.formatDate()
         this.interentionList.refreshInterventionTable();
         this.AnalyseMixIntermaint.refreshChart();
         this.statusInsertIntervention = true;
@@ -141,8 +141,13 @@ export class InterventionsComponent implements OnInit {
 
   updateInterventionMaintenance($event) {
     //If mise a jour to maintenance
-    if ($event.idMaintenance) {
+    if (this.userDetails != "Tech") {
       $event.tech = this.findTechInList(this.techs, $event.idTech)
+    } else {
+      $event.tech = this.us.getFullName();
+    }
+
+    if ($event.idMaintenance) {
       //Ajout solution pour Date Maintenance
       if ($event.solution) {
         this.ds.addSolution($event).subscribe(data => {
@@ -169,7 +174,7 @@ export class InterventionsComponent implements OnInit {
         /**
          * ajout d'une solution
          */
-        console.log("AddSolution");
+        console.log("AddSolution : ", $event);
         this.is.addSolution($event).subscribe(data => {
           console.log(data);
         });
@@ -311,7 +316,7 @@ export class InterventionsComponent implements OnInit {
           });
           this.formatDate();
         });
-        //this.comptemetier(this.projet[0].metier, this.interventions);
+      //this.comptemetier(this.projet[0].metier, this.interventions);
       this.show = true;
       //If Status is SuperAdmin
     } else if (this.userDetails === "SuperAdmin") {
@@ -360,51 +365,8 @@ export class InterventionsComponent implements OnInit {
     });
   }
 
-  /**
-   *
-   * @param $event Modification status lors de l'insertion d'une intervention
-   */
-  modifieStatus($event) {
-    this.statusInsertIntervention = $event;
-  }
 
-  SolutionSave($event) {
-    //Save if Intervention isnot closed but is status Waiting
 
-    console.log( $event.idIntervention )
-    let type = this.interventionOrMaintenance($event)
-
-    if(type=='Intervention'){
-
-    }
-    /*if ($event.status == "Waiting") {
-      $event.dateWaiting = [];
-      $event.dateWaiting.push(moment().format("DD/MM/YYYY"));
-      this.ss.postSolutionWaiting($event).subscribe((data: Solution) => {
-        if (data) {
-          this.remplaceIntervention(data, "Waiting");
-        } else {
-          console.log("err Waiting : Waiting", data);
-        }
-      });
-      //Save if Intervention isclosed
-    } else if (($event.status = "Done")) {
-      $event.dateCloture = moment().format("DD/MM/YYYY");
-      this.ss.postSolution($event).subscribe((data: Solution) => {
-        if (data) {
-          this.remplaceIntervention(data, "Done");
-        } else {
-          console.log("err Done : done", data);
-        }
-      });
-    } else {
-      this.showToastError("you cannot use this option");
-      this.flagErrorFormTech = true;
-    }*/
-  }
-  interventionOrMaintenance($event: any) {
-   return  $event.idIntervention ? 'Intervention': 'Maintenance' 
-  }
 
   showToastError(toast: string) {
     if (toast == "Duplicate") {

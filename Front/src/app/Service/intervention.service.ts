@@ -17,7 +17,7 @@ export class InterventionService {
   // add a new Intervention
 
   postInter(intervention: Intervention) {
-    console.log(typeof intervention.day)
+    console.log(intervention)
     return this.http.post(`${this.uri}/add`, intervention);
   }
 
@@ -30,13 +30,12 @@ export class InterventionService {
   // TODO Local ADMIN OPERATOR
   getInterventions() {
     const startOfMonth = moment()
-      .startOf("month")
-      .format("YYYY-MM-DD hh:mm");
-    const endOfMonth = moment()
-      .endOf("month")
-      .format("YYYY-MM-DD hh:mm");
-    const idHopital = this.us.getIdHopital();
+      .startOf("month").toISOString();
 
+    const endOfMonth = moment()
+      .endOf("month").toISOString();
+    const idHopital = this.us.getIdHopital();
+    console.log(endOfMonth)
     return this.http.get(`${this.uri}/byHopital`, { params: { idHopital, startOfMonth, endOfMonth } });
   }
   // TODO TECH

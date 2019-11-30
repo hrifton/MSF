@@ -189,7 +189,7 @@ export class CalendrierTechComponent implements OnInit {
       } else {
         args.cancel = true;
       }
-    } else if (args.type=="QuickInfo"){
+    } else if (args.type == "QuickInfo") {
       args.cancel = true;
     }
   }
@@ -202,7 +202,7 @@ export class CalendrierTechComponent implements OnInit {
    *
    */
   createForm(data) {
-
+    console.log(data)
     this.solutionForm = this.fb.group({
       _id: new FormControl(data._id, [Validators.required]),
       solution: new FormControl("", [
@@ -210,10 +210,13 @@ export class CalendrierTechComponent implements OnInit {
         Validators.minLength(5),
         Validators.maxLength(500)
       ]),
-      asset: new FormControl(""),
-      mat: new FormControl(""),
+      asset: new FormControl(data.asset ? data.asset : ""),
+      priority: new FormControl(data.priority ? data.priority : ""),
+      mat: new FormControl(data.mat ? data.mat : ""),
       dateAssign: new FormControl(data.dateAssing, [Validators.required]),
-      tech: new FormControl(data.tech, [Validators.required]),
+      metier: new FormControl(data.metier[0]._id),
+      subCat: new FormControl(data.subCat),
+      idTech: new FormControl(data.idTech, [Validators.required]),
       status: new FormControl(data.status, [Validators.required]),
       idCategorie: new FormControl(data.metier[0]._id, [Validators.required]),
       idDepartement: new FormControl(data.departements[0]._id, [
@@ -224,9 +227,6 @@ export class CalendrierTechComponent implements OnInit {
     });
     console.log(this.solutionForm.value);
   }
-
-
-
 
 
   createFormMaintenance(data): FormGroup {

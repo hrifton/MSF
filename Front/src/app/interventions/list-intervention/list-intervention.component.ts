@@ -234,16 +234,16 @@ export class ListInterventionComponent implements OnInit {
     return 0;
   };
 
- /* dateValidator() {
-    return (control: FormControl): null | Object => {
-      return control.value &&
-        control.value.getFullYear &&
-        (1900 <= control.value.getFullYear() &&
-          control.value.getFullYear() <= 2099)
-        ? null
-        : { OrderDate: { value: control.value } };
-    };
-  }*/
+  /* dateValidator() {
+     return (control: FormControl): null | Object => {
+       return control.value &&
+         control.value.getFullYear &&
+         (1900 <= control.value.getFullYear() &&
+           control.value.getFullYear() <= 2099)
+         ? null
+         : { OrderDate: { value: control.value } };
+     };
+   }*/
 
   public onChange(args: any): void {
     this.findSubCat(args.itemData._id)
@@ -278,6 +278,7 @@ export class ListInterventionComponent implements OnInit {
         if (!this.angForm.value.dateAssing) {
           console.log("assigne Date ")
           this.angForm.value.dateAssing = new Date();
+          this.angForm.value.status = "Open";
         };
 
         this.messageEvent.emit(this.angForm.value);

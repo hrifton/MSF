@@ -65,7 +65,13 @@ module.exports.liste = (req, res) => {
                       //$gte: new Date(req.endOfMonth)
                     }
                   },
-                  { $or: [{ status: "Open" }, { status: "Waiting" }] }
+                  {
+                    $or: [
+                      { status: "Open" },
+                      { status: "Waiting" },
+                      { status: "New" }
+                    ]
+                  }
                 ]
               }
             },
@@ -274,8 +280,8 @@ module.exports.update = (req, res, next) => {
 };
 
 module.exports.addSolution = (req, res, next) => {
-  var d = moment().format("L");
-  console.log(req.body.solution);
+  var d = moment().format("LL");
+  console.log("addSolution ", req.body);
   solution =
     req.body.status +
     "  " +
@@ -283,7 +289,7 @@ module.exports.addSolution = (req, res, next) => {
     "   :  " +
     req.body.solution +
     "  (" +
-    req.body.idTech +
+    req.body.tech +
     ")";
   Intervention.findByIdAndUpdate(
     req.body._id,
