@@ -162,9 +162,6 @@ export class CalendrierTechComponent implements OnInit {
       args.requestType === "eventCreate" ||
       args.requestType === "eventChange"
     ) {
-      console.log(args.requestType);
-      //TODO rajouté status de l'intervention ensuite+date de cloture s'il y a cloture save()
-      console.log(this.solutionForm.value);
       this.SolutionSave.emit(this.solutionForm.value);
     }
   }
@@ -192,7 +189,7 @@ export class CalendrierTechComponent implements OnInit {
       } else {
         args.cancel = true;
       }
-    } else {
+    } else if (args.type=="QuickInfo"){
       args.cancel = true;
     }
   }
@@ -207,7 +204,7 @@ export class CalendrierTechComponent implements OnInit {
   createForm(data) {
 
     this.solutionForm = this.fb.group({
-      idIntervention: new FormControl(data._id, [Validators.required]),
+      _id: new FormControl(data._id, [Validators.required]),
       solution: new FormControl("", [
         Validators.required,
         Validators.minLength(5),

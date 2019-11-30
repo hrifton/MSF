@@ -234,7 +234,7 @@ export class ListInterventionComponent implements OnInit {
     return 0;
   };
 
-  dateValidator() {
+ /* dateValidator() {
     return (control: FormControl): null | Object => {
       return control.value &&
         control.value.getFullYear &&
@@ -243,7 +243,7 @@ export class ListInterventionComponent implements OnInit {
         ? null
         : { OrderDate: { value: control.value } };
     };
-  }
+  }*/
 
   public onChange(args: any): void {
     this.findSubCat(args.itemData._id)

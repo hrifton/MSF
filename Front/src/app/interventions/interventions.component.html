@@ -20,7 +20,7 @@
             <div class="e-card-content">
               <app-formulaire-intervention
                 *ngIf="departements.length > 0"
-                (messageEvent)="update($event)"
+                (messageEvent)="saveIntervention($event)"
                 (statusRequest)="modifieStatus($event)"
                 [user]="userDetails"
                 [departements]="departements"
@@ -85,7 +85,7 @@
               </div>
               <div class="e-card-content">
                 <app-list-intervention
-                  (messageEvent)="check($event)"
+                  (messageEvent)="updateInterventionMaintenance($event)"
                   *ngIf="interventions"
                   [interventions]="interventions"
                   [maintenance]="maintenance"
@@ -112,7 +112,7 @@
         *ngIf="interventions.length > 0"
         [interventions]="interventions"
         [maintenance]="maintenance"
-        (SolutionSave)="SolutionSave($event)"
+        (SolutionSave)="updateInterventionMaintenance($event)"
       ></app-calendrier-tech>
     </div>
   </ng-template>

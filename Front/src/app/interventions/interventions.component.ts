@@ -107,10 +107,10 @@ export class InterventionsComponent implements OnInit {
    *
    * Modification de la variable @statusInsertIntervention envoyé a formulaire intervention pour affichage TOAST
    */
-  update($event) {
+  saveIntervention($event) {
     $event.idUser = this.us.getId();
     $event.type = "JobRequest";
-    $event.status = "Open";
+    $event.status = "New";
     $event.day = new Date();
     $event.idHopital = this.us.getIdHopital();
     this.is.postInter($event).subscribe((data: Intervention) => {
@@ -139,7 +139,7 @@ export class InterventionsComponent implements OnInit {
     this.interentionList.refreshInterventionTable();
   }
 
-  check($event) {
+  updateInterventionMaintenance($event) {
     //If mise a jour to maintenance
     if ($event.idMaintenance) {
       $event.tech = this.findTechInList(this.techs, $event.idTech)
@@ -311,6 +311,7 @@ export class InterventionsComponent implements OnInit {
           });
           this.formatDate();
         });
+        //this.comptemetier(this.projet[0].metier, this.interventions);
       this.show = true;
       //If Status is SuperAdmin
     } else if (this.userDetails === "SuperAdmin") {
@@ -369,7 +370,14 @@ export class InterventionsComponent implements OnInit {
 
   SolutionSave($event) {
     //Save if Intervention isnot closed but is status Waiting
-    if ($event.status == "Waiting") {
+
+    console.log( $event.idIntervention )
+    let type = this.interventionOrMaintenance($event)
+
+    if(type=='Intervention'){
+
+    }
+    /*if ($event.status == "Waiting") {
       $event.dateWaiting = [];
       $event.dateWaiting.push(moment().format("DD/MM/YYYY"));
       this.ss.postSolutionWaiting($event).subscribe((data: Solution) => {
@@ -392,7 +400,10 @@ export class InterventionsComponent implements OnInit {
     } else {
       this.showToastError("you cannot use this option");
       this.flagErrorFormTech = true;
-    }
+    }*/
+  }
+  interventionOrMaintenance($event: any) {
+   return  $event.idIntervention ? 'Intervention': 'Maintenance' 
   }
 
   showToastError(toast: string) {
