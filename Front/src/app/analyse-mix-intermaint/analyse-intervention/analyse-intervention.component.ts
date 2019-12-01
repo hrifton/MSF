@@ -43,53 +43,61 @@ export class AnalyseInterventionComponent implements OnInit {
   }
 
   getChart(data) {
-    console.log(data)
     this.piedata = [
-
+      // tslint:disable-next-line:max-line-length
       {
-        x: "Done : " + data.done,
+        x: 'Done : ' + data.done,
         y: Math.round(
           (data.done * 100) /
-          (data.open + data.done + data.waiting + data.canceled)
+          (data.new + data.open + data.done + data.waiting + data.canceled)
         ),
-        text: "Done",
-        fill: "#3da11e69"
+        text: 'Done',
+        fill: '#5c940d'
       },
       {
-        x: "Open :" + data.open,
+        x: 'Open :' + data.open,
         y: Math.round(
           (data.open * 100) /
-          (data.open + data.done + data.waiting + data.canceled)
+          (data.new + data.open + data.done + data.waiting + data.canceled)
         ),
-        text: "Open :" + data.open,
-        fill: "#fd242463"
+        text: 'open :' + data.open,
+        fill: '#c0eb75'
       },
       {
-        x: "Waiting :" + data.waiting,
+        x: 'Waiting :' + data.waiting,
         y: Math.round(
           (data.waiting * 100) /
-          (data.open + data.done + data.waiting + data.canceled)
+          (data.new + data.open + data.done + data.waiting + data.canceled)
         ),
-        text: "waiting :" + data.waiting,
-        fill: "#af941c69"
+        text: 'waiting :' + data.waiting,
+        fill: '#94d82d'
       },
       {
-        x: "Canceled :" + data.canceled,
+        x: 'New :' + data.new,
+        y: Math.round(
+          (data.new * 100) /
+          (data.new + data.open + data.done + data.waiting + data.canceled)
+        ),
+        text: 'new :' + data.new,
+        fill: '#E3E3E2'
+      },
+      {
+        x: 'Canceled :' + data.canceled,
         y: Math.round(
           (data.canceled * 100) /
-          (data.open + data.done + data.waiting + data.canceled)
+          (data.new + data.open + data.done + data.waiting + data.canceled)
         ),
-        text: "canceled :" + data.canceled,
-        fill: "#ffd8a8"
+        text: 'canceled :' + data.canceled,
+        fill: '#fa5252'
       }
     ];
 
-    this.datalabel = { visible: true, name: "text", position: "Outside" };
+    this.datalabel = { visible: true, name: 'text', position: 'Outside' };
 
     this.legendSettings = {
       visible: true
     };
-    this.chart.refresh();
+    //this.show = true
   }
   @ViewChild("pie") public pie: ChartComponent;
 

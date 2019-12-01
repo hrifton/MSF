@@ -325,9 +325,15 @@ export class ListInterventionComponent implements OnInit {
    * refresh tableau liste intervention
    */
   refreshInterventionTable() {
+    console.log("Refresh Liste")
     this.grid.refresh();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    console.log(changes)
+  }
 
   // Couleur par etat de ligne  https://stackblitz.com/edit/angular-9tucrb?file=app.component.ts
   rowDataBound(args: RowDataBoundEventArgs) {

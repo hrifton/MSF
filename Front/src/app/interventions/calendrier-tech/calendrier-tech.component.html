@@ -60,24 +60,40 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+        <div
+          *ngIf="typeFormulaire == 'JobRequest'; else Maintenance"
+          class="col-xs-6 col-sm-6 col-lg-6 col-md-6"
+        >
           <div class="e-float-input">
             <span class="e-float-line">Categorie :</span>
             <input
               id="categorie"
               type="text"
-              value="{{ data.metier[0].name || data.categorie }}"
+              value="{{ data.metier[0].name }}"
               disabled
             />
           </div>
         </div>
+        <ng-template #Maintenance>
+          <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+            <div class="e-float-input">
+              <span class="e-float-line">Categorie :</span>
+              <input
+                id="categorie"
+                type="text"
+                value="{{ data.categorie }}"
+                disabled
+              />
+            </div>
+          </div>
+        </ng-template>
         <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
           <div class="e-float-input">
             <span class="e-float-line">Sub-Categorie :</span>
             <input
               id="sub-categorie"
               type="text"
-              value="{{ data.metier[0].name || data.subCat }}"
+              value="{{ data.subCat }}"
               disabled
             />
           </div>

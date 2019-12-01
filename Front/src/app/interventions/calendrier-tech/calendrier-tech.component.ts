@@ -72,6 +72,7 @@ export class CalendrierTechComponent implements OnInit {
     { status: "Open" }
   ];
   public status: boolean = false;
+  typeFormulaire: string;
 
   constructor(private fb: FormBuilder) { }
 
@@ -82,7 +83,7 @@ export class CalendrierTechComponent implements OnInit {
     this.eventSettings = {
       dataSource: this.data
     };
-    console.log(this.data);
+
   }
 
   oneventRendered(args: EventRenderedArgs): void {
@@ -109,21 +110,24 @@ export class CalendrierTechComponent implements OnInit {
     let tmp = [];
     this.interventions.forEach(element => {
       if (element) {
-        console.log(element);
+
         element.EndTime = element.StartTime;
         element.Subject = element.description;
         if (element.priority == "High") {
-          element.CategoryColor = "#df6666d5";
-        } else if (element.priority == "Low") {
-          element.CategoryColor = "#f8e620d5";
-        } else if (element.priority == "Medium") {
-          element.CategoryColor = "#f2b95dd5";
+          element.CategoryColor = "#e3240ed5";
         } else if (element.status == "Done") {
-          console.log(element, "Status Done ");
-          element.CategoryColor = "#c5c5c5d5";
+
+          element.CategoryColor = "#2d9f00d5";
+        } else if (element.priority == "Low") {
+          element.CategoryColor = "#ffc425d5";
+        } else if (element.priority == "Medium") {
+          element.CategoryColor = "#f37735d5";
         } else if (element.type == "Maintenance") {
-          element.CategoryColor = "##0861c5d5";
+          element.CategoryColor = "#4c7aaed5";
         }
+
+
+
         element.id = element._id;
         tmp.push(element);
       }
@@ -179,10 +183,12 @@ export class CalendrierTechComponent implements OnInit {
     console.log(args)
     if (args.type == "Editor") {
       console.log(any.Subject);
-      if (any.Subject != undefined) {
+      if (any.Subject != undefined && any.status != "Done") {
         if (any.type == "Maintenance") {
+          this.typeFormulaire = "Maintenance"
           this.createFormMaintenance(args.data)
         } else {
+          this.typeFormulaire = "JobRequest"
           this.createForm(args.data);
         }
 
@@ -229,10 +235,11 @@ export class CalendrierTechComponent implements OnInit {
   }
 
 
-  createFormMaintenance(data): FormGroup {
+  createFormMaintenance(data) {
     // this.findSubCat(data.categorie)
     console.log('Formulaire Maintenance : ', data)
-    return new FormGroup({
+
+    this.solutionForm = this.fb.group({
       _id: new FormControl(data._id),
       idMaintenance: new FormControl(data._id),
       //departement a rajouté

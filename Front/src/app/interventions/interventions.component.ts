@@ -28,6 +28,7 @@ import { HopitalService } from "../Service/hopital.service";
 import Solution from "../Class/Solution";
 import { CalendrierTechComponent } from "./calendrier-tech/calendrier-tech.component";
 import { NavBarComponent } from "../nav-bar/nav-bar.component";
+import { Categorie } from '../Class/Categorie';
 
 @Component({
   selector: "app-interventions",
@@ -306,6 +307,7 @@ export class InterventionsComponent implements OnInit {
                 this.formatDate();
                 console.log(this.interventions);
                 if (this.interventions.length > 0) {
+
                   this.remplaceIdCatByNameCat();
                   this.comptemetier(this.projet[0].metier, this.interventions);
                 }
@@ -327,13 +329,13 @@ export class InterventionsComponent implements OnInit {
   }
   remplaceIdCatByNameCat() {
     let categorie = this.projet[0].metier;
-    console.log(categorie)
+
     this.interventions.forEach(element => {
-      if (element.idMaintenance == undefined) {
+      if (element.idMaintenance == undefined && element.status != "New") {
         let index = _.findIndex(categorie, function (c) {
           return element.metier == c._id;
         });
-
+        console.log(index, element)
         element.categorie = categorie[index].name;
       }
 
@@ -358,8 +360,8 @@ export class InterventionsComponent implements OnInit {
           element.categorie = this.returnCategorie(element.metier);
       }
 
-      if (this.userDetails != "Tech") {
-        console.log("go findTech")
+      if (this.userDetails != "Tech" && element.status != "New") {
+        console.log("go findTech", element)
         element.tech = this.findTechInList(this.techs, element.idTech);
       }
     });
@@ -430,7 +432,8 @@ export class InterventionsComponent implements OnInit {
     let index = _.findIndex(listeTech, function (t) {
       return t._id == idTech;
     });
-    console.log(listeTech[index].fullName);
+
+    console.log(listeTech, index, idTech);
     return listeTech[index].fullName;
   }
 

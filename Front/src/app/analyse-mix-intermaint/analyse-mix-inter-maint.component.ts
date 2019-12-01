@@ -177,6 +177,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
       open: 0,
       canceled: 0,
       done: 0,
+      new: 0,
       waiting: 0
     };
     data.forEach(element => {
@@ -193,6 +194,9 @@ export class AnalyseMixIntermaintComponent implements OnInit {
         case 'Waiting':
           obj.waiting++;
           break;
+        case 'New':
+          obj.new++;
+          break;
       }
     });
 
@@ -206,7 +210,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
         x: 'Done : ' + data.done,
         y: Math.round(
           (data.done * 100) /
-          (data.open + data.done + data.waiting + data.canceled)
+          (data.new + data.open + data.done + data.waiting + data.canceled)
         ),
         text: 'Done',
         fill: '#5c940d'
@@ -215,7 +219,7 @@ export class AnalyseMixIntermaintComponent implements OnInit {
         x: 'Open :' + data.open,
         y: Math.round(
           (data.open * 100) /
-          (data.open + data.done + data.waiting + data.canceled)
+          (data.new + data.open + data.done + data.waiting + data.canceled)
         ),
         text: 'open :' + data.open,
         fill: '#c0eb75'
@@ -224,16 +228,25 @@ export class AnalyseMixIntermaintComponent implements OnInit {
         x: 'Waiting :' + data.waiting,
         y: Math.round(
           (data.waiting * 100) /
-          (data.open + data.done + data.waiting + data.canceled)
+          (data.new + data.open + data.done + data.waiting + data.canceled)
         ),
         text: 'waiting :' + data.waiting,
         fill: '#94d82d'
       },
       {
+        x: 'New :' + data.new,
+        y: Math.round(
+          (data.new * 100) /
+          (data.new + data.open + data.done + data.waiting + data.canceled)
+        ),
+        text: 'new :' + data.new,
+        fill: '#E3E3E2'
+      },
+      {
         x: 'Canceled :' + data.canceled,
         y: Math.round(
           (data.canceled * 100) /
-          (data.open + data.done + data.waiting + data.canceled)
+          (data.new + data.open + data.done + data.waiting + data.canceled)
         ),
         text: 'canceled :' + data.canceled,
         fill: '#fa5252'
